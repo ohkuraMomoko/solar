@@ -1,0 +1,189 @@
+﻿@Styles.Render("~/Content/pages/member/transactionDesktop.min.css")
+@model Chailease.SolarEnergy.Web.ViewModel.MemberViewModel
+@using System.Globalization;
+<div class="transaction-container">
+    <div class="transaction-header">
+        <div class="transaction-header--item">狀態</div>
+        <div class="transaction-header--item">發布時間</div>
+        <div class="transaction-header--item">專案名稱</div>
+        <div class="transaction-header--item">剩餘合約時間</div>
+        <div class="transaction-header--item">數量</div>
+        <div class="transaction-header--item">暫定售價</div>
+        <div class="transaction-header--item">預估IRR</div>
+        <div class="transaction-header--item">關注數/瀏覽數</div>
+        <div class="transaction-header--item"></div>
+        <div class="transaction-header--item"></div>
+    </div>
+    <div class="transaction-body accordion" id="accordion">
+        @if (Model.MemOnSaleSellManageList != null)
+        {
+            int dataIndex = 0;
+            foreach (var m in Model.MemOnSaleSellManageList)
+            {
+                var statusDesc = "";
+                switch (m.SELL_STATUS)
+                {
+                    case "01":
+                        statusDesc = "上架";
+                        break;
+                    case "02":
+                        statusDesc = "暫停";
+                        break;
+                    case "03":
+                        statusDesc = "下架";
+                        break;
+                }
+                @Html.Hidden("SELL_INST_CD", m.SELL_INST_CD)
+                <section class="transaction-collapse-block notfinish">
+                    <div class="transaction-button">
+                        <div class="transaction-button--item">
+                            @statusDesc
+                        </div>
+                        <div class="transaction-button--item">@DateTime.ParseExact(m.SELL_STRT_DT, "yyyyMMddHHmmss", CultureInfo.InvariantCulture, DateTimeStyles.None).ToString("yyyy/MM/dd")</div>
+                        <div class="transaction-button--item">
+                            @*
+                                可點選連結後，連至專案資訊畫面
+                            *@
+                            <a href="@Url.Action("Project", "Sell", new { id = m.SELL_INST_CD })">@m.SELL_CASE_NAME</a>
+                        </div>
+                        <div class="transaction-button--item">@m.CONTRACT_REMAIN_DAY</div>
+                        <div class="transaction-button--item">@m.SELL_NUM 片</div>
+                        <div class="transaction-button--item">@int.Parse(m.SELL_PRICE).ToString("###,##0") 元</div>
+                        <div class="transaction-button--item">
+                            @*
+                                點擊後會可開啟附件預估報酬資訊.pdf
+                            *@
+                            <a href="@Url.Action("LoanCaseFile", new { m.FILE_UUID })">@m.SELL_IRR%</a>
+                        </div>
+                        <div class="transaction-button--item">
+                            <a data-toggle="collapse" onclick="service.MemOnSaleSellManageWantStatus('@m.SELL_INST_CD',@dataIndex)" href="#collapse-@dataIndex" role="button" aria-expanded="false" aria-controls="collapse1">@m.BUYER_NUM / @m.VIEWER_NUM</a>
+                        </div>
+                        <div class="transaction-button--item">
+                            @*
+                                分三種狀態
+                                1.上架
+                                2.暫停
+                                3.下架
+                            *@
+
+                            @if (m.SELL_STATUS == "01" || m.SELL_STATUS == "02")
+                            {
+                                <button type="button" class="btn--common btn--common-1 annouce-btn" data-toggle="modal" data-target="#modalNosold" data-status="03" data-id="@m.SELL_INST_CD" onmouseout="mouseOUT(this);" onmouseover="mouseON(this)">下架</button>
+                            }
+                        </div>
+
+                        <div class="transaction-button--item">
+                            @*
+                                分兩種狀態(只要增加或移除class即可)
+                                1.暫停被關注
+                                2.恢復被關注(CLASS: follow-gray)
+                            *@
+
+                            @if (m.SELL_STATUS == "02")
+                            {
+                                <button type="button" class="btn--common btn--common-1 annouce-btn follow-btn follow-gray" onclick="service.MemOnSaleSellManageStatus('@m.SELL_INST_CD','01')"></button>
+                            }
+                            else
+                            {
+                                if (m.SELL_STATUS == "01")
+                                {
+                                    <button type="button" class="btn--common btn--common-1 annouce-btn follow-btn" data-toggle="modal" data-target="#modalFollow" data-status="02" data-id="@m.SELL_INST_CD" onmouseout="mouseOUT(this);" onmouseover="mouseON(this)"></button>
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="collapse" id="collapse-@dataIndex" data-parent="#accordion">
+                        <div class="transaction-content">
+                            <div class="transaction-content--title">關注數 @m.BUYER_NUM /瀏覽數 @m.VIEWER_NUM</div>
+                            <div class="transaction-content--container">
+                                @foreach (var view in Model.MemOnSaleSellManageBuyerList[dataIndex])
+                                {
+                                    <div class="collapse-item">
+                                        <div class="follow-contact-top">
+                                            <p>會員代碼 @view.MBR_ID</p>
+                                            <p>欲購買片數 @view.BUY_NUM 片</p>
+                                        </div>
+                                        <div class="follow-contact-blue">
+                                            <div class="follow-contact-blue-item">
+                                                <p>@view.CUST_NAME&nbsp;&nbsp;|&nbsp;&nbsp;</p>
+                                                @if (view.IS_BUYER_CANCEL == "Y")
+                                                {
+                                                    <p>已取消關注</p>
+                                                }
+                                                else
+                                                {
+                                                    if (m.SELL_STATUS == "01" || m.SELL_STATUS == "02")
+                                                    {
+                                                        <p>@view.CUST_EMAIL&nbsp;&nbsp;|&nbsp;&nbsp;@view.CUST_MOBILE</p>
+                                                    }
+                                                }
+                                            </div>
+                                            @if (view.IS_SELLER_ACCT == "N")
+                                            {
+                                                if (m.SELL_STATUS == "03")
+                                                {
+                                                    <div class="status status-gray">提供存款帳戶</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="status status-green"><a href="#" onclick="service.MemOnSaleSellManageBuyerAcct(this,'@m.SELL_INST_CD','@view.WANT_INST_CD','Y')">提供存款帳戶</a></div>
+                                                }
+                                                @*<div class="status status-green"><a href="#" onclick="service.MemOnSaleSellManageBuyerAcct(this,'@m.SELL_INST_CD','@view.WANT_INST_CD','@view.IS_SELLER_ACCT')">提供存款帳戶</a></div>*@
+                                            }
+                                            else
+                                            {
+                                                <div class="status status-gray">已提供帳戶</div>
+                                            }
+                                            <p class="follow-contact-blue-item follow-contact-blue-item-right">關注公告次數 @view.BUYER_NUM 次 / 成功受讓 @view.TRANS_NUM 次</p>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="follow-contact-blue">
+                        <div class="follow-contact-blue-item">*@
+                            <p class="text">                                
+                                @if (m.LAST_FEE_DIST_DT == null)
+                                {
+                                    <text>本案尚無電費分配記錄</text>
+                                }
+                                else
+                                {
+                                    <text>最近一次電費分配日</text>
+                                    <span>@DateTime.ParseExact(m.LAST_FEE_DIST_DT, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None).ToString("yyyy/MM/dd")</span>
+                                    if (m.LAST_FEE_CAL_DT != null)
+                                    {
+                                        <text>(計費至 @DateTime.ParseExact(m.LAST_FEE_CAL_DT, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None).ToString("yyyy/MM/dd"))，</text>
+                                    }
+                                    if (m.LAST_FEE_DIST_AVG != "0")
+                                    {
+                                        <text> 本案公告後已有電費分配紀錄，平均每片分配金額為<span> @m.LAST_FEE_DIST_AVG </span > 元 </text>
+                                    } else {
+                                        <text> 本案公告後尚無電費分配紀錄 </text>
+                                    }
+                                }
+                            </p>
+                        @*</div>
+                    </div>*@
+                   
+                </section>
+
+                dataIndex++;
+            }
+        }
+    </div>
+</div>
+
+<script>
+
+    function mouseON(e) {
+        e.style.backgroundColor = "";
+    }
+
+    function mouseOUT(e) {
+        e.style.backgroundColor = "#1EB5AC";
+    }
+
+</script>

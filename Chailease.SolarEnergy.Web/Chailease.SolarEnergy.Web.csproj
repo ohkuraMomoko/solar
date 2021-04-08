@@ -1,0 +1,1025 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2877E432-CAE1-4CF3-8B3C-B22CB5434EA2}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Chailease.SolarEnergy.Web</RootNamespace>
+    <AssemblyName>Chailease.SolarEnergy.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="GoogleRecaptcha, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GoogleRecaptcha.1.2.1\lib\GoogleRecaptcha.dll</HintPath>
+    </Reference>
+    <Reference Include="GoogleRecaptchaMvc, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GoogleRecaptchaMvc.1.0.1\lib\GoogleRecaptchaMvc.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.xmlworker, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itextsharp.xmlworker.5.5.13\lib\itextsharp.xmlworker.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.6.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.ApplicationInsights">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.2.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.6\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.2.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.2.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.2.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.2.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.2.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Commons\Common.cs" />
+    <Compile Include="Commons\HtmlHelpers.cs" />
+    <Compile Include="Commons\PdfHalpers.cs" />
+    <Compile Include="Commons\UploadHelpers.cs" />
+    <Compile Include="Controllers\AdvancedPurchaseController.cs" />
+    <Compile Include="Controllers\api\ApiBaseController.cs" />
+    <Compile Include="Controllers\api\HttpNotFoundAwareControllerActionSelector.cs" />
+    <Compile Include="Controllers\api\HttpNotFoundAwareDefaultHttpControllerSelector.cs" />
+    <Compile Include="Controllers\api\LoanCaseController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ComponentsController.cs" />
+    <Compile Include="Controllers\FileController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MemOnSaleController.cs" />
+    <Compile Include="Controllers\SellController.cs" />
+    <Compile Include="Controllers\JoinController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\LandingPageController.cs" />
+    <Compile Include="Controllers\MemberController.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
+    <Compile Include="Controllers\QaController.cs" />
+    <Compile Include="Controllers\RentController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
+    <Compile Include="Controllers\WikiController.cs" />
+    <Compile Include="Filters\RecaptchaAttribute.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\CalculateViewModel.cs" />
+    <Compile Include="ViewModel\CommentsViewModel.cs" />
+    <Compile Include="ViewModel\EditPasswordViewModel.cs" />
+    <Compile Include="ViewModel\ForgetPwdViewModel.cs" />
+    <Compile Include="ViewModel\FAQViewModel.cs" />
+    <Compile Include="ViewModel\MemberViewModel.cs" />
+    <Compile Include="ViewModel\SellViewModel.cs" />
+    <Compile Include="ViewModel\LandingPageItemViewModel.cs" />
+    <Compile Include="ViewModel\LandingPageViewModel.cs" />
+    <Compile Include="ViewModel\LoginViewModel.cs" />
+    <Compile Include="ViewModel\HomeViewModel.cs" />
+    <Compile Include="ViewModel\MenuViewModel.cs" />
+    <Compile Include="ViewModel\NewsViewModel.cs" />
+    <Compile Include="ViewModel\RegistrationInfoViewModel.cs" />
+    <Compile Include="ViewModel\JoinViewModel.cs" />
+    <Compile Include="ViewModel\RentViewModel.cs" />
+    <Compile Include="ViewModel\ReportsViewModel.cs" />
+    <Compile Include="ViewModel\RequestFormBankViewModel.cs" />
+    <Compile Include="ViewModel\RequestFormViewModel.cs" />
+    <Compile Include="ViewModel\WikiViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\EDM\System\images\5aacf0bc-a820-4025-9cf8-b62f15577e47.png" />
+    <Content Include="Content\EDM\System\images\logo%402x.png" />
+    <Content Include="Content\EDM\System\M01.html" />
+    <Content Include="Content\EDM\System\M02.html" />
+    <Content Include="Content\EDM\System\M03.html" />
+    <Content Include="Content\EDM\System\M04.html" />
+    <Content Include="Content\EDM\System\M05.html" />
+    <Content Include="Content\EDM\System\M06.html" />
+    <Content Include="Content\EDM\System\M07.html" />
+    <Content Include="Content\EDM\System\M08.html" />
+    <Content Include="Content\EDM\System\M09.html" />
+    <Content Include="Content\EDM\System\M10.html" />
+    <Content Include="Content\EDM\System\M12.html" />
+    <Content Include="Content\EDM\System\M13.html" />
+    <Content Include="Content\EDM\System\M14.html" />
+    <Content Include="Content\EDM\System\M15.html" />
+    <Content Include="Content\EDM\System\M16.html" />
+    <Content Include="Content\EDM\System\M17.html" />
+    <Content Include="Content\EDM\System\sourceCode.html" />
+    <Content Include="Content\EDM\System\template.html" />
+    <Content Include="Content\images\about_bgimage02.png" />
+    <Content Include="Content\images\about_market_bgimage01.jpg" />
+    <Content Include="Content\images\about_market_big_image.jpg" />
+    <Content Include="Content\images\about_market_icon01.svg" />
+    <Content Include="Content\images\about_market_icon02.svg" />
+    <Content Include="Content\images\about_market_icon03.svg" />
+    <Content Include="Content\images\about_market_image01.jpg" />
+    <Content Include="Content\images\about_market_image02.jpg" />
+    <Content Include="Content\images\about_market_image03.jpg" />
+    <Content Include="Content\images\about_market_image04.jpg" />
+    <Content Include="Content\images\about_market_image05.jpg" />
+    <Content Include="Content\images\about_market_image06.jpg" />
+    <Content Include="Content\images\add_member_icon.svg" />
+    <Content Include="Content\images\arrow_back_bt.svg" />
+    <Content Include="Content\images\arrow_back_bt_hover.svg" />
+    <Content Include="Content\images\article\article19-1.png" />
+    <Content Include="Content\images\article\article19-2.jpg" />
+    <Content Include="Content\images\article\article19-3.jpg" />
+    <Content Include="Content\images\article\article19-4.jpg" />
+    <Content Include="Content\images\article\article19-5.jpg" />
+    <Content Include="Content\images\article\article19-6.jpg" />
+    <Content Include="Content\images\article\article19-7.png" />
+    <Content Include="Content\images\article\article19-8.png" />
+    <Content Include="Content\images\article\article19-9.png" />
+    <Content Include="Content\images\back_bt.svg" />
+    <Content Include="Content\images\back_bt_Hover.svg" />
+    <Content Include="Content\images\big_paper.svg" />
+    <Content Include="Content\images\big_paper_hover.svg" />
+    <Content Include="Content\images\bread_arrow_icon.svg" />
+    <Content Include="Content\images\bread_home_icon.svg" />
+    <Content Include="Content\images\btn_fb.svg" />
+    <Content Include="Content\images\btn_fb_active.svg" />
+    <Content Include="Content\images\btn_fb_in.svg" />
+    <Content Include="Content\images\btn_fb_share.svg" />
+    <Content Include="Content\images\btn_fb_share_active.svg" />
+    <Content Include="Content\images\btn_gg_in.svg" />
+    <Content Include="Content\images\btn_line_share_active.svg" />
+    <Content Include="Content\images\btn_line.svg" />
+    <Content Include="Content\images\btn_line_active.svg" />
+    <Content Include="Content\images\btn_line_share.svg" />
+    <Content Include="Content\images\bt_close_w.svg" />
+    <Content Include="Content\images\calculate_bgimage.jpg" />
+    <Content Include="Content\images\calculate_bigimage.jpg" />
+    <Content Include="Content\images\calculate_icon01.svg" />
+    <Content Include="Content\images\calculate_icon02.svg" />
+    <Content Include="Content\images\calculate_icon03.svg" />
+    <Content Include="Content\images\calculate_icon04.svg" />
+    <Content Include="Content\images\calculate_image01.jpg" />
+    <Content Include="Content\images\calculate_image02.jpg" />
+    <Content Include="Content\images\calculate_image03.jpg" />
+    <Content Include="Content\images\calculate_image04.jpg" />
+    <Content Include="Content\images\contact_icon.svg" />
+    <Content Include="Content\images\contact_iconX.svg" />
+    <Content Include="Content\images\error_bg.jpg" />
+    <Content Include="Content\images\error_image01.svg" />
+    <Content Include="Content\images\favicon.ico" />
+    <Content Include="Content\images\flash_icon.svg" />
+    <Content Include="Content\images\icon-youtube.png" />
+    <Content Include="Content\images\icon_arrow_down_b.svg" />
+    <Content Include="Content\images\icon_arrow_down_g.svg" />
+    <Content Include="Content\images\icon_arrow_down_grey.svg" />
+    <Content Include="Content\images\icon_arrow_down_w.svg" />
+    <Content Include="Content\images\icon_arrow_down_white.svg" />
+    <Content Include="Content\images\icon_arrow_right_black.svg" />
+    <Content Include="Content\images\icon_arrow_right_blue.svg" />
+    <Content Include="Content\images\Icon_check_white.svg" />
+    <Content Include="Content\images\icon_close_white.svg" />
+    <Content Include="Content\images\icon_fb.svg" />
+    <Content Include="Content\images\icon_fb_hover.svg" />
+    <Content Include="Content\images\icon_line.svg" />
+    <Content Include="Content\images\icon_line_hover.svg" />
+    <Content Include="Content\images\icon_phone.svg" />
+    <Content Include="Content\images\index-p1-btn.svg" />
+    <Content Include="Content\images\index-p1-btnn.svg" />
+    <Content Include="Content\images\index_banner-mobile.png" />
+    <Content Include="Content\images\index_banner.jpg" />
+    <Content Include="Content\images\index_bgimage.png" />
+    <Content Include="Content\images\index_bigimages0905.jpg" />
+    <Content Include="Content\images\index_font_OPERATION_MODEL.svg" />
+    <Content Include="Content\images\index_font_PROTECTION.svg" />
+    <Content Include="Content\images\index_font_SOLAR_ENERGY.svg" />
+    <Content Include="Content\images\index_font_TRUST.svg" />
+    <Content Include="Content\images\index_image01-kv.jpg" />
+    <Content Include="Content\images\index_image02.jpg" />
+    <Content Include="Content\images\index_image03.jpg" />
+    <Content Include="Content\images\index_image04.jpg" />
+    <Content Include="Content\images\index_image05.jpg" />
+    <Content Include="Content\images\index_image06.jpg" />
+    <Content Include="Content\images\index_newsimage.jpg" />
+    <Content Include="Content\images\index_OPERATION_MODEL.svg" />
+    <Content Include="Content\images\index_OPERATION_MODEL_mobile.svg" />
+    <Content Include="Content\images\investment_bigimage.jpg" />
+    <Content Include="Content\images\investment_check01_icon.svg" />
+    <Content Include="Content\images\investment_check_box_icon.svg" />
+    <Content Include="Content\images\investment_fontbg_b.png" />
+    <Content Include="Content\images\investment_fontbg_b.svg" />
+    <Content Include="Content\images\investment_fontbg_g.png" />
+    <Content Include="Content\images\investment_fontbg_g.svg" />
+    <Content Include="Content\images\kv-btn-arrow.svg" />
+    <Content Include="Content\images\landingpage\bg-green1.svg" />
+    <Content Include="Content\images\landingpage\bg-green2.svg" />
+    <Content Include="Content\images\landingpage\icon-mail.png" />
+    <Content Include="Content\images\landingpage\icon-map.png" />
+    <Content Include="Content\images\landingpage\icon-person.png" />
+    <Content Include="Content\images\landingpage\icon-phone.png" />
+    <Content Include="Content\images\landingpage\p1-kv-desktop.jpg" />
+    <Content Include="Content\images\landingpage\p1-kv-mobile.png" />
+    <Content Include="Content\images\landingpage\p1-kv.jpg" />
+    <Content Include="Content\images\landingpage\p4-bg-m.png" />
+    <Content Include="Content\images\landingpage\p4-bg.png" />
+    <Content Include="Content\images\landingpage\world-1.png" />
+    <Content Include="Content\images\landingpage\world-2.png" />
+    <Content Include="Content\images\landingpage\world-3.png" />
+    <Content Include="Content\images\landingpage\world-4.png" />
+    <Content Include="Content\images\lightball_icon.svg" />
+    <Content Include="Content\images\logo.svg" />
+    <Content Include="Content\images\logo_mobile.svg" />
+    <Content Include="Content\images\logo_mobile_top.svg" />
+    <Content Include="Content\images\Member_center_power_plant_icon01.svg" />
+    <Content Include="Content\images\Member_center_power_plant_icon02.svg" />
+    <Content Include="Content\images\Member_center_transaction_icon.svg" />
+    <Content Include="Content\images\Member_Centre_icon01.svg" />
+    <Content Include="Content\images\Member_Centre_icon02.svg" />
+    <Content Include="Content\images\Member_Centre_icon03.svg" />
+    <Content Include="Content\images\Member_Centre_icon04.svg" />
+    <Content Include="Content\images\Member_Centre_icon_bank_checking.svg" />
+    <Content Include="Content\images\Member_Centre_icon_bank_no.svg" />
+    <Content Include="Content\images\Member_Centre_icon_bank_not_pass.svg" />
+    <Content Include="Content\images\Member_Centre_icon_bank_pass.svg" />
+    <Content Include="Content\images\Member_Centre_icon_ID_checking.svg" />
+    <Content Include="Content\images\Member_Centre_icon_ID_no.svg" />
+    <Content Include="Content\images\Member_Centre_icon_ID_not_pass.svg" />
+    <Content Include="Content\images\Member_Centre_icon_ID_pass.svg" />
+    <Content Include="Content\images\Member_Centre_icon_mail_not_pass.svg" />
+    <Content Include="Content\images\Member_Centre_icon_mail_pass.svg" />
+    <Content Include="Content\images\Member_Centre_icon_phone_pass.svg" />
+    <Content Include="Content\images\Member_Centre_SH.svg" />
+    <Content Include="Content\images\Member_Centre_store.svg" />
+    <Content Include="Content\images\member_icon.svg" />
+    <Content Include="Content\images\message_bigimage.jpg" />
+    <Content Include="Content\images\mobile_operation_model_image05.svg" />
+    <Content Include="Content\images\money_icom.svg" />
+    <Content Include="Content\images\money_icon.svg" />
+    <Content Include="Content\images\news_bigimage.jpg" />
+    <Content Include="Content\images\news_logos.png" />
+    <Content Include="Content\images\news_report_bigimage.jpg" />
+    <Content Include="Content\images\no-project.svg" />
+    <Content Include="Content\images\normal_info_icon.svg" />
+    <Content Include="Content\images\normal_info_icon_phone.svg" />
+    <Content Include="Content\images\operation model_image01.svg" />
+    <Content Include="Content\images\operation_model_image01.svg" />
+    <Content Include="Content\images\operation_model_bigimage .jpg" />
+    <Content Include="Content\images\operation_model_bigimage.jpg" />
+    <Content Include="Content\images\operation_model_image02.jpg" />
+    <Content Include="Content\images\operation_model_image03.jpg" />
+    <Content Include="Content\images\operation_model_image04.jpg" />
+    <Content Include="Content\images\operation_model_image05.svg" />
+    <Content Include="Content\images\operation_model_image05_m.svg" />
+    <Content Include="Content\images\pedia-bigimage.jpg" />
+    <Content Include="Content\images\play_icon.svg" />
+    <Content Include="Content\images\QA_bigimage.jpg" />
+    <Content Include="Content\images\register_images_bank.svg" />
+    <Content Include="Content\images\register_images_ID1.svg" />
+    <Content Include="Content\images\register_images_ID2.svg" />
+    <Content Include="Content\images\rent_bigimage.jpg" />
+    <Content Include="Content\images\rent_bigimage02.jpg" />
+    <Content Include="Content\images\rent_icon01.svg" />
+    <Content Include="Content\images\rent_icon02.svg" />
+    <Content Include="Content\images\rent_icon03.svg" />
+    <Content Include="Content\images\rent_icon04.svg" />
+    <Content Include="Content\images\rent_image01.jpg" />
+    <Content Include="Content\images\rent_image03.jpg" />
+    <Content Include="Content\images\roof.svg" />
+    <Content Include="Content\images\roof_y.svg" />
+    <Content Include="Content\images\search_info_icon.svg" />
+    <Content Include="Content\images\setup_EDM_cloce.svg" />
+    <Content Include="Content\images\setup_EDM_turnon.svg" />
+    <Content Include="Content\images\solarCase.jpg" />
+    <Content Include="Content\images\success_info_icon.svg" />
+    <Content Include="Content\images\s_bulb_icon.svg" />
+    <Content Include="Content\images\s_download_hover.svg" />
+    <Content Include="Content\images\s_download_icon.svg" />
+    <Content Include="Content\images\s_eye_icon.svg" />
+    <Content Include="Content\images\s_lock_icon.svg" />
+    <Content Include="Content\images\s_noeye_icon.svg" />
+    <Content Include="Content\images\s_no_icon.svg" />
+    <Content Include="Content\images\s_paper_icon.svg" />
+    <Content Include="Content\images\s_paper_icon_g.svg" />
+    <Content Include="Content\images\s_paper_icon_w.svg" />
+    <Content Include="Content\images\s_phone_icon.svg" />
+    <Content Include="Content\images\s_register_images_bank.svg" />
+    <Content Include="Content\images\s_register_images_ID.svg" />
+    <Content Include="Content\images\title_font_ABOUT_MARKET.svg" />
+    <Content Include="Content\images\title_font_Bulletin_Board.svg" />
+    <Content Include="Content\images\title_font_CALCULATE.svg" />
+    <Content Include="Content\images\title_font_FINMARTPEDIA.svg" />
+    <Content Include="Content\images\title_font_INVESTMENT.svg" />
+    <Content Include="Content\images\title_font_NEWS.svg" />
+    <Content Include="Content\images\title_font_NEWS_REPORTS.svg" />
+    <Content Include="Content\images\title_font_OPERATION_MODEL.svg" />
+    <Content Include="Content\images\title_font_Q&amp;A.svg" />
+    <Content Include="Content\images\title_font_RENT.svg" />
+    <Content Include="Content\images\Trial_icon.svg" />
+    <Content Include="Content\images\triangle.svg" />
+    <Content Include="Content\images\warning_info_icon.svg" />
+    <Content Include="Content\images\X_menu_mobile.svg" />
+    <Content Include="Content\layout.css" />
+    <Content Include="Content\layout.min.css" />
+    <Content Include="Content\library\bootstrap.css" />
+    <Content Include="Content\library\bootstrap.min.css" />
+    <Content Include="Content\pages\advancedPurchase.css" />
+    <Content Include="Content\pages\advancedPurchase.min.css" />
+    <Content Include="Content\pages\home\about.css">
+      <DependentUpon>about.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\home\about.min.css">
+      <DependentUpon>about.css</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\home\comments.css" />
+    <Content Include="Content\pages\home\comments.min.css" />
+    <Content Include="Content\pages\home\commentsSuccess.css">
+      <DependentUpon>commentsSuccess.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\home\commentsSuccess.min.css">
+      <DependentUpon>commentsSuccess.css</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\home\error.css">
+      <DependentUpon>error.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\home\error.min.css">
+      <DependentUpon>error.css</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\home\guidelines.css">
+      <DependentUpon>guidelines.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\home\guidelines.min.css">
+      <DependentUpon>guidelines.css</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\home\index.css" />
+    <Content Include="Content\pages\home\index.min.css" />
+    <Content Include="Content\pages\home\operationModel.css">
+      <DependentUpon>operationModel.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\home\operationModel.min.css">
+      <DependentUpon>operationModel.css</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\home\privacy.css">
+      <DependentUpon>privacy.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\home\privacy.min.css">
+      <DependentUpon>privacy.css</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\join\calculate.css" />
+    <Content Include="Content\pages\join\calculate.min.css" />
+    <Content Include="Content\pages\join\index.css" />
+    <Content Include="Content\pages\join\index.min.css" />
+    <Content Include="Content\pages\join\project.css" />
+    <Content Include="Content\pages\join\project.min.css" />
+    <Content Include="Content\pages\landingPage\index.css">
+      <DependentUpon>index.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\landingPage\index.min.css">
+      <DependentUpon>index.css</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\member\annouce.css" />
+    <Content Include="Content\pages\member\annouce.min.css" />
+    <Content Include="Content\pages\member\dashboard.css" />
+    <Content Include="Content\pages\member\dashboard.min.css" />
+    <Content Include="Content\pages\member\index.css" />
+    <Content Include="Content\pages\member\index.min.css" />
+    <Content Include="Content\pages\member\interestDesktop.css">
+      <DependentUpon>interestDesktop.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\member\interestDesktop.min.css">
+      <DependentUpon>interestDesktop.css</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\member\interestMobile.css">
+      <DependentUpon>interestMobile.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\member\interestMobile.min.css">
+      <DependentUpon>interestMobile.css</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\member\mailVerifySuccess.css">
+      <DependentUpon>mailVerifySuccess.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\member\mailVerifySuccess.min.css">
+      <DependentUpon>mailVerifySuccess.css</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\member\newsletterSetting.css">
+      <DependentUpon>newsletterSetting.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\member\newsletterSetting.min.css">
+      <DependentUpon>newsletterSetting.css</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\member\profile.css">
+      <DependentUpon>profile.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\member\profile.min.css">
+      <DependentUpon>profile.css</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\member\transactionDesktop.css">
+      <DependentUpon>transactionDesktop.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\member\transactionDesktop.min.css">
+      <DependentUpon>transactionDesktop.css</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\member\transactionMobile.css">
+      <DependentUpon>transactionMobile.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\member\transactionMobile.min.css">
+      <DependentUpon>transactionMobile.css</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\member\transfer.css" />
+    <Content Include="Content\pages\member\transfer.min.css" />
+    <Content Include="Content\pages\news\article.css" />
+    <Content Include="Content\pages\news\article.min.css" />
+    <Content Include="Content\pages\news\index.css" />
+    <Content Include="Content\pages\news\index.min.css" />
+    <Content Include="Content\pages\qa.css" />
+    <Content Include="Content\pages\qa.min.css" />
+    <Content Include="Content\pages\rent\index.css">
+      <DependentUpon>index.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\rent\index.min.css">
+      <DependentUpon>index.css</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\rent\landlord.css">
+      <DependentUpon>landlord.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\rent\landlord.min.css">
+      <DependentUpon>landlord.css</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\rent\success.css">
+      <DependentUpon>success.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\rent\success.min.css">
+      <DependentUpon>success.css</DependentUpon>
+    </Content>
+    <Content Include="Content\pages\reports\article.css" />
+    <Content Include="Content\pages\reports\article.min.css" />
+    <Content Include="Content\pages\reports\index.css" />
+    <Content Include="Content\pages\reports\index.min.css" />
+    <Content Include="Content\pages\reports\report.css" />
+    <Content Include="Content\pages\reports\report.min.css" />
+    <Content Include="Content\pages\sell\calculate.css" />
+    <Content Include="Content\pages\sell\calculate.min.css" />
+    <Content Include="Content\pages\sell\index.css" />
+    <Content Include="Content\pages\sell\index.min.css" />
+    <Content Include="Content\pages\sell\project.css" />
+    <Content Include="Content\pages\sell\project.min.css" />
+    <Content Include="Content\pages\wiki\article.css" />
+    <Content Include="Content\pages\wiki\article.min.css" />
+    <Content Include="Content\pages\wiki\index.css" />
+    <Content Include="Content\pages\wiki\index.min.css" />
+    <Content Include="Content\plugin\aos\aos.css">
+      <DependentUpon>aos.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\plugin\aos\aos.min.css">
+      <DependentUpon>aos.css</DependentUpon>
+    </Content>
+    <Content Include="Content\plugin\bootstrap-table.min.css" />
+    <Content Include="Content\plugin\datepicker.min.css" />
+    <Content Include="Content\typeahead.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Scripts\aos.js" />
+    <Content Include="Scripts\bloodhound.js" />
+    <Content Include="Scripts\bloodhound.min.js" />
+    <Content Include="Scripts\bootstrap-table.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\layout.scss" />
+    <Content Include="Content\components\_accordion.scss" />
+    <Content Include="Content\components\_breadcrumb.scss" />
+    <Content Include="Content\components\_button.scss" />
+    <Content Include="Content\components\_contact.scss" />
+    <Content Include="Content\components\_footer.scss" />
+    <Content Include="Content\components\_form.scss" />
+    <Content Include="Content\components\_formSignup.scss" />
+    <Content Include="Content\components\_formStep.scss" />
+    <Content Include="Content\components\_loadingCover.scss" />
+    <Content Include="Content\components\_logo.scss" />
+    <Content Include="Content\components\_menu.scss" />
+    <Content Include="Content\components\_modal.scss" />
+    <Content Include="Content\components\_modalSignup.scss" />
+    <Content Include="Content\components\_pageParallax.scss" />
+    <Content Include="Content\components\_progressBar.scss" />
+    <Content Include="Content\components\_solarItem.scss" />
+    <Content Include="Content\components\_tabs.scss" />
+    <Content Include="Content\components\_templateClass.scss" />
+    <Content Include="Content\library\bootstrap-grid.scss" />
+    <Content Include="Content\library\bootstrap-reboot.scss" />
+    <Content Include="Content\library\bootstrap.scss" />
+    <Content Include="Content\library\mixins\_alert.scss" />
+    <Content Include="Content\library\mixins\_background-variant.scss" />
+    <Content Include="Content\library\mixins\_badge.scss" />
+    <Content Include="Content\library\mixins\_border-radius.scss" />
+    <Content Include="Content\library\mixins\_box-shadow.scss" />
+    <Content Include="Content\library\mixins\_breakpoints.scss" />
+    <Content Include="Content\library\mixins\_buttons.scss" />
+    <Content Include="Content\library\mixins\_caret.scss" />
+    <Content Include="Content\library\mixins\_clearfix.scss" />
+    <Content Include="Content\library\mixins\_float.scss" />
+    <Content Include="Content\library\mixins\_forms.scss" />
+    <Content Include="Content\library\mixins\_gradients.scss" />
+    <Content Include="Content\library\mixins\_grid-framework.scss" />
+    <Content Include="Content\library\mixins\_grid.scss" />
+    <Content Include="Content\library\mixins\_hover.scss" />
+    <Content Include="Content\library\mixins\_image.scss" />
+    <Content Include="Content\library\mixins\_list-group.scss" />
+    <Content Include="Content\library\mixins\_lists.scss" />
+    <Content Include="Content\library\mixins\_nav-divider.scss" />
+    <Content Include="Content\library\mixins\_navbar-align.scss" />
+    <Content Include="Content\library\mixins\_pagination.scss" />
+    <Content Include="Content\library\mixins\_reset-text.scss" />
+    <Content Include="Content\library\mixins\_resize.scss" />
+    <Content Include="Content\library\mixins\_screen-reader.scss" />
+    <Content Include="Content\library\mixins\_size.scss" />
+    <Content Include="Content\library\mixins\_table-row.scss" />
+    <Content Include="Content\library\mixins\_text-emphasis.scss" />
+    <Content Include="Content\library\mixins\_text-hide.scss" />
+    <Content Include="Content\library\mixins\_text-truncate.scss" />
+    <Content Include="Content\library\mixins\_transition.scss" />
+    <Content Include="Content\library\mixins\_visibility.scss" />
+    <Content Include="Content\library\utilities\_align.scss" />
+    <Content Include="Content\library\utilities\_background.scss" />
+    <Content Include="Content\library\utilities\_borders.scss" />
+    <Content Include="Content\library\utilities\_clearfix.scss" />
+    <Content Include="Content\library\utilities\_display.scss" />
+    <Content Include="Content\library\utilities\_embed.scss" />
+    <Content Include="Content\library\utilities\_flex.scss" />
+    <Content Include="Content\library\utilities\_float.scss" />
+    <Content Include="Content\library\utilities\_position.scss" />
+    <Content Include="Content\library\utilities\_screenreaders.scss" />
+    <Content Include="Content\library\utilities\_sizing.scss" />
+    <Content Include="Content\library\utilities\_spacing.scss" />
+    <Content Include="Content\library\utilities\_text.scss" />
+    <Content Include="Content\library\utilities\_visibility.scss" />
+    <Content Include="Content\library\_alert.scss" />
+    <Content Include="Content\library\_badge.scss" />
+    <Content Include="Content\library\_breadcrumb.scss" />
+    <Content Include="Content\library\_button-group.scss" />
+    <Content Include="Content\library\_buttons.scss" />
+    <Content Include="Content\library\_card.scss" />
+    <Content Include="Content\library\_carousel.scss" />
+    <Content Include="Content\library\_close.scss" />
+    <Content Include="Content\library\_code.scss" />
+    <Content Include="Content\library\_custom-forms.scss" />
+    <Content Include="Content\library\_dropdown.scss" />
+    <Content Include="Content\library\_forms.scss" />
+    <Content Include="Content\library\_functions.scss" />
+    <Content Include="Content\library\_grid.scss" />
+    <Content Include="Content\library\_images.scss" />
+    <Content Include="Content\library\_input-group.scss" />
+    <Content Include="Content\library\_jumbotron.scss" />
+    <Content Include="Content\library\_list-group.scss" />
+    <Content Include="Content\library\_media.scss" />
+    <Content Include="Content\library\_mixins.scss" />
+    <Content Include="Content\library\_modal.scss" />
+    <Content Include="Content\library\_nav.scss" />
+    <Content Include="Content\library\_navbar.scss" />
+    <Content Include="Content\library\_pagination.scss" />
+    <Content Include="Content\library\_popover.scss" />
+    <Content Include="Content\library\_print.scss" />
+    <Content Include="Content\library\_progress.scss" />
+    <Content Include="Content\library\_reboot.scss" />
+    <Content Include="Content\library\_root.scss" />
+    <Content Include="Content\library\_tables.scss" />
+    <Content Include="Content\library\_tooltip.scss" />
+    <Content Include="Content\library\_transitions.scss" />
+    <Content Include="Content\library\_type.scss" />
+    <Content Include="Content\library\_utilities.scss" />
+    <Content Include="Content\library\_variables.scss" />
+    <Content Include="Content\pages\advancedPurchase.scss" />
+    <Content Include="Content\pages\home\comments.scss" />
+    <Content Include="Content\pages\home\index.scss" />
+    <Content Include="Content\pages\join\calculate.scss" />
+    <Content Include="Content\pages\join\index.scss" />
+    <Content Include="Content\pages\join\online.scss" />
+    <Content Include="Content\pages\join\project.scss" />
+    <Content Include="Content\pages\news\article.scss" />
+    <Content Include="Content\pages\news\index.scss" />
+    <Content Include="Content\pages\reports\article.scss" />
+    <Content Include="Content\pages\reports\index.scss" />
+    <Content Include="Content\pages\wiki\article.scss" />
+    <Content Include="Content\pages\wiki\index.scss" />
+    <Content Include="Content\plugin\_slick-theme.scss" />
+    <Content Include="Content\plugin\_slick.scss" />
+    <Content Include="Content\plugin\_textoverflow.scss" />
+    <Content Include="Content\setting\_extend.scss" />
+    <Content Include="Content\setting\_mixins.scss" />
+    <Content Include="Content\setting\_reset.scss" />
+    <Content Include="Content\setting\_variables.scss" />
+    <Content Include="Content\pages\member\dashboard.scss" />
+    <Content Include="Content\pages\member\index.scss" />
+    <Content Include="Content\pages\qa.scss" />
+    <Content Include="Content\pages\join\_projectExtend.scss" />
+    <Content Include="Content\pages\join\_projectTabFile.scss" />
+    <Content Include="Content\pages\join\_projectTabInfo.scss" />
+    <Content Include="Content\pages\join\_projectTabMoney.scss" />
+    <Content Include="App_Data\PDF\轉讓通知書.pdf" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
+    <Content Include="Content\pages\join\_modalBuyProject.scss" />
+    <Content Include="Content\pages\member\interestDesktop.scss" />
+    <Content Include="Content\pages\member\interestMobile.scss" />
+    <Content Include="Content\pages\member\_interestExtend.scss" />
+    <Content Include="Content\pages\member\transactionMobile.scss" />
+    <Content Include="Content\pages\member\_transactionExtend.scss" />
+    <Content Include="Content\pages\member\profile.scss" />
+    <Content Include="Content\pages\home\guidelines.scss" />
+    <Content Include="Content\plugin\_noty.scss" />
+    <Content Include="Content\pages\home\error.scss" />
+    <Content Include="Content\pages\rent\index.scss" />
+    <Content Include="Content\pages\rent\landlord.scss" />
+    <Content Include="Content\pages\member\newsletterSetting.scss" />
+    <Content Include="Content\pages\home\about.scss" />
+    <Content Include="Content\pages\home\operationModel.scss" />
+    <Content Include="Content\pages\home\privacy.scss" />
+    <Content Include="Content\plugin\aos\aos.scss" />
+    <Content Include="Content\plugin\aos\_animations.scss" />
+    <Content Include="Content\plugin\aos\_core.scss" />
+    <Content Include="Content\plugin\aos\_easing.scss" />
+    <Content Include="Content\pages\member\mailVerifySuccess.scss" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Content\pages\rent\success.scss" />
+    <Content Include="Content\pages\home\commentsSuccess.scss" />
+    <Content Include="Content\pages\landingPage\index.scss" />
+    <Content Include="Content\pages\sell\calculate.scss" />
+    <Content Include="Content\pages\sell\index.scss" />
+    <Content Include="Content\pages\sell\project.scss" />
+    <Content Include="Content\pages\member\transfer.scss" />
+    <Content Include="Content\pages\member\annouce.scss" />
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Chart.bundle.min.js" />
+    <Content Include="Scripts\chartjs-plugin-annotation.js" />
+    <Content Include="Scripts\common.js" />
+    <Content Include="Scripts\Components\_ModalForgetEmail.js" />
+    <Content Include="Scripts\Components\_ModalForgetPassword.js" />
+    <Content Include="Scripts\Components\_ModalSettingPassword.js" />
+    <Content Include="Scripts\Components\_ModalSignup.js" />
+    <Content Include="Scripts\datepicker.min.js" />
+    <Content Include="Scripts\image-compressor.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-3.3.1.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.tmpl.min.js" />
+    <Content Include="Scripts\jquery.tubular.1.0.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\lazyload.min.js" />
+    <Content Include="Scripts\materialize.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\noty.min.js" />
+    <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\project.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\site.js" />
+    <Content Include="Scripts\slick.min.js" />
+    <Content Include="Scripts\TweenMax.min.js" />
+    <Content Include="Scripts\typeahead.bundle.js" />
+    <Content Include="Scripts\typeahead.bundle.min.js" />
+    <Content Include="Scripts\typeahead.jquery.js" />
+    <Content Include="Scripts\typeahead.jquery.min.js" />
+    <Content Include="Scripts\Utility.js" />
+    <Content Include="sitemap.xml" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\AdvancedPurchase\FormResult.cshtml" />
+    <Content Include="Views\AdvancedPurchase\Index.cshtml" />
+    <Content Include="Views\AdvancedPurchase\RequestForm.cshtml" />
+    <Content Include="Views\AdvancedPurchase\RequestFormBank.cshtml" />
+    <Content Include="Views\Components\_ContactBtn.cshtml" />
+    <Content Include="Views\Components\_Footer.cshtml" />
+    <Content Include="Views\Components\_Menu.cshtml" />
+    <Content Include="Views\Components\_ModalBuyInfo.cshtml" />
+    <Content Include="Views\Components\_ModalForgetEmail.cshtml" />
+    <Content Include="Views\Components\_ModalForgetPassword.cshtml" />
+    <Content Include="Views\Components\_ModalSettingPassword.cshtml" />
+    <Content Include="Views\Components\_ModalSignup.cshtml" />
+    <Content Include="Views\Components\_ModalSource.cshtml" />
+    <Content Include="Views\Components\_ModalSubscription.cshtml" />
+    <Content Include="Views\Home\Comments.cshtml" />
+    <Content Include="Views\Home\Guidelines.cshtml" />
+    <Content Include="Views\Join\Calculate.cshtml" />
+    <Content Include="Views\Join\Index.cshtml" />
+    <Content Include="Views\Join\Online.cshtml" />
+    <Content Include="Views\Join\Project.cshtml" />
+    <Content Include="Views\News\Article.cshtml" />
+    <Content Include="Views\News\Index.cshtml" />
+    <Content Include="Views\Reports\Article.cshtml" />
+    <Content Include="Views\Reports\Index.cshtml" />
+    <Content Include="Views\Wiki\Article.cshtml" />
+    <Content Include="Views\Wiki\Index.cshtml" />
+    <Content Include="Views\Qa\Index.cshtml" />
+    <Content Include="Views\Member\Dashboard.cshtml" />
+    <Content Include="Views\Member\Index.cshtml" />
+    <Content Include="Views\Member\Interest.cshtml" />
+    <Content Include="Views\Member\_InterestDesktop.cshtml" />
+    <Content Include="Views\Member\_InterestMobile.cshtml" />
+    <Content Include="Views\Member\_ModalInterest.cshtml" />
+    <Content Include="Views\Member\Transaction.cshtml" />
+    <Content Include="Content\pages\member\transactionDesktop.scss" />
+    <Content Include="Views\Member\_TransactionDesktop.cshtml" />
+    <Content Include="Views\Member\_TransactionMobile.cshtml" />
+    <Content Include="Views\Join\_BuyRaw.cshtml" />
+    <Content Include="Views\Join\_ModalBuyProject.cshtml" />
+    <Content Include="Views\Join\_ProjectTabFile.cshtml" />
+    <Content Include="Views\Join\_ProjectTabInfo.cshtml" />
+    <Content Include="Views\Join\_ProjectTabMoney.cshtml" />
+    <Content Include="Views\Components\_ModalNotAllow.cshtml" />
+    <Content Include="Views\Join\_IndexProjectContent.cshtml" />
+    <Content Include="Views\Join\_OnlineProjectContent.cshtml" />
+    <Content Include="Views\Member\Profile.cshtml" />
+    <Content Include="Views\Components\_ModalChangeEmail.cshtml" />
+    <Content Include="Views\Components\_ModalChangeCellphone.cshtml" />
+    <Content Include="Views\Member\Password.cshtml" />
+    <Content Include="Views\Member\BankInfo.cshtml" />
+    <Content Include="Views\Member\Event.cshtml" />
+    <Content Include="Views\Components\_LoadingCover.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\Home\NotFound.cshtml" />
+    <Content Include="Views\News\ArticleList.cshtml" />
+    <Content Include="Views\Reports\ArticleList.cshtml" />
+    <Content Include="Views\Wiki\ArticleList.cshtml" />
+    <Content Include="Views\Home\Maintain.cshtml" />
+    <Content Include="Views\Rent\Index.cshtml" />
+    <Content Include="Views\Rent\Landlord.cshtml" />
+    <Content Include="Views\Home\Privacy.cshtml" />
+    <Content Include="Views\Member\NewsletterSetting.cshtml" />
+    <Content Include="Views\Home\OperationModel.cshtml" />
+    <Content Include="Views\Home\Membership.cshtml" />
+    <Content Include="Views\Shared\_Meta.cshtml" />
+    <Content Include="Views\Member\MailVerifySuccess.cshtml" />
+    <Content Include="Views\Shared\_ArticleMeta.cshtml" />
+    <Content Include="Views\Rent\Success.cshtml" />
+    <Content Include="Views\Home\CommentsSuccess.cshtml" />
+    <Content Include="Views\Join\_ProjectTabMoneyTable.cshtml" />
+    <Content Include="Views\Home\Share.cshtml" />
+    <Content Include="Views\Shared\_Calculate.cshtml" />
+    <Content Include="Views\LandingPage\Index.cshtml" />
+    <Content Include="Views\Sell\_BuyRaw.cshtml" />
+    <Content Include="Views\Sell\_IndexProjectContent.cshtml" />
+    <Content Include="Views\Sell\_ModalBuyProject.cshtml" />
+    <Content Include="Views\Sell\_OnlineProjectContent.cshtml" />
+    <Content Include="Views\Sell\_ProjectTabFile.cshtml" />
+    <Content Include="Views\Sell\_ProjectTabInfo.cshtml" />
+    <Content Include="Views\Sell\_ProjectTabMoney.cshtml" />
+    <Content Include="Views\Sell\_ProjectTabMoneyTable.cshtml" />
+    <Content Include="Views\Sell\Calculate.cshtml" />
+    <Content Include="Views\Sell\Index.cshtml" />
+    <Content Include="Views\Sell\Project.cshtml" />
+    <Content Include="Views\Sell\_Calculate.cshtml" />
+    <Content Include="Views\Member\Accept.cshtml" />
+    <Content Include="Views\Member\Transfer.cshtml" />
+    <Content Include="Views\Member\_AcceptDesktop.cshtml" />
+    <Content Include="Views\Member\_AcceptMobile.cshtml" />
+    <Content Include="Views\Member\Annouce.cshtml" />
+    <Content Include="Views\Member\_AnnouceDesktop.cshtml" />
+    <Content Include="Views\Member\_AnnouceMobile.cshtml" />
+    <Content Include="Views\Member\_TransferDesktop.cshtml" />
+    <Content Include="Views\Member\_TransferMobile.cshtml" />
+    <Content Include="Views\Member\CancelCaseOpen.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\LOCAL _TEMP\" />
+    <Folder Include="Content\EDM\Marketing\" />
+    <Folder Include="Models\" />
+    <Folder Include="Views\Base\" />
+    <Folder Include="Views\Login\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- <ProjectReference Include="..\Chailease.SolarEnergy.Model\Chailease.SolarEnergy.Model.csproj">
+      <Project>{5114a262-42b9-4be6-a896-9cdc894e306f}</Project>
+      <Name>Chailease.SolarEnergy.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Chailease.SolarEnergy.Services\Chailease.SolarEnergy.Services.csproj">
+      <Project>{29ab8e0e-fc4d-4ca5-a398-e02665a45e84}</Project>
+      <Name>Chailease.SolarEnergy.Services</Name>
+    </ProjectReference> -->
+    <ProjectReference Include="..\Chailease.SolarEnergy.Model\Chailease.SolarEnergy.Model.csproj">
+      <Project>{5114A262-42B9-4BE6-A896-9CDC894E306F}</Project>
+      <Name>Chailease.SolarEnergy.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Chailease.SolarEnergy.Repository\Chailease.SolarEnergy.Repository.csproj">
+      <Project>{35E677F8-858B-4914-B897-A7AFA56B6AC7}</Project>
+      <Name>Chailease.SolarEnergy.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Chailease.SolarEnergy.Services\Chailease.SolarEnergy.Services.csproj">
+      <Project>{29AB8E0E-FC4D-4CA5-A398-E02665A45E84}</Project>
+      <Name>Chailease.SolarEnergy.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>此專案參考這部電腦上所缺少的 NuGet 封裝。請啟用 NuGet 封裝還原，以下載該封裝。如需詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的檔案是 {0}。</ErrorText>
+    </PropertyGroup>
+    <!-- <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props'))" /> -->
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

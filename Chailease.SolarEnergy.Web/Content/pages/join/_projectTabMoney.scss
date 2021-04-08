@@ -1,0 +1,423 @@
+﻿/* @site: 全民電廠
+ * @author: nikki
+ * @update: nikki (2019-01-16)
+ * @page: 電廠明細頁
+ * @description: 電廠明細頁(PART:tab-money分頁內容)
+ */
+
+@import "../../setting/_variables.scss";
+@import "../../setting/_mixins.scss";
+
+
+/* block: trial-container ---*/
+.trial-container {
+    width: 100%;
+    max-width: 57.5rem;
+    margin: 0 auto;
+}
+
+.trial-header {
+    width: 100%;
+    font-size: 1.13rem;
+    letter-spacing: 0.06rem;
+    color: $color-dark;
+    font-weight: 500;
+    margin: 1.56rem auto .81rem;
+    @include flexbox;
+    @include justify-content(flex-end);
+
+    &-item {
+        width: 15rem;
+        text-align: right;
+
+        &:last-child {
+            margin-left: 3.75rem;
+        }
+
+        > span {
+            font-size: 1.2em;
+        }
+    }
+}
+
+@include rwd(#{$ipad - 1px}) {
+    .trial-header {
+        font-size: 0.71rem;
+        margin: 0.75rem auto 0.13rem;
+
+        &-item {
+            width: 50%;
+
+            &:last-child {
+                margin-left: 0;
+            }
+        }
+    }
+}
+
+.trial-content {
+    width: 100%;
+    height: 8.13rem;
+    background-color: $color-secondary--2;
+    margin: 0 auto 3.06rem;
+    position: relative;
+    $transangleOffset: 20px;
+
+    &:after {
+        content: '預估試算';
+        width: 90px;
+        height: 40px;
+        background-color: $color-primary-blue;
+        color: #fff;
+        text-align: center;
+        line-height: 40px;
+        position: absolute;
+        bottom: 8px;
+        left: -$transangleOffset;
+    }
+
+    &:before {
+        content: '';
+        width: 0;
+        height: 0px;
+        border-left: 15px solid $color-primary-blue;
+        border-top: 20px solid transparent;
+        border-bottom: 20px solid transparent;
+        position: absolute;
+        left: 90px-$transangleOffset;
+        bottom: 8px;
+    }
+
+    .trial-input {
+        width: 60%;
+        $inputHeight: 2.63rem;
+        height: $inputHeight;
+        position: absolute;
+        left: 10%;
+        top: 18%;
+        background: #E5F9F6;
+        border: 1px solid #D8D8D8;
+        box-shadow: inset 0 5px 3px 0 rgba(0,0,0,0.10);
+        border-radius: 2.42px;
+
+        > span {
+            font-size: 1.13rem;
+            line-height: $inputHeight;
+            position: absolute;
+            top: 0;
+
+            &.trial-input-left {
+                left: 5%;
+            }
+
+            &.trial-input-right {
+                right: 5%;
+            }
+        }
+
+        > input {
+            width: 100%;
+            background-color: transparent;
+            outline: none;
+            border: none;
+            font-size: 2rem;
+            color: $color-primary-blue;
+            font-weight: bold;
+            text-align: center;
+            line-height: $inputHeight;
+            display: inline-block;
+        }
+    }
+
+    .btn-trial {
+        width: 11.06rem;
+        position: absolute;
+        top: 18%;
+        right: 5%;
+    }
+
+    &-data {
+        width: calc(100% - 90px);
+        text-align: right;
+        padding-right: 1%;
+        position: absolute;
+        bottom: 14px;
+        right: 0;
+        @include flexbox;
+        @include justify-content(space-between);
+        @include align-items(center);
+
+        &-item {
+            font-size: 1.13rem;
+            color: $color-dark;
+
+            > span {
+                font-size: 1.2em;
+                font-weight: bold;
+                color: $color-primary-blue;
+            }
+        }
+    }
+}
+
+@include rwd($ipad) {
+    .trial-content {
+        height: 9.5rem;
+    }
+}
+
+@include rwd(#{$ipad - 1px}) {
+    .trial-content {
+        &:after {
+            bottom: 38%;
+            @include prefix(transform,scale(0.6));
+        }
+
+        &:before {
+            bottom: 38%;
+            @include prefix(transform,scale(0.6));
+            left: 49px;
+        }
+
+        .trial-input {
+            top: 10%;
+            width: 70%;
+            left: 3%;
+
+            > span {
+                font-size: 0.81rem;
+            }
+
+            > input {
+                font-size: 1.4rem;
+                padding-left: 30%;
+            }
+        }
+
+        .btn-trial {
+            right: 3%;
+            top: 10%;
+            width: 20%;
+        }
+
+        &-data {
+            width: 100%;
+            bottom: 14%;
+            padding-right: 5%;
+            @include flex-wrap(wrap);
+            @include align-items(flex-start);
+
+            &-item {
+                width: 50%;
+                font-size: 0.71rem;
+                line-height: 1rem;
+                margin-bottom: 5px;
+            }
+        }
+    }
+}
+
+@include rwd($i5) {
+    .trial-content {
+        height: 11.5rem;
+
+        &:after,
+        &:before {
+            bottom: 48%;
+        }
+
+        &-data {
+            bottom: 5%;
+        }
+    }
+}
+
+/*item: .chart-container ----*/
+.chart-container {
+    position: relative;
+    margin: auto;
+    height: 60vh;
+    max-height: 500px;
+    width: 100%;
+}
+
+@include rwd($ipad-pro) {
+    .chart-container {
+        height: 350px;
+    }
+}
+
+/*@include rwd(#{$ipad - 1px}) {
+    .chart-container {
+        height: 80vw;
+    }
+}*/
+
+/*item: .chart-tooltip -----*/
+.chart-tooltip {
+    width: 14.58rem;
+    // height: 9.75rem;
+    background-color: rgba($color-primary-blue, 0.85);
+    color: white;
+    padding: 0.81rem 1rem;
+    border-radius: .25rem;
+    opacity: 0;
+    position: absolute;
+    pointer-events: none;
+    @include change();
+
+    td {
+        width: 50%;
+        font-size: .94rem;
+        text-align: right;
+    }
+}
+
+@include rwd(#{$ipad - 1px}) {
+    .chart-tooltip {
+        width: 9.13rem;
+        padding: 0.44rem;
+
+        td {
+            font-size: 0.69rem;
+
+            &:first-child {
+                width: 60%;
+            }
+
+            &:last-child {
+                width: 40%;
+            }
+        }
+    }
+}
+
+/* item: sub-title ----*/
+.sub-title {
+    font-size: 1.38rem;
+    letter-spacing: 0.04rem;
+    color: $color-dark--2;
+    margin: 2.13rem 0 1.19rem;
+}
+
+@include rwd($ipad) {
+    .sub-title {
+        font-size: 1rem;
+    }
+}
+/*item: calc table -----*/
+$tableAllBox: 8;
+
+.table {
+    text-align: center;
+}
+
+.table-title-content,
+.table-row {
+    @include flexbox;
+    @include flex-direction(row);
+    font-size: 1rem;
+    min-height: 1.31rem;
+}
+
+.table-title-content {
+    background-color: rgba(#D4F9F3, 0.55);
+}
+
+.table-title {
+    width: calc(100%/#{$tableAllBox});
+    line-height: 2.38rem;
+    color: $color-dark--2;
+}
+
+/*item: item-box ----------------------*/
+.item-box:nth-child(2n) {
+    background-color: rgba(#E5F9F6, .7);
+}
+
+/* status: item-box.total ------------*/
+.item-box.total {
+    background-color: rgba(#FFF3B5, 0.7);
+    .table-row {
+        height: 1.56rem;
+    }
+
+    .table-data {
+        font-weight: bold;
+        line-height: 1.56rem;
+    }
+}
+
+.table-data {
+    width: calc(100%/#{$tableAllBox});
+    font-size: 0.88rem;
+    line-height: 1.2;
+    color: $color-dark--2;
+    @include flexbox;
+    @include justify-content(center);
+    @include align-items(center);
+}
+
+/*rwd: table --------------*/
+@include rwd(#{$ipad - 1px}) {
+    $itemHeight: 2.8rem;
+    $itemWeight: 6.65rem;
+
+    .table {
+        @include flexbox;
+        @include flex-direction(row);
+        margin-bottom: 0;
+    }
+
+    .table-title-content {
+        @include flexbox;
+        @include flex-direction(column);
+    }
+
+    .table-title-content {
+        width: $itemWeight;
+        height: auto;
+        font-size: .81rem;
+    }
+
+    .table-title {
+        width: $itemWeight;
+        height: $itemHeight;
+        line-height: $itemHeight;
+        text-align: left;
+        padding: 0 0.53rem;
+        border-bottom: 1px solid #fff;
+        &-note{
+            line-height: 1rem;
+        }
+    }
+
+    .table-data-content, .item-box {
+        width: auto;
+        @include flexbox;
+        @include flex-direction(row);
+        overflow-y: scroll;
+    }
+
+    $mobile-w: 3.3rem;
+
+    .table-row {
+        width: $mobile-w;
+        height: auto;
+        @include flex-direction(column);
+    }
+
+    .item-box.total {
+        width: $mobile-w;
+        overflow: initial;
+        .table-row {
+            height: auto;
+        }
+    }
+
+    .table-data {
+        width: 100%;
+        font-size: .81rem;
+        height: $itemHeight;
+    }
+}

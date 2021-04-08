@@ -1,0 +1,141 @@
+@charset "UTF-8";
+/* @site: 全民電廠
+ * @author: mickey
+ * @update: miceky (2019-11-22)
+ * @page: 會員中心 - 我的電廠 - 確認出售價格
+ * @description: 
+ */
+/* =Variables--------------------------*/
+/* font style ---*/
+/* desktop & mobile size */
+/* color */
+/*animation */
+/*z-index */
+/* z-index順序 */
+/* contactBtn => meun mobile => signup/login */
+/*為手譏評板裝置，且裝置奘為橫向*/
+/*若只判斷orientation:landscape，desktop size也包含在內*/
+.solar-item-header {
+  height: 7rem;
+  background-size: 146%;
+  padding: 0 4% 2%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.solar-item-header--status {
+  margin-bottom: -1rem;
+}
+
+.solar-item-header--box {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+
+.solar-item-header--inline {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  height: 100%;
+  color: #ffffff;
+}
+
+@media only screen and (max-width: 1280px) {
+  .solar-item-header {
+    background-size: 165%;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .solar-item-header {
+    background-size: 148%;
+    height: 6rem;
+  }
+}
+
+.solar-row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.solar-row--label {
+  width: 130px;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 auto;
+          flex: 0 0 auto;
+}
+
+.solar-row--label-s {
+  font-size: 0.875rem;
+}
+
+.solar-row--year span {
+  font-size: 1.5625rem;
+  font-weight: 700;
+}
+
+.solar-row--price span {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+@media only screen and (max-width: 480px) {
+  .solar-item .solar-item-body--content {
+    padding: 0.75rem 1.19rem 4.13rem;
+    height: 16rem;
+  }
+  .solar-row {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.project-item-btn {
+  color: #2A9992;
+  font-weight: 600;
+  background-color: #ffffff;
+}
+
+.project-item-btn:hover {
+  color: #ffffff;
+}
+
+.project-item-btn:hover:before {
+  background-color: #1C8886;
+}
+
+.project-item-btn:before {
+  background-color: #1C8886;
+}

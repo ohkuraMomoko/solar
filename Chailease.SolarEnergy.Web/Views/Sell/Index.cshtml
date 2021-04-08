@@ -1,0 +1,307 @@
+﻿@model SellViewModel
+@{
+    ViewBag.Title = "二手交易公佈欄";
+}
+@section header {
+    @Styles.Render("~/Content/pages/join/index.min.css")
+    @Styles.Render("~/Content/pages/sell/index.min.css")
+}
+@section metatags {
+    @Html.Action("GetMetaByType", "Base", new { id = 6 })
+}
+
+<div class="page-container">
+    <div class="page-kv" data-aos="bg-scale">
+        <h2 class="page-kv--title" data-aos="fade-down" data-aos-delay="400">二手交易公佈欄</h2>
+        <img src="@Url.Content("~/Content/images/title_font_Bulletin_Board.svg")" alt="INVESTMENT" class="page-kv--img" data-aos="fade-up" data-aos-delay="200">
+    </div>
+    <div class="page-content">
+        <div class="breadcrumb-container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/" href="@Url.Content("~/Home/")">
+                            <span itemprop="name"><img src="@Url.Content("~/Content/images/bread_home_icon.svg")" alt="首頁"></span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/" href="@Url.Content("~/Home/")">
+                            <span itemprop="name">參與專案</span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    <li class="breadcrumb-item" aria-current="page" itemprop="itemListElement" itemscope
+                        itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Join/" href="@Url.Content("~/Join/")">
+                            <span itemprop="name">投資專案</span>
+                        </a>
+                        <meta itemprop="position" content="2" />
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page" itemprop="itemListElement" itemscope
+                        itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                            <span itemprop="name">二手交易公佈欄</span>
+                        </a>
+                        <meta itemprop="position" content="3" />
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <div class="case-container pt-4">
+            <div class="join-notice">
+                <div class="join-notice-content" id="btnNewPrjNotice" data-caseno="0">
+                    <img src="@Url.Content("~/Content/images/Member_Centre_icon01.svg")" alt="" class="join-notice--icon">
+                    <span>有新增公告請通知我</span>
+                </div>
+            </div>
+            <h1 class="case-title mb-5">二手交易公佈列表</h1>
+            <div class="select-reorder-container">
+                <select class="select-reorder" id="solarItemSearchSelect">
+                    <option value="01" selected="">依關注度排序</option>
+                    <option value="02">依最新上架日期排序</option>
+                    <option value="03">依預估內部報酬率排序</option>
+                </select>
+            </div>
+
+            @{
+                Html.RenderPartial("~/Views/Sell/_IndexProjectContent.cshtml", Model);
+            }
+            <!-- <div class="project-contents" id="project-contents-id"> -->
+
+        </div>
+        <div id="view_more_btn">
+            <button class="btn--type btn--type-3 solar-item-btn btn--readmore d-block m-auto">
+                <span>VIEW MORE</span>
+            </button>
+        </div>
+
+    </div>
+</div>
+@*<script type="text/javascript">
+           function NoticeCaseOpen(_mbrId, _caseNo, _status) {
+                $ajax.Post('@Url.Action("NoticeCaseOpen", "Sell")', { mbr_Id: _mbrId, case_No: _caseNo, status: _status }, function (d) {
+                if (d.RESULT) {
+                    alert(d.ERRMSG);
+                }
+                else {
+                    alert(d.ERRMSG);
+                }
+            });
+            return false;
+        }
+    </script>*@
+
+@section scripts {
+
+  <script>
+var initPageIdx = 1;
+var pageIdx = 1;
+//let memberId = '@Model.UserInfoDetail.MBR_ID';
+$(document).ready(function() {
+    LoadProjects();
+    loginExt.setPageRefresh(true);
+
+    function logElementEvent(eventName, element) {
+        console.log(
+            Date.now(),
+            eventName,
+            element.getAttribute("data-bg")
+        );
+    }
+
+    var callback_finish = function() {
+        logElementEvent("✔️ FINISHED", document.documentElement);
+    };
+
+    lazy = new LazyLoad({
+        elements_selector: "[data-lazy='true']",
+        threshold: 0,
+        callback_finish: callback_finish
+    });
+});
+
+$('#view_more_btn').click(function() {
+    pageIdx += 1;
+    LoadProjects();
+});
+
+        $('#solarItemSearchSelect').on("change", function () {
+            $('div.join-solar').empty();
+            pageIdx = initPageIdx;
+            $("#view_more_btn").show();
+            $("#project-contents-id").empty();
+            LoadProjects();
+        })
+
+var initFlag = 0;
+        var numberFormat = function (n) {
+            n += "";
+            var arr = n.split(".");
+            var re = /(\d{1,3})(?=(\d{3})+$)/g;
+            return arr[0].replace(re, "$1,") + (arr.length == 2 ? "." + arr[1] : "");
+        };
+
+    function LoadProjects() {
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SellList", "Sell")',
+            data: {
+                sort_Type: $('#solarItemSearchSelect option:selected').val(),
+                pageIndex: pageIdx,
+                page_Num: "@SellViewModel.VIEW_COUNT_INTERVAL"
+            },
+            beforeSend: function() {
+                $("#loadingContainer").fadeIn(800);
+                $("body").css("overflow", "hidden");
+            },
+            timeout: 10000,
+            success: function (d) {
+                
+                var html = $("#plantTemplate").html();
+                $.each(d.MemOnSaleList, function (e, m) {
+                    if (m.IS_BUYER == "Y") {
+                        m.IS_BUYER_MSG = "你已關注此案";
+                        m.SHOW = "show";
+                    } else {
+                        m.IS_BUYER_MSG = "VIEW MORE";
+                        m.SHOW = "";
+                    }
+                    m.POWER_PANEL_SELL_PRICE = numberFormat(m.POWER_PANEL_SELL_PRICE);
+                    m.POWER_STRT_DT = m.POWER_STRT_DT.substring(0, 4) + '年' + m.POWER_STRT_DT.substring(4, 6) + '月';
+                    m.CASE_IMG = window.location.protocol + '//' + window.location.host + '@Url.Action("Image", "File")' + "?uri=" + m.CASE_IMG;
+                    //if (m.CASE_IMG !== undefined) {
+                    //    m.CASE_IMG = m.CASE_IMG.file;
+                    //}
+
+                    $('div.join-solar').append(templateBind(html, m));
+                });
+                //專案列表載入失敗
+                //if (data.MemOnSaleList.ERRCODE == -1) {
+                //    location.href = data.MemOnSaleList.ERRMSG;
+                //}
+                lazy.update();
+                $("#loadingContainer").fadeOut(500);
+                $("body").css("overflow", "auto");
+            },
+            error: function(errMsg) {
+                $("#loadingContainer").fadeOut(500);
+                $("body").css("overflow", "auto");
+                showMsg("專案列表加載失敗", "error");
+            },
+            complete: function(XMLHttpRequest, textStatus) {
+                $("#loadingContainer").fadeOut(300);
+                $("body").css("overflow", "auto");
+                var tmp_end_flag = $('#Tmp_End_Flag').length;
+                if (tmp_end_flag > 0) {
+                    $("#view_more_btn").hide();
+                    $('#Tmp_End_Flag').remove();
+                } else {
+                    console.log('不知為何不能跑sendData')
+                   // sendData();
+                }
+            }
+        });
+    }
+
+
+//function sendData() {
+//    // GA: 圖靈/電廠區塊&電廠列表頁/Product Impression
+//    var products = [];
+//    if (initFlag == 0) {
+//        for (var i = 0; i < $(".solar-item").length; i++) {
+//            var product = {
+//                "id": "",
+//                "name": "",
+//                "category": "太陽能板",
+//                "price": "",
+//                "position": 0
+//            };
+//            var obj = $("#project-contents-id").find(".solar-item").eq(i);
+//            console.log('hh=' + obj.data("id"));
+//            product.id = obj.data("id").toString().trim();
+//            product.name = obj.find(".solar-title--data").text().trim() + obj.find(".solar-title--num").text().trim();
+//            product.price = parseInt(obj.find(".solar-pcs-price").text().replace(/,/g, '').trim());
+//            product.position = i;
+//            products.push(product);
+//        }
+//        initFlag = 5;
+//    } else {
+//        for (var i = initFlag + 1; i < $(".solar-item").length; i++) {
+//            var product = {
+//                "id": "",
+//                "name": "",
+//                "category": "太陽能板",
+//                "price": "",
+//                "position": 0
+//            };
+//            var obj = $("#project-contents-id").find(".solar-item").eq(i);
+//            product.id = obj.data("id").toString().trim();
+//            product.name = obj.find(".solar-title--data").text().trim() + obj.find(".solar-title--num").text().trim();
+//            product.price = parseInt(obj.find(".solar-pcs-price").text().replace(/,/g, '').trim());
+//            product.position = i;
+//            products.push(product);
+//        }
+//        initFlag += 6;
+//    }
+
+//    dataLayer.push({
+//        'impression': {
+//            'products': products
+//        },
+//        'event': 'td_impressionParse'
+//    });
+//}
+
+$('#btnNewPrjNotice').click(function() {
+    loginExt.setPageRefresh(true)
+
+    if ('@Model.UserInfoDetail.MBR_LVL' == "") {
+        $('#modalMember').modal('show');
+        // GA: 圖靈/電廠列表/新專案上架請通知我/click event/狀態:需登入
+        dataLayer.push({
+            'event': 'productClick',
+            'buttonName': '新專案上架請通知我',
+            'pageName': '登入',
+            'productName': 'null',
+            'url': '@Request.Url.LocalPath'
+        });
+    } else {
+
+        caseno = $(this).data('caseno')
+        //console.log(caseno);
+        $.ajax({
+            url: '@Url.Action("NoticeCaseOpen", "Sell")',
+            type: "POST",
+            dataType: 'json',
+            cache: false,
+            data: {
+                STATUS: '1',
+                CASE_NO: caseno
+            },
+            success: function (res) {
+                //console.log(res)
+                if (!res.RESULT) {
+                    showMsg(res.ERRMSG, "error");
+                } else {
+                    $('#modalSubscription').modal('show');
+                    // GA: 圖靈/電廠列表/新專案上架請通知我/click event/狀態:訂閱成功
+                    dataLayer.push({
+                        'event': 'productClick',
+                        'buttonName': '新專案上架請通知我',
+                        'pageName': '訂閱成功',
+                        'productName': 'null',
+                        'url': '@Request.Url.LocalPath'
+                    });
+                }
+            },
+            error: function(errMsg) {
+                showMsg("訂閱失敗", "error");
+            }
+        });
+    }
+});
+
+  </script>
+}

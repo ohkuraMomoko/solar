@@ -1,0 +1,128 @@
+﻿@model HomeViewModel
+@{
+    ViewBag.Title = "認識電廠專家";
+}
+@section header{
+    @Styles.Render("~/Content/pages/home/about.min.css")
+}
+@section metatags {
+    @Html.Action("GetMetaByType", "Base", new { id = 2 })
+}
+
+
+<div class="page-container">
+    <div class="page-kv" data-aos="bg-scale">
+        <h2 class="page-kv--title" data-aos="fade-down" data-aos-delay="400">@ViewBag.Title </h2>
+        <img src="@Url.Content("~/Content/images/title_font_ABOUT_MARKET.svg")" alt="NEWS" class="page-kv--img" data-aos="fade-up" data-aos-delay="200">
+    </div>
+    <div class="page-content">
+        <div class="breadcrumb-container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/" href="@Url.Content("~/Home/")">
+                            <span itemprop="name"><img src="@Url.Content("~/Content/images/bread_home_icon.svg")" alt="首頁"></span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/About"  href="@Url.Content("~/Home/About")">
+                            <span itemprop="name">@ViewBag.Title</span>
+                        </a>
+                        <meta itemprop="position" content="2" />
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <article class="article">
+            <section class="intro">
+                <h1 class="intro--title">太陽能源產業長期深耕</h1>
+                <h3 class="intro--subtitle">中租是您委託代管最值得信賴的選擇</h3>
+                <p class="intro--desc">
+                    中租控股於2015年成立「中租能源開發(股)公司」，擴大提供綠色能源與能源管理服務，並大幅自建與收購太陽能電廠，2016年已擁有全台最多太陽能電廠，2017年更與子公司共同推動「中租‧全民電廠」太陽能電廠認購平台，善盡綠能環保的企業社會責任。
+                    <br /><br />
+                    全民電廠是由「中租雲端服務(股)公司」所營運，母公司為國內租賃業龍頭「中租迪和(股)公司」，最終母公司為上市公司「中租控股(股)公司」
+                    <br /><br />
+                    我們以永續發展為目標，在環境議題上，除落實節能減碳政策外，更致力推動綠能產品鏈，包含ESCO節能融資與太陽電廠投資等，績效屢獲肯定，並列入MSCI全球永續指數成分股。
+                </p>
+                <div class="goodpoint-container">
+                    <div class="goodpoint" data-aos="zoom-in-up" data-aos-delay="50" data-aos-once="true">
+                        <img src="@Url.Content("~/Content/Images/about_market_icon01.svg")" alt="" class="icon-img">
+                        @*<p class="icon-number">@Model.CONFIG["PowerPlants"]<span class="unit-dollor">座</span></p>*@
+                        <p class="icon-number">@Model.PoweGenrInfo.POWER_PLANT_NUM<span class="unit-dollor">座</span></p>
+                        <p class="icon-text">中租旗下太陽能電廠數</p>
+                    </div>
+                    <div class="goodpoint" data-aos="zoom-in-up" data-aos-delay="150" data-aos-once="true">
+                        <img src="@Url.Content("~/Content/Images/about_market_icon02.svg")" alt="" class="icon-img">
+                        @*<p class="icon-number">@Model.CONFIG["AccummulatePower"]<span class="unit-cha">億</span><span class="unit-dollor">度</span></p>*@
+                        <p class="icon-number">@Model.PoweGenrInfo.POWER_GEN_NUM<span class="unit-cha">億</span><span class="unit-dollor">度</span></p>
+                        <p class="icon-text">累積太陽能發電數</p>
+                    </div>
+                    <div class="goodpoint" data-aos="zoom-in-up" data-aos-delay="200" data-aos-once="true">
+                        <img src="@Url.Content("~/Content/Images/about_market_icon03.svg")" alt="" class="icon-img">
+                        @*<p class="icon-number">@Model.CONFIG["AccummulateMoney"]<span class="unit-cha">億</span><span class="unit-dollor">元</span></p>*@
+                        <p class="icon-number">@Model.PoweGenrInfo.POWER_GEN_INCOME<span class="unit-cha">億</span><span class="unit-dollor">元</span></p>
+                        <p class="icon-text">累積售電收入金額</p>
+                    </div>
+                </div>
+                <p class="intro-care">註：此太陽能電廠數、發電度數、發電金額之計算，是來自於中租控股旗下(包含但不限於中租迪和)所管理之已掛表太陽能電廠，而不是全民電廠目前的相關數字</p>
+            </section>
+            <section class="power-plant">
+                <h4 class="power-plant--title">每一座電廠都獲得最佳的管理</h4>
+                <p class="power-plant--subtitle">電廠上架前</p>
+                <div class="row powerpoint">
+                    <div class="col-12 col-md-6">
+                        <div class="d-flex flex-column justify-content-center">
+                            <img src="@Url.Content("~/Content/Images/about_market_image01.jpg")" alt="" class="powerpoint--img" data-aos="fade-up" data-aos-once="true">
+                            <p class="powerpoint--title" data-aos="fade-up" data-aos-once="true">確認電廠皆已先建置完成降低會員認購風險</p>
+                            <p class="powerpoint--desc" data-aos="fade-up" data-aos-delay="100" data-aos-once="true">太陽能電廠從申請建置到開始計算電費收入，大多需半年以上，投入資金者除等待外，建置期間也有不確定性風險。為避免此狀況，我們平台所開放認購的電廠皆已建置完成並與台電聯網(電費計費起算點)，讓資金投入時就能開始計算電費收入。</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="d-flex flex-column justify-content-center">
+                            <img src="@Url.Content("~/Content/Images/about_market_image02.jpg")" alt="" class="powerpoint--img" data-aos="fade-up" data-aos-once="true">
+                            <p class="powerpoint--title" data-aos="fade-up" data-aos-once="true">高規格標準驗收電廠</p>
+                            <p class="powerpoint--desc" data-aos="fade-up" data-aos-delay="100" data-aos-once="true">要抵禦風災與確保發電效能，最關鍵的是施工品質，這必須經由高規格標準的驗收。所有上架電廠，均由中租嚴謹驗收，包含螺絲是否鎖緊、發電效能是否符合預期等數十項標準，讓電廠能妥善營運20年。</p>
+                        </div>
+                    </div>
+                </div>
+                <p class="power-plant--subtitle">電廠上架後</p>
+                <div class="row powerpoint">
+                    <div class="col-12 col-md-6">
+                        <div class="d-flex flex-column justify-content-center">
+                            <img src="@Url.Content("~/Content/Images/about_market_image03.jpg")" alt="" class="powerpoint--img" data-aos="fade-up" data-aos-once="true">
+                            <p class="powerpoint--title" data-aos="fade-up" data-aos-once="true">專責維運團隊把關風險</p>
+                            <p class="powerpoint--desc" data-aos="fade-up" data-aos-delay="100" data-aos-once="true">全民電廠所上架之案件從案場評估、協力廠商選擇、案場施工、驗收與電廠維護...等諸多環節，一套嚴謹的管理規範，要求員工、廠商夥伴確切執行，為認購者把關風險。</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="d-flex flex-column justify-content-center">
+                            <img src="@Url.Content("~/Content/Images/about_market_image04.jpg")" alt="" class="powerpoint--img" data-aos="fade-up" data-aos-once="true">
+                            <p class="powerpoint--title" data-aos="fade-up" data-aos-once="true">科技監控發電效能有品質</p>
+                            <p class="powerpoint--desc" data-aos="fade-up" data-aos-delay="100" data-aos-once="true">我們採用科技監控掌握設備發電狀況，檢視所有設備是否正常運作；此外，為維持設備之發電效能，太陽能板必須定期做清洗，也須積極深化對原材料的設計能力，確保太陽能電廠的能效表現。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row powerpoint">
+                    <div class="col-12 col-md-6">
+                        <div class="d-flex flex-column justify-content-center">
+                            <img src="@Url.Content("~/Content/Images/about_market_image05.jpg")" alt="" class="powerpoint--img" data-aos="fade-up" data-aos-once="true">
+                            <p class="powerpoint--title" data-aos="fade-up" data-aos-once="true">設備投保產險有保障</p>
+                            <p class="powerpoint--desc" data-aos="fade-up" data-aos-delay="100" data-aos-once="true">每一座電廠皆會與保險公司每年簽立一年期之電子設備保險合約，當發生保險事故時，能夠迅速依保險公司條款取得理賠及修復，讓電廠可以繼續售電，為認購者創造電費收入。</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="d-flex flex-column justify-content-center">
+                            <img src="@Url.Content("~/Content/Images/about_market_image06.jpg")" alt="" class="powerpoint--img" data-aos="fade-up" data-aos-once="true">
+                            <p class="powerpoint--title" data-aos="fade-up" data-aos-once="true">完善的資金管理流程</p>
+                            <p class="powerpoint--desc" data-aos="fade-up" data-aos-delay="100" data-aos-once="true">值得信賴的金融服務必須有嚴謹的作業程序，所有的交易金流，均由中租雲端(股)公司開立專戶管理，紀錄完整且透明。我們也會在確認所有合約要件被滿足後，才會將交易款項撥付給電廠出售人，保障交易安全。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <a href="@Url.Content("~/Join")" class="center btn--type btn--type-2">
+                <span>查看電廠</span>
+            </a>
+        </article>
+    </div>
+</div>

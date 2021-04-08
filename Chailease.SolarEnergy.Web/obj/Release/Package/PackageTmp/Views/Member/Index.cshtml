@@ -1,0 +1,374 @@
+﻿@model Chailease.SolarEnergy.Web.ViewModel.MemberViewModel
+@{
+    ViewBag.Title = "會員中心";
+}
+@section header{
+    @Styles.Render("~/Content/pages/member/index.min.css")
+}
+@section metatags {
+    @Html.Action("GetMetaByType", "Base", new { id = 1 })
+}
+<div class="page-container">
+    <div class="page-kv">
+        <h1 class="page-kv--title">會員中心</h1>
+    </div>
+    <div class="page-content">
+        <div class="breadcrumb-container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/" href="@Url.Content("~/Home/")">
+                            <span itemprop="name"><img src="@Url.Content("~/Content/images/bread_home_icon.svg")" alt="首頁"></span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                            <span itemprop="name">會員中心</span>
+                        </a>
+                        <meta itemprop="position" content="2" />
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <div class="member-container">
+            @* TODO:
+                會員功能區分是否有使用權限，
+                若無使用權限請在.member-card加上.notallow
+            *@
+
+            @* TODO: 會員資料 狀態區分 *@
+            <div class="member">
+                <div class="member-title">會員資料</div>
+                <div class="member-card member-card--profile">
+                    <div class="row member-card-row">
+                        <div class="col-12 col-md-5 member-level-col">
+                            <div class="member-level-data">
+                                <p class="level">資格：<span>@* 一般會員orVIP會員*@</span></p>
+                                @*<a href="@Url.Content("~/AdvancedPurchase/")" class="levelup">升級VIP會員</a>*@
+                            </div>
+                        </div>
+                        @*  一般會員: 手機驗證、信箱驗證
+                    VIP會員: 手機/信箱驗證(應皆為已驗證)、身分證審核、銀行帳戶審核
+                        *@
+                        <div class="col-12 col-md-7 member-level-col">
+                            @* 手機驗證 *@
+                            <div class="member-status member-status-phone">
+                                @* 已驗證 *@
+                                <img src="~/Content/images/Member_Centre_icon_phone_pass.svg" alt="">
+                            </div>
+                            @* 信箱驗證 *@
+                            <div class="member-status member-status-mail">   </div>
+                            @* 身分證審核 *@
+                            <div class="member-status member-status-card">
+                                @* 審核通過
+                            <img src="~/Content/images/Member_Centre_icon_ID_pass.svg" alt= "" > *@
+                                @* 審核中
+                            <img src="~/Content/images/Member_Centre_icon_ID_checking.svg" alt= "" > *@
+                                @* 待補件
+                            <img src="~/Content/images/Member_Centre_icon_ID_not_pass.svg" alt= "" > *@
+                                @* 資格不符
+                            <img src="~/Content/images/Member_Centre_icon_ID_no.svg" alt= "" >  *@
+                            </div>
+                            @* 帳戶審核 *@
+                            <div class="member-status member-status-bank">
+                                @* 審核通過
+                            <img src="~/Content/images/Member_Centre_icon_bank_pass.svg" alt="">*@
+                                @* 審核中
+                            <img src="~/Content/images/Member_Centre_icon_bank_checking.svg" alt=""> *@
+                                @* 待補件
+                            <img src="~/Content/images/Member_Centre_icon_bank_not_pass.svg" alt=""> *@
+                                @* 資格不符
+                            <img src="~/Content/images/Member_Centre_icon_bank_no.svg" alt=""> *@
+                            </div>
+                        </div>
+                    </div>
+                    <a href="@Url.Content("~/member/Profile")" class="member-card-title">
+                        <span class="title"><img src="~/Content/images/Member_Centre_icon03.svg">會員資料</span>
+                        <span class="detail">詳細資訊<img src="~/Content/images/icon_arrow_down_w.svg"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="member">
+                <div class="member-title">我的電廠</div>
+                <div class="member-card member-card--project">
+                    <div class="row member-card-row">
+                        <div class="col-12 col-md-6 member-card-item">
+                            全民電廠數量<span>0</span>
+                        </div>
+                        <div class="col-12 col-md-6 member-card-item">
+                            太陽能板數量<span>0</span>
+                        </div>
+                    </div>
+                    <a href="@Url.Content("~/member/dashboard")" class="member-card-title">
+                        <span class="title"><img src="~/Content/images/Member_Centre_icon01.svg">電廠總覽</span>
+                        <span class="detail">詳細資訊<img src="~/Content/images/icon_arrow_down_w.svg"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="member">
+                <div class="member-title">我的收益</div>
+                <div class="member-card member-card--income">
+                    <div class="row member-card-row">
+                        <div class="col-12 col-md-6 member-card-item">
+                            累積總發電量<span>0</span>
+                        </div>
+                        <div class="col-12 col-md-6 member-card-item">
+                            電費總收益<span>0</span>
+                        </div>
+                    </div>
+                    <a href="@Url.Content("~/member/Interest")" class="member-card-title">
+                        <span class="title"><img src="~/Content/images/Member_Centre_icon02.svg">收益總覽</span>
+                        <span class="detail">詳細資訊<img src="~/Content/images/icon_arrow_down_w.svg"></span>
+                    </a>
+                </div>
+            </div>
+            @* TODO: 交易資訊
+                尚未繳款訂單 分兩種格式
+            *@
+            <div class="member">
+                <div class="member-title">交易資訊</div>
+                <div class="member-card member-card--transaction">
+                    <div class="row member-card-row">
+                        <div class="col-12 col-md-6 member-card-item">
+                            總共訂單紀錄<span>0</span>
+                        </div>
+                        <div class="col-12 col-md-6 member-card-item">
+                            尚未繳款訂單<span>0</span>
+                        </div>
+                        @*<div class="col-12 col-md-6 member-card-item ">
+                                尚未繳款訂單<span class="text-heightline">1</span>
+                                <p class="text-heightline not-pay">最近付款到期日 2018/10/01</p>
+                            </div>*@
+                    </div>
+                    <a href="@Url.Content("~/member/Transaction")" class="member-card-title">
+                        <span class="title"><img src="~/Content/images/Member_Centre_icon04.svg">交易紀錄</span>
+                        <span class="detail">詳細資訊<img src="~/Content/images/icon_arrow_down_w.svg"></span>
+                    </a>
+                </div>
+            </div>
+            <!-- 出售公告管理 -->
+            <div class="member">
+                <div class="member-title">出售公告管理</div>
+                <div class="member-card member-card--memOnSale">
+                    <div class="row member-card-row">
+                        <div class="col-12 col-md-6 member-card-item memOnSaleValue">
+                            已發布專案<span>@Model.MemOnSaleCenter.REAL_SELL_NUM</span>
+                        </div>
+                        <div class="col-12 col-md-6 member-card-item memOnSaleValue">
+                            新增關注數<span class="text-heightline">@Model.MemOnSaleCenter.REAL_BUY_NUM</span>
+                        </div>
+                    </div>
+                    <a href="@Url.Content("~/member/annouce")" class="member-card-title yellow-bg">
+                        <span class="title"><img src="~/Content/images/Member_Centre_store.svg">公告管理</span>
+                        <span class="detail">詳細資訊<img src="~/Content/images/icon_arrow_down_w.svg"></span>
+                    </a>
+                </div>
+            </div>
+            <!-- 出售公告管理 -->
+            <div class="member">
+                <div class="member-title">轉讓/受讓紀錄</div>
+                <div class="member-card member-card--memOnSale">
+                    <div class="row member-card-row">
+                        <div class="col-12 col-md-6 member-card-item memOnSaleValue">
+                            轉讓紀錄<span>@Model.MemOnSaleCenter.REAL_TRANS_SELL_NUM</span>
+                        </div>
+                        <div class="col-12 col-md-6 member-card-item memOnSaleValue">
+                            受讓紀錄<span>@Model.MemOnSaleCenter.REAL_TRANS_BUY_NUM</span>
+                        </div>
+                    </div>
+                    <a href="@Url.Content("~/member/transfer")" class="member-card-title yellow-bg">
+                        <span class="title"><img src="~/Content/images/Member_Centre_SH.svg">移轉紀錄</span>
+                        <span class="detail">詳細資訊<img src="~/Content/images/icon_arrow_down_w.svg"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <script>
+    const imgBaseUrl = '@Url.Content("~/Content/images/")';
+    const advancedPurchaseUrl = '@Url.Action("index","AdvancedPurchase")';
+    const profileUrl = '@Url.Action("Profile", "member")';
+    const bankInfoUrl = '@Url.Action("BankInfo", "member")';
+    const passwordUrl = '@Url.Action("Password", "member")';
+    const initUrl = '@Url.Action("IndexInit")';
+    const emailValidUrl = '@Url.Action("SendEmailValidata", "AdvancedPurchase")';
+
+    ///memberStatus
+    //0:非會員或未登入
+    //1:一般會員
+    //2:一般會員(升級VIP會員中，身分證、存摺尚未送過)
+    //3:VIP會員(升級VIP會員流程完成，VIP會員資格審核中)
+    //4:VIP會員(升級VIP會員流程完成，VIP會員審核中，有被壓過退回紀錄)
+    //5:VIP會員(審核通過)
+    $(function () {
+        member.GetAuth();
+    });
+    var member = new function () {
+        var self = this;
+        var container = $('div.member-container');
+        var projectForm = container.find('div.member-card--project');
+        var incomeForm = container.find('div.member-card--income');
+        var profileForm = container.find('div.member-card--profile');
+        var transactionForm = container.find('div.member-card--transaction');
+        var memberAuth = {};
+        //self.a = () => { return memberAuth;};
+        self.GetAuth = function () {
+            $ajax.Post(initUrl, {}, function (d) {
+                if (d) {
+                    memberAuth = d.auth;
+                    var loan = d.loan;
+                    Init(memberAuth, loan);
+                }
+            });
+        }
+
+        var Init = function (auth, loan) {
+            console.log('MBR_LVL：' + auth.MBR_LVL);
+            if (auth.MBR_LVL == '02' | auth.MBR_LVL == '03')
+                loanBind(loan);
+            else
+                loanClear();
+            authBind(auth);
+        }
+
+        var authBind = function (auth) {
+            //信箱驗證
+            var imgEmailUrl = '';
+            var imgTag;
+            if (auth.VRF_EMAIL.toLowerCase() == 'y') {
+                imgEmailUrl = imgBaseUrl + 'Member_Centre_icon_mail_pass.svg';
+                imgTag = $('<img></img>', { src: imgEmailUrl, alt: '' });
+            }
+            else {
+                imgEmailUrl = imgBaseUrl + 'Member_Centre_icon_mail_not_pass.svg';
+                imgTag = $('<img></img>', { src: imgEmailUrl, alt: '', style: 'cursor: pointer; ' }).click(function () {
+                    $ajax.Post(emailValidUrl, {}, function (d) {
+                        if (d.result)
+                            showMsg('已送出驗證信。');
+                        else
+                            showMsg(d.message, 'error');
+                    });
+                    $(this).attr('style', '').unbind();
+                });
+            }
+            profileForm.find('div.member-status-mail').append(imgTag);
+
+            var allowType = '', memberLevelName = '', imgCardUrl = '', imgBankUrl = '';
+            switch (auth.MBR_LVL) {
+                case "00":
+                    allowType = '111111';
+                    memberLevelName = '';
+                    break;
+                case "01":
+                    //profileForm.find('a:last').attr('href', 'javascript:member.MemberDataClick()');
+                    profileForm.find('a:last').attr('href', passwordUrl);
+                    $('<a></a>', { href: advancedPurchaseUrl, class: "levelup ga_member_index_btn_advance" }).html('升級VIP會員').appendTo('div.member-level-data');
+                    memberLevelName = '一般會員';
+                    allowType = '011111'
+                    break;
+                case "02":
+                    profileForm.find('a:last').attr('href', profileUrl);
+                    memberLevelName = 'VIP會員';
+                    allowType = '000000'
+
+                    //身分證審核 - 02：送審中, 04：退件
+                    if (auth.VRF_BASEINFO_NOW == "02")
+                        imgCardUrl = imgBaseUrl + 'Member_Centre_icon_ID_checking.svg';
+                    if (auth.VRF_BASEINFO_NOW == "04")
+                        imgCardUrl = imgBaseUrl + 'Member_Centre_icon_ID_not_pass.svg';
+
+                    //帳戶審核 - 02：送審中, 04：退件
+                    if (auth.VRF_ACCTINFO_NOW == "02")
+                        imgBankUrl = imgBaseUrl + 'Member_Centre_icon_bank_checking.svg';
+                    if (auth.VRF_ACCTINFO_NOW == "04")
+                        imgBankUrl = imgBaseUrl + 'Member_Centre_icon_bank_not_pass.svg';
+                    break;
+                case "03":
+                    profileForm.find('a:last').attr('href', profileUrl);
+                    memberLevelName = 'VIP會員';
+                    allowType = '000000'
+                    //身分證審核 - 03：審核完畢
+                    imgCardUrl = imgBaseUrl + 'Member_Centre_icon_ID_pass.svg';
+
+                    if (auth.VRF_ACCTINFO_UPDATE) {
+                        //帳戶審核 - 更新存摺審核中
+                        imgBankUrl = imgBaseUrl + 'Member_Centre_icon_bank_checking.svg';
+                    }
+                    else {
+                        //帳戶審核 - 03：審核完畢
+                        imgBankUrl = imgBaseUrl + 'Member_Centre_icon_bank_pass.svg';
+                    }
+                    break;
+            }
+
+            Allow(allowType);
+            //一般會員 or VIP會員
+            profileForm.find('div.member-level-data p span').html(memberLevelName);
+            //身分證審核
+            imgTag = $('<img></img>', { src: imgCardUrl, alt: '' });
+            if (auth.VRF_BASEINFO_NOW == "04") {
+                imgTag.attr('style', 'cursor: pointer;').click(function () {
+                    window.location.href = profileUrl;
+                });
+            }
+            profileForm.find('div.member-status-card').append(imgTag);
+            //帳戶審核
+            imgTag = $('<img></img>', { src: imgBankUrl, alt: '' });
+            if (auth.VRF_ACCTINFO_NOW == "04") {
+                imgTag.attr('style', 'cursor: pointer;').click(function () {
+                    window.location.href = bankInfoUrl;
+                });
+            }
+            profileForm.find('div.member-status-bank').append(imgTag);
+        }
+
+        var loanClear = function () {
+            projectForm.find('div.member-card-item span:nth(0)').html('0');
+            projectForm.find('div.member-card-item span:nth(1)').html('0');
+            incomeForm.find('div.member-card-item span:nth(0)').html('0');
+            incomeForm.find('div.member-card-item span:nth(1)').html('0');
+            transactionForm.find('div.member-card-item span:nth(0)').html('0');
+            var unpaid = transactionForm.find('div.member-card-item span:nth(1)').html('0');
+            if (unpaid.hasClass('text-heightline'))
+                unpaid.removeClass('text-heightline').next().remove();
+        }
+
+        var loanBind = function (loan) {
+            projectForm.find('div.member-card-item span:nth(0)').html(loan.POWER_TTL_NUM);
+            projectForm.find('div.member-card-item span:nth(1)').html(loan.PANEL_TTL_NUM);
+            incomeForm.find('div.member-card-item span:nth(0)').html(setSymbol(loan.POWER_GEN_TTL_NUM));
+            incomeForm.find('div.member-card-item span:nth(1)').html(setSymbol(loan.POWER_INCOME_TTL_AMT));
+            transactionForm.find('div.member-card-item span:nth(0)').html(loan.OEDER_TTL_NUM);
+            var unpaid = transactionForm.find('div.member-card-item span:nth(1)').html(loan.OEDER_UNPAID_TTL_NUM);
+            if (loan.OEDER_UNPAID_TTL_NUM > 0) {
+                if (loan.LAST_BILL_EXPIRE_DATE)
+                    unpaid.addClass('text-heightline').after($('<p></p>', { class: 'text-heightline not-pay' }).html('最近付款到期日 ' + loan.LAST_BILL_EXPIRE_DATE));
+            }
+        }
+
+        self.MemberDataClick = function () {
+            showMsg('尚無使用權限');
+        }
+
+        var Allow = function (b) {
+            const notallow = 'notallow';
+            var cards = container.find('div.member-card');
+            $.each(cards, function (i, v) {
+                if (b[i] == 1) {
+                    $(v).addClass(notallow);
+                }
+                else {
+                    $(v).removeClass(notallow);
+                }
+            });
+        }
+
+
+    }
+    </script>
+}

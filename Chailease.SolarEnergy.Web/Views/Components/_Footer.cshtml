@@ -1,0 +1,205 @@
+﻿@model MenuViewModel
+@{
+    var cur_url = System.Configuration.ConfigurationManager.AppSettings["url"] + Request.Url.LocalPath;
+}
+<div class="footer-container">
+    <div class="footer desktop">
+        <div class="sitemap">
+            <div class="sitemap-item">
+                <p class="sitemap-item-title">認識電廠專家</p>
+                <a href="@Url.Content("~/Home/OperationModel")"
+                   class="sitemap-item-link ga_component_footer_link_operationmodel">
+                    如何運作
+                </a>
+                <a href="@Url.Content("~/Home/About")"
+                   class="sitemap-item-link ga_component_footer_link_about">
+                    認識電廠專家
+                </a>
+                <a href="@Url.Content("~/News")"
+                   class="sitemap-item-link ga_component_footer_link_news">
+                    最新消息
+                </a>
+                <a href="@Url.Content("~/Reports")"
+                   class="sitemap-item-link ga_component_footer_link_reports">
+                    媒體報導
+                </a>
+                <a href="@Url.Content("~/Wiki")"
+                   class="sitemap-item-link ga_component_footer_link_wiki">
+                    電廠小百科
+                </a>
+                <a href="@Url.Content("~/Home/Comments")"
+                   class="sitemap-item-link ga_component_footer_link_comments">
+                    線上留言
+                </a>
+                <a href="https://www.chailease.com.tw/?utm_source=finmart&utm_medium=website&utm_campaign=20210226" target="_blank"
+                   class="sitemap-item-link ">
+                    關於中租
+                </a>
+            </div>
+            <div class="sitemap-item">
+                <p class="sitemap-item-title">我想參與認購</p>
+                <a href="@Url.Content("~/Join")"
+                   class="sitemap-item-link ga_component_footer_link_join">
+                    購買太陽能板
+                </a>
+                <a href="@Url.Content("~/Join/Calculate")"
+                   class="sitemap-item-link ga_component_footer_link_calculate">
+                    獲利試算
+                </a>  
+                <a href="@Url.Content("~/Sell")"
+                    class="sitemap-item-link ga_component_footer_link_calculate">
+                    二手交易
+                </a>
+            </div>
+            <div class="sitemap-item">
+                <p class="sitemap-item-title">我要出租屋頂</p>
+                <a href="@Url.Content("~/Rent")"
+                   class="sitemap-item-link ga_component_footer_link_rent">
+                    出租屋頂獲利
+                </a>
+                <a href="@Url.Content("~/Rent/Landlord")"
+                   class="sitemap-item-link ga_component_footer_link_landlord">
+                    出租聯繫
+                </a>
+            </div>
+            @if (Model.FaqList.Count() > 0)
+            {
+                <div class="sitemap-item">
+                    <p class="sitemap-item-title">常見問題</p>
+                    @foreach (var pub in Model.FaqList)
+                    {
+                        var qaClass = "ga_component_footer_link_" + pub.CD;
+                        <a href="@Url.RouteUrl("QAIndex", new { CD=pub.CD })"
+                           class="sitemap-item-link @qaClass">@pub.NME</a>
+                    }
+                </div>
+            }
+        </div>
+        <div class="footer-social">
+            <a target="_blank" class="btn--social-2 btn--social-2-line js-share-line ga_component_footer_btn_line" data-share="@cur_url"></a>
+            <a target="_blank" class="btn--social-2 btn--social-2-fb js-share-fb ga_component_footer_btn_fb" data-share="@cur_url"></a>
+        </div>
+
+    </div>
+
+    <!-- mobile footer accordion -->
+    <div class="footer mobile">
+        <div class="accordion" id="accordionFooter">
+            <div class="card">
+                <div class="card-header" id="collapseItemHeading1">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseItem1"
+                            aria-expanded="false" aria-controls="collapseItem1">
+                        認識電廠專家
+                    </button>
+                </div>
+
+                <div id="collapseItem1" class="collapse" aria-labelledby="collapseItemHeading1" data-parent="#accordionFooter">
+                    <div class="card-body">
+                        <a href="@Url.Content("~/Home/OperationModel")"
+                           class="collapse-item-link ga_component_footer_link_operationmodel">
+                            如何運作
+                        </a>
+                        <a href="@Url.Content("~/Home/About")"
+                           class="collapse-item-link ga_component_footer_link_about">
+                            認識電廠專家
+                        </a>
+                        <a href="@Url.Content("~/News")" class="collapse-item-link ga_component_footer_link_news">
+                            最新消息
+                        </a>
+                        <a href="@Url.Content("~/Reports")"
+                           class="collapse-item-link ga_component_footer_link_reports">
+                            媒體報導
+                        </a>
+                        <a href="@Url.Content("~/Wiki")"
+                           class="collapse-item-link ga_component_footer_link_wiki">
+                            電廠小百科
+                        </a>
+                        <a href="@Url.Content("~/Home/Comments")"
+                           class="collapse-item-link ga_component_footer_link_comments">
+                            線上留言
+                        </a>
+                        <a href="https://www.chailease.com.tw/?utm_source=finmart&utm_medium=website&utm_campaign=20210226" target="_blank"
+                           class="sitemap-item-link ">
+                            關於中租
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="collapseItemHeading2">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseItem2"
+                            aria-expanded="false" aria-controls="collapseItem2">
+                        我想參與認購
+                    </button>
+
+                </div>
+                <div id="collapseItem2" class="collapse" aria-labelledby="collapseItemHeading2" data-parent="#accordionFooter">
+                    <div class="card-body">
+                        <a href="@Url.Content("~/Join")"
+                           class="collapse-item-link ga_component_footer_link_join">
+                            購買太陽能板
+                        </a>
+                        <a href="@Url.Content("~/Join/Calculate")"
+                           class="collapse-item-link ga_component_footer_link_calculate">
+                            獲利試算
+                        </a>
+                        <a href="@Url.Content("~/Sell")"
+                            class="sitemap-item-link ga_component_footer_link_calculate">
+                            二手交易
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="collapseItemHeading3">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseItem3"
+                            aria-expanded="false" aria-controls="collapseItem3">
+                        我要出租屋頂
+                    </button>
+                </div>
+                <div id="collapseItem3" class="collapse" aria-labelledby="collapseItemHeading3" data-parent="#accordionFooter">
+                    <div class="card-body">
+                        <a href="@Url.Content("~/Rent")"
+                           class="collapse-item-link ga_component_footer_link_rent">
+                            出租屋頂獲利
+                        </a>
+                        <a href="@Url.Content("~/Rent/Landlord")"
+                           class="collapse-item-link  ga_component_footer_link_landlord">
+                            出租聯繫
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="collapseItemHeading4">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseItem4"
+                            aria-expanded="false" aria-controls="collapseItem4">
+                        常見問題
+                    </button>
+                </div>
+                <div id="collapseItem4" class="collapse" aria-labelledby="collapseItemHeading4" data-parent="#accordionFooter">
+                    <div class="card-body">
+                        @if (Model.FaqList.Count() > 0)
+                        {
+                            foreach (var pub in Model.FaqList)
+                            {
+                                var qaClass = "ga_component_footer_link_" + pub.CD;
+                                <a href="@Url.RouteUrl("QAIndex", new { CD=pub.CD })"
+                                   class="collapse-item-link @qaClass">@pub.NME</a>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-social">
+            <a class="btn--social-2 btn--social-2-line js-share-line ga_component_footer_btn_line" data-share="@cur_url"></a>
+            <a class="btn--social-2 btn--social-2-fb js-share-fb ga_component_footer_btn_fb" data-share="@cur_url"></a>
+        </div>
+    </div>
+
+    <div class="copyright">
+        <p class="copyright-info">&copy; @DateTime.Now.Year 中租太陽能電廠 Corporation. 著作權所有，並保留一切權利。</p>
+        <a href="@Url.Content("~/Home/Privacy")" class="policy-link">隱私權政策和使用條款</a>
+    </div>
+</div>

@@ -1,0 +1,307 @@
+﻿@import "../setting/_variables.scss";
+@import "../setting/_mixins.scss";
+
+/* modal --member ===================*/
+
+/* tabs ==================*/
+.cd-tabs {	
+	width: 100%;
+	margin-top: -0.19rem;
+	position: relative;
+	&:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+	&::after {
+		/* subtle gradient layer on top right - to indicate it's possible to scroll */
+		position: absolute;
+		top: 0;
+		right: 0;
+		height: 60px;
+		width: 50px;
+		z-index: 1;
+		pointer-events: none;
+		background: -webkit-linear-gradient(right, #f8f7ee, rgba(248, 247, 238, 0));
+		background: linear-gradient(to left, #f8f7ee, rgba(248, 247, 238, 0));
+		visibility: visible;
+		opacity: 1;
+		-webkit-transition: opacity .3s 0s, visibility 0s 0s;
+		-moz-transition: opacity .3s 0s, visibility 0s 0s;
+		transition: opacity .3s 0s, visibility 0s 0s;
+	}
+}
+
+.no-cssgradients .cd-tabs::after {
+	display: none;
+}
+
+.cd-tabs {
+	&.is-ended::after {
+		/* class added in jQuery - remove the gradient layer when it's no longer possible to scroll */
+		visibility: hidden;
+		opacity: 0;
+		-webkit-transition: opacity .3s 0s, visibility 0s .3s;
+		-moz-transition: opacity .3s 0s, visibility 0s .3s;
+		transition: opacity .3s 0s, visibility 0s .3s;
+	}
+	nav {
+		/*overflow: auto;*/
+		-webkit-overflow-scrolling: touch;
+		background: #f8f7ee;
+		box-shadow: inset 0 -2px 3px rgba(203, 196, 130, 0.06);
+	}
+}
+
+.cd-tabs-navigation {
+	width: 100%;
+	&:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+	&--item {
+		float: left;
+		width: 50%;
+		height: 3rem;
+		&-link {
+			width: 100%;
+			height: 100%;
+			font-size: 1.13rem;
+			line-height: 3rem;
+			letter-spacing: 0.14rem;
+			font-weight: bold;
+			text-align: center;
+			color: $color-secondary;
+			background-color: $color-secondary--4;
+			border-top: 2px solid $color-secondary;
+			position: relative;
+			display: block;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			&:hover {
+				color: $color-primary-blue;
+			}
+		}
+	}
+	
+}
+
+.cd-tabs-navigation--item-link {
+	&.selected {
+		background-color: #ffffff;
+		border-color: $color-primary-blue;
+		color: $color-primary-blue;
+	}
+}
+
+/* item: tabs-content --------*/
+.cd-tabs-content {
+	background: #ffffff;
+	li {
+		display: none;
+		padding: 3rem 0;
+		&.selected {
+			display: block;
+			-webkit-animation: cd-fade-in 0.5s;
+			-moz-animation: cd-fade-in 0.5s;
+			animation: cd-fade-in 0.5s;
+		}
+	}
+}
+
+
+@include keyframes(cd-fade-in) {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+/* block: modal login ===================*/
+.modal-login-container {
+    width: 20rem;
+    margin: 0 auto;
+
+    .modal-login-title {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        letter-spacing: 0.08rem;
+        text-align: center;
+        color: $color-dark;
+        margin-bottom: 20px;
+    }
+
+    .modal-login-forget,
+    .modal-login-email {
+        line-height: 1.38rem;
+        letter-spacing: 0.06rem;
+        color: $color-dark;
+        text-align: right;
+        cursor: pointer;
+        margin-top: 0.56rem;
+    }
+
+    .modal-login-email {
+        text-align: left;
+    }
+}
+
+/* rwd: .modal-login-container ---*/
+@include rwd($ipad) {
+    .modal-login-container {
+        width: 80%;
+
+        .modal-login-title {
+            font-size: 1rem;
+            line-height: 1;
+            letter-spacing: 0.06rem;
+        }
+
+        .modal-login-forget,
+        .modal-login-email {
+            font-size: 0.81rem;
+            line-height: 1.13rem;
+        }
+    }
+}
+/* item: btn--form-send ==========*/
+.btn--form-send {
+	width: 19.38rem;
+}
+/* rwd: .btn--form-send ---*/
+@include rwd($ipad) {
+	.btn--form-send {
+		width: 100%;
+	}
+}
+
+/* block: modal signup ==================*/
+.modal-signup-container {
+	width: 20rem;
+	margin: 0 auto;
+	.modal-signup-title {
+		font-size: 1.25rem;
+		line-height: 1.75rem;
+		letter-spacing: 0.08rem;
+		text-align: center;
+		color: $color-dark;
+		margin-bottom: 20px;
+	}
+	.form-step-container {
+		margin-bottom: 2rem;
+	}
+	.checkbox-signup {
+		margin-top: 1.13rem;
+		a {
+			color: $color-primary-blue--2;
+		}
+	}
+}
+/* rwd: .modal-signup-container ---*/
+@include rwd($ipad) {
+	.modal-signup-container {
+		width: 80%;
+	}
+}
+.modal-signup-container-step3 {
+	width: 100%;
+	.signup-success{
+		&--icon {
+			width: 2.5rem;
+		}
+		&--title {
+			font-size: 1.25rem;
+			line-height: 1.75rem;
+			text-align: center;
+			letter-spacing: 0.08rem;
+			color: $color-dark;
+			margin: 1.38rem auto 1.19rem;
+		}
+		&--text {
+			font-size: 0.94rem;
+			line-height: 1.31rem;
+			text-align: center;
+			letter-spacing: 0.03rem;
+			margin-bottom: 3rem;
+			>img {
+				display: inline-block;
+			}
+			>span {
+				color: $color-primary-blue;
+			}
+		}
+		&-bottom {
+			@include flexbox;
+			@include justify-content(center);
+			&--item {
+				padding: 0 5%;
+				&:last-child {
+					border-left: 1px solid #d4d4d4;
+				}
+			}
+			
+		}
+		&--btn {
+			width: 11.25rem;
+			margin-bottom: 1.06rem;
+			&-text {
+				font-size: 0.94rem;
+				line-height: 1.31rem;
+				text-align: center;
+				color: $color-dark--2;
+				margin-bottom: 0.69rem;
+			}
+		}
+		&--highlight {
+			width: 100%;
+			border-radius: 6px;
+			background-color: #1BBFA4;
+			color: #ffffff;
+			text-align: center;
+			padding: 0.41rem;
+		}
+	}
+}
+/*rwd:*/
+@include rwd($ipad){
+	.modal-signup-container-step3 {
+		.signup-success{
+			&--text {
+				margin-bottom: 1.34rem;
+			}
+			&--btn{
+				width: 7.5rem;
+				margin-bottom: 0.56rem;
+			}
+			&--btn-text {
+				text-align: left;
+			}
+		}
+	}
+}
+
+.login-step {
+	&--title {
+		font-size: 1.25rem;
+		letter-spacing: 0.08rem;
+		font-weight: bold;
+		text-align: center;
+	}
+	&--desc {
+		letter-spacing: 0.06rem;
+		line-height: 1.38rem;
+		color: $color-dark;
+		text-align: center;
+		margin: 1.75rem 0 1.4rem;
+	}
+	&--maildata {
+		font-size: 1.25rem;
+		letter-spacing: 0.06rem;
+		color: $color-primary-blue;
+		text-align: center;
+		margin-bottom: 1.5rem;
+	}
+}

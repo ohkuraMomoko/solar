@@ -1,0 +1,178 @@
+﻿/* @site: 全民電廠
+ * @author: nikki
+ * @update: nikki (2019-2-22)
+ * @page: 會員專區-會員資料
+ * @description: 各分頁共用，包含:我的資料/銀行帳戶/修改密碼/會員活動
+ */
+
+@import "../../setting/_variables.scss";
+@import "../../setting/_mixins.scss";
+
+.page-container {
+    background-image: linear-gradient(0deg, rgba(30,181,172,0.00) 30%, rgba(30,181,172,0.80) 100%);
+}
+
+.page-kv {
+    padding-top: 10rem;
+    height: 25rem;
+
+    &--title {
+        color: $color-dark;
+    }
+}
+
+@include rwd(#{$ipad - 1px}) {
+    .page-kv {
+        height: 15rem;
+        padding: 7rem 5% 0;
+    }
+}
+
+.row div .form-item {
+    padding-right: 0;
+}
+/*item: profile-tag ---*/
+.profile-tag-container {
+    border-bottom: 1px solid #D3D3D3;
+}
+.profile-tag {
+    width: 90%;
+    max-width: 57rem;
+    margin: 0 auto;
+    @include flexbox;
+    /*@include justify-content(space-between);*/
+    &--item {
+        width: 25%;
+        max-width: 10rem;
+        font-size: 1.5rem;
+        line-height: 3rem;
+        text-align: center;
+        color: #8a8a8a;
+        border-bottom: .5rem solid transparent;
+        border-radius: 2px;
+        margin: 0 3%;
+        @include change();
+
+        > a {
+            color: inherit;
+            display: block;
+        }
+
+        &:hover,
+        &.active {
+            color: $color-dark;
+            border-color: $color-primary-blue;
+        }
+    }
+}
+/*rwd: profile-tag ----*/
+@include rwd($ipad) {
+    .profile-tag {
+        width: 100%;
+        &--item {
+            font-size: 0.94rem;
+            line-height: 2rem;
+            border-width: .25rem;
+            margin: 0 auto;
+        }
+    }
+}
+/*item: profile-content ----*/
+.profile-content {
+    width: 90%;
+    max-width: 54rem;
+    margin: 0 auto;
+    padding: 3rem 0 4rem;
+}
+
+.profile-idcard-container {
+    max-width: 630px;
+}
+@include rwd($ipad) {
+    max-width: none;
+}
+
+/*page: password =================*/
+.pwd-text {
+    color: #7b7b7b;
+    line-height: 1.5;
+    padding: 5px 10px;
+    background-color: #fff3b5;
+    border-radius: 18px;
+    display: block;
+    margin-top: 0.5rem;
+    margin-left: 1rem;
+}
+@include rwd($ipad){
+    .pwd-text {
+        font-size: 0.94rem;
+        padding: 5px;
+    }
+}
+/*page: event ===================*/
+.event-content {
+    width: 100%;
+    max-width: 28.88rem;
+    margin: 0 auto;
+    padding-top: 2.88rem;
+}
+
+.event-title {
+    font-size: 1.38rem;
+    color: $color-dark--2;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+.event-subtitle {
+    color: #8a8a8a;
+    text-align: center;
+}
+.userid {
+    $btnWidth: 7rem;
+    $btnHeight: 2.38rem;
+    margin-top: 2.8rem;
+    margin-bottom: 1rem;
+    @include flexbox;
+    @include justify-content(space-between);
+    @include align-items(flex-end);
+    &-text {
+        width: calc(100% - #{$btnWidth});
+        line-height: $btnHeight;
+        font-size: 0.94rem;
+        background-color: $color-secondary--5;
+        padding: 0 .5rem;
+        &--title {
+            color: $color-primary-blue;
+            font-weight: 500;
+            margin-right: 10%;
+        }
+        &--data {
+            color: $color-dark;
+        }
+    }
+    &-btn {
+        width: $btnWidth;
+        line-height: $btnHeight;
+        height: $btnHeight;
+        text-align: center;
+        color: #fff;
+        background-color: $color-primary-blue;
+        display: block;
+        cursor: pointer;
+    }
+}
+.btn--line {
+    background-color: #fff;
+    border: 1px solid #757575;
+    color: $color-primary-blue;
+    position: relative;
+    >img {
+        height: 75%;
+        display: inline-block;
+    }
+    &:hover {
+        background-color: $color-primary-blue;
+        color: #fff;
+    }
+}

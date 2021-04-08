@@ -1,0 +1,377 @@
+﻿/* @site: 全民電廠
+ * @author: mickey
+ * @update: mickey (2019-11-19)
+ * @page: 會員專區-轉讓紀錄
+ * @description: 轉讓紀錄/受讓紀錄
+ */
+
+@import "../../setting/_variables.scss";
+@import "../../setting/_mixins.scss";
+
+/*item: profile-tag ---*/
+.profile-tag-container {
+    border-bottom: 1px solid #D3D3D3;
+}
+.profile-tag {
+    width: 90%;
+    max-width: 57rem;
+    margin: 0 auto;
+    @include flexbox;
+    justify-content: center;
+    /*@include justify-content(space-between);*/
+    &--item {
+        width: 50%;
+        max-width: 18.75rem;
+        font-size: 1.5rem;
+        line-height: 3rem;
+        text-align: center;
+        color: #8a8a8a;
+        border-bottom: .5rem solid transparent;
+        border-radius: 2px;
+        margin: 0 3%;
+        @include change();
+
+        > a {
+            color: inherit;
+            display: block;
+        }
+
+        &:hover,
+        &.active {
+            color: $color-dark;
+            border-color: $color-primary-blue;
+        }
+    }
+}
+/*rwd: profile-tag ----*/
+@include rwd($ipad) {
+    .profile-tag {
+        width: 100%;
+        &--item {
+            font-size: 0.94rem;
+            line-height: 2rem;
+            border-width: .25rem;
+            margin: 0 auto;
+        }
+    }
+}
+
+.annouce{
+    .select-reorder-container{
+        border-bottom: 1px solid #D3D3D3;
+        padding-bottom: 4rem;
+        &::after{
+            right: 3rem;
+            top: calc(50% - 15px);
+        }
+    }
+    select.select-reorder {
+        right: 2rem;
+        height: 2.81rem;
+        bottom: 1rem;
+    }
+
+    .transaction-header{
+        border-bottom: 1px solid #e3e3e3;
+    }
+    .transaction-collapse-block{
+        border-top: 0;
+    }
+    .transaction-button::after{
+        display: none;
+    }
+    .transaction-button--item a{
+        font-weight: 700;
+        text-decoration: underline;
+    } 
+    .transaction-content{
+        max-width: 100%;
+        width: 100%;
+        border: 1px solid #E7E7E7;
+        margin-top: 0.5rem;
+        padding: 1rem;
+    }
+    .annouce-btn{
+        width: 80%;
+        height: 2.19rem;
+        line-height: 2.19rem;
+        background-color: #1EB5AC;
+        &:hover, &:focus, &:active{
+            color: #fff;
+            background-color: #3fe4da;
+        }
+        &.follow-btn{
+            &:before{
+                content: '暫停被關注';
+                display: inline-block;
+                width: 100%;
+                height: 2.19rem;
+                line-height: 2.19rem;
+            }
+            &.follow-gray{
+                background-color: #A3A3A3;
+                &:before{
+                    content: '恢復被關注';
+                }
+                &:hover, &:focus, &:active{
+                    color: #fff;
+                    background-color: $color-secondary--2;
+                }
+            }
+        }
+    }
+    .text{
+        text-align: right;
+        font-size: rem(15px);
+        color: #A3A3A3;
+        letter-spacing: 0.5px;
+        padding-top: 0.5rem;
+        span{
+            color: #000000;
+        }
+    }
+}
+
+@include rwd_big($ipad-pro){
+    .annouce{
+        .transaction-container{
+            width: 90%;
+        }
+
+        .transaction-button--item:nth-child(1),
+        .transaction-header--item:nth-child(1),
+        .transaction-button--item:nth-child(5),
+        .transaction-header--item:nth-child(5) {
+            width: 5%;
+        }
+
+        .transaction-button--item:nth-child(3),
+        .transaction-header--item:nth-child(3) {
+            width: 15%;
+        }
+
+        .transaction-button--item:nth-child(9),
+        .transaction-header--item:nth-child(9) {
+            width: 10%;
+        }
+
+        .transaction-button--item:nth-child(10),
+        .transaction-header--item:nth-child(10) {
+            width: 15%;
+        }
+
+        .transaction-button--item:nth-child(2),
+        .transaction-button--item:nth-child(4),
+        .transaction-button--item:nth-child(6),
+        .transaction-button--item:nth-child(7),
+        .transaction-button--item:nth-child(8),
+        .transaction-header--item:nth-child(2),
+        .transaction-header--item:nth-child(4),
+        .transaction-header--item:nth-child(6),
+        .transaction-header--item:nth-child(7),
+        .transaction-header--item:nth-child(8) {
+            width: 10%;
+        }
+    }
+}
+
+@include rwd($ipad){
+    .annouce .select-reorder-container{
+        width: 100%;
+        &::after{
+            right: 5rem;
+        }
+    }
+    .annouce select.select-reorder{
+        width: 80%;
+        right: auto;
+        left: 0; 
+    }
+    .transaction-button--item, .transaction-header--item {
+        line-height: 1.38rem;
+        margin-bottom: .44rem;
+    }
+    .transfer .transfer-btn{
+        max-width: 100%;
+    }
+}
+
+// 二手交易公告(展開 collapse)
+.transaction-content--title{
+    text-align: right;
+}
+.transaction-content{
+    position: relative;
+    // arrow
+    &:after, &:before {
+        bottom: 100%;
+        left: 70%;
+        bottom: 100%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+    }
+    &:after {
+        border-right: 13px solid transparent;
+        border-bottom: 24px solid #E7E7E7;
+        border-left: 13px solid transparent;
+    }
+    &:before {
+        border-right: 12px solid transparent;
+        border-bottom: 21px solid #fff;
+        border-left: 12px solid transparent;
+        margin-left: 1px;
+        z-index: 100;
+    }
+}
+.transaction-content--container{
+    display: flex;
+    flex-direction: column;
+}
+.collapse-item{
+    padding: 0.5rem;
+    border: 2px solid #E7E7E7;
+    margin-bottom: 0.75rem;
+    &:last-child{
+        margin-bottom: 0;
+    }
+    p{ 
+        color: #5E5E5E;
+        letter-spacing: 0.53px;
+    }
+    .follow-contact-top, .follow-contact-blue{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .alert-text{
+        display: flex;
+        align-items: center;
+        p{
+            margin-left: 0.5rem;
+            font-size: rem(15px);
+        }
+    }
+    .follow-contact-blue{
+        background-color: #DCF9F8;
+        padding: 0.5rem;
+        margin: 0.5rem -0.5rem 0;
+        position: relative;
+        p{
+            color: #4A4A4A;
+        }
+    }
+    .follow-contact-blue-item{
+        display: flex;
+        align-items: center;
+    }
+    .status{
+        width: 6.5rem;
+        height: 1.88rem;
+        line-height: 1.88rem;
+        border-radius: 3px;
+        color: #FFFFFF;
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        left: 60%;
+        transform: translate(-50%, -50%);
+        &.status-green{
+            background-color: #2DB9B1; 
+        }
+        &.status-gray{
+            background-color: #9B9B9B;
+        }
+    }
+}
+.collapse-item .follow-contact-blue-item-right{
+    letter-spacing: -0.75px;
+}
+@include rwd($ipad){
+    .annouce .transaction-collapse-block{
+        padding-top: 0;
+        border-bottom: 1px solid #E3E3E3;
+    }
+    .annouce-btn-wrap{
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-right: -1rem;
+        margin-bottom: 0.5rem;
+        padding-right: 1rem;
+    }
+    .annouce .annouce-btn{
+        width: auto;
+        margin-right: 1rem;
+        padding: 0 0.5rem;
+    }
+    // collapse
+    .annouce .transaction-content{
+        width: 100%;
+        margin-top: 1rem;
+        background-color: #FFFFFF;
+        &:before, &:after{
+            left: 80%;
+        }
+    }
+    .collapse-item {
+        p{
+            letter-spacing: 0;
+        }
+        .follow-contact-blue, .follow-contact-blue-item{
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .follow-contact-blue{
+            span{
+                display: block;
+            }
+            p{
+                line-height: 1.8;
+            }
+        }
+        .status{
+            position: relative;
+            left: auto;
+            top: auto;
+            transform: none;
+        }
+    }
+    .annouce .text{
+        text-align: justify;
+        padding: 0.5rem 1rem 1rem;
+    }
+}
+
+// 下架公告
+.modelAnnouncement{
+    .modal-content{
+        padding: 3rem;
+    }
+    .modal-title{
+        font-size: rem(22px);
+        color: #8A8A8A;
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+    .modal-text {
+        font-size: 15px;
+        color: #303030;
+        letter-spacing: 0.07px;
+        text-align: justify;
+    }
+    .modal-text {
+        font-size: 15px;
+        color: #303030;
+        letter-spacing: 0.07px;
+        text-align: justify;
+    }
+}
+@include rwd($ipad){
+    .modelAnnouncement .modal-content {
+        padding: 1rem;
+    }
+}

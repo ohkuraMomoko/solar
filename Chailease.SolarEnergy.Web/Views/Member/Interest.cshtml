@@ -1,0 +1,273 @@
+﻿@model HomeViewModel
+@{
+    ViewBag.Title = "電費收益";
+}
+@section header{
+    <link rel="stylesheet" href="@Url.Content("~/Content/plugin/datepicker.min.css")">
+}
+@section metatags {
+    @Html.Action("GetMetaByType", "Base", new { id = 1 })
+}
+<div class="page-container">
+    <div class="page-kv">
+        <h1 class="page-kv--title">電費收益</h1>
+    </div>
+    <div class="page-content">
+        <div class="breadcrumb-container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/" href="@Url.Content("~/Home/")">
+                            <span itemprop="name"><img src="@Url.Content("~/Content/images/bread_home_icon.svg")" alt="首頁"></span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Member/" href="@Url.Content("~/Member/")">
+                            <span itemprop="name">會員中心</span>
+                        </a>
+                        <meta itemprop="position" content="2" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                            <span itemprop="name">電費收益</span>
+                        </a>
+                        <meta itemprop="position" content="3" />
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        @* 依照裝置切換patical view*@
+        <div id="place" class="place"></div>
+    </div>
+</div>
+
+@{
+    Html.RenderPartial("~/Views/Member/_ModalInterest.cshtml");
+}
+
+@section scripts{
+    <script src="~/Scripts/datepicker.min.js"></script>
+    <script>
+    $(function(){
+        var cachedWidth = $(window).width();
+        var brackPoint = 768;
+        $(window).resize(function () {
+            var newWidth = $(window).width();
+            if (newWidth !== cachedWidth) {
+                cachedWidth = newWidth;
+                //    location.reload();
+                checkDevice();
+            }
+        });
+
+        function detectmob() {
+            if (navigator.userAgent.match(/Android/i)
+                || navigator.userAgent.match(/webOS/i)
+                || navigator.userAgent.match(/iPhone/i)
+                || navigator.userAgent.match(/iPad/i)
+                || navigator.userAgent.match(/iPod/i)
+                || navigator.userAgent.match(/BlackBerry/i)
+                || navigator.userAgent.match(/Windows Phone/i)
+            ) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        function checkDevice(){
+            if (detectmob() && $(window).width() <= brackPoint) {
+                $('#place').load("@Url.Content("_InterestMobile")", init);
+            } else {
+                //$('#place').load("@Url.Content("_InterestDesktop")", init);
+                $('#place').load("@Url.Content("_InterestDesktop")", function (responseTxt, statusTxt, xhr) {
+                    if (statusTxt === "success") {
+                        init();
+                    }
+                    
+                });
+            }
+        }
+
+        checkDevice();
+
+    })
+    </script>
+    <script>
+        const id = '@ViewBag.id';
+        const powerplantsUrl = '@Url.Action("PlantList")';
+        const myInvestSumUrl = '@Url.Action("MyInvestSum")';
+        const detailSolarPanelUrl = '@Url.Action("DetailSolarPanel")';
+        const detailSolarPanelContentUrl = '@Url.Action("DetailSolarPanelContent")';
+        const detailSolarPanel_EINVUrl = '@Url.Action("DetailSolarPanel_EINV")';
+        const detailSolarPanel_POWERUrl = '@Url.Action("DetailSolarPanel_POWER")';
+        var pageIndex = 0;
+        var chkpageIndex = 0;
+        var rowIndex = 0;
+        var populate;
+        var init = function () {
+            populate = new scrollingendless(function (callback) {
+                getDetailSolarPanelSum($('#powerplants').val(), $('#datepickerStart').val(), $('#datepickerEnd').val(), callback);
+            }, 3);
+
+            $ajax.Post(powerplantsUrl, {}, function (d) {
+                if (d.result) {
+                    if (d.plant) {
+                        $.each(d.plant, function (i, v) { $('<option></option>', { val: v.key }).html(v.value).appendTo($('#powerplants')); });
+                    }
+
+                    $('#powerplants').change(function () {
+                        getInvestSum($('#powerplants').val(), $('#datepickerStart').val(), $('#datepickerEnd').val());
+                        pageIndex = 0;
+                        $('#accordion').html('');
+                        getDetailSolarPanelSum($('#powerplants').val(), $('#datepickerStart').val(), $('#datepickerEnd').val());
+
+                        populate.start();
+                    });
+
+                    if (id) {
+                        $('#powerplants').val(id);
+                        if ($('#powerplants').val())
+                            $('#powerplants').change()
+                        else
+                            showMsg('電廠資料不存在', 'error');
+                    }
+                    else
+                        $('#powerplants').change()
+                }
+            });
+
+
+            //MODAL: 發票資訊明細
+            $('#modalInvoice').on('show.bs.modal', function (e) {
+                var invoiceNumber = $(e.relatedTarget).data("invoice-number");
+                var CompId = $(e.relatedTarget).data("compid");
+                $("#invoiceId").text(invoiceNumber);
+                $('#modalInvoice div.row:nth(1) div:nth(1)').html('元');
+                $('#modalInvoice div.row:nth(2) div:nth(1)').html('元');
+                $('#modalInvoice div.row:nth(3) div:nth(1)').html('');
+                $('#modalInvoice div.row:nth(4) div:nth(1)').html('');
+                $ajax.Post(detailSolarPanel_EINVUrl, { CompId: CompId, INVNO: invoiceNumber }, function (d) {
+                    if (d.result) {
+                        if (d.data) {
+                            var dd = d.data;
+                            //$('#modalInvoice div.row:nth(0) div:nth(1)').html(dd.INV_NO);
+                            $('#modalInvoice div.row:nth(1) div:nth(1)').html(setSymbol(dd.INV_AMT) + '元');
+                            $('#modalInvoice div.row:nth(2) div:nth(1)').html(setSymbol(dd.INV_AMT_TAX) + '元');
+                            $('#modalInvoice div.row:nth(3) div:nth(1)').html(dd.INV_DT);
+                            $('#modalInvoice div.row:nth(4) div:nth(1)').html(dd.INVD_DESC);
+                        }
+                        else
+                            showMsg("查無資料", 'error');
+                    }
+                    else {
+                        //$('#modalInvoice').modal('hide');
+                        showMsg(d.message, 'error');
+                    }
+                });
+            });
+
+            // MODAL: 電廠編號明細
+            $('#modalSolarList').on('show.bs.modal', function (e) {
+                var majseqid = $(e.relatedTarget).data("solar-id");
+                $('#modalSolarList div.modal-interest-content').html('');
+                $ajax.Post(detailSolarPanel_POWERUrl, { MAJSEQID: majseqid }, function (d) {
+                    if (d.result) {
+                        if (d.data) {
+                            $.each(d.data, function (i, v) {
+                                var html = '<div class="row"><div class="col-6">' + v.SUB_SEQ_ID + '</div><div class="col-6">' + v.SOLAR_PANELS_NO + '</div></div>';
+                                $('#modalSolarList div.modal-interest-content').append(html);
+                            });
+                        }
+                    } else
+                        showMsg(d.message, 'error');
+                });
+            });
+        }
+
+        var getInvestSum = function (majSeqId, startDate, endDate) {
+            $ajax.Post(myInvestSumUrl, { MajSeqId: majSeqId, StartDate: startDate, EndDate: endDate }, function (d) {
+                if (d) {
+                    $('#owner-pic').html(d.TOTAL_PANEL_NUM);
+                    $('#owner-total').html(setSymbol(d.TOTAL_AMT));
+                    //$('li.all-interest-item p.dollar').html(setSymbol(d.TOTAL_AMT));
+                    $('li.all-interest-item p.frequency').html(d.TOTAL_DISTRIBUTION_TIMES);
+                    $('li.all-interest-item p.benefit').html(setSymbol(d.TOTAL_POWER_BENEFIT));
+                }
+            });
+        }
+
+        var getDetailSolarPanelSum = function (majSeqId, startDate, endDate, callback) {
+            pageIndex++;
+            var dateVal = new Date();
+            var tmpdetailSolarPanelUrl = detailSolarPanelUrl + "?t=" + dateVal.getTime();
+            if (chkpageIndex === 0) {
+                chkpageIndex = pageIndex;
+                $ajax.Post(tmpdetailSolarPanelUrl, { MajSeqId: majSeqId, StartDate: startDate, EndDate: endDate, PageIndex: pageIndex }, function (d) {
+                    if (d.result) {
+                        var html = $('#interestSection').html();
+                        var isEnd = true;
+                        $.each(d.data, function (i, v) {
+                            v.index = rowIndex++;
+                            v.PRD_DSB_AMT = setSymbol(v.PRD_DSB_AMT);
+                            $('#accordion').append(templateBind($('#interestSection').html(), v));
+                            isEnd = v.RESULT_COUNT == v.ROWNO;
+                        });
+
+                        $('.collapse').unbind().on('show.bs.collapse', function (e) {
+                            if ($(this).find('div').length == 1) {
+                                var majseqid = $(this).data('majseqid');
+                                var prdid = $(this).data('prdid');
+                                var stratdate = $(this).data('stratdate');
+                                var enddate = $(this).data('enddate');
+
+                                var id = '#' + e.currentTarget.id;
+
+                                $ajax.Post(detailSolarPanelContentUrl, { MajSeqId: majseqid, PrdNum: prdid }, function (d1) {
+                                    if (d1) {
+                                        d1.MAJ_SEQ_ID = majseqid;
+                                        d1.POWER_FEE_START_DATE = stratdate;
+                                        d1.POWER_FEE_END_DATE = enddate;
+
+                                        d1.INVEST_NUM = setSymbol(d1.INVEST_NUM);
+                                        d1.INCOME_DEC_AMT = setSymbol(d1.INCOME_DEC_AMT);
+                                        d1.MAINTENANCE_FEE = setSymbol(d1.MAINTENANCE_FEE);
+                                        d1.MANAGEMENT_COSTS = setSymbol(d1.MANAGEMENT_COSTS);
+                                        d1.SERVICE_FEE = setSymbol(d1.SERVICE_FEE);
+                                        d1.BENEFIT = setSymbol(d1.BENEFIT);
+                                        d1.POWER_GEN_NUM = setSymbol(d1.POWER_GEN_NUM);
+                                        d1.POWER_GEN_TTL_AMT = setSymbol(d1.POWER_GEN_TTL_AMT);
+                                        d1.RENT_FEE = setSymbol(d1.RENT_FEE);
+                                        d1.INSURANCE_FEE = setSymbol(d1.INSURANCE_FEE);
+                                        d1.CASE_TOTAL_BENEFIT = setSymbol(d1.CASE_TOTAL_BENEFIT);
+
+                                        linkGetFile = '';
+                                        if (d1.POWER_FILE_NAME)
+                                            linkGetFile = '<a href="@Url.Action("GetFile","Home")/' + d1.POWER_FILE_NAME+'" target="_blank"><img src="@Url.Content("~/Content/images/s_paper_icon.svg")" alt="">查看</a>';
+                                        d1.linkGetFile = linkGetFile;
+
+                                        $(id).find('div').prepend(templateBind($('#interestSectioncollapse').html(), d1));
+                                    }
+                                });
+                            }
+                        });
+
+                        if (isEnd)
+                            populate.end();
+                        else if (callback)
+                            callback();
+                        chkpageIndex = 0;
+                    }
+                    else {
+                        chkpageIndex = 0;
+                        showMsg(d.message, 'error');
+                    }
+                });
+                
+            }
+
+        }
+
+    </script>
+}

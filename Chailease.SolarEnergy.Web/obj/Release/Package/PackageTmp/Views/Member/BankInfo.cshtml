@@ -1,0 +1,390 @@
+﻿@model HomeViewModel
+@{
+    ViewBag.Title = "會員中心";
+}
+@section metatags {
+    @Html.Action("GetMetaByType", "Base", new { id = 1 })
+}
+@section header{
+    @Styles.Render("~/Content/pages/member/profile.min.css")
+    <style>
+        /* 套件樣式影響到錯誤提示的圖案顯示，要重製掉float */
+        .twitter-typeahead {
+            float: inherit !important;
+        }
+
+        .bankname .input-group .twitter-typeahead {
+            display: inherit !important;
+        }
+
+        /*搜尋下拉選單的樣式:銀行分行*/
+        .tt-query, /* UPDATE: newer versions use tt-input instead of tt-query */
+        .tt-hint {
+            width: 396px;
+            height: 30px;
+            padding: 8px 12px;
+            font-size: 24px;
+            line-height: 30px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .tt-query { /* UPDATE: newer versions use tt-input instead of tt-query */
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        }
+
+        .tt-hint {
+            color: #999;
+        }
+
+        .tt-menu { /* UPDATE: newer versions use tt-menu instead of tt-dropdown-menu */
+            width: 422px;
+            margin-top: 12px;
+            padding: 8px 0;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            box-shadow: 0 5px 10px rgba(0,0,0,.2);
+        }
+
+        .tt-suggestion {
+            padding: 3px 20px;
+            font-size: 18px;
+            line-height: 24px;
+        }
+
+            .tt-suggestion.tt-is-under-cursor { /* UPDATE: newer versions use .tt-suggestion.tt-cursor */
+                color: #fff;
+                background-color: #0097cf;
+            }
+
+            .tt-suggestion p {
+                margin: 0;
+            }
+    </style>
+}
+<div class="page-container">
+    <div class="page-kv">
+        <h1 class="page-kv--title">會員中心</h1>
+    </div>
+    <div class="page-content">
+        <div class="breadcrumb-container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/" href="@Url.Content(" ~/Home/")">
+                            <span itemprop="name">
+                                <img src="@Url.Content("~/Content/images/bread_home_icon.svg")" alt="首頁">
+                            </span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Member/" href="@Url.Content("~/Member/")">
+                            <span itemprop="name">會員中心</span>
+                        </a>
+                        <meta itemprop="position" content="2" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Member/Profile" href="@Url.Content("~/Member/Profile")">
+                            <span itemprop="name">會員資料</span>
+                        </a>
+                        <meta itemprop="position" content="3" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                            <span itemprop="name">銀行帳戶</span>
+                        </a>
+                        <meta itemprop="position" content="4" />
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <div class="profile-container">
+            <div class="profile-tag-container">
+                <ul class="profile-tag">
+                    <li class="profile-tag--item">
+                        <a href="@Url.Content("~/Member/Profile")">我的資料 </a>
+                    </li>
+                    <li class="profile-tag--item active">
+                        <a href="@Url.Content("~/Member/BankInfo")">銀行帳戶 </a>
+                    </li>
+                    <li class="profile-tag--item">
+                        <a href="@Url.Content("~/Member/Password")">修改密碼 </a>
+                    </li>
+                    <li class="profile-tag--item">
+                        <a href="@Url.Content("~/Member/Event")">會員活動 </a>
+                    </li>
+                </ul>
+            </div>
+            @* TODO:
+                #showBankInfo 展示USER目前銀行資料
+                #changeBankInfo 修改銀行資料
+                請切換兩邊顯示(Class + d-none OR 用FadeOut)
+            *@
+            <div id="showBankInfo" class="profile-content">
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="form-item">
+                            <label for="bankNameDisplay" class="control-label">銀行帳戶姓名</label>
+                            <div class="input-group lock">
+                                <input type="text" id="bankNameDisplay" name="bankNameDisplay" class="form-control" value="" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6"></div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="form-item">
+                            <label for="bankIdDisplay" class="control-label">銀行代碼</label>
+                            <div class="input-group lock">
+                                <input type="text" id="bankIdDisplay" name="bankIdDisplay" class="form-control" value="" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-item">
+                            <label for="bankBranchDisplay" class="control-label">分行名稱</label>
+                            <div class="input-group lock">
+                                <input type="text" id="bankBranchDisplay" name="bankBranchDisplay" class="form-control" value="" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-item">
+                    <label for="bankAccountDisplay" class="control-label">銀行帳號</label>
+                    <div class="input-group lock">
+                        <input type="text" id="bankAccountDisplay" name="bankAccountDisplay" class="form-control" value="" readonly>
+                    </div>
+                </div>
+                @* TODO:
+                    審核狀態請參閱Guideline的Form MemberCenter部分的HTML結構
+                    銀行存摺狀態:
+                    1. 已審核(銀行存摺此處僅展示，無法修改。請套上上傳圖檔)
+                    2. 審核中(銀行存摺此處僅展示，無法修改。請套上上傳圖檔)
+                    3. 未審核
+                    4. 審核失敗(說明文字不確定，可能由後台給?。請套上上傳圖檔)
+                *@
+                <div class="form-item">
+                    <div class="idcard-status">
+                        <label class="control-label mb-3">銀行存摺</label>
+                        @* 1. 已審核 *@
+                        <img src="~/Content/images/success_info_icon.svg" class="ml-3 idcard-status--icon d-none baseBankststus03">
+
+                        @* 2. 審核中*@
+                        <img src="~/Content/images/search_info_icon.svg" class="ml-md-3 idcard-status--icon d-none baseBankststus02">
+                        <span class="ml-md-3 idcard-status--text d-none baseBankststus02">銀行存摺尚在查核中</span>
+
+                        @* 3. 未審核*@
+                        <img src="~/Content/images/warning_info_icon.svg" class="ml-md-3 idcard-status--icon d-none baseBankststus01">
+                        <span class="ml-md-3 idcard-status--text text-heightline d-none baseBankststus01">銀行存摺尚未確認，會影響到您的會員權利</span>
+
+                        @* 4. 審核失敗*@
+                        <img src="~/Content/images/warning_info_icon.svg" class="ml-md-3 idcard-status--icon d-none baseBankststus04">
+                        <span class="ml-md-3 idcard-status--text text-heightline d-none baseBankststus04">審核失敗，請重新上傳</span>
+
+                    </div>
+                    <div class="upload-content-account">
+                        @* 1. 已審核/2. 審核中 *@
+                        <div class="file-container-account">
+                            @*<div class="js-file-preview file-img" style="background-image:url('../Content/images/news_report_bigimage.jpg')">*@
+                            <div class="js-file-preview file-img" style="">
+                            </div>
+                            @*<input type="file" id="fileAccountBank" class="js-input-file input-file"accept="image/gif, image/jpeg, image/jpg, image/png">*@
+                        </div>
+                        @* 3. 未審核/4. 審核失敗
+                            <div class="file-container-account">
+                                <div class="js-file-preview file-img" style="background-image:url('../Content/images/news_report_bigimage.jpg')">
+                                </div>
+                                <input type="file" id="fileAccountBank" class="js-input-file input-file"
+                                    accept="image/gif, image/jpeg, image/jpg, image/png">
+                                <p class="file-name js-file-name d-none">檔名顯示</p>
+                                <div class="btn--type btn--type-2 file-btn">選擇檔案</div>
+                            </div>
+                        *@
+                    </div>
+                </div>
+                <button class="center btn--common btn--common-1 mt-5">編輯修改</button>
+            </div>
+            <div id="changeBankInfo" class="profile-content ">
+                <form action="">
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="form-item">
+                                <label for="bankName" class="control-label">銀行帳戶姓名</label>
+                                <div class="input-group lock">
+                                    <input type="text" id="eAcctName" name="eAcctName" class="form-control" value="" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="form-item">
+                                <label for="bankId" class="control-label">銀行代碼</label>
+                                <div class="input-group">
+                                    @*<input type="text" id="bankId" name="bankId" class="form-control" value="855">*@
+                                    <select class="form-control" id="eBankId" name="eBankId" required>
+                                        <option value="" selected="" disabled="">銀行代碼(3碼)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 bankname">
+                            <div class="form-item">
+                                <label for="eBankBranchName" class="control-label">分行名稱</label>
+                                <div class="input-group">
+                                    <input type="text" id="eBankBranchName" name="eBankBranchName" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <label for="eBankAccount" class="control-label">銀行帳號</label>
+                        <div class="input-group">
+                            <input type="text" id="eBankAccount" name="eBankAccount" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="idcard-status">
+                            <label class="control-label mb-3">銀行存摺</label>
+                        </div>
+                        <div class="upload-content-account">
+                            <div class="file-container-account input-group">
+                                <div class="js-file-preview file-img"></div>
+                                <input type="file" id="fileAccountBank" name="fileAccountBank" class="js-input-file input-file" accept="image/gif, image/jpeg, image/jpg, image/png" required>
+                                <p class="file-name js-file-name d-none">檔名顯示</p>
+                                <div class="btn--type btn--type-2 file-btn">選擇檔案</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-center mt-5">
+                        <button class="center btn--common btn--common-2 mb-3 mb-md-0">放棄修改</button>
+                        <button class="center btn--common btn--common-1">編輯修改</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+
+    <link href="~/Content/typeahead.css" rel="stylesheet" />
+    <script src="~/Scripts/typeahead.bundle.js"></script>
+    <script src="~/Scripts/image-compressor.js"></script>
+
+    <script>
+        const initUrl = '@Url.Action("BankInfoInit")';
+        const bankNameUrl = '@Url.Action("GetBankBranchName")';
+        const changeformBankUrl = '@Url.Action("BankInfo")';
+
+        var showform = $('#showBankInfo');
+        var changeform = $('#changeBankInfo form');
+
+        var bankBranchName;
+        $(function () {
+            changeform.hide();
+            bankBranchName = new typeaheadoption('#eBankBranchName');
+            $ajax.Post(initUrl, {}, function (d) {
+                if (d) {
+                    if (!d.auth.isEdit) {
+                        showform.find('button,div.input-change').remove();
+                    }
+                    if (d.auth.bankStatus) {
+                        var bankclassname = 'baseBankststus' + d.auth.bankStatus;
+                        showform.find('.' + bankclassname).removeClass('d-none');
+                    }
+                    var bankName = '';
+                    if (d.bankCode) {
+                        $.each(d.bankCode, function (i, v) {
+                            $('<option></option>', { value: v.key }).html(v.value).appendTo($('#eBankId'));
+                            if (d.info.PAYEE_BANK_ID == v.key)
+                            bankName = v.value;
+                        });
+                    }
+                    infobind(d.info, bankName);
+                }
+            });
+
+            changeform.validate(validateParams);
+            changeform.find('#fileAccountBank').rules("add", { filesize: 30 * 1024 * 1024 });
+            changeform.find('#eBankAccount').rules("add", { digits: true, maxlength: 14 });
+
+            $('#eBankId').change(function () {
+                bankBranchName.clear();
+                var v = $(this).val();
+                $ajax.Post(bankNameUrl, { code: v }, function (d) {
+                    if (d.bankNames) {
+                        bankBranchName.setData(d.bankNames);
+                    }
+                });
+            });
+
+            showform.find('button').click(function () {
+                showform.hide();
+                changeform.find('input:not(#eAcctName),select').val('');
+                changeform.fadeIn(300);
+            });
+
+            changeform.find('button:nth(0)').click(function () {
+                showform.fadeIn(300);
+                changeform.hide();
+                return false;
+            });
+
+            changeform.submit(function () {
+                if (!changeform.valid()) return false;
+
+                var file = changeform.find('#fileAccountBank')[0].files[0];
+                var p = new imgcompress();
+                p.compress(file, 1, function (d) {
+                    var formData = new FormData();
+                    formData.append('File', d, d.name);
+                    formData.append('BankId', changeform.find('#eBankId').val());
+                    formData.append('BankName', changeform.find('#eBankId option:selected').html());
+                    formData.append('BankBranchName', changeform.find('#eBankBranchName').val());
+                    formData.append('BankBranchId', bankBranchName.getKey());
+                    formData.append('BankAccount', changeform.find('#eBankAccount').val());
+                    $ajax.FormPost(changeformBankUrl, formData, function (d) {
+                        if (d.result) {
+                            window.location.reload();
+                        }
+                        else {
+                            showMsg(d.message, 'error');
+                        }
+                    });
+
+                }, function (e) { showMsg('File upload fail - ' + e, 'error'); });
+
+                return false
+            });
+
+            changeform.on('keyup keypress', function (e) {
+                var keyCode = e.keyCode || e.which;
+                if (keyCode === 13) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        });
+
+
+        var infobind = function (d, bankName) {
+            showform.find('#bankNameDisplay').val(d.CUST_NAME);
+            if (d.PAYEE_BANK_ID) showform.find('#bankIdDisplay').val(d.PAYEE_BANK_ID + ' - ' + bankName);
+            showform.find('#bankBranchDisplay').val(d.PAYEE_BANK);
+            showform.find('#bankAccountDisplay').val(d.PAYEE_ACCT);
+
+            changeform.find('#eAcctName').val(d.CUST_NAME);
+        }
+
+
+    </script>
+
+}

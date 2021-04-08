@@ -1,0 +1,32 @@
+﻿@model JoinViewModel
+@{
+    var fileList = Model.LoanCaseFile.LIST_LOANCASE_DETAIL;
+    var project = Model.LoanCaseIntroduct.CASELOAN_INTRODCT;
+    var projectID = project.POWER_PLANT_NUM;
+}
+
+<section class="row no-gutters block-item">
+    <h3 class="tab-content-title">專案合約文件(認購人線上合約)</h3>
+    <ul class="file-list">
+        @{
+            if (fileList != null)
+            {
+                foreach (var item in fileList)
+                {
+                    <li class="file-item">
+                        <a href="@Url.Action("LoanCaseFile", new { item.FILE_UUID })"
+                           class="file-item-link" target=""
+                           data-ga-target="ga_project_tabfile_btn_download"
+                           data-ga-project-id="@projectID"
+                           data-ga-project-file-id="@item.FILE_MEMO">
+                            <div class="file-item-link--img"></div>
+                            <div class="file-item-link--icon"></div>
+                            <p class="file-item-link--name">@item.FILE_MEMO</p>
+                        </a>
+                    </li>
+                }
+            }
+        }
+    </ul>
+</section>
+

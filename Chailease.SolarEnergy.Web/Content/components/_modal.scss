@@ -1,0 +1,460 @@
+﻿/*modal ===============*/
+.modal-content {
+	border: none;
+	border-top: 0.19rem solid $color-primary-blue;
+	border-radius: 0;
+}
+.modal-btn--close {
+	position: absolute;
+	right: 0;
+	top: -6rem;
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	@include change(transform, .5s, $cb);
+	&:hover {
+		transform: rotate(270deg);
+	}
+}
+@include rwd(#{$ipad - 1px}) {
+	.modal-btn--close {
+		width: 2.5rem;
+		top: -3.5rem;
+	}
+}
+
+/*MODAL: 註冊 ============*/
+.modal-signup {
+	margin-top: 100px;
+}
+/*MODAL: 來源問卷 =======*/
+.modal-source {
+	.modal-content {
+		padding: 10% 5%;
+	}
+	.modal-content--title {
+		font-size: 1.38rem;
+		text-align: center;
+		letter-spacing: 0.06rem;
+		color: $color-dark--2;
+		margin-bottom: 2.5rem;
+	}
+}
+
+/*MODAL: 密碼重設 ===*/
+.modal-forgetpw {
+	.modal-content {
+		padding: 10% 5%;
+		.modal-content--title {
+			font-size: 1.38rem;
+			text-align: center;
+			letter-spacing: 0.06rem;
+			color: $color-dark--2;
+			margin-bottom: 2.5rem;
+		}
+	}
+	.modal-password--result {
+		&--icon {
+			width: 2.5rem;
+		}
+		&--title {
+			font-size: 1.38rem;
+			text-align: center;
+			letter-spacing: 0.06rem;
+			color: $color-dark--2;
+			margin-bottom: 2.5rem;
+			margin-top: 1.19rem;
+		}
+		&--text {
+			font-size: 0.94rem;
+			line-height: 1.31rem;
+			text-align: center;
+			letter-spacing: 0.03rem;
+			margin-bottom: 3rem;
+			>span {
+				color: $color-primary-blue;
+			}
+			>img {
+				display: inline-block;
+			}
+		}
+	}
+}
+
+
+/*MODAL: 忘記信箱 ===*/
+.modal-forgetEmail {
+	.modal-content {
+		padding: 10% 5%;
+		.modal-content--title {
+			font-size: 1.38rem;
+			text-align: center;
+			letter-spacing: 0.06rem;
+			color: $color-dark--2;
+			margin-bottom: 2.5rem;
+		}
+	}
+	.modal-email--result {
+		&--icon {
+			width: 2.5rem;
+		}
+		&--title {
+			font-size: 1.38rem;
+			text-align: center;
+			letter-spacing: 0.06rem;
+			color: $color-dark--2;
+			margin-bottom: 2.5rem;
+			margin-top: 1.19rem;
+		}
+		&--text {
+			font-size: 0.94rem;
+			line-height: 1.31rem;
+			text-align: center;
+			letter-spacing: 0.03rem;
+			margin-bottom: 3rem;
+			>span {
+				color: $color-primary-blue;
+			}
+			>img {
+				display: inline-block;
+			}
+		}
+	}
+}
+
+/*MODAL: 設定登入密碼 ===*/
+.modal-setting-password {
+	.modal-content{
+		padding: 10% 5%;
+	}
+	.modal-form--setting-password {
+		.modal-content--title {
+			font-size: 1.38rem;
+			text-align: center;
+			letter-spacing: 0.06rem;
+			color: $color-dark--2;
+			margin-bottom: 2.5rem;
+		}
+	}
+	&--result {
+		>img {
+			width: 2.5rem;
+			margin-top: 5rem;
+			margin-bottom: 0.94rem;
+		}
+		&--title {
+			font-size: 1.38rem;
+			text-align: center;
+			letter-spacing: 0.06rem;
+			color: $color-dark--2;
+		}
+		&--text {
+			font-size: 1.25rem;
+			line-height: 1.75rem;
+			text-align: center;
+			letter-spacing: 0.06rem;
+			margin-bottom: 3.5rem;
+			>span {
+				color: $color-primary-blue;
+			}
+		}
+		.care-text {
+			font-size: 0.94rem;
+			line-height: 1.31rem;
+			margin-top: 0.5rem;
+			color: $color-secondary;
+			text-align: center;
+		}
+	}
+}
+
+
+/* MODAL: 成為出資會員 ===*/
+.modal-buyinfo {
+	.modal-content {
+		padding: 10% 0;
+	}
+	.modal-buyinfo{
+		&--icon {
+			width: 3.13rem;
+			margin-bottom: 0.8rem;
+		}
+		&--title {
+			text-align: center;
+			color: $color-primary-blue;
+			font-size: 1.25rem;
+			line-height: 1.75rem;
+			letter-spacing: 0.08rem;
+			margin-bottom: 1.69rem;
+		}
+		&--img {
+			width: 90%;
+			margin: 0 auto 1.13rem;
+			>img {
+				display: inline-block;
+			}
+			>img:first-child {
+				width: 40%;
+				margin-right: 8%;
+			}
+			>img:last-child {
+				width: 50%;
+			}
+		}
+	}
+	.care-text {
+		width: 100%;
+		height: 1.75rem;
+		background-color: $color-primary-blue;
+		text-align: center;
+		font-size: 0.88rem;
+		color: #fff;
+		margin-bottom: 1.75rem;
+		>span {
+			font-size: 1.2em;
+			font-weight: bold;
+		}
+	}
+	.btn--form-send {
+		width: 90%;
+		margin: 0 auto;
+	}
+}
+
+/* MODAL: 訂閱  ---*/
+.modal-subscription {
+	.modal-content {
+		padding: 3rem 0 5rem;
+	}
+	.btn--common {
+		width: 8.19rem;
+	}
+	&--icon {
+		width: 2.5rem;
+	}
+	&--title {
+		text-align: center;
+		color: $color-primary-blue;
+		margin-top: 2.38rem;
+	}
+	&--text {
+		text-align: center;
+		color: #8a8a8a;
+		margin: 1.31rem auto 2.63rem;
+	}
+}
+
+/* Modal:共通訊息視窗 */
+// .modal-msg {
+//     width: 100%;
+//     background-color: rgba(#000, 0.5);
+//     z-index: $msg-modal-z;
+//     .modal-dialog {
+//         max-width: 450px;
+//     }
+//     .modal-footer {
+//         border: none;
+//         padding: 2.5rem;
+//         display: block;
+//     }
+//     .modal-body {
+//         padding: 1rem 1.81rem;
+//     }
+//     .modal-content {
+//         box-shadow: 0 2px 8px 0 rgba(0,0,0,0.20);
+//     }
+//     &-pic {
+//         display: block;
+//         margin: 0 auto;
+//     }
+//     &-title {
+//         font-size: 2.25rem;
+//         line-height: 3.13rem;
+//         text-align: center;
+//         margin: 1.63rem auto 0.75rem;
+//     }
+//     &-content {
+//         text-align: center;
+//         font-size: 1rem;
+//         line-height: 1.38rem;
+//         color: $color-dark--2;
+//     }
+//     &-btn {
+//         width: 14.13rem;
+//         max-width: 100%;
+//         height: 3.13rem;
+//         line-height: 3.13rem;
+//         margin: 0 auto;
+//         display: block;
+//     }
+// }
+// .modal-msg--info {
+//     .modal-msg-title {
+//         color: $color-dark;
+//     }
+// }
+// .modal-msg--warning {
+//     .modal-msg-title {
+//         color: $color-primary-red;
+//     }
+// }
+// .modal-msg--error {
+//     .modal-msg-title {
+//         color: $color-warning;
+//     }
+// }
+// .modal-msg--success {
+//     .modal-msg-title {
+//         color: $color-primary-blue;
+//     }
+// }
+
+// @include rwd(#{$ipad - 1px}) {
+//     .modal-msg {
+//         .modal-content {
+//             width: 280px;
+//             margin: 0 auto;
+//         }
+//         &-title {
+//             font-size: 1.5rem;
+//         }
+//         &-btn {
+//             width: 8.13rem;
+//             line-height: 2.5rem;
+//             height: 2.5rem;
+//             font-size: 0.88rem;
+//         }
+//     }
+// }
+
+// /* Modal:影片報導 / Modal:0卡分期是什麼首頁 */
+// /*用bootatrap modal格式，但自行改用js控制 */
+// .modal-videoreport,
+// .modal-zerocardindex {
+//     &.modal {
+//         z-index: $video-modal-z;
+//         width: 100%;
+//         height: 100vh;
+//         background-color: rgba(#000, 0.5);
+//     }
+//     .modal-dialog {
+//         width: 90%;
+//         max-width: 900px;
+//         height: 100%;
+//         margin: 5% auto 0;
+//     }
+    
+//     .modal-content {
+//         padding: 3% 5%;
+//         border-radius: 15px;
+//     }
+//     .modal-header {
+//         width: 90%;
+//         margin: 0 auto;
+//         margin-bottom: 36px;
+//         border-bottom: none;
+//         .close {
+//             width: 3.11rem;
+//             height: 3.11rem;
+//             background-color: transparent;
+//             padding: 0;
+//             @include change(transform, ease-in-out, 0.3s);
+//             cursor: pointer;
+//             &:hover {
+//                 transform: rotate(180deg);
+//             }
+//             >img {
+//                 width: 100%;
+//                 height: 100%;
+//             }
+//         }
+//     }
+//     .modal-body {
+//         padding: 0;
+//         width: 90%;
+//         margin: 0 auto;
+//     }
+//     .modal-video {
+//         iframe {
+//             width: 100%;
+//             max-width: 710px;
+//             height: 25vw;
+//             max-height: 450px;
+//             margin: 0 auto;
+//             display: block;
+//         }
+//         &-content {
+//             padding-top: 0.69rem;
+//             padding-bottom: 1.19rem;
+//             border-bottom: 1px solid $color-dark--2;
+//             .video-title {
+//                 font-size: 2.25rem;
+//                 line-height: 3.13rem;
+//                 color: $color-dark--2;
+//                 margin-bottom: 15px;
+//             }
+//             .video-info {
+//                 font-size: 1.13rem;
+//                 line-height: 2.19rem;
+//                 color: $color-dark--2;
+//             }   
+//         }
+//         &-social {
+//             padding-top: 2.31rem;
+//             @include flexbox;
+//             @include justify-content(flex-end);
+//             >button:first-child {
+//                 margin-right: 3%;
+//             }
+//         }
+//     }
+// }
+
+
+// @include rwd(#{$ipad - 1px}){
+//     .modal-videoreport,
+//     .modal-zerocardindex {
+//         .modal-dialog {
+//             height: auto;
+//         }
+//         .modal-header {
+//             margin-bottom: 3%;
+//             .close {
+//                 width: 1.88rem;
+//                 height: 1.88rem;
+//             }
+//         }
+//         .modal-body{
+//             width: 100%;
+//         }
+//         .modal-video {
+//             iframe {
+//                 width: 100%;
+//                 height: 52vw;
+//             }
+//             &-content {
+//                 padding-top: 0.94rem;
+//                 padding-bottom: 1.88rem;
+//                 .video-title {
+//                     font-size: 1.13rem;
+//                     line-height: 1.56rem;
+//                     margin-bottom: 0.75rem;
+//                 }
+//                 .video-info {
+//                     font-size: 0.88rem;
+//                     line-height: 1.75rem;
+//                 }   
+//             }
+//             &-social {
+//                 padding: 1rem 0;
+//                 @include flex-direction(column);
+//                 @include align-items(flex-end);
+//                 >button:first-child {
+//                     margin-bottom: 3%;
+//                     margin-right: 0;
+//                 }
+//             }
+//         }
+//     }
+    
+// }

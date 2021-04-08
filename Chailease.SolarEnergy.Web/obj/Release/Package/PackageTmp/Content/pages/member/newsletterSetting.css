@@ -1,0 +1,57 @@
+﻿@charset "UTF-8";
+/* @site: 全民電廠
+ * @author: nikki
+ * @update: nikki (2019-3-4)
+ * @page: 管理電子報偏好設定
+ * @description: 
+ */
+/* =Variables--------------------------*/
+/* font style ---*/
+/* desktop & mobile size */
+/* color */
+/*animation */
+/*z-index */
+/*為手譏評板裝置，且裝置奘為橫向*/
+/*若只判斷orientation:landscape，desktop size也包含在內*/
+.page-container {
+  background-image: linear-gradient(0deg, rgba(30, 181, 172, 0) 30%, rgba(30, 181, 172, 0.8) 100%); }
+
+.page-kv {
+  padding-top: 10rem;
+  height: 25rem; }
+  .page-kv--title {
+    color: #303030; }
+
+@media only screen and (max-width: 767px) {
+  .page-kv {
+    height: 15rem;
+    padding: 7rem 5% 0; } }
+
+/*block: setting-container ---*/
+.setting-container {
+  max-width: 48rem;
+  width: 90%;
+  margin: 0 auto; }
+
+.setting-item {
+  height: 9.22rem;
+  letter-spacing: 0.15rem;
+  line-height: 2;
+  color: #303030;
+  border-bottom: 1px solid #CECECE; }
+  .setting-item--title {
+    font-size: 1.5rem;
+    font-weight: bold; }
+  .setting-item--text {
+    font-size: 1.25rem; }
+
+@media only screen and (max-width: 767px) {
+  .setting-item {
+    height: auto;
+    padding: 5% 0;
+    letter-spacing: 0rem;
+    line-height: 1.5; }
+    .setting-item--title {
+      font-size: 1rem; }
+    .setting-item--text {
+      font-size: .88rem; } }

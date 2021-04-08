@@ -1,0 +1,49 @@
+﻿@*
+    MODAL: 修改行動電話
+*@
+<div class="modal fade" id="modalChangeCellphone" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-forgetEmail" role="document">
+        <div class="modal-content ">
+            <button type="button" class="modal-btn--close" data-dismiss="modal" aria-label="Close">
+                <img src="@Url.Content("~/Content/images/bt_close_w.svg")" alt="">
+            </button>
+            @* 步驟1: 填表*@
+            <form action="" class="modal-form--forgetEmail">
+                <p class="modal-content--title">修改行動電話</p>
+                <div class="form-item">
+                    <label class="control-label">原行動電話</label>
+                    <div class="input-group">
+                        <div class="account-data-containter">
+                            <span class="account-data">0926 567 734</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-item">
+                    <label class="control-label">欲修改行動電話</label>
+                    <div class="form-item">
+                        <div class="input-group input-sendotpcode">
+                            <input type="tel" id="InputChangePhone" name="InputChangePhone" class="form-control" placeholder="請輸入手機號碼" autocomplete="tel" required>
+                            <div class="sendtopcode-common btn-sendotpcode">發送驗證碼</div>
+                            <div class="sendtopcode-common show-resend-time">
+                                重發(&nbsp;<span id="countdown" class="time"></span>&nbsp;)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="input-group input-otpcode">
+                            <input type="number" id="InputPhoneOtpCode" name="InputPhoneOtpCode" class="form-control" placeholder="請輸入驗證碼" required maxlength="6">
+                        </div>
+                    </div>
+                    @*  驗證碼判斷成功後，請在.input-otpcode加上.success
+                        <div class="form-item">
+                            <div class="input-group input-otpcode success">
+                                <input type="tel" id="otpCodeInput1" name="otpCodeInput1" class="form-control" placeholder="請輸入驗證碼" required="">
+                            </div>
+                        </div>*@
+                </div>
+                <button class="center btn--common btn--common-1 btn--form-send">完成</button>
+            </form>
+        </div>
+    </div>
+</div>
+

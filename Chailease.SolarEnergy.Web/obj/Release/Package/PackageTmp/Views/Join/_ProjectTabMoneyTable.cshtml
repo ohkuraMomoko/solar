@@ -1,0 +1,80 @@
+﻿@model JoinViewModel
+@{
+    
+    var calculate = Model.LoanCaseCalculate;
+}
+
+    <div class="item-box">
+        @{
+
+            decimal POWER_GEN_SUM = 0;
+            decimal POWER_FEE_SUM = 0;
+            decimal iPOWER_FEE = 0;
+            decimal APPOR_RENT_SUM = 0;
+            decimal APPOR_INSURANCE_SUM = 0;
+            decimal OTHER_FEE_SUM = 0;
+            decimal ANNUAL_RECEIPT_SUM = 0;
+            decimal iANNUAL_RECEIPT = 0;
+            decimal iPRE_ACCUMLATE_RECEIPT = 0;
+            decimal amt = 0;
+
+            foreach (var item in calculate.CALUATLE_LIST)
+            {
+
+                if (decimal.TryParse(item.PRE_POWER_GEN, out amt))
+                {
+                    POWER_GEN_SUM += amt;
+                }
+                if (decimal.TryParse(item.PRE_POWER_FEE, out iPOWER_FEE))
+                {
+                    POWER_FEE_SUM += iPOWER_FEE;
+                }
+                if (decimal.TryParse(item.PRE_APPOR_RENT, out amt))
+                {
+                    APPOR_RENT_SUM += amt;
+                }
+                if (decimal.TryParse(item.PRE_APPOR_INSURANCE, out amt))
+                {
+                    APPOR_INSURANCE_SUM += amt;
+                }
+                if (decimal.TryParse(item.PRE_OTHER_FEE, out amt))
+                {
+                    OTHER_FEE_SUM += amt;
+                }
+                if (decimal.TryParse(item.PRE_ANNUAL_RECEIPT, out iANNUAL_RECEIPT))
+                {
+                    ANNUAL_RECEIPT_SUM += iANNUAL_RECEIPT;
+                }
+                if (decimal.TryParse(item.PRE_ACCUMLATE_RECEIPT, out iPRE_ACCUMLATE_RECEIPT))
+                {
+
+                }
+                <div class="table-row">
+                    <div class="table-data">@item.YEAR</div>
+                    <div class="table-data">@item.PRE_POWER_PERFORMANCE %</div>
+                    <div class="table-data">@item.PRE_POWER_GEN</div>
+                    <div class="table-data">@iPOWER_FEE.ToString("N0")</div>
+                    <div class="table-data">@item.PRE_APPOR_RENT</div>
+                    <div class="table-data">@item.PRE_APPOR_INSURANCE</div>
+                    <div class="table-data">@item.PRE_OTHER_FEE</div>
+                    <div class="table-data">@iANNUAL_RECEIPT.ToString("N0")</div>
+                    <div class="table-data">@iPRE_ACCUMLATE_RECEIPT.ToString("N0")</div>
+                </div>
+            }
+        }
+
+    </div>
+
+    <div class="item-box total">
+        <div class="table-row">
+            <div class="table-data">合&nbsp;&nbsp;計</div>
+            <div class="table-data"></div>
+            <div class="table-data">@POWER_GEN_SUM.ToString("N0")</div>
+            <div class="table-data">@POWER_FEE_SUM.ToString("N0")</div>
+            <div class="table-data">@APPOR_RENT_SUM.ToString("N0")</div>
+            <div class="table-data">@APPOR_INSURANCE_SUM.ToString("N0")</div>
+            <div class="table-data">@OTHER_FEE_SUM.ToString("N0")</div>
+            <div class="table-data">@ANNUAL_RECEIPT_SUM.ToString("N0")</div>
+            <div class="table-data"></div>
+        </div>
+    </div>

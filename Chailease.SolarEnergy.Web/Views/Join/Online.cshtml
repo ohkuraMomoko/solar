@@ -1,0 +1,203 @@
+﻿@{
+    ViewBag.Title = "購買太陽能板";
+}
+@section header {
+    @Styles.Render("~/Content/pages/join/index.min.css")
+}
+@section metatags {
+    @Html.Action("GetMetaByType", "Base", new { id = 6 })
+}
+
+
+<div class="page-container">
+    <div class="page-kv" data-aos="bg-scale">
+        <h2 class="page-kv--title" data-aos="fade-down" data-aos-delay="400">購買太陽能板</h2>
+        <img src="@Url.Content("~/Content/images/title_font_INVESTMENT.svg")" alt="INVESTMENT" class="page-kv--img" data-aos="fade-up" data-aos-delay="200">
+    </div>
+    <div class="page-content">
+        <div class="breadcrumb-container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/" href="@Url.Content("~/Home/")">
+                            <span itemprop="name"><img src="@Url.Content("~/Content/images/bread_home_icon.svg")" alt="首頁"></span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    <li class="breadcrumb-item" aria-current="page" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Join/" href="@Url.Content("~/Join/")">
+                            <span itemprop="name">我想參與認購</span>
+                        </a>
+                        <meta itemprop="position" content="2" />
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page" itemprop="itemListElement" itemscope
+                        itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                            <span itemprop="name">發電中</span>
+                        </a>
+                        <meta itemprop="position" content="3" />
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <div class="case-container">
+            <div class="join-notice">
+                <div class="join-notice-content" id="btnNewPrjNotice" data-caseno="0">
+                    <img src="@Url.Content("~/Content/images/Member_Centre_icon01.svg")" alt="" class="join-notice--icon">
+                    <span>有新上架專案請通知我</span>
+                </div>
+            </div>
+            <h1 class="case-title">專案列表</h1>
+            <div class="tab">
+                <a href="@Url.Content("~/join")" class="tab-item ">開放認購中</a>
+                <a href="@Url.Content("~/join/Online")" class="tab-item active">發電中</a>
+            </div>
+            <div class="select-reorder-container">
+                <select class="select-reorder" id="solarItemSearchSelect">
+                    <option value="03" selected="">依最高發電量排序</option>
+                    
+                </select>
+            </div>
+            <div class="project-contents" id="project-contents-id">
+
+            </div>
+            <div id="view_more_btn">
+                <button class="btn--type btn--type-3 solar-item-btn btn--readmore d-block m-auto">
+                    <span>VIEW MORE</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+<script>
+
+    let initPageIdx = 1;
+    let pageIdx = 1;
+
+    $(document).ready(function () {
+        LoadProjects();
+        loginExt.setPageRefresh(true);
+
+        function logElementEvent(eventName, element) {
+            console.log(
+                Date.now(),
+                eventName,
+                element.getAttribute("data-bg")
+            );
+        }
+
+        var callback_finish = function () {
+            logElementEvent("✔️ FINISHED", document.documentElement);
+        };
+
+        lazy = new LazyLoad({
+            elements_selector: "[data-lazy='true']",
+            threshold: 0,
+            callback_finish: callback_finish
+        });
+    });
+
+    $('.btn--readmore').click(function () {
+        pageIdx += 1;
+        LoadProjects();
+    });
+
+    $('#solarItemSearchSelect').on("change", function () {
+        pageIdx = initPageIdx;
+        $("#view_more_btn").show();
+        $("#project-contents-id").empty();
+        LoadProjects();
+    })
+
+    function LoadProjects() {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("ProjectList")',
+            data: { status: 2 , page: pageIdx , orderType: $('#solarItemSearchSelect option:selected').val() },
+            beforeSend: function () {
+                $("#loadingContainer").fadeIn(800);
+                $("body").css("overflow", "hidden");
+            },
+            success: function (data) {
+                $('#project-contents-id').append(data);
+
+                var tmp_end_flag = $('#Tmp_End_Flag').length;
+                if (tmp_end_flag > 0) {
+                    $("#view_more_btn").hide();
+                    $('#Tmp_End_Flag').remove();
+                }
+                lazy.update();
+
+                $("#loadingContainer").fadeOut(500);
+                $("body").css("overflow", "auto");
+            },
+            failure: function (errMsg) {
+                $("#loadingContainer").fadeOut(500);
+                $("body").css("overflow", "auto");
+                showMsg("專案列表加載失敗","error");
+            }
+        });
+    }
+
+    $('#btnNewPrjNotice').on('click', function () {
+            DoLogin(showLoginModal, showNoticeModal);
+    });
+
+
+    showLoginModal = function(meminfo){
+        $('#modalMember').modal('show');
+        // GA: 圖靈/電廠列表/新專案上架請通知我/click event/狀態:需登入
+            dataLayer.push({
+                'event': 'productClick',			
+                'buttonName': '新專案上架請通知我',				
+                'pageName': '登入',							
+                'productName': 'null',
+                'url': '@Request.Url.LocalPath'
+            });
+    }
+
+    showNoticeModal = function (meminfo) {
+        var caseno = $('#btnNewPrjNotice').data('caseno');
+        $.ajax({
+            url: '@Url.Action("NewPrjNotice","JOIN")',
+            type: "POST",
+            dataType: 'json',
+            cache: false,
+            data: { MBR_ID: meminfo.ID, STATUS: '1', CASE_NO: caseno, NOTICE_TYPE: '1' }
+        }).done(function (res) {
+            if (!res.result) {
+                showMsg(res.msg,"error")
+            }
+            else {
+                $('#modalSubscription').modal('show');
+                // GA: 圖靈/電廠列表/新專案上架請通知我/click event/狀態:訂閱成功
+                dataLayer.push({
+                    'event': 'productClick',			
+                    'buttonName': '新專案上架請通知我',				
+                    'pageName': '訂閱成功',							
+                    'productName': 'null',
+                    'url': '@Request.Url.LocalPath'
+                });
+            }
+        });
+    }
+
+    function DoLogin(callback, callback2) {
+        $.ajax({
+            url: '@Url.Action("GetInstantUserInfo")',
+            type: "POST",
+            dataType: 'json',
+            cache: false,
+            data: {}
+            }).done(function (res) {
+                if (res && res.LEVEL) {
+                    callback2(res);
+                } else {
+                    callback(res);
+                }
+        });
+    }
+</script>
+}

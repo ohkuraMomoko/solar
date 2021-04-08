@@ -1,0 +1,96 @@
+﻿@model HomeViewModel
+@{
+    ViewBag.Title = "取消訂閱";
+}
+@section header{
+    @Styles.Render("~/Content/pages/member/newsletterSetting.min.css")
+}
+<div class="page-container">
+    <div class="page-kv">
+        <h1 class="page-kv--title">@ViewBag.Title</h1>
+    </div>
+    <div class="page-content">
+        <div class="breadcrumb-container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/" href="@Url.Content("~/Home/")">
+                            <span itemprop="name"><img src="@Url.Content("~/Content/images/bread_home_icon.svg")" alt="首頁"></span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Member/" href="@Url.Content("~/Member/")">
+                            <span itemprop="name">@ViewBag.Title</span>
+                        </a>
+                        <meta itemprop="position" content="2" />
+                    </li>
+
+                </ol>
+            </nav>
+        </div>
+        <div class="setting-container">
+
+            <div class="d-flex justify-content-center mt-5">
+                <button class="btn--common btn--common-1">放棄修改</button>
+                <button class="btn--common btn--common-1 ml-3">確定取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalCacle" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-subscription" role="document">
+        <div class="modal-content">
+            <button type="button" class="modal-btn--close" data-dismiss="modal" aria-label="Close">
+                <img src="@Url.Content("~/Content/images/bt_close_w.svg")" alt="">
+            </button>
+            <img src="@Url.Content("~/Content/images/success_info_icon.svg")" alt="" class="center modal-subscription--icon">
+            <p class="modal-subscription--title">您已取消訂閱</p>
+            <p class="modal-subscription--text">謝謝您！</p>
+            <button class="center btn--common btn--common-1" data-dismiss="modal">確定</button>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var Page = {
+        $CancelButton: $('div.justify-content-center button:nth(1)'),
+        DisableCancelButton: function () {
+            this.$CancelButton.attr('disabled', 'disabled').css({ "background-color": "#8CD8DF", "color": "#fff" });
+        },
+        NoticeCaseOpen: function (_mbrId) {
+             $ajax.Post('@Url.Action("NoticeCaseOpen", "Sell")', {
+                    MBR_ID: _mbrId,
+                    STATUS: '2',
+                    CASE_NO: 0
+                }, function (d) {
+                    Page.DisableCancelButton();                   
+                    if (!d.RESULT) {
+                        showMsg(res.ERRMSG, "error");
+                    }
+                    else {
+                        $('#modalCacle').modal('show');
+                    }
+                })
+        }
+    }
+    $(function () {
+        var homeUrl = '@Url.Action("index", "home")';
+        var postUrl = '@Url.Action("NewsNoticeClose")';
+        $('div.justify-content-center button:nth(0)').click(function () {
+            window.location = homeUrl;
+        });
+
+        var mbrId = '@Request.QueryString["mbrId"]';
+        if (mbrId != '') {
+            Page.$CancelButton.click(function () {
+                Page.NoticeCaseOpen(mbrId);             
+            })
+        }
+        else {
+            Page.DisableCancelButton();
+        }
+    })
+
+
+</script>

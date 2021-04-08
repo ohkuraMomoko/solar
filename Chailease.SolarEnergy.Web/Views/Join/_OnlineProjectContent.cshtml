@@ -1,0 +1,75 @@
+﻿@using System.Text.RegularExpressions
+@model Chailease.SolarEnergy.Web.ViewModel.JoinViewModel
+
+<div class="join-solar">
+
+    @{
+        var firstlist = Model.LoanCaseList.Data;
+        if (firstlist != null)
+        {
+            foreach (var item in firstlist)
+            {
+                string regex = @"^(?'name'[^\d]+)?(?'num'\d+)?";
+                string caseName = Regex.Match(item.CASE_NAME, regex).Groups["name"].Value;
+                string caseNameNo = Regex.Match(item.CASE_NAME, regex).Groups["num"].Value;
+                decimal intRate = 0;
+                decimal power_gen_num;
+                decimal power_gen_amt;
+                decimal.TryParse(item.CASE_POWER_GEN_NUM, out power_gen_num);
+                decimal.TryParse(item.CASE_POWER_GEN_AMT, out power_gen_amt);
+                if (decimal.TryParse(item.PRIORITY_CLAIM_IR, out intRate))
+                {
+                    intRate = intRate * 100;
+                }
+
+                <div class="solar-item solar-item--online">
+                    <div class="solar-item-header">
+                        <span class="solar-item-header--status">發電中</span>
+                        <div class="solar-item-header--date">
+                            商轉起始日 <span>@item.CASE_POWER_DT</span>
+                        </div>
+                    </div>
+                    <div data-lazy="true" class="solar-item-body" data-bg="url('@Url.Action("Image", "File", new { uri = item.CASE_IMG })')">
+                        <div class="solar-item-body--header">
+                            <div class="solar-title">
+                                @* API資料可能只會回傳"雲林大埤004號"，要切割字串，單位"號"由樣式產生 *@
+                                <p class="solar-title--data">@caseName</p>
+                                @if (!string.IsNullOrEmpty(caseNameNo))
+                                {
+                                    <span class="solar-title--num">@caseNameNo</span>
+                                }
+                            </div>
+                            <div class="solar-percentage">
+                                <p class="solar-percentage--text">預估內部報酬率</p>
+                                @* 只須報酬率放置資料，"%"由樣式產生 *@
+                                <p class="solar-percentage--data">@(intRate.ToString("G29"))</p>
+                            </div>
+                        </div>
+                        <div class="solar-item-body--content">
+                            <div class="online-data">
+                                <p class="online-data--title">截至目前發電總量</p>
+                                <div class="online-data--info">
+                                    <img src="@Url.Content("~/Content/images/flash_icon.svg")" alt="" class="online-data--info-icon">
+                                    <span class="online-data--info-number ">@power_gen_num.ToString("N0")</span>
+                                </div>
+                            </div>
+                            <div class="online-data">
+                                <p class="online-data--title">截至目前發電金額</p>
+                                <div class="online-data--info">
+                                    <img src="@Url.Content("~/Content/images/money_icon.svg")" alt="" class="online-data--info-icon">
+                                    <span class="online-data--info-number dollor">@power_gen_amt.ToString("N0")</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    }
+    @* temp flag for js*@
+    @if (Model.End_Flag)
+    {
+        <div id="Tmp_End_Flag"></div>
+    }
+</div>
+

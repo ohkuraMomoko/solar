@@ -1,0 +1,618 @@
+@charset "UTF-8";
+/* @site: 全民電廠
+ * @author: mickey
+ * @update: miceky (2019-11-22)
+ * @page: 會員中心 - 我的電廠 - 確認出售價格
+ * @description: 
+ */
+/* =Variables--------------------------*/
+/* font style ---*/
+/* desktop & mobile size */
+/* color */
+/*animation */
+/*z-index */
+/* z-index順序 */
+/* contactBtn => meun mobile => signup/login */
+/*為手譏評板裝置，且裝置奘為橫向*/
+/*若只判斷orientation:landscape，desktop size也包含在內*/
+.page-container {
+  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(30%, rgba(30, 181, 172, 0)), to(rgba(30, 181, 172, 0.8)));
+  background-image: -webkit-linear-gradient(bottom, rgba(30, 181, 172, 0) 30%, rgba(30, 181, 172, 0.8) 100%);
+  background-image: -o-linear-gradient(bottom, rgba(30, 181, 172, 0) 30%, rgba(30, 181, 172, 0.8) 100%);
+  background-image: linear-gradient(0deg, rgba(30, 181, 172, 0) 30%, rgba(30, 181, 172, 0.8) 100%);
+}
+
+.page-kv {
+  padding-top: 10rem;
+  height: 25rem;
+  background-image: unset;
+}
+
+.page-kv--title {
+  color: #303030;
+}
+
+@media only screen and (max-width: 767px) {
+  .page-kv {
+    height: 15rem;
+    padding: 7rem 5% 0;
+  }
+}
+
+.calculate {
+  position: relative;
+  padding: 2rem 0 4rem;
+}
+
+@media only screen and (max-width: 768px) {
+  .calculate {
+    padding: 1rem 1rem 4rem;
+  }
+}
+
+.sellcal-title {
+  width: 80%;
+  margin: 0 auto;
+  padding: 0.75rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.sellcal-title h2 {
+  font-size: 1.75rem;
+  color: #1EB5AC;
+}
+
+.sellcal-title p {
+  color: #8A8A8A;
+}
+
+.sellcal-title span {
+  font-size: 1.625rem;
+  color: #1EB5AC;
+  margin-left: 0.5rem;
+}
+
+.sellcal-subtitle {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.sellcal-btn {
+  font-size: 1.5rem;
+  position: absolute;
+  top: auto;
+  right: 2rem;
+  width: auto;
+  line-height: 3.75rem;
+  height: 3.75rem;
+  width: 11.31rem;
+  text-align: center;
+}
+
+.sellcal-text {
+  text-align: center;
+  color: #8A8A8A;
+  margin-bottom: 1rem;
+}
+
+@media only screen and (max-width: 768px) {
+  .sellcal-title {
+    width: 95%;
+    padding: 1rem 0;
+  }
+  .sellcal-title h2 {
+    font-size: 1.375rem;
+  }
+  .sellcal-title span {
+    font-size: 1.125rem;
+  }
+  .sellcal-subtitle {
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    padding: 0 1rem;
+  }
+  .sellcal-btn {
+    position: relative;
+    top: auto;
+    right: auto;
+    height: 1.88rem;
+    line-height: 1.88rem;
+    font-size: 1.125rem;
+  }
+}
+
+.calculate-item.auto-height {
+  height: auto;
+}
+
+.calculate-item.auto-height > div {
+  line-height: unset;
+}
+
+.calculate-item.auto-height .form-item {
+  margin-bottom: 0;
+}
+
+.calculate-item--data-1 {
+  color: #4A4A4A;
+  font-size: 1.25rem;
+}
+
+.calculate-item--data-3 {
+  margin-right: 1rem;
+}
+
+.calc-input-container:after {
+  content: '元/片';
+  right: 2%;
+  width: 3rem;
+}
+
+.calculate-item--data {
+  text-align: right;
+}
+
+@media only screen and (max-width: 768px) {
+  .calculate-item-inline .custom-select select {
+    height: 48px;
+    line-height: 48px;
+  }
+}
+
+.calculate-content-info {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.select-article-class[disabled] {
+  background-color: rgba(216, 216, 216, 0.7);
+  border: 1px solid #B4B4B4;
+  color: #B4B4B4;
+}
+
+.calculate-item--text {
+  text-align: right;
+}
+
+.sellcal-gray {
+  font-size: 1.125rem;
+  color: #8A8A8A;
+}
+
+.sellcal-gray span {
+  color: #232323;
+}
+
+.sellcal-gray.text-sm {
+  font-size: 1rem;
+}
+
+.sellcal-gray label {
+  width: 4rem;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 4rem;
+          flex: 0 0 4rem;
+}
+
+.sellcal-gray label:before {
+  content: ':';
+  display: inline-block;
+  float: right;
+  margin-right: 0.5rem;
+}
+
+.sellcal-blue {
+  font-size: 0.875rem;
+  color: #1EB5AC;
+}
+
+.calc-link {
+  border-radius: 8px;
+  margin: 0 auto;
+}
+
+.calc-link[disabled] {
+  cursor: not-allowed;
+}
+
+.viewPdf {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.viewPdf.hide {
+  display: none;
+}
+
+.viewPdf-btn {
+  font-size: 1.125rem;
+  color: #FFFFFF;
+  line-height: 3.13rem;
+  height: 3.13rem;
+  background-color: #1EB5AC;
+  padding: 0 2rem 0 3.5rem;
+  width: auto;
+  position: relative;
+}
+
+.viewPdf-btn:before {
+  content: '';
+  width: 1.25rem;
+  height: 1.63rem;
+  background-image: url("../../images/s_paper_icon_w.svg");
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  position: absolute;
+  left: 1.5rem;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+.text-input {
+  border: 1px solid #D8D8D8;
+  color: #6F6F6F;
+  border-radius: 10px;
+  width: 6.38rem;
+  line-height: 3.25rem;
+  height: 3.25rem;
+  text-align: center;
+  font-size: 1.25rem;
+  outline: 0;
+  -webkit-transition: border-color .2s linear;
+  -o-transition: border-color .2s linear;
+  transition: border-color .2s linear;
+}
+
+.text-input:hover, .text-input:focus, .text-input:active {
+  border-color: #1EB5AC;
+}
+
+.text-input ~ .calculate-item--title {
+  margin-left: 1rem;
+}
+
+.calc-full {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.flex-grow, .modal-col-label {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 auto;
+          flex: 0 0 auto;
+}
+
+.hide {
+  display: none !important;
+}
+
+@media only screen and (max-width: 768px) {
+  .sellcal-subtitle {
+    padding: 0;
+  }
+  .sellcal-subtitle button {
+    width: auto;
+    padding: 0 1rem;
+    line-height: 2.19rem;
+  }
+  .calc-link {
+    margin: 0 15px;
+  }
+  .calc-full {
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+  }
+}
+
+.calculate-item-inline {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+}
+
+.calculate-item-inline > * {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 calc(50% - 0.5rem);
+          flex: 0 0 calc(50% - 0.5rem);
+  width: calc(50% - 0.5rem);
+}
+
+.calculate-item-inline .custom-select {
+  margin-left: 1rem;
+}
+
+.calculate-item-inline .custom-select select {
+  width: 100%;
+}
+
+.modal-open .page-content {
+  z-index: auto;
+}
+
+.modal-dialog {
+  max-width: 80%;
+  margin: 0 auto;
+}
+
+.modal-dialog *:not(button) {
+  color: #A3A3A3;
+}
+
+.modal-dialog .text-black, .modal-dialog .modal-col-content, .modal-dialog #modalCalculate .th-inner, #modalCalculate .modal-dialog .th-inner {
+  color: #535353;
+}
+
+.modal-content {
+  padding: 1rem 2rem;
+}
+
+.modal-col-label {
+  width: 11.25rem;
+}
+
+.modal-col-content {
+  font-weight: 700;
+}
+
+.modal-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 33.33333%;
+          flex: 0 0 33.33333%;
+  max-width: 33.33333%;
+  margin-bottom: 0.5rem;
+}
+
+.modal-item-md {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 50%;
+          flex: 0 0 50%;
+  max-width: 50%;
+}
+
+.modal-row,
+.modal-row-l {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+#modalCalculate th, #modalCalculate td {
+  text-align: center;
+}
+
+#modalCalculate .th-inner {
+  padding: 0 !important;
+  line-height: 2.38rem;
+}
+
+#modalCalculate th {
+  background: #E5F9F6;
+}
+
+#modalCalculate td {
+  font-size: 0.875rem;
+  line-height: 1.31rem;
+}
+
+#modalCalculate tbody tr:nth-child(even) td {
+  background: #E5F9F6;
+}
+
+#modalCalculate .total td {
+  background: #FFF3B5 !important;
+  color: #535353;
+  font-weight: 700;
+}
+
+#modalCalculate .bootstrap-table {
+  margin: 1rem 0;
+}
+
+#modalCalculate .clps-btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#modalCalculate .clps-btn span {
+  margin-right: 0.5rem;
+}
+
+#modalCalculate .clps-btn[aria-expanded="true"] .clps-close {
+  display: block;
+}
+
+#modalCalculate .clps-btn[aria-expanded="true"] .clps-open {
+  display: none;
+}
+
+#modalCalculate .clps-btn[aria-expanded="true"] img {
+  -webkit-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+#modalCalculate .clps-btn[aria-expanded="false"] .clps-close {
+  display: none;
+}
+
+#modalCalculate .clps-btn[aria-expanded="false"] .clps-open {
+  display: block;
+}
+
+#modalCalculate .clps-btn[aria-expanded="false"] img {
+  -webkit-transform: rotate(0deg);
+      -ms-transform: rotate(0deg);
+          transform: rotate(0deg);
+}
+
+@media only screen and (max-width: 768px) {
+  .modal-dialog {
+    max-width: 90%;
+  }
+  .modal-content {
+    padding: 1rem;
+  }
+  .modal-col-content {
+    text-align: right;
+    width: 100%;
+  }
+  .modal-item {
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 100%;
+            flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .modal-item-md {
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 100%;
+            flex: 0 0 100%;
+    max-width: 100%;
+  }
+  #modalCalculate .p-4 {
+    padding: 1rem 0 !important;
+  }
+  #modalCalculate .th-inner {
+    line-height: unset;
+    padding: 0.25rem !important;
+  }
+  #modalCalculate td {
+    line-height: unset;
+    padding: 0.25rem 0.5rem !important;
+  }
+  #modalCalculate .bootstrap-table {
+    margin: 0.5rem 0;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .bootstrap-table .fixed-table-container .table {
+    overflow: visible;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .bootstrap-table .fixed-table-container .fixed-table-body {
+    overflow: hidden;
+  }
+  .flip-scroll .cf:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
+  .flip-scroll * html .cf {
+    zoom: 1;
+  }
+  .flip-scroll *:first-child + html .cf {
+    zoom: 1;
+  }
+  .flip-scroll table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  .flip-scroll th,
+  .flip-scroll td {
+    margin: 0;
+    vertical-align: top;
+    white-space: nowrap;
+  }
+  .flip-scroll table {
+    display: block;
+    position: relative;
+    width: 100%;
+  }
+  .flip-scroll thead {
+    display: block;
+    float: left;
+  }
+  .flip-scroll tbody {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    position: relative;
+    overflow-x: auto;
+  }
+  .flip-scroll thead tr {
+    display: block;
+  }
+  .flip-scroll th {
+    display: block;
+    text-align: left;
+    height: 3rem;
+  }
+  .flip-scroll tbody tr {
+    display: inline-block;
+    vertical-align: top;
+  }
+  .flip-scroll td {
+    display: block;
+    min-height: 1.25em;
+    text-align: left;
+    height: 3rem;
+  }
+  .btn-wrap .th-inner {
+    height: 1.88rem;
+  }
+  /* sort out borders */
+  .flip-scroll th {
+    border-bottom: 0;
+    border-left: 0;
+  }
+  .flip-scroll td {
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+  }
+  .flip-scroll {
+    margin-top: 0 !important;
+  }
+}

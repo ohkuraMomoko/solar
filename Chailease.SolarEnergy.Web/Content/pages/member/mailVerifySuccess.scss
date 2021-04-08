@@ -1,0 +1,98 @@
+﻿/* @site: 全民電廠
+ * @author: nikki
+ * @update: nikki (2019-1-25)
+ * @page: 會員專區-信箱驗證成功頁
+ * @description: 
+ */
+
+@import "../../setting/_variables.scss";
+@import "../../setting/_mixins.scss";
+
+.page-container {
+    background-image: linear-gradient(0deg, rgba(30,181,172,0.00) 30%, rgba(30,181,172,0.80) 100%);
+}
+
+.page-kv {
+    padding-top: 10rem;
+    height: 25rem;
+
+    &--title {
+        color: $color-dark;
+    }
+}
+
+@include rwd(#{$ipad - 1px}) {
+    .page-kv {
+        height: 15rem;
+        padding: 7rem 5% 0;
+    }
+}
+
+.verify {
+    width: 100%;
+    max-width: 490px;
+    margin: 0 auto;
+    padding-top: 5%;
+}
+.verify {
+    &--icon {
+        width: 2.5rem;
+    }
+
+    &--title {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        text-align: center;
+        letter-spacing: 0.08rem;
+        color: $color-dark;
+        margin: 1.38rem auto 1.19rem;
+    }
+
+    &-bottom {
+        @include flexbox;
+        @include justify-content(center);
+
+        &--item {
+            padding: 0 5%;
+
+            &:last-child {
+                border-left: 1px solid #d4d4d4;
+            }
+        }
+    }
+
+    &--btn {
+        width: 100%;
+        max-width: 11.25rem;
+        margin-bottom: 1.06rem;
+
+        &-text {
+            font-size: 0.94rem;
+            line-height: 1.31rem;
+            text-align: center;
+            color: $color-dark--2;
+            margin-bottom: 0.69rem;
+        }
+    }
+
+    &--highlight {
+        width: 100%;
+        border-radius: 6px;
+        background-color: #1BBFA4;
+        color: #ffffff;
+        text-align: center;
+        padding: 0.41rem;
+    }
+}
+/*rwd:*/
+@include rwd($ipad) {
+    .verify {
+        &--btn {
+            margin-bottom: 0.56rem;
+        }
+
+        &--btn-text {
+            text-align: left;
+        }
+    }
+}

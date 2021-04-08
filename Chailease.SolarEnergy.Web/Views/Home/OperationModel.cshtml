@@ -1,0 +1,96 @@
+﻿@model HomeViewModel
+@{
+    ViewBag.Title = "如何運作";
+}
+@section header{
+    @Styles.Render("~/Content/pages/home/operationModel.min.css")
+}
+@section metatags {
+    @Html.Action("GetMetaByType", "Base", new { id = 1 })
+}
+
+
+<div class="page-container">
+    <div class="page-kv" data-aos="bg-scale">
+        <h2 class="page-kv--title"  data-aos="fade-down" data-aos-delay="400">@ViewBag.Title </h2>
+        <img src="@Url.Content("~/Content/images/title_font_OPERATION_MODEL.svg")" alt="NEWS" class="page-kv--img" data-aos="fade-up" data-aos-delay="200">
+    </div>
+    <div class="page-content">
+        <div class="breadcrumb-container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/" href="@Url.Content("~/Home/")">
+                            <span itemprop="name"><img src="@Url.Content("~/Content/images/bread_home_icon.svg")" alt="首頁"></span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/About" href="@Url.Content("~/Home/About")">
+                            <span itemprop="name">認識電廠專家</span>
+                        </a>
+                        <meta itemprop="position" content="2" />
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" >
+                            <span itemprop="name">@ViewBag.Title</span>
+                        </a>
+                        <meta itemprop="position" content="3" />
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <article class="article">
+            <h1 class="article-title">全民電廠運作模式</h1>
+            <p class="article-desc">
+                中租・全民電廠，是一個提供全民以小額資金參與認購太陽能發電廠的平台<br>
+                您不需提供場地也不須管理電廠，只要用小額資金透過全民電廠認購太陽能板後委託中租進行管理，即可享有台電20年的躉售收益
+            </p>
+            <div data-aos="fade-in" data-aos-once="true">
+                <picture>
+                    <source media="(max-width: 750px)" srcset="@Url.Content("~/Content/images/index_OPERATION_MODEL_mobile.svg?v=2")">
+                    <img src="@Url.Content("~/Content/images/index_OPERATION_MODEL.svg?v=2")" alt="" class="center">
+                </picture>
+            </div>
+            
+            <a href="@Url.Content("~/join")" class="article-link" data-aos="fade-right" data-aos-delay="50" data-aos-once="true">查看所有電廠</a>
+            <div class="article-content">
+                <section class="section-item" data-aos="fade-up" data-aos-once="true">
+                    <img src="@Url.Content("~/Content/images/operation_model_image02.jpg")" alt="" class="section-item--img">
+                    <div class="section-content">
+                        <p class="section-content--title">如何獲利20年</p>
+                        <p class="section-content--desc">透過經濟部制訂的「再生能源固定收購電價制度」，您與眾人所擁有的電廠所生產之電能，可以固定優惠價格出售給台電公司20年，共享長期穩定收益。</p>
+                        <a href="https://www.mrpv.org.tw" target="_blank" class="section-content--link" data-aos="fade-right" data-aos-delay="50" data-aos-once="true">看看政府如何推動政策?</a>
+                    </div>
+                </section>
+                <section class="section-item" data-aos="fade-up" data-aos-once="true">
+                    <img src="@Url.Content("~/Content/images/operation_model_image03.jpg")" alt="" class="section-item--img">
+                    <div class="section-content">
+                        <p class="section-content--title">每月輕鬆獲得收益</p>
+                        <p class="section-content--desc">台電公司會定期計算發電量，依電廠規模每 1 或 2 個月抄表一次，並支付售電收入至中租代收專戶。您每一期的電費收益將撥付至您同名的指定帳戶，但需扣除屋頂租金、保險費用、委託管理費、維護保養費與市集服務費等相關費用。</p>
+                        <a href="@Url.Content("~/Join/Calculate")" class="section-content--link" data-aos="fade-right" data-aos-delay="50" data-aos-once="true">想試算收益嗎?</a>
+                    </div>
+                </section>
+                <section class="section-item" data-aos="fade-up" data-aos-once="true">
+                    <img src="@Url.Content("~/Content/images/operation_model_image04.jpg")" alt="" class="section-item--img">
+                    <div class="section-content">
+                        <p class="section-content--title">認購4片太陽能板約一人每月用電量</p>
+                        <p class="section-content--desc">依台電2017年統計資料，每戶每月用電量約300度；根據戶政統計每戶約以2.73人計算，相當每人每月用電110度。4片太陽能板預估月均發電量 117度，自己用的電自己發已不再是遙遠的口號，用行動加入中租全民電廠，一起替綠能減碳永續地球盡一己微薄之力。</p>
+                    </div>
+                </section>
+            </div>
+            <h3 class="article-title">全民認購電廠</h3>
+            <p class="article-desc">不需管理不用有場地‧交給中租就對了<p>
+            <div data-aos="fade-in" data-aos-once="true">
+                <picture>
+                    <source media="(max-width: 750px)" srcset="@Url.Content("~/Content/images/operation_model_image05_m.svg")"> <img
+                        src="@Url.Content("~/Content/images/operation_model_image05.svg")" alt="" class="center">
+                </picture>
+            </div>
+            
+        </article>
+        <a href="@Url.Content("~/Join")" class="mt-5 mb-3 center btn--type btn--type-2" data-aos="fade-up" data-aos-once="true">
+            <span>查看電廠</span>
+        </a>
+    </div>
+</div>

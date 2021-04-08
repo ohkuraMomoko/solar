@@ -1,0 +1,196 @@
+﻿@model SellViewModel
+@*
+    TODO: title為該電廠名稱
+*@
+<div class="sellcal-title">
+    <h2>@Model.MemOnSalepPreConfirmDto.CASE_NAME</h2>
+    <p>
+        持有太陽能板數量<span>@Model.MemOnSalepPreConfirmDto.POWER_PANEL_NUM</span>
+    </p>
+</div>
+<form class="calculate" data-aos="fade">
+    <div class="sellcal-subtitle">
+        <h2 class="calculate-title">確認出售價格</h2>
+        @if (Model.MemOnSalepPreCalDto.ERRCODE == 0)
+        {
+            <button type="button" class="btn--common btn--common-4 sellcal-btn" id="calcbtn">試算報酬率</button>
+        }
+        else
+        {
+            <button type="button" style="background-color:#8CD8DF;color:#fff" class="btn--common btn--common-4 sellcal-btn" disabled="disabled" id="calcbtn">試算報酬率</button>
+        }
+    </div>
+    <div class="calculate-content">
+        @{
+            if (Model.MemOnSalepPreConfirmDto.LAST_FEE_DIST_DT != "")
+            {
+                <p class="sellcal-text">新增最近一次電費分配日 @DateTime.ParseExact(Model.MemOnSalepPreConfirmDto.LAST_FEE_DIST_DT, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture).ToString("yyyy/MM/dd") (計費迄日 @DateTime.ParseExact(Model.MemOnSalepPreConfirmDto.LAST_FEE_CAL_DT, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture).ToString("yyyy/MM/dd") )</p>
+            }
+            else
+            {
+                <p class="sellcal-text"></p>
+            }
+        }
+        
+        <div class="row calculate-item">
+            <div class="col-6">
+                <p class="calculate-item--title">售電合約剩餘計費期間</p>
+            </div>
+            <div class="col-6">
+                <div class="calculate-item--data">
+                    <span class="calculate-item--data-1">
+                        @Model.MemOnSalepPreConfirmDto.CONTRACT_REMAIN_DAY
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row calculate-item">
+            <div class="col-6">
+                <p class="calculate-item--title">太陽能板出售單價</p>
+            </div>
+            <div class="col-6">
+                <div class="calculate-item--data">
+                    <div class="calc-input-container no-unit">
+                        @Html.Hidden("SELL_PRICE")
+                        <input type="text" name="POWER_PANEL_SELL_PRICE" min="1" value="1" maxlength="7" class="calc-input">元/片
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row calculate-item">
+            <div class="col-6">
+                <p class="calculate-item--title">預估剩餘期間總回收金額</p>
+            </div>
+            <div class="col-6">
+                <div class="calculate-item--data">
+                    <span class="calculate-item--data-3 calc-money"></span>元
+                </div>
+            </div>
+        </div>
+        <div class="row calculate-item">
+            <div class="col-6">
+                <p class="calculate-item--title">預估購買者內部報酬率</p>
+            </div>
+            <div class="col-6">
+                <div class="calculate-item--data">
+                    <span class="calculate-item--data-3 calc-return"></span>%
+                </div>
+            </div>
+        </div>
+        <p class="calculate-content-info" style="text-align: left;">註 ：依據您輸入的「出售單價」與「預估剩餘期間及總回收金額」，可試算出購買者的「預估內部報酬率」，發布前請確認所公布之出售資訊無誤。</p>
+        <div class="calculate-item viewPdf hide calcshow">
+            <a target="_blank" href="#" class="btn--common btn--common-4 viewPdf-btn">檢視預估報酬資訊.pdf</a>
+        </div>
+
+        <div class="row calculate-item auto-height">
+            <div class="col-6">
+                <div class="form-item">
+                    <div class="input-group">
+                        <div class="custom-select">
+                            <select class="select-article-class" id="sellnum" name="sellnum" disabled>
+                                <option value="" selected="selected">出售數量</option>
+                                @for (int i = 1; i <= Model.MemOnSalepPreConfirmDto.POWER_PANEL_NUM; i++)
+                                {
+                                    <option value="@i">@i</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="calculate-item--text">
+                    <p class="sellcal-gray">今日公布截止日為 :  @Model.MemOnSalepPreConfirmDto.SELL_END_DT</p>
+                    <p class="sellcal-blue">公告期間最長  @Model.MemOnSalepPreConfirmDto.SELL_DAY 天</p>
+                </div>
+            </div>
+        </div>
+        <div class="row calculate-item auto-height">
+            <button type="button" class="btn--type btn--type-3 calc-link" id="calcsubmitbtn" data-aos="fade-up" data-aos-delay="100" disabled>
+                <span style="color:wheat !important">發布出售訊息至公布欄</span>
+            </button>
+        </div>
+        <div class="row calculate-item auto-height calcshow hide">
+            <div class="col-12 col-md-6 calc-full">                
+                <div class="calculate-item--data text-left calculate-item-inline">
+                    @*<p class="calculate-item--title" name="CUST_NAME">@Model.MemberInfo.CUST_NAME</p>*@
+                    <input type="text" value="@Model.MemberInfo.CUST_NAME" name="CUST_NAME" class="text-input">
+                    <div class="custom-select">
+                        <select class="select-article-class" id="sellcusttitle" name="sellcusttitle">
+                            <option value="先生" selected="selected">先生</option>
+                            <option value="小姐">小姐</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="calculate-item--data text-left">
+                    <div class="sellcal-gray text-sm"><label>電話</label><span>@Model.MemberInfo.MOBILE</span></div>
+                    <div class="sellcal-gray text-sm"><label>Email</label><span>@Model.MemberInfo.EMAIL</span></div>
+                </div>
+            </div>
+        </div>
+        @*<p class="mb-4 text-justify calcshow hide">當您確認並發布出售訊息後，即視同您同意由網站協助提供「姓名、手機與email等聯絡資訊」給表達購買意願之出資會員(同步獲得買方聯絡資訊)，以利雙方連絡交易事宜</p>*@
+        <p class="mb-4 text-justify calcshow hide">
+            當您確認並發布出售訊息後，即表示您同意由本平台協助提供「姓名、手機與email等聯絡資訊」給表達接洽意願之會員，您同時可取得對方聯絡資訊，以利雙方連絡交易事宜。
+        </p>
+            <div class="d-flex align-items-start calcshow hide">
+                <div class="flex-grow mr-2"><img src="@Url.Content("~/Content/images/lightball_icon.svg")" /></div>
+             <p class="text-justify">
+                @*二手交易公佈欄提醒事項：<br>
+                1.本網站僅協助有意願交易會員間建立聯繫管道，不涉及實質交易。會員間應自行接洽交易事宜，相關交易問題與本網站無關。<br>
+                2.交易標的除太陽能板外，尚包含附屬之設備與權利義務(例如售電權利，及支付租金保費與管理維運費用…等)，買受人請詳閱專案相關資訊。<br>
+                3.交易雙方私下完成交易後，可以賣方留存與本網站之存款帳戶(即電費收款帳戶)做為價金收款帳戶。<br>
+                4.交易雙方需另共同簽署「轉讓通知書」予本網站，本網站將於收到該實體書面文件後，始辦理電費收款人之變更。<br>
+                5.會員發布出售訊息後，網站有權利向買賣雙方查證交易真實性，如有爭議，網站得暫停分配電費，並於確認爭議解決後(包含但不限於法院判決)始分配電費。<br>
+                6.完成「變更電費收款人之日期」不同於「電費移轉歸屬日」，例如轉讓者持有之太陽能板專案最近一次電費計費期間為2019/09/05~2019/10/04(即計費迄日)，該筆電費並於2019/11/07分配。後續太陽能板於2019/11/10完成辦理「變更電費收款人」，受讓者收取電費之起日實為2019/10/05(前次計費迄日之下一日)*@
+                1.本平台僅協助有意願交易會員間建立聯繫管道，不涉及仲介或任何交易事務(包含但不限於合約訂定)，亦不額外收取費用，會員間應自行接洽包含交易條件等所有相關事宜。<br>
+                2.交易標的除太陽能板外，尚包含附屬之設備與權利義務(例如售電權利，及支付租金保費與管理維運費用…等)，買方請詳閱專案相關資訊。<br>
+                3.確認交易後，買方可請賣方提供「留存予本平台之存款帳戶(即電費收款帳戶)」做為價金收款帳戶。<br>
+                4.交易雙方需另共同簽署「轉讓通知書」予本平台，本平台將於收到該實體書面文件後，始辦理電費收款人之變更，倘本平台未收到轉讓通知書或尚未完成變更電費收款人程序，本平台得繼續將電費收益給付給原受款人或依本提醒事項第5點處理。<br>
+                5.本平台有權利向買賣雙方查證交易真實性，如有爭議，本平台得暫停分配電費，並於確認爭議解決後(包含但不限於法院判決)始分配電費。<br>
+                6.買賣雙方應確認出售訊息發布後有無分配電費，並請確認電費分配日及計費迄日。本平台認定之「電費收益移轉起日」係以台電公司之計費期間為準，並非買賣雙方之「轉讓交易日」。<br>
+                例如：賣方於2020/04/10發布A電廠太陽能板出售訊息，買方並於4/25完成付款，且本平台於2020/04/28完成「變更電費收款人」。但A電廠於4/20有分配電費收益(計費期間為2020/02/20~2020/03/20)，則買方收取電費之起日實為2020/03/21(前次計費迄日之下一日)。
+            </p>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+    $().ready(function () {
+        var error=@Model.MemOnSalepPreCalDto.ERRCODE;
+        if (error != 0) {
+            showMsg('@Model.MemOnSalepPreCalDto.ERRMSG', "error");
+        };
+
+        $('#calcsubmitbtn').click(function () {
+            //TODO 不知如何判斷是先生還是小姐
+            var post_paramter =
+                {
+                    CAL_UUID: $('input[name=CAL_UUID]').val(),
+                    SELL_NUM: $('select[name=sellnum] option:selected').val(),
+                    SELL_CUST_NAME: $('input[name=CUST_NAME]').val(),
+                    SELL_CUST_TITLE: $('select[name=sellcusttitle] option:selected').val()
+                };
+
+            if (post_paramter.SELL_CUST_NAME == '') {
+                showMsg('未填寫姓名', 'error');
+                return;
+            };
+            //console.log(post_paramter.CAL_UUID);
+            if (post_paramter.SELL_NUM > 0) {
+
+                    $ajax.Post('@Url.Action("MemOnSalepConfirm", "MemOnSale")', post_paramter, function (d) {
+                        if (d.RESULT) {
+                            window.location.href = '@Url.Action("Index", "Sell")';
+                            return;
+                        }
+                        showMsg(d.ERRMSG, "error");
+                    })
+                }
+                else {
+                    showMsg("請選擇出售數量", "error");
+                }
+        })
+    });
+</script>

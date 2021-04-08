@@ -1,0 +1,137 @@
+﻿@model FAQViewModel
+@{
+    ViewBag.Title = "常見問題";
+    string CD = HttpContext.Current.Request.RequestContext.RouteData.Values["CD"]?.ToString();
+    Boolean ExistFlag = false; 
+}
+@section header {
+    @Styles.Render("~/Content/pages/qa.min.css")
+}
+@section metatags {
+    @Html.Action("GetMetaByType", "Base", new { id = 8 })
+}
+
+<div class="page-container">
+    <div class="page-kv" data-aos="bg-scale">
+        <h2 class="page-kv--title" data-aos="fade-down" data-aos-delay="400">@ViewBag.Title</h2>
+        <img src="@Url.Content("~/Content/images/title_font_Q&A.svg")" alt="Q&A" class="page-kv--img" data-aos="fade-up" data-aos-delay="200">
+    </div>
+    <div class="page-content">
+        <div class="breadcrumb-container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/" href="@Url.Content("~/Home/")">
+                            <span itemprop="name"><img src="@Url.Content("~/Content/images/bread_home_icon.svg")" alt="首頁"></span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                            <span itemprop="name">@ViewBag.Title</span>
+                        </a>
+                        <meta itemprop="position" content="2" />
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <h1 class="qa-title">問題分類列表</h1>
+        <div class="qa-tab-container js-qa-tab-container">
+            @foreach (var pub in Model.MenuVwModel.FaqList)
+            {
+                if (CD == null) { CD = pub.CD; }
+                if (pub.CD.ToString() == CD)
+                {
+                    <div class="tab-btn js-tab-btn active" data-target=".tab--qa@(pub.ID)">@pub.NME</div>
+                    ExistFlag = true;
+                }
+                else
+                {
+                    <div class="tab-btn js-tab-btn" data-target=".tab--qa@(pub.ID)">@pub.NME</div>
+                }
+            }
+        </div>
+        <section class="qa-body">
+            @foreach (var pub in Model.MenuVwModel.FaqList)
+                {
+                    string active = "";                   
+                    if (pub.CD.ToString() == CD)
+                    {
+                        active = "active";
+                    }
+                <div class="tab tab--qa@(pub.ID) @active">
+                    <div class="tab-content">
+                        <article id="QaAccordion1" class="qa-accordion">
+                            @* TODO: 兩筆重複一次row class
+                                兩邊ID要一致
+                                data-target="#collapse1-1"
+                                id="collapse1-1" class="collapse" data-parent="#QaAccordion1"
+                            *@
+
+                            @{
+                                int count = 0;
+                                var faqList = Model.FAQList.Where(x => x.FAQ_TYPE == pub.ID);
+                                int allCount = faqList.Count();
+                            }
+                            @foreach (var faq in faqList)
+                            {
+                                if (count % 2 == 0)
+                                {
+                                    @:<div class="row">
+                                }
+                                    <section class="col-12 col-md-6 card">
+                                        <div class="card-header">
+                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse1-@(faq.FAQ_SEQ)">
+                                                @faq.QSN
+                                            </button>
+                                        </div>
+                                        <div id="collapse1-@(faq.FAQ_SEQ)" class="collapse" data-parent="#QaAccordion@(faq.FAQ_SEQ)">
+                                            <div class="card-body" 
+                                                @if(!String.IsNullOrEmpty(faq.FAQ_URL)){
+                                                    @:onclick="location.href='@faq.FAQ_URL';"
+                                                 }>
+                                                @faq.ANS
+                                            </div>
+                                        </div>
+                                    </section>
+                                    if (count % 2 == 1 || count == (allCount - 1))
+                                    {
+                                        @:</div>
+                                    }
+                                count++;
+                            }
+                        </article>
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+
+</div>
+@if (!ExistFlag) {
+    Response.Redirect("~/Home/NotFound");
+}
+
+@section scripts{
+<script>
+    $(function () {
+        $('.js-qa-tab-container').slick({
+            arrows: false,
+            dots: false,
+            infinite: false,
+            speed: 300,
+            slidesToScroll: 4,
+            variableWidth: true
+        });
+
+
+        $(".js-tab-btn").click(function () {
+            let target = $(this).data("target");
+            $(".js-tab-btn").removeClass("active");
+            $(this).addClass("active");
+            $(".tab").removeClass("active");
+            $(target).addClass("active");
+        });
+    });
+</script>
+ }

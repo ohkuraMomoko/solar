@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.3 (67297) - http://www.bohemiancoding.com/sketch -->
+    <title>lightball_icon</title>
+    <desc>Created with Sketch.</desc>
+    <g id="lightball_icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-8" transform="translate(2.000000, 2.000000)" fill-rule="nonzero">
+            <circle id="Oval" fill="#FFF3B5" cx="14" cy="14" r="14"></circle>
+            <g id="Group-7" transform="translate(9.000000, 6.000000)" stroke="#979797">
+                <rect id="Rectangle-2" fill="#D8D8D8" x="3.5" y="13.5" width="3" height="2" rx="1"></rect>
+                <path d="M1.61243649,10.432791 C1.71860894,10.943696 2.09734725,11.1991486 2.74865141,11.1991486 C3.39995557,11.1991486 4.97193658,11.1991486 7.46459444,11.1991486 C7.91842182,11.2057344 8.209498,10.9502819 8.33782298,10.432791 C8.53031046,9.65655457 8.76680362,8.49848648 9.52507852,7.15032579 C10.2833534,5.8021651 10.88222,0 5.09098145,0 C-0.700257069,0 -0.331447482,6.05197971 0.411260784,7.15032579 C0.906399628,7.88255651 1.30679153,8.97671158 1.61243649,10.432791 Z" id="Path-19" fill="#FFFFFF"></path>
+                <rect id="Rectangle-2" fill="#D8D8D8" x="2.5" y="11.5" width="5" height="2" rx="1"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

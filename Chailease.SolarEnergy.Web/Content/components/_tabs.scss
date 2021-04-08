@@ -1,0 +1,99 @@
+@import "../setting/_variables.scss";
+@import "../setting/_mixins.scss";
+
+/* tabs */ 
+.tabs-container {
+    position: relative;
+}
+.tab {
+    @include flexbox;
+    @include justify-content(space-between);
+    @include align-items(center);
+    &-item {
+        font-size: 1.5rem;
+        line-height: 2.06rem;
+        text-align: center;
+        position: relative;
+        cursor: pointer;
+        >a {
+            width: 100%;
+            color: $color-dark--2;
+            display: block;
+            @include change(color);
+        }
+        &:hover {
+            >a {
+                color: $color-primary-red;
+            }
+        }
+        &:after {
+            content: '';
+            position: absolute;
+            bottom: -0.94rem;
+            height: 0.5rem;
+            border-radius: 100px;
+            @include opacity(0);
+            @include change(opacity);
+        }
+        &:nth-child(1n) {
+            &:after {
+                background-color: $color-primary-red;
+            }
+        }
+        &:nth-child(2n) {
+            &:after{
+                background-color: $color-primary-yellow;
+            }
+        }
+        &:nth-child(3n) {
+            &:after{
+                background-color: $color-primary-blue;
+            }
+        }
+        &--current {
+            >a {
+                color: $color-dark;
+            }
+            &:after {
+                @include opacity(1);
+            }
+        }
+    }
+    &--two {
+        .tab-item {
+            width: calc(100% / 2);
+            &:after {
+                width: 55%;
+                left: calc(50% - #{55%/2});
+            }
+            &:nth-child(2n) {
+                &:after{
+                    background-color: $color-primary-red;
+                }
+            }
+        }
+    }
+    &--three {
+        .tab-item {
+            width: calc(100% / 3);
+            &:after {
+                width: 45%;
+                left: calc(50% - #{45%/2});
+            }
+        }
+    }
+    &--four {
+        .tab-item {
+            width: calc(100% / 4);
+            &:after {
+                width: 61%;
+                left: calc(50% - #{61%/2});
+            }
+        }
+    }
+}
+
+@include rwd($ipad){
+    
+}
+

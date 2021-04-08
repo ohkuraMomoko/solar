@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="180px" height="94px" viewBox="0 0 180 94" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.3 (67297) - http://www.bohemiancoding.com/sketch -->
+    <title> s_register_images_bank</title>
+    <desc>Created with Sketch.</desc>
+    <g id="-s_register_images_bank" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-12" transform="translate(1.000000, 1.000000)">
+            <path d="M0.3025,0.3025 L0.3025,92.0205 L177.5675,92.0205 L177.5675,0.3025 L0.3025,0.3025 Z" id="Rectangle-15" stroke="#A0A0A0" stroke-width="0.605" opacity="0.5"></path>
+            <polygon id="Rectangle-2" fill="#D8D8D8" points="74.536 40.656 166.012 40.656 166.012 44.044 74.536 44.044"></polygon>
+            <text id="銀行存摺" font-family="PingFangTC-Regular, PingFang TC" font-size="11.858" font-weight="normal" fill="#A0A0A0">
+                <tspan x="12.705" y="50.268">銀行存摺</tspan>
+            </text>
+            <rect id="Rectangle-2" fill="#D8D8D8" x="0" y="9.317" width="177.87" height="16.94"></rect>
+            <polygon id="Rectangle-2-Copy" fill="#D8D8D8" points="74.536 51.1023333 166.012 51.1023333 166.012 54.4903333 74.536 54.4903333"></polygon>
+            <polygon id="Rectangle-2-Copy-2" fill="#D8D8D8" points="74.536 61.5486667 166.012 61.5486667 166.012 64.9366667 74.536 64.9366667"></polygon>
+            <polygon id="Rectangle-2-Copy-3" fill="#D8D8D8" points="74.536 71.995 166.012 71.995 166.012 75.383 74.536 75.383"></polygon>
+        </g>
+    </g>
+</svg>

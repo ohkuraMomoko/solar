@@ -1,0 +1,57 @@
+﻿@*MODAL: 電廠編號明細 modalSolarList *@
+<div class="modal fade" id="modalSolarList" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="modal-btn--close" data-dismiss="modal" aria-label="Close">
+                <img src="@Url.Content("~/Content/images/bt_close_w.svg")" alt="">
+            </button>
+            <div class="modal-interest-container">
+                <h5 class="modal-interest-title">電廠編號明細</h5>
+                <div class="modal-interest-header">
+                    <div class="row">
+                        <div class="col-6">序號</div>
+                        <div class="col-6">太陽能板編號</div>
+                    </div>
+                </div>
+                <div class="modal-interest-content"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL: 發票資訊明細 modalInvoice *@
+<div class="modal fade" id="modalInvoice" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="modal-btn--close" data-dismiss="modal" aria-label="Close">
+                <img src="@Url.Content("~/Content/images/bt_close_w.svg")" alt="">
+            </button>
+            <div class="modal-interest-container">
+                <h5 class="modal-interest-title">發票資訊明細</h5>
+                <div class="invoice-content">
+                    <div class="row">
+                        <div class="col-6">發票號碼</div>
+                        <div class="col-6" id="invoiceId"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">發票金額</div>
+                        <div class="col-6"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">發票總稅額</div>
+                        <div class="col-6"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">發票日期</div>
+                        <div class="col-6"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">發票品名</div>
+                        <div class="col-6"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ 

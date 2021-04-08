@@ -1,0 +1,53 @@
+/*!
+ * Bootstrap v4.0.0 (https://getbootstrap.com)
+ * Copyright 2011-2018 The Bootstrap Authors
+ * Copyright 2011-2018 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+
+/*$grid-gutter-width: 0;*/
+$breadcrumb-bg: transparent;
+
+// Required
+@import "functions";
+@import "variables";
+@import "mixins";
+@import "utilities";
+@import "root";
+@import "reboot";
+
+//layout
+@import "grid";
+
+// Optional
+@import "type";
+@import "transitions";
+@import "forms";
+@import "modal";
+@import "breadcrumb";
+@import "pagination";
+@import "card";
+
+
+/*
+@import "images";
+@import "code";
+@import "tables";
+@import "buttons";
+@import "dropdown";
+@import "button-group";
+@import "input-group";
+@import "custom-forms";
+@import "nav";
+@import "navbar";
+@import "badge";
+@import "jumbotron";
+@import "alert";
+@import "progress";
+@import "media";
+@import "list-group";
+@import "close";
+@import "tooltip";
+@import "popover";
+@import "carousel";
+@import "print";*/

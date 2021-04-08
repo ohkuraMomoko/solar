@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="52px" height="52px" viewBox="0 0 52 52" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.3 (67297) - http://www.bohemiancoding.com/sketch -->
+    <title>Trial_icon</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Trial_icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-2" transform="translate(1.000000, 1.000000)" fill-rule="nonzero">
+            <g id="Group-6" fill="#1EB5AC">
+                <g id="Group-3">
+                    <circle id="Oval-3" cx="25" cy="25" r="25"></circle>
+                </g>
+            </g>
+            <g id="Group" transform="translate(9.000000, 11.818182)" stroke="#FFFFFF">
+                <polyline id="Path-41" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" points="8.95140516 8.21441489 8.95140516 0.210955313 21.8409695 0.210955313 28.2412556 6.54297172 28.2412556 25.2374963 8.95140516 25.2374963 8.95140516 20.788936"></polyline>
+                <ellipse id="Oval" stroke-width="2" cx="11.5780446" cy="14.5090909" rx="7.20411664" ry="7.12727273"></ellipse>
+                <path d="M0.791939026,23.5259631 C0.688401277,23.6283965 0.688401277,23.7912683 0.791939026,23.8937017 L1.35122184,24.4470188 C1.45901263,24.5536598 1.63691635,24.5536598 1.74470714,24.4470188 L5.93932825,20.2971403 C6.042866,20.194707 6.042866,20.0318351 5.93932825,19.9294018 L5.38004543,19.3760847 C5.27225464,19.2694436 5.09435092,19.2694436 4.98656013,19.3760847 L0.791939026,23.5259631 Z" id="Rectangle" stroke-width="1.42857143"></path>
+                <path d="M12.1674863,4.07272727 L20.7329277,4.07272727" id="Path-42" stroke-width="1.5" stroke-linecap="round"></path>
+                <path d="M16.9519726,8.52727273 L24.2309646,8.52727273" id="Path-42" stroke-width="1.5" stroke-linecap="round"></path>
+                <path d="M19.7821612,12.8545455 L24.4882544,12.8545455" id="Path-42" stroke-width="1.5" stroke-linecap="round"></path>
+                <path d="M19.7821612,16.9272727 L24.4882544,16.9272727" id="Path-42-Copy" stroke-width="1.5" stroke-linecap="round"></path>
+                <path d="M15.9753263,21 L24.4882544,21" id="Path-42-Copy-2" stroke-width="1.5" stroke-linecap="round"></path>
+            </g>
+        </g>
+    </g>
+</svg>

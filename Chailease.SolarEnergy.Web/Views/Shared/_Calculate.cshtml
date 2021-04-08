@@ -1,0 +1,87 @@
+﻿@model HomeViewModel
+
+<div class="calculate" data-aos="fade">
+    <h2 class="calculate-title">輕鬆預測您的認購收益</h2>
+    <div class="calculate-content">
+        <div class="row calculate-item">
+            <div class="col-6">
+                <p class="calculate-item--title">購買太陽能板數量</p>
+            </div>
+            <div class="col-6">
+                <div class="calculate-item--data">
+                    <div class="calc-input-container">
+                        <input type="number" min="1" value="1" class="js-inputBuyValue calc-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row calculate-item">
+            <div class="col-6">
+                <p class="calculate-item--title">購買太陽能板金額</p>
+            </div>
+            <div class="col-6">
+                <div class="calculate-item--data">
+                    <span class="js-solarPanels calculate-item--data-2">@Model.CONFIG["PerPrice"]</span>元
+                </div>
+            </div>
+        </div>
+        <div class="row calculate-item">
+            <div class="col-6">
+                <p class="calculate-item--title">預估20年現金收益</p>
+            </div>
+            <div class="col-6">
+                <div class="calculate-item--data">
+                    <span class="js-sliderResultDollar calculate-item--data-3">@Model.CONFIG["PredictPrice"]</span>元
+                </div>
+            </div>
+        </div>
+        <p class="calculate-content-info">假設每片太陽能板為17,000元<br />註：電費收益及內部報酬率為預估值，是中租迪和股份有限公司以過去經驗做保守估計</p>
+        <a href="@Url.Content("~/join/")" class="btn--type btn--type-4 calc-link" data-aos="fade-up" data-aos-delay="100">
+            <span>前往開放認購專案</span>
+        </a>
+        <p class="calculate-content-info-2">以固定電價持續20年獲得售電收入，輕鬆享受綠電收益</p>
+    </div>
+</div>
+<script>
+    $(function () {
+        //initial
+        var predictPrice = parseInt('@Model.CONFIG["PredictPrice"]', 0);
+        var picPrice = parseInt('@Model.CONFIG["PerPrice"]'.replace(",", ""), 0);
+
+        // 預估20年現金收益
+        $(".js-sliderResultDollar").text(setSymbol(predictPrice));
+        $(".js-solarPanels").text(setSymbol(picPrice));
+
+        function setSymbol(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        function changeMoney(el) {
+            if (isNaN($(el).val()) || $(el).val()<0) {
+                $(el).val("");
+                return false;
+            }
+            $(".js-costomerDollar").text(setSymbol($(el).val() * predictPrice));
+            $(".js-sliderResultDollar").text(setSymbol(($(el).val() * predictPrice)));
+            $(".js-solarPanels").text(setSymbol(($(el).val() * picPrice)));
+        }
+        $(".js-inputBuyValue").change(function () {
+            changeMoney($(this));
+        });
+
+        $(".js-inputBuyValue").keyup(function () {
+            changeMoney($(this));
+        });
+
+        $('.js-inputBuyValue').blur(function () {
+            var picTxt = $('.js-inputBuyValue').val();
+            var pic = parseInt(picTxt, 0);
+            if (picTxt == '' || isNaN(picTxt)) {
+                pic = 1;
+            }
+            if (pic < 1) pic = 1; //確保為正數(售完外)
+            $('.js-inputBuyValue').val(pic);
+            changeMoney($('.js-inputBuyValue'));
+        });
+    })
+</script>
+

@@ -1,0 +1,36 @@
+﻿@*
+    MODAL: 修改EMAIL
+*@
+<div class="modal fade" id="modalChangeEmail" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-forgetEmail" role="document">
+        <div class="modal-content ">
+            <button type="button" class="modal-btn--close" data-dismiss="modal" aria-label="Close">
+                <img src="@Url.Content("~/Content/images/bt_close_w.svg")" alt="">
+            </button>
+            @* 步驟1: 填表*@
+            <form action="" class="modal-form--forgetEmail">
+                <p class="modal-content--title">修改E-mail帳號</p>
+                <div class="form-item">
+                    <label class="control-label">原帳號</label>
+                    <div class="input-group">
+                        <div class="account-data-containter">
+                            <span class="account-data">milton123@test.com</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-item">
+                    <label class="control-label">新帳號</label>
+                    <div class="input-group">
+                        <input type="email" id="inputChangeEmail" name="inputChangeEmail" class="form-control has-btn-clear" placeholder="請輸入新帳號信箱" required>
+                        <div class='js-input-btn-clear input-btn-clear'></div>
+                        <p class="account-care-text">
+                            <img src="~/Content/images/s_bulb_icon.svg" alt="" srcset="">
+                            請您至帳號信箱進行認証
+                        </p>
+                    </div>
+                </div>
+                <button class="center btn--common btn--common-1 btn--form-send changeemailbtn">送出</button>
+            </form>
+        </div>
+    </div>
+</div>

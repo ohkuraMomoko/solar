@@ -1,0 +1,100 @@
+﻿/* @site: 全民電廠
+ * @author: nikki
+ * @update: nikki (2019-01-16)
+ * @page: 電廠明細頁
+ * @description: 電廠明細頁(PART:tab-file分頁內容)
+ */
+
+@import "../../setting/_variables.scss";
+@import "../../setting/_mixins.scss";
+
+
+/* item: file-list ---*/
+.file-list {
+    width: 100%;
+    @include flexbox;
+    @include flex-wrap(wrap);
+}
+
+/* item: file-item ---*/
+.file-item {
+    $linkSize: 7.06rem;
+    width: $linkSize;
+    margin: 2.5rem;
+
+    &-link {
+        display: block;
+
+        &--img {
+            background-image: url("../../images/big_paper.svg");
+            background-size: contain;
+            width: $linkSize;
+            height: 8.13rem;
+            @include change();
+        }
+
+        &--icon {
+            background-image: url("../../images/s_download_icon.svg");
+            background-size: contain;
+            width: 1.5rem;
+            height: 1.5rem;
+            margin: 1.94rem auto .56rem;
+            @include change();
+        }
+
+        &--name {
+            font-size: 1.13rem;
+            line-height: 1.56rem;
+            letter-spacing: 0.04rem;
+            color: $color-dark--2;
+            text-align: center;
+            padding: 0 3%;
+            @include change();
+        }
+    }
+}
+
+/*action: file-item-link ---*/
+.file-item-link:hover {
+    .file-item-link {
+        &--img {
+            background-image: url("../../images/big_paper_hover.svg");
+        }
+
+        &--icon {
+            background-image: url("../../images/s_download_hover.svg");
+        }
+
+        &--name {
+            color: $color-primary-blue;
+        }
+    }
+}
+
+/*rwd: file-item ---*/
+@include rwd(#{$ipad - 1px}) {
+    .file-item {
+        $linkSize: 4.94rem;
+        width: $linkSize;
+        margin: .8rem .5rem;
+
+        &-link {
+            &--img {
+                width: $linkSize;
+                height: 5.69rem;
+            }
+
+            &--icon {
+                width: 1.06rem;
+                height: 1.06rem;
+                margin: 0.9rem auto .31rem;
+            }
+
+            &--name {
+                font-size: 0.81rem;
+                line-height: 1.13rem;
+                letter-spacing: 0.03rem;
+            }
+        }
+    }
+}

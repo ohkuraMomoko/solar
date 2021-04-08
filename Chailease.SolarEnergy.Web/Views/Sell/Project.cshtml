@@ -1,0 +1,1023 @@
+﻿@model Chailease.SolarEnergy.Web.ViewModel.SellViewModel
+@using System.Globalization;
+@{
+    ViewBag.Title = "二手太陽能板";
+}
+@section header {
+    @Styles.Render("~/Content/plugin/bootstrap-table.min.css")
+    @Styles.Render("~/Content/pages/join/project.min.css")
+    @Styles.Render("~/Content/pages/sell/project.min.css")
+}
+@section metatags {
+    @Html.Action("GetMetaByType", "Base", new { id = 6 })
+}
+
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+<div class="page-container">
+    <div class="page-kv" data-aos="bg-scale">
+        <h2 class="page-kv--title" data-aos="fade-down" data-aos-delay="400">二手太陽能板</h2>
+        <img src="@Url.Content("~/Content/images/title_font_INVESTMENT.svg")" alt="INVESTMENT" class="page-kv--img" data-aos="fade-up" data-aos-delay="200">
+    </div>
+    <div class="page-content">
+        <div class="breadcrumb-container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/" href="@Url.Content("~/Home/")">
+                            <span itemprop="name"><img src="@Url.Content("~/Content/images/bread_home_icon.svg")" alt="首頁"></span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    <li class="breadcrumb-item" aria-current="page" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Sell/" href="@Url.Content("~/Sell/")">
+                            <span itemprop="name">二手交易公佈欄</span>
+                        </a>
+                        <meta itemprop="position" content="2" />
+                    </li>
+                    @* TODO:
+                        麵包屑最後一個要套電廠標題
+                    *@
+                    <li class="breadcrumb-item active" aria-current="page" itemprop="itemListElement" itemscope
+                        itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                            @{
+                                string case_name = Model.MemOnSaleDetail.CASE_NAME + "_" + Model.MemOnSaleDetail.SH_TRANS_INST_CD;
+                                <span itemprop="name">@case_name</span>
+                            }                            
+                        </a>
+                        <meta itemprop="position" content="3" />
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <div class="project">
+            <section class="project-header">
+                <div class="js-project-slider project-slider">
+                    @*<div class="project-slider-item"
+                        data-bg="url('http://chuat02/SolarEnergySIT/File/Image?uri=54ec9edc-7c25-4cf7-8b10-46ec661195a4')"
+                        style="background-image:url('htts://chuat02/SolarEnergySIT/File/Image?uri=54ec9edc-7c25-4cf7-8b10-46ec661195a4')"></div>*@
+                    @{
+                        if (Model.MemOnSaleDetail.CASE_IMG_LIST != null)
+                        {
+                            foreach (var item in Model.MemOnSaleDetail.CASE_IMG_LIST)
+                            {
+                                <div class="project-slider-item" style="background-image:url('@Url.Action("Image","File", new { uri = item.FILE_UUID })')"></div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="project-slider-item" style="background-image:url(@Url.Content("~/Content/images/solarCase.jpg"))"></div>
+                        }
+                    }
+                </div>
+
+                <div class="project-info">
+                    @switch (Model.MemOnSaleDetail.CASE_WEB_STATUS)
+                    {
+                        case "01":
+                            Model.MemOnSaleDetail.CASE_WEB_STATUS = "尚未開啟";
+                            break;
+                        case "02":
+                            Model.MemOnSaleDetail.CASE_WEB_STATUS = "開放認購中";
+                            break;
+                        case "03":
+                            Model.MemOnSaleDetail.CASE_WEB_STATUS = "已售完(專案釋出請通知)";
+                            break;
+                        case "04":
+                            Model.MemOnSaleDetail.CASE_WEB_STATUS = "認購完成";
+                            break;
+                        case "05":
+                            Model.MemOnSaleDetail.CASE_WEB_STATUS = "發電中";
+                            break;
+                        case "99":
+                            Model.MemOnSaleDetail.CASE_WEB_STATUS = "募資失敗";
+                            break;
+                    }
+                    <h3 class="project-info--status">@Model.MemOnSaleDetail.CASE_WEB_STATUS</h3>
+                    <h1 class="project-info--name">@Model.MemOnSaleDetail.CASE_NAME</h1>
+                    <div class="project-info-content">
+                        <ul class="project-info-list">
+                            <li class="row no-gutters project-info-item">
+                                <div class="col-6 project-info-item--title">太陽能板售價</div>
+                                <div class="col-6 project-info-item--data">
+                                    <span>@int.Parse(Model.MemOnSaleDetail.POWER_PANEL_SELL_PRICE).ToString("N0") 元/片</span>
+                                </div>
+                            </li>
+                            <li class="row no-gutters project-info-item">
+                                <div class="col-6 project-info-item--title">預估內部報酬率</div>
+                                <div class="col-6 project-info-item--data">
+                                    <span> @Model.MemOnSaleDetail.SELL_IRR %</span>
+                                </div>
+                            </li>
+                            <li class="row project-info-item">
+                                @*@{
+                                    if (Model.MemOnSaleDetail.POWER_STRT_DT != null)
+                                    {
+                                        <div class="col-6 project-info-item--title project-info-item--title-multi">售電合約剩餘期間<br>自@(Model.MemOnSaleDetail.POWER_STRT_DT.Substring(0, 4))年@(Model.MemOnSaleDetail.POWER_STRT_DT.Substring(4, 2))月發電</div>
+                                    }
+                                }
+                                <div class="col-6 project-info-item--data">
+                                    <span> @Model.MemOnSaleDetail.CONTRACT_REMAIN_DAY </span>
+                                </div>*@
+                                @{
+                                    if (Model.MemOnSaleDetail.POWER_STRT_DT != null)
+                                    {
+                                        <div class="col-12 project-info-item--title project-info-item--title-multi">售電合約剩餘期間<span> @Model.MemOnSaleDetail.CONTRACT_REMAIN_DAY </span>、自@(Model.MemOnSaleDetail.POWER_STRT_DT.Substring(0, 4))年@(Model.MemOnSaleDetail.POWER_STRT_DT.Substring(4, 2))月起售電<br></div>
+                                    }
+                                }
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                @*
+                    依照關注與否分三種狀態 (CLASS: d-none)
+                    1.已關注 (CLASS: project-followed)
+                    2.未關注 (CLASS: project-unfollowed)
+                    3.暫停關注 (CLASS: project-stopfollowed)
+                *@
+                <!-- 已關注 -->
+                <div class="project-followed d-none">
+                    <div class="project-buy">
+                        <div class="project-buy--progress">
+                            <div class="num-text">
+                                <p>
+                                    欲出售<span id="maxPc">@Model.MemOnSaleDetail.SELL_NUM</span>片
+                                </p>
+                            </div>
+                            <div class="num-control">
+                                <button type="button" class="num-control-btn decrease" disabled></button>
+                                <input class="num-control-input" text="number" id="numPc-1" name="numPc" readonly min="1" value="1" />
+                                <button type="button" class="num-control-btn increase" disabled></button>
+                            </div>
+                        </div>
+                        <div class="follow-btn">
+                            <p>您已關注此案</p>
+                            <button class="btn--common btn--common-2 project-buy--btn" id="unfollowBtn"
+                                    data-price="TEXT" data-name="TEXT" data-target="unfollowModal"
+                                    data-ga-target="ga_project_topinfo_btn_buy"
+                                    data-ga-project-id="TEXT">
+                                取消關注
+                            </button>
+                        </div>
+                    </div>
+                    @{
+                        if (Model.MemOnSaleDetail.LAST_FEE_DIST_DT != null)
+                        {
+                            <div class="follow-contact-blue">
+                                <div class="follow-contact-blue-item">
+                                    最近一次電費分配日 @DateTime.ParseExact(Model.MemOnSaleDetail.LAST_FEE_DIST_DT, "yyyyMMdd", CultureInfo.InvariantCulture).ToString("yyyy/MM/dd")，本案公告後已有電費分配紀錄，平均每片分配金額為 @Model.MemOnSaleDetail.LAST_FEE_DIST_AVG 元
+                                </div>
+                            </div>
+                        }
+                        else {
+                            <div class="follow-contact-blue">
+                                <div class="follow-contact-blue-item">
+                                    本案尚無電費分配記錄 
+                                </div>
+                            </div>
+                        }
+                    }
+                    <section class="follow-contact">
+                        <div class="block-item">
+                            <h3 class="tab-content-title">出售者聯絡資訊</h3>
+                        </div>
+                        <div class="follow-contact-top">
+                            <p>會員代碼 @Model.MemOnSaleDetail.SELL_MBR_ID</p>
+                            <div class="alert-text">
+                                <img src="@Url.Content("~/Content/images/lightball_icon.svg")" alt="" />
+                                <p>建議與賣家確認交易後，使用賣家「原用以收取電費之個人帳戶」做轉帳/匯款</p>
+                            </div>
+                        </div>
+                        @*@if (Model.MemOnSaleDetail.SELL_STATUS == "02" || Model.MemOnSaleDetail.SELL_STATUS == "01")
+                        {*@
+                            <div class="follow-contact-blue">
+                                <div class="follow-contact-blue-item">
+                                    @{
+                                        if (Model.SellMemberInfo != null)
+                                        {
+                                            <label class="CUST_NAME">@Model.MemOnSaleDetail.SELL_CUST_NAME</label><span class="d-lg-block d-none">&nbsp;&nbsp;</span>
+                                            <label class="EMAIL">@Model.SellMemberInfo.EMAIL</label><span class="d-lg-block d-none">&nbsp;&nbsp;|&nbsp;&nbsp;</span><label class="MOBILE">@Model.SellMemberInfo.MOBILE</label>
+                                        }
+                                        else
+                                        {
+                                            <label class="CUST_NAME"></label><span>&nbsp;&nbsp;</span>
+                                            <label class="EMAIL"></label><span>&nbsp;&nbsp;|&nbsp;&nbsp;</span><label class="MOBILE"></label>
+                                        }
+                                    }
+                                    
+                                </div>
+                                @{
+                                    if (Model.MemOnSaleDetail.IS_SELLER_ACCT == "Y")
+                                    {
+                                        if (Model.Payee != null && Model.Payee.PAYEE_BANK_ID != null && @Model.Payee.PAYEE_ACCT != null)
+                                        {
+                                            <p class="follow-contact-blue-item">
+                                                @Model.Payee.PAYEE_BANK (@Model.Payee.PAYEE_BANK_ID)&nbsp;&nbsp;<span>帳號：@Model.Payee.PAYEE_ACCT</span>
+                                            </p>
+                                        }
+                                        else
+                                        {
+                                            <p class="follow-contact-blue-item">
+                                                確認購買後可請賣家提供
+                                            </p>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <p class="follow-contact-blue-item">
+                                            確認購買後可請賣家提供
+                                        </p>
+                                    }
+                                }
+                                
+                            </div>
+                                    @*}*@
+                    </section>
+                </div>
+                <!-- 未關注 -->
+                <div class="project-unfollowed d-none">
+                    <div class="project-buy ">
+                        <div class="project-buy--progress">
+                            <div class="num-text">
+                                <p>
+                                    欲出售<span id="maxPc">@Model.MemOnSaleDetail.SELL_NUM</span>片
+                                </p>
+                            </div>
+                            <div class="num-control">
+                                <button type="button" class="num-control-btn decrease" onclick="decreaseNum()"></button>
+                                <input class="num-control-input" text="number" id="numPc-2" name="numPc" readonly min="1" value="1" />
+                                <button type="button" class="num-control-btn increase" onclick="increaseNum()"></button>
+                            </div>
+                        </div>
+                        <button class="btn--common btn--common-1 project-buy--btn"
+                                data-toggle="modal" data-target="followModal"
+                                data-price="TEXT" data-name="TEXT"
+                                data-ga-target="ga_project_topinfo_btn_buy"
+                                data-ga-project-id="TEXT" id="followBtn">
+                            關注此案<br>並與賣方接洽
+                        </button>
+                    </div>
+
+                    @*最近一次電費分配日 @DateTime.ParseExact(Model.MemOnSaleDetail.LAST_FEE_DIST_DT, "yyyyMMdd", CultureInfo.InvariantCulture).ToString("yyyy/MM/dd")，本案公告後已有電費分配紀錄，平均每片分配金額為 @int.Parse(Model.MemOnSaleDetail.LAST_FEE_DIST_AVG).ToString("#,#") 元*@
+                    @{
+                        if (Model.MemOnSaleDetail.LAST_FEE_DIST_DT != null)
+                        {
+                            <div class="follow-contact-blue">
+                                <div class="follow-contact-blue-item">
+                                    最近一次電費分配日 @DateTime.ParseExact(Model.MemOnSaleDetail.LAST_FEE_DIST_DT, "yyyyMMdd", CultureInfo.InvariantCulture).ToString("yyyy/MM/dd")，本案公告後已有電費分配紀錄，平均每片分配金額為 @Model.MemOnSaleDetail.LAST_FEE_DIST_AVG 元
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="follow-contact-blue">
+                                <div class="follow-contact-blue-item">
+                                    本案尚無電費分配記錄
+                                </div>
+                            </div>
+                        }
+                    }
+                    <section class="follow-contact">
+                        <div class="block-item">
+                            <h3 class="tab-content-title">出售者聯絡資訊</h3>
+                        </div>
+                        <div class="follow-contact-top">
+                            <p>會員代碼 @Model.MemOnSaleDetail.SELL_MBR_ID</p>
+                            <div class="alert-text">
+                                <img src="@Url.Content("~/Content/images/lightball_icon.svg")" alt="" />
+                                <p>建議與賣家確認交易後，使用賣家「原用以收取電費之個人帳戶」做轉帳/匯款</p>
+                            </div>
+                        </div>
+                        @if (Model.MemOnSaleDetail.SELL_STATUS == "01" && Model.MemOnSaleDetail.IS_BUYER == "N")
+                        {
+                            <div class="follow-contact-blue">
+                                <div class="follow-contact-blue-item">
+                                    <p id="sell-Info">發布公告次數 @Model.MemOnSaleSellInfo.SELL_NUM 次，已移轉次數 @Model.MemOnSaleSellInfo.TRANS_NUM 次</p>
+                                </div>
+                                <div class="follow-contact-blue-item">
+                                    <p class="follow-contact-blue-item">
+                                        確認購買後可請賣家提供
+                                    </p>
+                                </div>
+                            </div>
+                        }                        
+
+                    </section>
+                </div>
+                <!-- 暫停關注 -->
+                <div class="project-stopfollowed d-none">
+                    <div class="project-buy ">
+                        <div class="project-buy--progress">
+                            <div class="num-text">
+                                <p>
+                                    欲出售<span id="maxPc">@Model.MemOnSaleDetail.SELL_NUM</span>片
+                                </p>
+                            </div>
+                            <div class="num-control">
+                                <button type="button" class="num-control-btn decrease" disabled></button>
+                                <input class="num-control-input" text="number" id="numPc-3" name="numPc" readonly min="1" value="1" />
+                                <button type="button" class="num-control-btn increase" disabled></button>
+                            </div>
+                        </div>
+                        <button class="btn--common btn--common-2 project-buy--btn"
+                                data-price="TEXT" data-name="TEXT"
+                                data-ga-target="ga_project_topinfo_btn_buy"
+                                data-ga-project-id="TEXT" disabled>
+                            與買方接洽中<br>暫停接受關注
+                        </button>
+                    </div>
+                    @*最近一次電費分配日 @DateTime.ParseExact(Model.MemOnSaleDetail.LAST_FEE_DIST_DT, "yyyyMMdd", CultureInfo.InvariantCulture).ToString("yyyy/MM/dd")，本案公告後已有電費分配紀錄，平均每片分配金額為 @int.Parse(Model.MemOnSaleDetail.LAST_FEE_DIST_AVG).ToString("#,#") 元*@
+                    @{
+                        if (Model.MemOnSaleDetail.LAST_FEE_DIST_DT != null)
+                        {
+                            <div class="follow-contact-blue">
+                                <div class="follow-contact-blue-item">
+                                    最近一次電費分配日 @DateTime.ParseExact(Model.MemOnSaleDetail.LAST_FEE_DIST_DT, "yyyyMMdd", CultureInfo.InvariantCulture).ToString("yyyy/MM/dd")，本案公告後已有電費分配紀錄，平均每片分配金額為 @Model.MemOnSaleDetail.LAST_FEE_DIST_AVG 元
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="follow-contact-blue">
+                                <div class="follow-contact-blue-item">
+                                    本案尚無電費分配記錄
+                                </div>
+                            </div>
+                        }
+                    }
+                    <section class="follow-contact">
+                        <div class="block-item">
+                            <h3 class="tab-content-title">出售者聯絡資訊</h3>
+                        </div>
+                        <div class="follow-contact-top">
+                            <p>會員代碼 @Model.MemOnSaleDetail.SELL_MBR_ID</p>
+                            <div class="alert-text">
+                                <img src="@Url.Content("~/Content/images/lightball_icon.svg")" alt="" />
+                                <p>建議與賣家確認交易後，使用賣家「原用以收取電費之個人帳戶」做轉帳/匯款</p>
+                            </div>
+                        </div>
+                        @if (Model.MemOnSaleDetail.SELL_STATUS == "02" ) 
+                        {
+                            <div class="follow-contact-blue">
+                                <div class="follow-contact-blue-item">
+                                    @{
+                                        if (Model.MemOnSaleDetail.IS_BUYER == "Y")
+                                        {
+                                            if (Model.SellMemberInfo != null)
+                                            {
+                                                <label class="CUST_NAME">@Model.MemOnSaleDetail.SELL_CUST_NAME</label><span>&nbsp;&nbsp;</span>
+                                                <label class="EMAIL">@Model.SellMemberInfo.EMAIL</label><span>&nbsp;&nbsp;|&nbsp;&nbsp;</span><label class="MOBILE">@Model.SellMemberInfo.MOBILE</label>
+                                            }
+                                            else
+                                            {
+                                                <label class="CUST_NAME"></label><span>&nbsp;&nbsp;</span>
+                                                <label class="EMAIL"></label><span>&nbsp;&nbsp;|&nbsp;&nbsp;</span><label class="MOBILE"></label>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <p id="sell-Info">發布公告次數 @Model.MemOnSaleSellInfo.SELL_NUM 次，已移轉次數 @Model.MemOnSaleSellInfo.TRANS_NUM 次</p>
+                                        }
+                                    }
+                                    
+                                </div>
+                                @if (Model.MemOnSaleDetail.IS_SELLER_ACCT == "Y")
+                                {
+                                    if (Model.Payee != null && Model.Payee.PAYEE_BANK_ID != null && @Model.Payee.PAYEE_BANK != null)
+                                    {
+                                           <p class="follow-contact-blue-item">
+                                               @Model.Payee.PAYEE_BANK (@Model.Payee.PAYEE_BANK_ID)&nbsp;&nbsp;<span>帳號：@Model.Payee.PAYEE_ACCT</span>
+                                           </p>
+                                    }
+                                    else
+                                    {
+                                        <p class="follow-contact-blue-item">
+                                            確認購買後可請賣家提供
+                                        </p>
+                                    }
+                                }
+                                else
+                                {
+                                    <p class="follow-contact-blue-item">
+                                        確認購買後可請賣家提供
+                                    </p>
+                                }
+                            </div>
+                        }
+                    </section>
+                </div>
+                <!-- 已下架 -->
+                <div class="project-takeOff d-none">
+                    <div class="project-buy ">
+                        <div class="project-buy--progress">
+                            <div class="num-text">
+                                <p>
+                                    欲出售<span id="maxPc">@Model.MemOnSaleDetail.SELL_NUM</span>片
+                                </p>
+                            </div>
+                            <div class="num-control">
+                                <button type="button" class="num-control-btn decrease" disabled></button>
+                                <input class="num-control-input" text="number" id="numPc-3" name="numPc" readonly min="1" value="1" />
+                                <button type="button" class="num-control-btn increase" disabled></button>
+                            </div>
+                        </div>
+                        <button class="btn--common btn--common-2 project-buy--btn"
+                                data-price="TEXT" data-name="TEXT"
+                                data-ga-target="ga_project_topinfo_btn_buy"
+                                data-ga-project-id="TEXT" disabled>
+                            已下架
+                        </button>
+                    </div>
+                    @*最近一次電費分配日 @DateTime.ParseExact(Model.MemOnSaleDetail.LAST_FEE_DIST_DT, "yyyyMMdd", CultureInfo.InvariantCulture).ToString("yyyy/MM/dd")，本案公告後已有電費分配紀錄，平均每片分配金額為 @int.Parse(Model.MemOnSaleDetail.LAST_FEE_DIST_AVG).ToString("#,#") 元*@
+                    @{
+                        if (Model.MemOnSaleDetail.LAST_FEE_DIST_DT != null)
+                        {
+                            <div class="follow-contact-blue">
+                                <div class="follow-contact-blue-item">
+                                    最近一次電費分配日 @DateTime.ParseExact(Model.MemOnSaleDetail.LAST_FEE_DIST_DT, "yyyyMMdd", CultureInfo.InvariantCulture).ToString("yyyy/MM/dd")，本案公告後已有電費分配紀錄，平均每片分配金額為 @Model.MemOnSaleDetail.LAST_FEE_DIST_AVG 元
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="follow-contact-blue">
+                                <div class="follow-contact-blue-item">
+                                    本案尚無電費分配記錄
+                                </div>
+                            </div>
+                        }
+                    }                                        
+                    <section class="follow-contact">
+                        <div class="block-item">
+                            <h3 class="tab-content-title">出售者聯絡資訊</h3>
+                        </div>
+                        <div class="follow-contact-top">
+                            <p>會員代碼 @Model.MemOnSaleDetail.SELL_MBR_ID</p>
+                            <div class="alert-text">
+                                <img src="@Url.Content("~/Content/images/lightball_icon.svg")" alt="" />
+                                <p>建議與賣家確認交易後，使用賣家「原用以收取電費之個人帳戶」做轉帳/匯款</p>
+                            </div>
+                        </div>
+                        @*@if (Model.MemOnSaleDetail.SELL_STATUS == "02" || Model.MemOnSaleDetail.SELL_STATUS == "01")
+                        {*@
+                            <div class="follow-contact-blue">
+                                <div class="follow-contact-blue-item">
+                                    @{
+                                        if (Model.MemOnSaleDetail != null)
+                                        {
+                                            <label class="CUST_NAME">@Model.MemOnSaleDetail.SELL_CUST_NAME</label><span>&nbsp;&nbsp;</span>
+                                            @*<label class="EMAIL">@Model.SellMemberInfo.EMAIL</label><span>&nbsp;&nbsp;|&nbsp;&nbsp;</span><label class="MOBILE">@Model.SellMemberInfo.MOBILE</label>*@
+                                        }
+                                        else
+                                        {
+                                            <label class="CUST_NAME"></label><span>&nbsp;&nbsp;</span>
+                                            @*<label class="EMAIL"></label><span>&nbsp;&nbsp;|&nbsp;&nbsp;</span><label class="MOBILE"></label>*@
+                                        }
+                                    }                                    
+                                </div>
+                                @*@if (Model.MemOnSaleDetail.IS_SELLER_ACCT == "Y")
+                                {
+                                    if (Model.Payee != null && Model.Payee.PAYEE_BANK_ID != null && @Model.Payee.PAYEE_BANK != null)
+                                    {
+                                        <p class="follow-contact-blue-item">
+                                            @Model.Payee.PAYEE_BANK (@Model.Payee.PAYEE_BANK_ID)&nbsp;&nbsp;<span>帳號：@Model.Payee.PAYEE_ACCT</span>
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <p class="follow-contact-blue-item">
+                                            確認購買後可請賣家提供
+                                        </p>
+                                    }
+                                }
+                                else
+                                {
+                                    <p class="follow-contact-blue-item">
+                                        確認購買後可請賣家提供
+                                    </p>
+                                }*@
+                            </div>
+                        @*}*@
+                    </section>
+                </div>
+
+            </section>
+            <section class="project-body tabsy">
+                @* TIP: name=tab可用checked=""控制預設分頁 *@
+                <input type="radio" id="tab1" name="tab" checked="">
+                <label class="tab-btn tab-btn-1" for="tab1">專案介紹</label>
+                <div class="tab tab--project-info">
+                    <div class="tab-content">
+                        @{
+                            Html.RenderPartial("~/Views/Sell/_ProjectTabInfo.cshtml", Model);
+                        }
+                    </div>
+                </div>
+                <input type="radio" id="tab3" name="tab">
+                <label class="tab-btn tab-btn-3" for="tab3">檢視附件</label>
+                <div class="tab tab--file">
+                    <div class="tab-content">
+                        @{
+                            Html.RenderPartial("~/Views/Sell/_ProjectTabFile.cshtml", Model);
+                        }
+                    </div>
+                </div>
+                <button id="opneWinBtn" class="btn--common btn--common-1 view-btn">檢視原電廠資訊</button>
+            </section>
+
+            <section class="care-text-desktop">
+                提醒與聲明<br>
+                1.縱有經濟部依「再生能源發展條例」提供已固定費率購電20年之相關規定，惟購買之太陽能板後續發電仍有一定之風險(包括但不限於政府政策或法令之變更等)，購買前請詳閱相關資料並審慎評估。<br>
+                2.就發電度數與售電報酬之所有預估，係以過去電廠經營之經驗為基礎，均僅供參考，實際發電量受日照強度、時間等因素影響而浮動，任何人均無法保證發電度數與售電報酬，亦不保證太陽能板永不受損或不受任何天災地變影響，電費仍依實際之發電度數計算。<br>
+                3.太陽能設備將會洽保險公司投保產物保險，保險事故之理賠金額將依每年實際保險條款約定，如有自付額、保險理賠不給付或不足額之修復費用，將由售電收入中代為扣除，惟如仍不足支付時，認購人仍負有支付義務。
+            </section>
+            <div class="care-text-mobile">
+                <a class="collapse-btn" data-toggle="collapse" href="#collapseCareText" role="button" aria-expanded="false" aria-controls="collapseCareText">
+                    提醒與聲明 <span class="collapse-btn-icon"></span>
+                </a>
+                <div class="collapse" id="collapseCareText">
+                    <div class="collapse-body">
+                        1.縱有經濟部依「再生能源發展條例」提供已固定費率購電20年之相關規定，惟購買之太陽能板後續發電仍有一定之風險(包括但不限於政府政策或法令之變更等)，購買前請詳閱相關資料並審慎評估。<br>
+                        2.就發電度數與售電報酬之所有預估，係以過去電廠經營之經驗為基礎，均僅供參考，實際發電量受日照強度、時間等因素影響而浮動，任何人均無法保證發電度數與售電報酬，亦不保證太陽能板永不受損或不受任何天災地變影響，電費仍依實際之發電度數計算。<br>
+                        3.太陽能設備將會洽保險公司投保產物保險，保險事故之理賠金額將依每年實際保險條款約定，如有自付額、保險理賠不給付或不足額之修復費用，將由售電收入中代為扣除，惟如仍不足支付時，認購人仍負有支付義務。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-video" id="modalVideo" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="modal-btn--close" data-dismiss="modal" aria-label="Close">
+                <img src="@Url.Content("~/Content/images/bt_close_w.svg")" alt="">
+            </button>
+            <div id="modalVideoIndex"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalDenied" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-subscription" role="document">
+        <div class="modal-content">
+            <button type="button" class="modal-btn--close" data-dismiss="modal" aria-label="Close">
+                <img src="@Url.Content("~/Content/images/bt_close_w.svg")" alt="">
+            </button>
+            <img src="@Url.Content("~/Content/images/warning_info_icon.svg")" alt="" class="center modal-subscription--icon">
+            <p class="modal-subscription--title text-heightline text-bold">
+                您目前無法進行電廠認購
+                <br />
+                如有問題請洽客服電話：(02) 2658-1677
+            </p>
+            <p class="modal-subscription--text"></p>
+            <div class="w-70 m-auto d-flex justify-content-center">
+                <button class="center btn--common btn--common-2" data-dismiss="modal">確定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="followModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-subscription" role="document">
+        <div class="modal-content">
+            <button type="button" class="modal-btn--close" data-dismiss="modal" aria-label="Close">
+                <img src="@Url.Content("~/Content/images/bt_close_w.svg")" alt="">
+            </button>
+            <h2 class="modal-title">確認向出售會員表達接洽意願</h2>
+            <p class="modal-text">
+                當您確定後，即表示您同意由本平台協助提供「姓名、手機與email等聯絡資訊」給出售會員，您同時可取得對方聯絡資訊，以利雙方連絡交易事宜。
+            </p>
+            <div class="modal-alert-text">
+                <img src="@Url.Content("~/Content/images/lightball_icon.svg")" alt="" />
+                <p>
+                    本平台僅協助有意願交易會員間建立聯繫管道，不涉及仲介或任何交易事務(包含但不限於合約訂定)，亦不額外收取費用，會員間應自行接洽包含交易條件等所有相關事宜。
+                    提醒您，交易完成後，買賣雙方須簽署「轉讓通知書」予本平台，本平台將於收到該實體書面文件後，始辦理電費收款人之變更。
+
+                </p>
+            </div>
+            <div class="w-70 m-auto d-flex justify-content-center align-items-center">
+                <button class="btn--common btn--common-1 mr-4" data-dismiss="modal">返回</button>
+                <button class="btn--common btn--common-1" id="followModal-submit" onclick="return service.callMemOnSaleBuyerWant()" data-dismiss="modal">確定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="unfollowModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-subscription" role="document">
+        <div class="modal-content">
+            <button type="button" class="modal-btn--close" data-dismiss="modal" aria-label="Close">
+                <img src="@Url.Content("~/Content/images/bt_close_w.svg")" alt="">
+            </button>
+            <h2 class="modal-title">確認取消關注</h2>
+            <p class="modal-text">
+                取消後，將提醒賣家您已取消關注。
+            </p>
+            <div class="modal-alert-text">
+                <img src="@Url.Content("~/Content/images/lightball_icon.svg")" alt="" />
+                <p>
+                    本網站僅協助有意願交易會員間建立聯繫管道，不涉及實質交易。會員間應自行接洽交易事宜，相關交易問題與本網站無關。
+                </p>
+            </div>
+            <div class="w-70 m-auto d-flex justify-content-center align-items-center">
+                <button class="btn--common btn--common-1 mr-4" data-dismiss="modal">返回</button>
+                <button class="btn--common btn--common-1" id="unfollowModal-submit" onclick="return service.callMemOnSaleBuyerNoWant()" data-dismiss="modal">確定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="../../Scripts/project.js"></script>
+    @Scripts.Render("~/Scripts/bootstrap-table.min.js")
+
+    <script>
+        var SELL_STATUS='@Model.MemOnSaleDetail.SELL_STATUS' ;
+        var IS_BUYER = '@Model.MemOnSaleDetail.IS_BUYER';
+        var $mbrLVL = '@Model.UserInfoDetail.MBR_LVL';
+        $(document).ready(function () {
+
+            function logElementEvent(eventName, element) {
+                console.log(
+                    Date.now(),
+                    eventName,
+                    element.getAttribute("data-bg")
+                );
+            }
+
+            var callback_finish = function () {
+                logElementEvent("✔️ FINISHED", document.documentElement);
+            };
+
+            lazy = new LazyLoad({
+                elements_selector: "[data-lazy='true']",
+                threshold: 0,
+                callback_finish: callback_finish
+            });
+
+            if (!($mbrLVL === '02' || $mbrLVL === '03')) {
+                $('#followBtn').attr('disabled', 'disabled');
+                $('#followBtn').css("background-color", "#c1c1c1");
+            }
+
+            sendView();
+
+            if (SELL_STATUS == '01' && IS_BUYER == 'N') {
+                $('div.project-unfollowed').removeClass('d-none');
+            }
+            else if (SELL_STATUS == '01' && IS_BUYER == 'Y') {
+                $('div.project-followed').removeClass('d-none');
+            }
+            else if (SELL_STATUS == '02') {
+                getSellMemberInfo();
+                $('div.project-stopfollowed').removeClass('d-none');
+            }
+            else if (SELL_STATUS == '03') {
+                $('div.project-takeOff').removeClass('d-none');
+            };
+            if (window.location.href.indexOf('invest=true') > 0) {
+                $('.project-buy--btn').click();
+            }
+
+            $('#opneWinBtn').click(function () {
+                window.open('@Url.Action("Project", "Join")?ID=@Model.MemOnSaleDetail.CASE_NO');
+            });
+        //getContractVersion();
+
+            lazy.update();
+        });
+
+        var _sh_trans_inst_cd = '@Model.MemOnSaleDetail.SH_TRANS_INST_CD';
+        var service = {
+            callMemOnSaleBuyerWant: function () {
+                $ajax.Post('@Url.Action("MemOnSaleBuyerWant", "MemOnSale")', { sh_trans_inst_cd: _sh_trans_inst_cd, buy_Num: $('#numPc-2').val() },
+                    function (d) {
+                        //debugger;
+                        if (d.RESULT) {
+                            $('div.project-unfollowed').addClass('d-none');
+                            $('div.project-followed').removeClass('d-none');
+                        } else {
+                            showMsg(d.ERRMSG, "error");
+                        };
+                    });
+            },
+            callMemOnSaleBuyerNoWant: function () {
+                $ajax.Post('@Url.Action("MemOnSaleBuyerNoWant", "MemOnSale")', { sh_trans_inst_cd: _sh_trans_inst_cd },
+                    function (d) {
+                        if (d.RESULT) {
+                            // 由於一開始是以關注的狀態近來 IS_BUYER 會是 Y 無法變更，故此改成重讀刷新頁面
+                            location.replace(location.href);
+                        };
+                    });
+            }
+        };
+
+    @*
+    // GA: 圖靈/電廠頁/增強型電子商務-product detail
+    dataLayer.push({
+        'ecommerce': {
+            'detail': {
+                'products': [{
+                    'id': '@projectIntro.POWER_PLANT_NUM',
+                    'name': '@projectIntro.CASE_NAME',
+                    'category': "太陽能板",
+                    'price': @projectIntro.PANELS_PRICE,
+                }]
+            }
+        },
+        'event': 'td_productDetail'
+    });
+    *@
+
+    @*
+    $('.project-buy--btn').on("click", function () {
+        if (@projectIntro.CASE_WEB_STATUS != '02') {
+            showMsg('電廠已售完', 'error');
+            return;
+        }
+
+        $('#txtBuyPic').val(1);
+        $('#txtDiscountCode').val('');
+        $('#txtPrice').html('');
+        $('#txtTotalPrice').html('');
+        $('#txtDiscount').html(0);
+        $('#txtBuyPicInfo').addClass('d-none')
+        calculatePrice();
+
+        $("#step1").removeClass("d-none");
+        $("#step2").addClass("d-none");
+        $("#step3").addClass("d-none");
+        $("#step4NotCertified").addClass("d-none");
+        $("#step4Verified").addClass("d-none");
+
+        loginExt.setCallback(function () {
+            location.href = location.href + '?invest=true'
+            location.reload()
+
+        })
+
+        $ajax.Post('@Url.Action("GetInstantUserInfo")', {}, function (res) {
+            //console.log(res)
+            if (res.LEVEL == "03" || (res.LEVEL == "02" && res.RETURN_NOTE == 'N')) {
+                //完成認證&未完成認證
+                $('#modalBuyProject').modal('show');
+
+                // GA: 圖靈/電廠頁/立即購入/click event/狀態:可購買
+                dataLayer.push({
+                    'event': 'productClick',
+                    'buttonName': '立即購入',
+                    'pageName': '可購買頁面',
+                    'productName': '@projectIntro.CASE_NAME',
+                    'url': '@Request.Url.LocalPath'
+                });
+            }
+            else if (res.LEVEL == "02" && res.RETURN_NOTE == 'Y') {
+                //有退回註記
+                $('#modalDenied').modal('show');
+                // GA: 圖靈/電廠列表/立即購入/click event/狀態:無法進行電廠認購
+                dataLayer.push({
+                    'event': 'productClick',
+                    'buttonName': '立即購入',
+                    'pageName': '無法進行電廠認購',
+                    'productName': '@projectIntro.CASE_NAME',
+                    'url': '@Request.Url.LocalPath'
+                });
+            }
+            else if (res.LEVEL == "01") {
+                //一般會員
+                location.href = '@Url.Action("Index", "AdvancedPurchase")';
+                // GA: 圖靈/電廠列表/立即購入/click event/狀態:需升級出資會員
+                dataLayer.push({
+                    'event': 'productClick',
+                    'buttonName': '立即購入',
+                    'pageName': '需升級出資會員',
+                    'productName': '@projectIntro.CASE_NAME',
+                    'url': '@Request.Url.LocalPath'
+                });
+            }
+            else {
+                //未登入
+                $('#modalMember').modal('show');
+                // GA: 圖靈/電廠列表/立即購入/click event/狀態:需登入
+                dataLayer.push({
+                    'event': 'productClick',
+                    'buttonName': '立即購入',
+                    'pageName': '需登入',
+                    'productName': '@projectIntro.CASE_NAME',
+                    'url': '@Request.Url.LocalPath'
+                });
+            }
+        });
+    })*@
+
+    $('.tab-btn-3').on("click", function () {
+        $ajax.Post('@Url.Action("GetInstantUserInfo")', {}, function (res) {
+            console.log(res)
+            if (res.LEVEL == '03' || (res.LEVEL == '02' && res.RETURN_NOTE == 'N')) {
+                @*
+                // GA: 圖靈/電廠列表/專案附件頁籤/click event/狀態:出資會員
+                dataLayer.push({
+                    'event': 'productClick',
+                    'buttonName': '專案附件頁籤',
+                    'pageName': '專案附件頁',
+                    'productName': '@projectIntro.CASE_NAME',
+                    'url': '@Request.Url.LocalPath'
+                });
+                 *@
+            }
+            else if (res.LEVEL == "02" && res.RETURN_NOTE == 'Y') {
+                //有退回註記
+                $('.tab-btn-1').click()
+                $('#modalDenied').modal('show')
+                @*
+                // GA: 圖靈/電廠列表/專案附件頁籤/click event/狀態:目前無法進行電廠認購
+                dataLayer.push({
+                    'event': 'productClick',
+                    'buttonName': '專案附件頁籤',
+                    'pageName': '目前無法進行電廠認購',
+                    'productName': '@projectIntro.CASE_NAME',
+                    'url': '@Request.Url.LocalPath'
+                });*@
+            }
+            else if (res.LEVEL == "01") {
+                //一般會員
+                $('.tab-btn-1').click()
+                $('#modalNotAllow').modal('show')
+                // GA: 圖靈/電廠列表/專案附件頁籤/click event/狀態:一般會員
+                @*
+                dataLayer.push({
+                    'event': 'productClick',
+                    'buttonName': '專案附件頁籤',
+                    'pageName': '無預覽權限',
+                    'productName': '@projectIntro.CASE_NAME',
+                    'url': '@Request.Url.LocalPath'
+                });*@
+            }
+            else {
+                $('.tab-btn-1').click()
+                $('#modalMember').modal('show')
+                // GA: 圖靈/電廠列表/專案附件頁籤/click event/狀態:需登入
+                @*
+                dataLayer.push({
+                    'event': 'productClick',
+                    'buttonName': '專案附件頁籤',
+                    'pageName': '需登入',
+                    'productName': '@projectIntro.CASE_NAME',
+                    'url': '@Request.Url.LocalPath'
+                });
+                *@
+            }
+        });
+    })
+
+    $('.tab-btn-2').on("click", function () {
+        $ajax.Post('@Url.Action("GetInstantUserInfo")', {}, function (res) {
+            //console.log(res)
+            if (res.LEVEL == null || res.LEVEL == '' || res.LEVEL == '00') {
+                @*
+                // GA: 圖靈/電廠頁/立即試算/click event/狀態:需登入
+                dataLayer.push({
+                    'event': 'productClick',
+                    'buttonName': '立即試算',
+                    'pageName': '需登入',
+                    'productName': '@projectIntro.CASE_NAME',
+                    'url': '@Request.Url.LocalPath'
+                });
+                *@
+
+                $('.tab-btn-1').click()
+                //$('#modalMember').modal('show')
+                loginExt.setCallback(function () {
+                    $('.tab-btn-2').click();
+                }).open();
+            } else {
+                @*
+                // GA: 圖靈/電廠頁/立即試算/click event/狀態:電廠試算頁
+                dataLayer.push({
+                    'event': 'productClick',
+                    'buttonName': '立即試算',
+                    'pageName': '電廠試算頁',
+                    'productName': '@projectIntro.CASE_NAME',
+                    'url': '@Request.Url.LocalPath'
+                });
+                *@
+            }
+        });
+    })
+
+        function view_revenue() {
+            $('.tab-btn-2').click();
+        }
+
+        //GA 集客: 專案購買-Step1-購買片數
+        $('#modalBuyProject').on('shown.bs.modal', function (e) {
+            @*
+                dataLayer.push(
+                    {
+                        "event": "popupPageView",
+                        "popPATH": "/buy/order",
+                        "popTitle": "專案購買-Step1-購買片數"
+                    }
+                );
+         *@
+
+        });
+
+        $('#modalBuyProject').on('hidden.bs.modal', function (e) {
+            dataLayer.push(
+                {
+                    "event": "popupClosed",
+                }
+            );
+        });
+
+        // 購買片數-增加
+        function increaseNum() {
+            let oriNum = parseInt($('#numPc-2').val());
+            let maxNum = parseInt($('#maxPc').text());
+
+            if (oriNum < maxNum) {
+                $('#numPc-1,#numPc-2,#numPc-3').val(oriNum + 1);
+            }
+        }
+
+        // 購買片數-減少
+        function decreaseNum() {
+            let oriNum = parseInt($('#numPc-2').val());
+            let minNum = parseInt(1);
+
+            if (oriNum > minNum) {
+                $('#numPc-1,#numPc-2,#numPc-3').val(oriNum - 1);
+            }
+        }
+
+        // 瀏覽紀錄
+        function sendView() {
+            var jqxhr =$.ajax({
+                url: '@Url.Action("MemOnSaleBuyerView", "MemOnSale")',
+                data: { sh_trans_inst_cd: _sh_trans_inst_cd },
+                cache: false,
+                type: "Post",
+                async: false,
+                //success: function (result) {
+                //    console.log(result)
+                //}
+            });
+            
+            jqxhr.done(successHandler);
+            jqxhr.fail(failureHandler);
+        }
+
+        function successHandler() {
+            console.log("")
+        }
+
+        function failureHandler() {
+            console.log("")
+        }
+
+        // 關注按鈕
+        $('#followBtn').on('click', function () {
+            $('#followModal').modal('show');
+        });
+
+        // 取消關注按鈕
+        $('#unfollowBtn').on('click', function () {
+            $('#unfollowModal').modal('show');
+        });
+
+
+        // 關注 / 取消關注時重新取得 SellMemberInfo 資訊
+        $('#followModal-submit').on('click', function () {
+            //getSellMemberInfo();
+            location.replace(location.href);
+        });
+        $('#unfollowModal-submit').on('click', function () {
+            //getSellMemberInfo();
+            location.replace(location.href);
+        });
+
+        function getSellMemberInfo() {
+            var SELL_MBR_ID = '@Model.MemOnSaleDetail.SELL_MBR_ID';
+            var url = '@Url.Action("GetSellMemberInfo", "Sell")';
+
+            $.ajax({
+                url: url,
+                data: { sellMbrId: SELL_MBR_ID },
+                cache: false,
+                type: "Post",
+                async: false,
+                success: function (result) {
+                    if (result.RESULT) {
+                        console.log('result：' + result);
+                        //$('.CUST_NAME').text(result.Data.CUST_NAME);
+                        $('.EMAIL').text(result.Data.EMAIL);
+                        $('.MOBILE').text(result.Data.MOBILE);
+                    }
+                }
+            });
+        }
+    </script>
+}

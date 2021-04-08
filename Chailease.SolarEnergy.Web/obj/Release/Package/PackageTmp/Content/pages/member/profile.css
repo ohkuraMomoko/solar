@@ -1,0 +1,178 @@
+﻿@charset "UTF-8";
+/* @site: 全民電廠
+ * @author: nikki
+ * @update: nikki (2019-2-22)
+ * @page: 會員專區-會員資料
+ * @description: 各分頁共用，包含:我的資料/銀行帳戶/修改密碼/會員活動
+ */
+/* =Variables--------------------------*/
+/* font style ---*/
+/* desktop & mobile size */
+/* color */
+/*animation */
+/*z-index */
+/* z-index順序 */
+/* contactBtn => meun mobile => signup/login */
+/*為手譏評板裝置，且裝置奘為橫向*/
+/*若只判斷orientation:landscape，desktop size也包含在內*/
+.page-container {
+  background-image: linear-gradient(0deg, rgba(30, 181, 172, 0) 30%, rgba(30, 181, 172, 0.8) 100%); }
+
+.page-kv {
+  padding-top: 10rem;
+  height: 25rem; }
+  .page-kv--title {
+    color: #303030; }
+
+@media only screen and (max-width: 767px) {
+  .page-kv {
+    height: 15rem;
+    padding: 7rem 5% 0; } }
+
+.row div .form-item {
+  padding-right: 0; }
+
+/*item: profile-tag ---*/
+.profile-tag-container {
+  border-bottom: 1px solid #D3D3D3; }
+
+.profile-tag {
+  width: 90%;
+  max-width: 57rem;
+  margin: 0 auto;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  /*@include justify-content(space-between);*/ }
+  .profile-tag--item {
+    width: 25%;
+    max-width: 10rem;
+    font-size: 1.5rem;
+    line-height: 3rem;
+    text-align: center;
+    color: #8a8a8a;
+    border-bottom: .5rem solid transparent;
+    border-radius: 2px;
+    margin: 0 3%;
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -ms-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear; }
+    .profile-tag--item > a {
+      color: inherit;
+      display: block; }
+    .profile-tag--item:hover, .profile-tag--item.active {
+      color: #303030;
+      border-color: #1C8886; }
+
+/*rwd: profile-tag ----*/
+@media only screen and (max-width: 768px) {
+  .profile-tag {
+    width: 100%; }
+    .profile-tag--item {
+      font-size: 0.94rem;
+      line-height: 2rem;
+      border-width: .25rem;
+      margin: 0 auto; } }
+
+/*item: profile-content ----*/
+.profile-content {
+  width: 90%;
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: 3rem 0 4rem; }
+
+.profile-idcard-container {
+  max-width: 630px; }
+
+@media only screen and (max-width: 768px) {
+  max-width: none; }
+
+/*page: password =================*/
+.pwd-text {
+  color: #7b7b7b;
+  line-height: 1.5;
+  padding: 5px 10px;
+  background-color: #fff3b5;
+  border-radius: 18px;
+  display: block;
+  margin-top: 0.5rem;
+  margin-left: 1rem; }
+
+@media only screen and (max-width: 768px) {
+  .pwd-text {
+    font-size: 0.94rem;
+    padding: 5px; } }
+
+/*page: event ===================*/
+.event-content {
+  width: 100%;
+  max-width: 28.88rem;
+  margin: 0 auto;
+  padding-top: 2.88rem; }
+
+.event-title {
+  font-size: 1.38rem;
+  color: #6F6F6F;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 1rem; }
+
+.event-subtitle {
+  color: #8a8a8a;
+  text-align: center; }
+
+.userid {
+  margin-top: 2.8rem;
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  -webkit-justify-content: space-between;
+  -moz-justify-content: space-between;
+  justify-content: space-between;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  -webkit-align-items: flex-end;
+  -moz-align-items: flex-end;
+  align-items: flex-end; }
+  .userid-text {
+    width: calc(100% - 7rem);
+    line-height: 2.38rem;
+    font-size: 0.94rem;
+    background-color: #F5F5F5;
+    padding: 0 .5rem; }
+    .userid-text--title {
+      color: #1C8886;
+      font-weight: 500;
+      margin-right: 10%; }
+    .userid-text--data {
+      color: #303030; }
+  .userid-btn {
+    width: 7rem;
+    line-height: 2.38rem;
+    height: 2.38rem;
+    text-align: center;
+    color: #fff;
+    background-color: #1C8886;
+    display: block;
+    cursor: pointer; }
+
+.btn--line {
+  background-color: #fff;
+  border: 1px solid #757575;
+  color: #1C8886;
+  position: relative; }
+  .btn--line > img {
+    height: 75%;
+    display: inline-block; }
+  .btn--line:hover {
+    background-color: #1C8886;
+    color: #fff; }

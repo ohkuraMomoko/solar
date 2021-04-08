@@ -1,0 +1,245 @@
+﻿/* @site: 全民電廠
+ * @author: nikki
+ * @update: nikki (2019-1-25)
+ * @page: Q&A
+ * @description: Q&A版面跟0卡類似
+ */
+
+@import "../setting/_variables.scss";
+@import "../setting/_mixins.scss";
+ 
+/* common: extend ---*/
+.page-kv {
+    background-image: url("../images/QA_bigimage.jpg");
+}
+
+@include rwd($ipad) {
+    .page-content {
+        padding-bottom: 3rem;
+    }
+
+    .page-kv--img {
+        width: 35vw;
+        max-width: 259px;
+    }
+}
+
+.qa-title {
+    font-size: 2.25rem;
+    color: $color-dark;
+    text-align: center;
+    letter-spacing: 0.06rem;
+}
+@include rwd($ipad) {
+    .qa-title {
+        font-size: 1.13rem;
+        letter-spacing: 0.03rem;
+    }
+}
+
+/* block: project-body =====*/
+.qa-body {
+    width: 90%;
+    margin: 0 auto;
+}
+
+/* block: tabs ==== */
+@-webkit-keyframes showTab {
+    from {
+        opacity: 0;
+        -webkit-transform: translateY(10px);
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+}
+
+@keyframes showTab {
+    from {
+        opacity: 0;
+        -webkit-transform: translateY(10px);
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+}
+
+$tabBtnSize: 15rem;
+.qa-tab-container {
+    width: $tabBtnSize*4;
+    border-bottom: 1px solid #979797;
+    margin: 3.31rem auto 0;
+}
+
+.tab-btn {
+    width: $tabBtnSize;
+    font-size: 1.8rem;
+    text-align: center;
+    color: $color-dark--2;
+    line-height: 4rem;
+    font-weight: bold;
+    display: block;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    @include change(all, .3s, ease-in-out);
+    &:after {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 6px;
+        background: $color-primary-blue;
+        content: '';
+        -webkit-transition: -webkit-transform 0.3s;
+        transition: transform 0.3s;
+        -webkit-transform: translate3d(0,150%,0);
+        transform: translate3d(0,150%,0);
+    }
+}
+
+@include rwd($ipad-pro) {
+    .qa-tab-container {
+        width: 100%;
+    }
+    .tab-btn {
+        width: 14rem;
+    }
+}
+@include rwd($ipad) {
+    .qa-tab-container {
+        width: 100%;
+    }
+    .tab-btn {
+        width: 23vw;
+        max-width: 200px;
+        font-size: 1rem;
+        line-height: 2.8;
+        height: 44px;
+        &:after {
+            height: 4px;
+        }
+    }
+}
+
+@include rwd(#{$i6 - 1px}) {
+    .tab-btn {
+        font-size: 0.88rem;
+    }
+}
+
+.tab-content {
+    width: 90%;
+    margin: 0 auto;
+}
+@include rwd($ipad) {
+    .tab-content {
+        width: 100%;
+    }
+}
+/*action: tab active  ------*/
+.tab {
+    display: none;
+    &.active {
+        display: block;
+        .tab-content {
+            -webkit-animation: showTab 250ms ease-in-out;
+            animation: showTab 250ms ease-in-out;
+        }
+    }
+}
+.tab-btn.active {
+    color: $color-dark;
+    &:after {
+        -webkit-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+    }
+}
+
+
+
+/*block: tab-content --- */
+/* qa-accordion */
+.qa-accordion {
+    margin-top: 3.68rem;
+    .card {
+        border: none;
+        margin-bottom: 0.63rem;
+        &-header {
+            border-top: 0.31rem solid rgba($color-primary-blue--3, 0.5);
+            padding: 0;
+            background-color: transparent;
+            border-bottom: none;
+            button {
+                width: 100%;
+                text-align: left;
+                font-size: 1.25rem;
+                line-height: 1.75rem;
+                color: $color-primary-blue;
+                font-weight: bold;
+                background-color: transparent;
+                padding: 3.5% 6.5% 3.5% 6%;
+                position: relative;
+                cursor: pointer;
+                @include change(color);
+                &:after {
+                    content: '';
+                    position: absolute;
+                    right: 5%;
+                    top: 35%;
+                    width: 22px;
+                    height: 22px;
+                    background-repeat: no-repeat;
+                    background-position: 50% 50%;
+                    background-size: 100%;
+                    background-image: url("../images/icon_arrow_right_black.svg");
+                    @include change(transform);
+                    @include prefix(transform, rotate(90deg));
+                }
+                &.collapsed {
+                    color: $color-dark;
+                    font-weight: 500;
+                    &:after {
+                        @include prefix(transform, rotate(0));
+                    }
+                }
+            }
+        }
+        &-body {
+            padding: 0 5.5% 5.5%;
+            font-size: 1.13rem;
+            line-height: 1.81rem;
+            color: $color-secondary;
+            text-align: justify;
+        }
+    }
+}
+@include rwd($ipad) {
+    .qa-accordion {
+        margin-top: 2.5rem;
+        .card {
+            border-radius: 15px;
+            &-header {
+                button {
+                    font-size: 0.88rem;
+                    line-height: 1.25rem;
+                    padding-right: 10%;
+                    &:after {
+                        width: 0.83rem;
+                        height: 0.83rem;
+                    }
+                }
+            }
+            &-body {
+                font-size: 0.88rem;
+                line-height: 1.25rem;
+            }
+        }
+    }
+}

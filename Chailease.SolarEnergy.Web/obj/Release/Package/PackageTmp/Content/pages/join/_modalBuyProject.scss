@@ -1,0 +1,253 @@
+﻿/* @site: 全民電廠
+ * @author: nikki
+ * @update: nikki (2019-01-16)
+ * @page: 電廠明細頁
+ * @description: 電廠明細頁-購買太陽能板的modal
+ */
+
+
+@import "../../setting/_variables.scss";
+@import "../../setting/_mixins.scss";
+
+/*item: modal:modalBuyProject ========*/
+.modal-buy-project {
+    .modal-dialog {
+        max-width: 700px;
+        margin-top: 100px;
+    }
+    .modal-content {
+        padding: 3.5rem 0;
+    }
+}
+
+.buy-item {
+    &-title {
+        font-size: 1.38rem;
+        text-align: center;
+        color: $color-dark;
+        margin-bottom: 1.56rem;
+    }
+}
+
+.buy-data {
+    width: 90%;
+    max-width: 13.75rem;
+    margin: 2.5rem auto;
+    &-title {
+        font-size: 1.25rem;
+        text-align: center;
+        color: $color-dark--2;
+        margin-bottom: 1rem;
+    }
+    &-item {
+        width: 100%;
+        height: 2.5rem;
+        @include flexbox;
+        @include justify-content(space-between);
+        @include align-items(center);
+        &--title {
+            color: $color-dark--2;
+        }
+        &--value {
+            color: $color-dark;
+            font-weight: bold;
+            text-align: right;
+            &.total {
+                font-size: 1.38rem;
+                color: $color-primary-blue;
+            }
+        }
+        .input-buy-pic {
+            width: 6.63rem;
+            height: 100%;
+            border: 1px solid #d8d8d8;
+            position: relative;
+            > input {
+                width: 100%;
+                height: 100%;
+                border: none;
+                text-align: center;
+                color: $color-primary-blue;
+                font-weight: bold;
+                font-size: 1.5em;
+            }
+            &:after {
+                content: "片";
+                position: absolute;
+                right: 12%;
+                bottom: 25%;
+                font-size: .8em;
+                color: $color-dark--2;
+            }
+        }
+        .input-buy-coupon {
+            width: 100%;
+            height: 100%;
+            border: 1px solid #d8d8d8;
+            position: relative;
+            > input {
+                width: 100%;
+                height: 100%;
+                border: none;
+                text-align: center;
+            }
+        }
+        .check-pic {
+            color: $color-primary-blue;
+            >span {
+                font-size: 1.41rem;
+                font-weight: bold;
+            }
+            .change-pic {
+                font-size: 0.94rem;
+                color: $color-dark--2;
+                text-decoration: underline;
+                display: inline-block;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+.buy-raw {
+    height: 31rem;
+    overflow-y: scroll;
+    border-top: 1px solid #d3d3d3;
+    border-bottom: 1px solid #d3d3d3;
+    padding: 5%;
+    font-size: 0.94rem;
+    line-height: 1.31rem;
+    color: $color-dark--2;
+}
+
+.buy-raw-text {
+    text-align: right;
+    font-size: 0.88rem;
+    color: $color-dark--2;
+    line-height: 1.75rem;
+    margin-bottom: 1rem;
+    margin-top: 2.38rem;
+    padding-right: 5%;
+    > img {
+        width: 1.75rem;
+        display: inline-block;
+    }
+}
+
+.buy-btn {
+    @include flexbox;
+    @include justify-content(center);
+    > button {
+        width: 8.13rem;
+        &:last-child {
+            margin-left: 5%;
+        }
+    }
+}
+
+@include rwd(#{$ipad - 1px}) {
+    .buy-raw-text {
+        text-align: center;
+        margin-top: 1.94rem;
+        margin-bottom: 0.2rem;
+    }
+    .buy-raw {
+        height: 19rem;
+    }
+}
+
+.buy-item--result {
+    width: 90%;
+    max-width: 27rem;
+    margin: 0 auto;
+}
+
+.result {
+    &-title {
+        font-size: 1.63rem;
+        letter-spacing: 0.02rem;
+        color: $color-primary-blue;
+        text-align: center;
+        font-weight: bold;
+    }
+    &-text {
+        text-align: center;
+        color: $color-dark--2;
+        &-sub {
+            color: $color-primary-blue;
+            font-weight: bold;
+        }
+        .send-mail {
+            color: black;
+        }
+        &-bottom {
+            color: $color-dark--2;
+            font-size: 0.81rem;
+            line-height: 1.31rem;
+        }
+    }
+}
+
+@include rwd(#{$ipad - 1px}) {
+    .result {
+        &-icon {
+            width: 1.88rem;
+        }
+        &-title {
+            font-size: 1rem;
+        }
+    }
+}
+
+.result-order {
+    line-height: 2rem;
+    &-name {
+        color: $color-dark--2;
+    }
+    &value {
+        color: black;
+    }
+    .account {
+        font-size: 1.5em;
+    }
+}
+
+
+/*print: style ====*/
+.print-template {
+    display: none;
+}
+
+@page {
+    size: A4;
+    margin: 0;
+}
+
+@media print {
+    #headerMeun,
+    .breadcrumb-container,
+    .footer-container,
+    .page-content,
+    .modal-btn--close,
+    .btn--member,
+    .js-print-btn,
+    iframe,
+    .page-container,
+    .page-kv--title,
+    #_hj_poll_container {
+        display: none;
+    }
+    #modalBuyProject {
+        display: block;
+    }
+    /*.transaction-collapse-block.printPart {
+        display: block;
+    }*/
+    html, body {
+        height: 100%;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden;
+    }
+}
+/*print: style ====*/

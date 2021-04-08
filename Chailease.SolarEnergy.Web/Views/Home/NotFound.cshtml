@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "NotFound";
+}
+
+@section header {
+    @Styles.Render("~/Content/pages/home/error.min.css")
+}
+<div class="error">
+    <img src="@Url.Content("~/Content/images/error_image01.svg")" class="error-img">
+    <p class="error-text">我們似乎無法找到你要找的頁面</p>
+    <a href="javascript:history.back()" class="error-link mt-3">回上頁</a>
+</div>

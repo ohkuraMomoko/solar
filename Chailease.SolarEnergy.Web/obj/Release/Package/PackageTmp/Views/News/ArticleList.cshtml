@@ -1,0 +1,74 @@
+﻿@model NewsViewModel
+@using System.Text.RegularExpressions;
+@if (Model.ArticleItemList.Count() > 0)
+{
+
+    foreach (var news in Model.ArticleItemList)
+    {
+        switch (news.ART_TYPE)
+        {
+            case 1:
+                @* class type1: 圖+文 *@
+                <article class="article-item article--type1">
+                    <div class="article-item-source">
+                        <span class="article-item-source--class class-@news.SUB_TYPE">@Model.MapRef[news.SUB_TYPE].NME</span>
+                        @* <span class="article-item-source--class class-2">會員公告</span> *@
+                        @* <span class="article-item-source--class class-3">最新消息</span> *@
+                        <span class="article-item-source--date">@news.OPEN_START.ToString("yyyy年MM月dd日")</span>
+                    </div>
+                    <a href="@Url.RouteUrl("NewsArticle", new {  category = Model.ListType , articleAlias = news.ARTICLE_ALIAS })" class="article-item-content">
+                        <div data-lazy="true" class="article-item-content-img" data-bg="url('@Url.Action("Image", "File", new { uri = news.KV_IMG_LIST })')"></div>
+                        <div class="article-item-content-data">
+                            <p class="article-title">@news.ARTICLE_TITLE</p>
+                            <div class="article-description">
+                                @*@MvcHtmlString.Create(news.ARTICLE_BODY)*@
+                                @Regex.Replace(news.ARTICLE_BODY, "<.*?>", string.Empty);
+                            </div>
+                        </div>
+                    </a>
+                </article>
+
+                break;
+            case 2:
+                @* class type2: 圖(影片的圖片)+文 *@
+                <article class="article-item article--type2">
+                    <div class="article-item-source">
+                        <span class="article-item-source--class class-@news.SUB_TYPE">@Model.MapRef[news.SUB_TYPE].NME</span>
+                        <span class="article-item-source--date">@news.OPEN_START.ToString("yyyy年MM月dd日")</span>
+                    </div>
+                    <a href="@Url.RouteUrl("NewsArticle", new { category = Model.ListType, articleAlias = news.ARTICLE_ALIAS })" class="article-item-content">
+                        <div data-lazy="true" class="article-item-content-img" data-bg="url('@Url.Action("Image", "File", new { uri = news.KV_IMG_LIST })')"></div>
+                        <div class="article-item-content-data">
+                            <p class="article-title">@news.ARTICLE_TITLE</p>
+                            <div class="article-description">
+                                @Regex.Replace(news.ARTICLE_BODY, "<.*?>", string.Empty);
+                            </div>
+                        </div>
+                    </a>
+                </article>
+                break;
+            case 3:
+                @* class type3: 文 *@
+                <article class="article-item article--type3">
+                    <div class="article-item-source">
+                        <span class="article-item-source--class class-@news.SUB_TYPE">@Model.MapRef[news.SUB_TYPE].NME</span>
+                        <span class="article-item-source--date">@news.OPEN_START.ToString("yyyy年MM月dd日")</span>
+                    </div>
+                    <a href="@Url.RouteUrl("NewsArticle", new { category = Model.ListType, articleAlias = news.ARTICLE_ALIAS })" class="article-item-content">
+                        <div class="article-item-content-data">
+                            <p class="article-title">@news.ARTICLE_TITLE</p>
+                            <div class="article-description">
+                                @Regex.Replace(news.ARTICLE_BODY, "<.*?>", string.Empty);
+                            </div>
+                        </div>
+                    </a>
+                </article>
+                break;
+        }
+    }
+
+    if (!String.Equals(Model.ArticleItemList.LastOrDefault().ROW_ID, Model.Article_Count))
+    {
+        <div id="load_next"></div>
+    }
+}

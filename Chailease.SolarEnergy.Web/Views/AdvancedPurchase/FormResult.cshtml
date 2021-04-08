@@ -1,0 +1,73 @@
+﻿@{
+    ViewBag.Title = "出資資料填寫";
+}
+@section header{
+    @Styles.Render("~/Content/pages/advancedPurchase.min.css")
+}
+@section metatags {
+    @Html.Action("GetMetaByType", "Base", new { id = 1 })
+}
+
+@if (ViewBag.VAR_RETURN_NOTE == "N")
+{
+    <div class="page-container form-result">
+        <div class="page-kv">
+            <h1 class="page-kv--title">資料填寫</h1>
+        </div>
+        <div class="page-content">
+            <div class="form-result-content">
+                <img src="@Url.Content("~/Content/images/Trial_icon.svg")" alt="" class="form-result-content--img">
+                <h2 class="form-result-content--title">審核資料已送出</h2>
+                <p class="form-result-content--text">
+                    <span>[您現在可下定專案]</span><br />
+                    因您會員認證需1~2個工作天，待審核完成後<br />我們將會寄發<br />
+                    匯款資訊至您的E-mail：<span>@ViewBag.Email</span><br />
+                </p>
+                <a href="@ViewBag.Back"
+                   class="center btn--common btn--common-1 btn--form-send ga_advanced_result_btn_back--solarpoject">
+                    回下訂專案電廠
+                </a>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="page-container form-result">
+        <div class="page-kv">
+            <h1 class="page-kv--title">出資資料填寫</h1>
+        </div>
+        <div class="page-content">
+            <div class="form-result-content">
+                <img src="@Url.Content("~/Content/images/Trial_icon.svg")" alt="" class="form-result-content--img">
+                <h2 class="form-result-content--title">審核資料已送出</h2>
+                <p class="form-result-content--text">審核結果預估於1~2個工作天寄送：<span>@ViewBag.Email</span></p>
+                <a href="@ViewBag.Back"
+                   class="center btn--common btn--common-1 btn--form-send ga_advanced_result_btn_back--back">
+                    返回上頁
+                </a>
+            </div>
+        </div>
+    </div>
+}
+@section scripts {
+    <script>
+        $(function () {
+            //GA: 集客/出資會員/步驟4完成出資會員/PV
+            dataLayer.push(
+                {
+                    "event": "popupPageView",
+                    "popPATH": "/AdvancedPurchase/formResult",
+                    "popTitle": "出資會員-Step4-完成"
+                }
+            );
+
+            // GA: 圖靈/出資會員/3.審核資料已送出頁面/成功
+            dataLayer.push({
+                'event': 'td_fundingMemberRegister',
+                'register_step': '3',
+                'register_step_status': 'success'
+            });
+        })
+    </script>
+}

@@ -1,0 +1,168 @@
+﻿@model CommentsViewModel
+
+@{
+    ViewBag.Title = "我要留言";
+}
+@section header {
+    @Styles.Render("~/Content/pages/home/comments.min.css")
+}
+@section metatags {
+    @Html.Action("GetMetaByType", "Base", new { id = 1 })
+}
+
+<div class="page-container comments">
+    <div class="page-kv" data-aos="bg-scale">
+        <h1 class="page-kv--title" data-aos="fade-down" data-aos-delay="400">@ViewBag.Title </h1>
+    </div>
+    <div class="page-content">
+        <div class="breadcrumb-container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/" href="@Url.Content("~/Home/")">
+                            <span itemprop="name"><img src="@Url.Content("~/Content/images/bread_home_icon.svg")" alt="首頁"></span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/About/"  href="@Url.Content("~/Home/About/")">
+                            <span itemprop="name">認識電廠專家</span>
+                        </a>
+                        <meta itemprop="position" content="2" />
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                            <span itemprop="name">@ViewBag.Title</span>
+                        </a>
+                        <meta itemprop="position" content="3" />
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        @using (Html.BeginForm("Comments", "Home", FormMethod.Post, new { @class = "page-content-form", name = "comment-form" }))
+        {
+            <div class="form-item">
+                <label for="CustName" class="control-label">姓名</label>
+                <div class="input-group">
+                    @Html.TextBoxFor(x => x.CustName, new { @class = "form-control has-btn-clear", @placeholder = "請填入真實姓名", @autocomplete = "name", @required = "required" })
+                    @Html.ValidationMessageFor(x => x.CustName, "", new { @class = "input-error-info-signup" }, "p")
+                    <div class='js-input-btn-clear input-btn-clear'></div>
+                </div>
+            </div>
+            <div class="form-item">
+                <label for="Tel" class="control-label">聯絡電話</label>
+                <div class="input-group">
+                    @Html.TextBoxFor(x => x.Tel, new { @class = "form-control has-btn-clear", @placeholder = "請填入聯絡電話", @autocomplete = "tel", @required = "required" })
+                    @Html.ValidationMessageFor(x => x.Tel, "", new { @class = "input-error-info-signup" }, "p")
+                    <div class='js-input-btn-clear input-btn-clear'></div>
+                </div>
+            </div>
+            <div class="form-item">
+                <label for="Email" class="control-label">E-mail</label>
+                <div class="input-group">
+                    @Html.TextBoxFor(x => x.Email, new { @class = "form-control has-btn-clear", @placeholder = "請填入E-mail", @autocomplete = "email", @required = "required" })
+                    @Html.ValidationMessageFor(x => x.Email, "", new { @class = "input-error-info-signup" }, "p")
+                    <div class='js-input-btn-clear input-btn-clear'></div>
+                </div>
+            </div>
+            <div class="form-item">
+                <label for="QuestionType" class="control-label">問題分類</label>
+                <div class="input-group">
+                    <div class="custom-select">
+                        @Html.DropDownListFor(x => x.QuestionType, Model.QuestionTypeSelectList, new { @class = "form-control", @required = "required" })
+                        @Html.ValidationMessageFor(x => x.QuestionType, "", new { @class = "input-error-info-signup" }, "p")
+                    </div>
+                </div>
+            </div>
+            <div class="form-item">
+                <label for="Content" class="control-label">問題內容</label>
+                @Html.TextAreaFor(x => x.Content, new { @class = "form-textarea", @placeholder = "請輸入問題內容", @autocomplete = "Comment", @required = "required", cols = "30", rows = "10" })
+                @Html.ValidationMessageFor(x => x.Content, "", new { @class = "input-error-info-signup" }, "p")
+            </div>
+            <div class="form-item">
+                <div class="input-group">
+                    @*@Html.RecaptchaV2()*@
+                    @Html.v2CheckecBox()
+                    <p id="vaild-g-recaptcha-response" style="display:none" class="input-error-info-signup field-validation-error"><span for="Recaptcha" class="">未勾選我不是機器人</span></p>
+                    <p id="vaild-g-recaptcha-response-2" style="display:none" class="input-error-info-signup field-validation-error">請確認表單填寫完整</p>
+                </div>
+            </div>
+            <button id="submit-button" class="center btn--common btn--common-1 btn--form-send">送出</button>
+        }
+        <div class="comments-info">
+            如有相關問題請與我們聯繫<br>
+            服務電話：(02) 2658-1677<br>
+            服務時間：週一至週五 9:30-17:30<br>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+<script>
+
+    $(function () {
+        //控制recaptcha show hide
+        var vaildFunc = function () {
+            var $recaptchaMessage = $('form[name=comment-form] #vaild-g-recaptcha-response');
+            if ($('form[name=comment-form] #g-recaptcha-response').val() == '') {
+                $recaptchaMessage.show();
+            } else {
+                $recaptchaMessage.hide();
+            }
+            return true;
+        };
+        $('#submit-button').click(vaildFunc);
+    })
+    function RecaptchCallBack() {
+        $('form[name=comment-form] #vaild-g-recaptcha-response').hide();
+        $("form[name=comment-form] #vaild-g-recaptcha-response-2").hide();
+    }
+
+    $("form[name=comment-form]").submit(function (e) {
+        var form = $(this);
+        var url = form.attr('action');
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(), // serializes the form's elements.
+            dataType: 'json',
+            beforeSend: function () {
+                $("#loadingContainer").fadeIn(100);
+                $("body").css("overflow", "hidden");
+            },
+            success: function (data) {
+                var code = data["ReturnCode"];
+                var returnMsg = data["ReturnMsg"];
+                switch (code) {
+                    case 0://執行成功
+                        window.location = returnMsg;
+                        break;
+                    case 1://表單驗證失敗
+                        break;
+                    case 2://錯誤異常
+                        window.location = returnMsg;
+                        break;
+                    case 3:
+                        grecaptcha.reset();
+                        $("form[name=comment-form] #vaild-g-recaptcha-response-2").show();
+                        break;
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                var errorMsg = "readyState:" + jqXHR.readyState + "\n"
+                    + "status:" + jqXHR.status + "\n"
+                    + "statusText:" + jqXHR.statusText + "\n"
+                    + "responseText:[" + jqXHR.responseText + "]\n"
+                    + "textStatus[" + textStatus + "]\n"
+                    + "errorThrown" + errorThrown;
+                console.log(errorMsg);
+            },
+            complete: function (jqXHR, textStatus) {
+                $("#loadingContainer").fadeOut(300);
+                $("body").css("overflow", "auto");
+            }
+        });
+        e.preventDefault(); 
+    });
+</script>
+}

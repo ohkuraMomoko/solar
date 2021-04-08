@@ -1,0 +1,121 @@
+﻿.page {
+    padding-top: 5vw;
+    @include flexbox;
+    @include flex-direction(row);
+    @include justify-content(space-between);
+
+    &-class {
+        width: 33%;
+    }
+
+    &-content {
+        width: 67%;
+    }
+}
+
+@include rwd(#{$ipad - 1px}) {
+    .page {
+        position: relative;
+        padding-top: 0;
+        @include flex-direction(column);
+
+        &-class {
+            width: 100%;
+            position: absolute;
+            left: 0;
+            top: -75px;
+        }
+
+        &-content {
+            width: 100%;
+        }
+    }
+}
+/* 分類文章版型的限制，需要在推高外寬間距 */
+.page-class-container {
+    margin-top: 81px !important;
+}
+
+/* page class --- */
+.page-class {
+    &-item {
+        height: 3.75rem;
+        color: $color-dark;
+        font-size: 1.25rem;
+        line-height: 3.75rem;
+        text-align: center;
+        position: relative;
+        display: block;
+        z-index: 1;
+        @include change();
+        cursor: pointer;
+
+        &:after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background-color: rgba($color-secondary--2, 0.3);
+            z-index: -1;
+            @include change(width, ease-in-out, 0.3s);
+        }
+
+        &:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background-color: $color-primary-red;
+            z-index: 2;
+            @include change(width, linear, 0.25s);
+        }
+
+        &:hover {
+            color: $color-primary-red;
+        }
+
+        &.active {
+            &:after {
+                width: 100%;
+            }
+
+            &:before {
+                width: 0.63rem;
+            }
+        }
+    }
+}
+
+@include rwd(#{$ipad - 1px}) {
+    .page-class-item {
+        min-width: 5.31rem;
+        height: 3.13rem;
+        padding: 0 0.5rem;
+        line-height: 3.13rem;
+        font-size: 0.88rem;
+        letter-spacing: 0.04rem;
+        background-color: #fff;
+        border-radius: 100px;
+        display: inline-block;
+        margin: 0 0.5rem;
+
+        &:after,
+        &:before {
+            display: none;
+        }
+
+        &.active {
+            color: $color-primary-red;
+        }
+    }
+}
+/* page content */
+.page-content {
+    width: 100%;
+    padding-left: 4.3%;
+    padding-right: 5.5%;
+}

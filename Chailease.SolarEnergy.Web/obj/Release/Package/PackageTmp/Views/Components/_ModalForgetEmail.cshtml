@@ -1,0 +1,44 @@
+﻿@*
+    MODAL: 忘記EMAIL
+*@
+<div class="modal fade" id="modalForgetEmail" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-forgetEmail" role="document">
+        <div class="modal-content ">
+            <button type="button" class="modal-btn--close" data-dismiss="modal" aria-label="Close">
+                <img src="@Url.Content("~/Content/images/bt_close_w.svg")" alt="">
+            </button>
+            @* 步驟1: 填表*@
+            <form action="" class="modal-form--forgetEmail">
+                <p class="modal-content--title">忘記E-mail帳號</p>
+                <div class="form-item">
+                    <div class="input-group">
+                        <input type="text" id="inputForgetEmail" name="inputForgetEmail" class="form-control has-btn-clear" placeholder="請輸入手機" autocomplete="tel" required>
+                        <div class='js-input-btn-clear input-btn-clear'></div>
+                    </div>
+                </div>
+                <div class="form-item">
+                    <div class="input-group d-flex justify-content-center">
+                        @*@Html.RecaptchaV2()*@
+                        @Html.v2CheckecBox()
+                    </div>
+                </div>
+                <button class="center btn--common btn--common-1 btn--form-send">送出</button>
+            </form>
+            @* 步驟2: 結果*@
+            <div class="modal-email--result">
+                <img src="@Url.Content("~/Content/images/normal_info_icon_phone.svg")" alt="" class="center signup-success--icon">
+                <p class="modal-email--result--title">帳號簡訊已送出</p>
+                <p class="modal-email--result--text">
+                    <img src="@Url.Content("~/Content/images/s_bulb_icon.svg")" alt="" srcset="">
+                    您的Email帳號已發送至：
+                    <span>mi0921@test.com</span>
+                </p>
+                <button class="center btn--common btn--common-1 btn--form-send">完成</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const forgetEmail_ForgotAcctUrl = '@Url.Action("ForgotAcct", "Account")';
+</script>

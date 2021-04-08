@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="119px" height="45px" viewBox="0 0 119 45" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.3 (67297) - http://www.bohemiancoding.com/sketch -->
+    <title>back bt</title>
+    <desc>Created with Sketch.</desc>
+    <g id="back-bt" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-12">
+            <text id="BACK" font-family="PingFangTC-Regular, PingFang TC" font-size="16" font-weight="normal" fill="#7B7B7B">
+                <tspan x="63" y="30">BACK</tspan>
+            </text>
+            <g id="icon_arrow_down_grey" transform="translate(21.000000, 22.000000) rotate(-270.000000) translate(-21.000000, -22.000000) translate(12.000000, 13.000000)" fill="#A0A0A0">
+                <path d="M13.2340227,7.85146406 L6.12487535,0.765071163 C5.95458115,0.5953676 5.72364914,0.5 5.48291342,0.5 C5.24199615,0.500181307 5.01106414,0.595548908 4.8409515,0.765433778 L4.71241387,0.893436678 C4.6121981,0.993518267 4.54357208,1.11191188 4.5,1.23719518 L11.7727242,8.5 L4.5,15.7629861 C4.54357208,15.8884507 4.61237965,16.0070257 4.71277697,16.1071072 L4.84113305,16.2351101 C5.01142725,16.4048137 5.2421777,16.5 5.48309497,16.5 C5.72383069,16.5 5.95458115,16.4048137 6.12487535,16.2351101 L13.1699354,9.2127187 L13.2340227,9.14871725 C13.3525751,9.03050494 13.4330018,8.88074517 13.4707643,8.71974436 C13.5490125,8.41949959 13.4702197,8.08680083 13.2340227,7.85146406" id="Fill-1" transform="translate(9.000000, 8.500000) rotate(-270.000000) translate(-9.000000, -8.500000) "></path>
+            </g>
+            <circle id="Oval-4" stroke="#A0A0A0" cx="22.5" cy="22.5" r="22.5"></circle>
+        </g>
+    </g>
+</svg>

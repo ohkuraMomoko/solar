@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "會員中心";
+}
+@section header{
+    @Styles.Render("~/Content/pages/member/mailVerifySuccess.min.css")
+}
+@section metatags {
+    @Html.Action("GetMetaByType", "Base", new { id = 1 })
+}
+<div class="page-container">
+    <div class="page-kv">
+        <h1 class="page-kv--title">@ViewBag.Title</h1>
+    </div>
+    <div class="page-content">
+        <div class="breadcrumb-container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/" href="@Url.Content("~/Home/")">
+                            <span itemprop="name"><img src="@Url.Content("~/Content/images/bread_home_icon.svg")" alt="首頁"></span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Member/" href="@Url.Content(" ~/Member/")">
+                            <span itemprop="name">會員中心</span>
+                        </a>
+                        <meta itemprop="position" content="2" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                            <span itemprop="name">我的資料</span>
+                        </a>
+                        <meta itemprop="position" content="3" />
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <div class="verify">
+            <img src="@Url.Content("~/Content/images/success_info_icon.svg")" alt="" class="center verify--icon">
+            <p class="verify--title">Email驗證完成</p>
+            <div class="verify-bottom">
+                <div class="verify-bottom--item">
+                    <a href="@Url.Content("~/Join/")" class="btn--common btn--common-1 verify--btn ga_email_btn_viewmore">查看更多專案</a>
+                    <p class="verify--btn-text">試算電廠收益以及了解更多電廠相關資訊</p>
+                </div>
+                <div class="verify-bottom--item">
+                    <a href="@Url.Action("Index", "AdvancedPurchase")" class="btn--common btn--common-1 verify--btn ga_email_btn_advanced">成為VIP會員</a>
+                    <p class="verify--btn-text">預先成為VIP會員可省去購買電廠時等待時間</p>
+                    <p class="verify--highlight">請先備妥&nbsp;身分證&nbsp;及&nbsp;存摺</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

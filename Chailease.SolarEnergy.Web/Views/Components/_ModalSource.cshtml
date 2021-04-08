@@ -1,0 +1,30 @@
+﻿
+@*
+MODAL: 來源問卷
+*@
+<div class="modal fade" id="modalSource" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-source" role="document">
+        <div class="modal-content">
+            <button type="button" class="modal-btn--close" data-dismiss="modal" aria-label="Close">
+                <img src="@Url.Content("~/Content/images/bt_close_w.svg")" alt="">
+            </button>
+            <p class="modal-content--title">請問您如何得知中租全民電廠</p>
+            <form action="">
+                <div class="form-item">
+                    <div class="input-group has-inputtext">
+                        <div class="custom-select">
+                            <select class="form-control" id="sourceSelect" required>
+                                <option value="" selected="" disabled="">如何得知全民電廠</option>
+                                <option value="1">類別一</option>
+                                <option value="2">類別二</option>
+                                <option value="etc">其他</option>
+                            </select>
+                        </div>
+                        <input type="text" name="sourceEtc" id="sourceEtc" class="select-inputtext" placeholder="輸入其他訊息來源">
+                    </div>
+                </div>
+                <button class="btn--common btn--common-1 btn--form-send">送出</button>
+            </form>
+        </div>
+    </div>
+</div>

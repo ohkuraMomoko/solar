@@ -1,0 +1,123 @@
+﻿/* @site: 全民電廠
+ * @author: mickey
+ * @update: mickey (2019-11-19)
+ * @page: 會員專區-轉讓紀錄
+ * @description: 轉讓紀錄/受讓紀錄
+ */
+
+@import "../../setting/_variables.scss";
+@import "../../setting/_mixins.scss";
+
+/*item: profile-tag ---*/
+.profile-tag-container {
+    border-bottom: 1px solid #D3D3D3;
+}
+.profile-tag {
+    width: 90%;
+    max-width: 57rem;
+    margin: 0 auto;
+    @include flexbox;
+    justify-content: center;
+    /*@include justify-content(space-between);*/
+    &--item {
+        width: 50%;
+        max-width: 18.75rem;
+        font-size: 1.5rem;
+        line-height: 3rem;
+        text-align: center;
+        color: #8a8a8a;
+        border-bottom: .5rem solid transparent;
+        border-radius: 2px;
+        margin: 0 3%;
+        @include change();
+
+        > a {
+            color: inherit;
+            display: block;
+        }
+
+        &:hover,
+        &.active {
+            color: $color-dark;
+            border-color: $color-primary-blue;
+        }
+    }
+}
+/*rwd: profile-tag ----*/
+@include rwd($ipad) {
+    .profile-tag {
+        width: 100%;
+        &--item {
+            font-size: 0.94rem;
+            line-height: 2rem;
+            border-width: .25rem;
+            margin: 0 auto;
+        }
+    }
+}
+
+.transfer{
+    .transaction-header{
+        border-bottom: 1px solid #e3e3e3;
+    }
+    .transaction-collapse-block{
+        border-top: 0;
+    }
+    .transaction-button::after{
+        display: none;
+    }
+    .transfer-btn{
+        background-color: #FFFFFF;
+        color: #535353;
+        max-width: 11.81rem;
+        height: 2.19rem;
+        line-height: 2.19rem;
+        width: 100%;
+        cursor: pointer;
+        display: block;
+        margin: 0 auto;
+        text-align: center;
+        @include change(all);
+        &:hover, &:active, &:focus{
+            background-color: #c7c7c7;
+            color: #ffffff;
+        }
+    }
+}
+
+@include rwd_big($ipad-pro){
+    .transfer{
+        .transaction-container{
+            width: 80%;
+        }
+
+        .transaction-button--item:nth-child(4),
+        .transaction-header--item:nth-child(4) {
+            width: 12%;
+        }
+
+        .transaction-button--item:nth-child(5),
+        .transaction-header--item:nth-child(5) {
+            width: 28%;
+        }
+
+        .transaction-button--item:nth-child(1),
+        .transaction-button--item:nth-child(2),
+        .transaction-button--item:nth-child(3),
+        .transaction-header--item:nth-child(1),
+        .transaction-header--item:nth-child(2),
+        .transaction-header--item:nth-child(3) {
+            width: 20%;
+        }
+    }
+}
+
+@include rwd($ipad){
+    .transaction-button--item, .transaction-header--item {
+        line-height: 1.38rem;
+        margin-bottom: .44rem;
+    }
+    .transfer .transfer-btn{
+        max-width: 100%;
+    }
+}

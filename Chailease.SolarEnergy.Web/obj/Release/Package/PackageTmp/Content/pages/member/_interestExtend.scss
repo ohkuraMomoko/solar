@@ -1,0 +1,166 @@
+﻿/* @site: 全民電廠
+ * @author: nikki
+ * @update: nikki (2019-1-30)
+ * @page: 會員專區-電費收益
+ * @description: 
+ */
+
+@import "../../setting/_variables.scss";
+@import "../../setting/_mixins.scss";
+
+.page-container {
+    background-image: linear-gradient(0deg, rgba(30,181,172,0.00) 30%, rgba(30,181,172,0.80) 100%);
+}
+
+.page-kv {
+    padding-top: 10rem;
+    height: 25rem;
+
+    &--title {
+        color: $color-dark;
+    }
+}
+
+@include rwd(#{$ipad - 1px}) {
+    .page-kv {
+        height: 15rem;
+        padding: 7rem 5% 0;
+    }
+}
+
+
+/*block: interset-container ---*/
+.interset-container {
+    width: 90%;
+    max-width: 66.19rem;
+    margin: 0 auto;
+}
+
+/*rwd: interset-container ---*/
+@include rwd($ipad) {
+    .interset-container {
+        width: 100%;
+    }
+}
+
+.modal-interest {
+    &-title {
+        height: 4.69rem;
+        line-height: 4.69rem;
+        font-size: 1.38rem;
+        font-weight: bold;
+        color: $color-primary-blue;
+        text-align: center;
+        border: 1px solid #D8D8D8;
+    }
+}
+
+/*modal: modalSolarList ---*/
+.modal-interest {
+    &-header {
+        // width: 97%;
+        color: $color-dark;
+        font-weight: bold;
+        line-height: 1.88rem;
+        .row .col-6 {
+            &:first-child {
+                text-align: right;
+            }
+        }
+    }
+    &-content {
+        height: 21rem;
+        color: $color-dark;
+        line-height: 1.88rem;
+        margin: 0 auto;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        .row .col-6 {
+            &:first-child {
+                text-align: right;
+            }
+        }
+    }
+}
+
+/*modal: modalInvoice ---*/
+.invoice {
+    &-content {
+        width: 50%;
+        min-width: 250px;
+        margin: 0 auto;
+        padding: 5% 0;
+        line-height: 1.88rem;
+        .row .col-6 {
+            &:last-child {
+                text-align: right;
+            }
+        }
+    }
+}
+
+/*item: date-select ----*/
+.date-select {
+    width: 19rem;
+    height: 3.25rem;
+    background-image: url(../../images/icon_arrow_down_g.svg);
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: calc(100% - 20px) 50%;
+    background-size: 18px;
+    font-size: 1.0625rem;
+    line-height: 1.5;
+    letter-spacing: 1.2px;
+    color: #1c8886;
+    border-radius: 10px;
+    border: 1px solid #b4b4b4;
+    outline: none;
+    -webkit-appearance: none;
+    margin: 0;
+    cursor: pointer;
+    display: flex;
+    padding: 0 1%;
+    margin-left: 1.88rem;
+    position: relative;
+    &:after {
+        content: '';
+        position: absolute;
+        left: 36%;
+        top: 10%;
+        width: 40px;
+        height: 80%;
+        background-image: url(../../images/icon_arrow_down_g.svg);
+        background-color: #fff;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        background-size: 18px;
+        border-right: 1px solid #b4b4b4;
+    }
+    input {
+        border: none;
+        background-color: transparent;
+        outline: none;
+        width: 50%;
+    }
+}
+
+/*rwd: date-select ---*/
+@include rwd($ipad-pro) {
+    .date-select {
+        width: 100%;
+        height: 1.63rem;
+        border-radius: 5px;
+        font-size: .63rem;
+        line-height: 1.63rem;
+        padding-left: 1.5rem;
+        background-size: 10px;
+        background-position-x: 95%;
+        margin: 0;
+        &:after {
+            left: 37%;
+            top: 10%;
+            width: 30px;
+            background-size: 10px;
+        }
+    }
+}

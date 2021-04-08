@@ -1,0 +1,218 @@
+﻿/* @site: 全民電廠
+ * @author: nikki
+ * @update: nikki (2019-2-13)
+ * @page: 會員專區-交易紀錄
+ * @description: 
+ */
+
+@import "../../setting/_variables.scss";
+@import "../../setting/_mixins.scss";
+@import "_transactionExtend.scss";
+
+/*print: style ====*/
+.print-template {
+    display: none;
+}
+
+@page {
+    size: A4;
+    margin: 0;
+}
+
+@media print {
+    #headerMeun,
+    .breadcrumb-container,
+    .transaction-header-select,
+    .transaction-collapse-block,
+    .footer-container {
+        display: none;
+    }
+
+    .transaction-collapse-block.printPart {
+        display: block;
+    }
+    html, body {
+        font-size: 10px;
+    }
+}
+/*print: style ====*/
+
+$contentSizeMax: 66rem;
+/*block: transaction-container ---*/
+.transaction-container {
+    width: 95%;
+    max-width: 1550px;
+    // min-width: $contentSizeMax;
+    margin: 0 auto;
+}
+
+.transaction-collapse-block {
+    padding: 1rem 0;
+    border-top: 1px solid #e3e3e3;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+/*extend: ----*/
+$btnHeight: 3.13rem;
+.transaction-header,
+.transaction-button {
+    height: $btnHeight;
+    font-size: 0.94rem;
+    line-height: 1.2;
+    color: $color-dark;
+    font-size: 0.94rem;
+    text-align: center;
+    @include flexbox;
+    @include align-items(center);
+
+    &--item {
+        &:nth-child(1) {
+            width: 15%;
+        }
+
+        &:nth-child(2) {
+            width: 16%;
+        }
+
+        &:nth-child(3) {
+            width: 7%;
+        }
+
+        &:nth-child(4) {
+            width: 12%;
+        }
+
+        &:nth-child(5) {
+            width: 13%;
+        }
+
+        &:nth-child(6) {
+            width: 16%;
+        }
+
+        &:nth-child(7) {
+            width: 10%;
+        }
+
+        &:nth-child(8) {
+            width: 10%;
+        }
+    }
+}
+
+.transaction-header-select select {
+    width: 100%;
+    max-width: 110px;
+    height: 26px;
+    background-image: url(../../images/icon_arrow_down_g.svg);
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: 94% 56%;
+    background-size: 10px;
+    line-height: 26px;
+    color: #1c8886;
+    border-radius: 13px;
+    border: 1px solid $color-primary-blue;
+    outline: none;
+    -webkit-appearance: none;
+    margin: 0;
+    padding-left: 10%;
+    cursor: pointer;
+}
+/*item: transaction-button  ----*/
+.transaction-button {
+    background-color: #f5f5f5;
+    position: relative;
+    &:after {
+        $arrowSize: 18px;
+        content: "";
+        width: $arrowSize;
+        height: $arrowSize;
+        position: absolute;
+        right: 10px;
+        top: calc(50% - #{$arrowSize/2});
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        background-image: url(../../images/icon_arrow_down_grey.svg);
+        @include change(transform);
+    }
+    &[aria-expanded="true"]{
+        &:after {
+            @include prefix(transform, rotate(180deg));
+        }
+    }
+}
+/*status: transaction-button  -----*/
+.cancle {
+    .transaction-button {
+        &:after {
+            display: none;
+        }
+    }
+}
+
+
+
+.transaction-content--container {
+    @include flexbox;
+    @include justify-content(space-between);
+    >.col--first,
+    >.col--second {
+        width: 410px;
+    }
+    >.col--btn {
+        width: 4.38rem;
+    }
+}
+.transaction-content {
+    width: 100%;
+    max-width: $contentSizeMax;
+    margin: 0 auto;
+    border: 1rem solid #f5f5f5;
+    border-top: none;
+    padding: 1rem 1.75rem;
+    &--title {
+        margin-bottom: .81rem;
+    }
+}
+
+$dataHeight: 1.69rem;
+.transaction-data {
+    background-color: #f8f8f8;
+    height: $dataHeight;
+    line-height: $dataHeight;
+    margin-bottom: 0.31rem;
+    padding-left: 0.75rem;
+}
+
+.transaction-btn {
+    width: 100%;
+    font-size: 0.94rem;
+    letter-spacing: 0.15rem;
+    border-radius: 9px;
+    background-color: $color-primary-blue;
+    color: #fff;
+    text-align: center;
+    display: block;
+    cursor: pointer;
+    &--print {
+        line-height: 2.19rem;
+        margin-bottom: 1.13rem;
+    }
+    &--cancle {
+        padding: .8rem 0;
+        line-height: 1.2;
+        
+    }
+}
+
+.check-detail-btn {
+    text-align: center;
+    color: #535353;
+    @include flexbox;
+    @include justify-content(center);
+    @include flex-direction(column);
+    >p {
+        margin-top: 10px;
+    }
+}

@@ -1,0 +1,21 @@
+﻿@model Chailease.SolarEnergy.Web.ViewModel.SellViewModel
+<section class="row no-gutters block-item">
+    <h3 class="tab-content-title">專案附屬合約與相關文件</h3>
+    <ul class="file-list">
+        @foreach (var item in Model.LoanCaseAttach.LIST_LOANCASE_DETAIL)
+        {
+            <li class="file-item">
+                <a href="@Url.Action("LoanCaseFile","Join", new { item.FILE_UUID })"
+                   class="file-item-link" target=""
+                   data-ga-target="ga_project_tabfile_btn_download"
+                   data-ga-project-id="@Model.LoanCaseIntroduct.CASELOAN_INTRODCT.POWER_PLANT_NUM"
+                   data-ga-project-file-id="@item.FILE_MEMO">
+                    <div class="file-item-link--img"></div>
+                    <div class="file-item-link--icon"></div>
+                    <p class="file-item-link--name">@item.FILE_MEMO</p>
+                </a>
+            </li>
+        }      
+    </ul>
+</section>
+

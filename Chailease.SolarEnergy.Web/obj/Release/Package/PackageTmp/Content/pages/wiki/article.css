@@ -1,0 +1,175 @@
+﻿@charset "UTF-8";
+/* @site: 全民電廠
+ * @author: nikki
+ * @update: nikki (2019-1-4)
+ * @page: 電廠小百科文章內頁
+ * @description: 電廠小百科文章類型,  1.圖+文 2.影片+文, 3.純文章
+ */
+/* =Variables--------------------------*/
+/* font style ---*/
+/* desktop & mobile size */
+/* color */
+/*animation */
+/*z-index */
+/*為手譏評板裝置，且裝置奘為橫向*/
+/*若只判斷orientation:landscape，desktop size也包含在內*/
+/* common: extend ---*/
+.page-kv {
+  background-image: url("../../images/news_bigimage.jpg"); }
+
+@media only screen and (max-width: 768px) {
+  .page-content {
+    padding-bottom: 3rem; }
+  .page-kv--img {
+    width: 35vw;
+    max-width: 259px; } }
+
+/* block: article ---*/
+.article-container {
+  width: 100%;
+  max-width: 54.38rem;
+  margin: 0 auto; }
+
+/* item: article-item-source ---*/
+.article-item-source {
+  width: 100%;
+  height: 1.75rem;
+  margin-bottom: 0.63rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  -webkit-justify-content: space-between;
+  -moz-justify-content: space-between;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  align-items: center; }
+  .article-item-source--class {
+    height: 1.63rem;
+    padding: 0 8px;
+    text-align: center;
+    border-width: 2px;
+    border-style: solid; }
+  .article-item-source--date {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    color: #1C8886; }
+
+/* rwd: article-item-source ---*/
+@media only screen and (max-width: 768px) {
+  .article-item-source--class {
+    height: 1.06rem;
+    line-height: 15px;
+    font-size: 0.6rem;
+    border-width: 1px; }
+  .article-item-source--date {
+    font-size: 0.75rem;
+    line-height: 1rem; } }
+
+/* status: article-item-source--class  --- */
+.article-item-source--class.class-1 {
+  color: #6F6F6F;
+  border-color: #6F6F6F; }
+
+.article-item-source--class.class-2 {
+  color: #958226;
+  border-color: #958226; }
+
+.article-item-source--class.class-3 {
+  color: #1C8886;
+  border-color: #1C8886; }
+
+/* item: article-content ---*/
+.article-content {
+  padding-top: 1.88rem;
+  margin-top: 0.69rem; }
+  .article-content--title {
+    font-size: 2.25rem;
+    color: #6F6F6F;
+    line-height: 3.13rem;
+    letter-spacing: 0.15rem;
+    font-weight: bold;
+    margin-top: 1.63rem;
+    margin-bottom: 2rem; }
+  .article-content--data {
+    font-size: 1rem;
+    line-height: 1.75rem;
+    letter-spacing: 0.08rem;
+    color: #6F6F6F;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #D8D8D8; }
+
+/* rwd: article-content ---*/
+@media only screen and (max-width: 768px) {
+  .article-content {
+    padding-top: 0; }
+    .article-content--title {
+      font-size: 1.13rem;
+      line-height: 1.56rem;
+      letter-spacing: 0.06rem;
+      margin: 0.63rem auto 0.22rem; }
+    .article-content--data {
+      font-size: 0.81rem;
+      line-height: 1.38rem; } }
+
+/* item: article-footer ---*/
+.article-footer {
+  margin-top: 1.68rem; }
+  .article-footer--social {
+    margin-bottom: 3.44rem;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    -webkit-justify-content: flex-end;
+    -moz-justify-content: flex-end;
+    justify-content: flex-end; }
+    .article-footer--social > button:first-child {
+      margin-right: 1.56rem; }
+  .article-footer--read {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    -webkit-justify-content: space-between;
+    -moz-justify-content: space-between;
+    justify-content: space-between; }
+
+/* rwd: article-footer ---*/
+@media only screen and (max-width: 768px) {
+  .article-footer--social {
+    margin-bottom: 1.2rem; } }
+
+/* status: article-content-type ---*/
+.article-content--type-img {
+  width: 100%;
+  height: 38.13rem;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover; }
+
+.article-content--type-video {
+  width: 100%;
+  height: 38.13rem; }
+  .article-content--type-video > iframe {
+    width: 100%;
+    height: 100%; }
+
+/* rwd: article-content-type ---*/
+@media only screen and (max-width: 768px) {
+  .article-content--type-img {
+    height: 13.31rem; }
+  .article-content--type-video {
+    height: 13.31rem; } }

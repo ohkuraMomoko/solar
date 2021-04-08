@@ -1,0 +1,449 @@
+﻿@model HomeViewModel
+@{
+    ViewBag.Title = "資料填寫";
+}
+@section metatags {
+    @Html.Action("GetMetaByType", "Base", new { id = 1 })
+}
+@section header{
+    @Styles.Render("~/Content/pages/advancedPurchase.min.css")
+}
+<div class="page-container request-form">
+    <div class="page-kv">
+        <h1 class="page-kv--title">資料填寫</h1>
+    </div>
+    <div class="page-content">
+        <form action="" class="page-content-form">
+            <h2 class="page-content-form--title">請輸入/上傳身分資料</h2>
+            <div class="form-step-container form-step-container--3">
+                <div class="form-step form-step--active">
+                    <div class="form-step--number">1</div>
+                    <p class="form-step--title">E-mail認證</p>
+                </div>
+                <div class="form-step form-step--active">
+                    <div class="form-step--number">2</div>
+                    <p class="form-step--title">身分資料</p>
+                </div>
+                <div class="form-step">
+                    <div class="form-step--number">3</div>
+                    <p class="form-step--title">帳戶銀行資料</p>
+                </div>
+            </div>
+            <div class="form-item">
+                <label class="control-label">帳號</label>
+                <div class="input-group">
+                    <div class="account-data-containter">
+                        <span class="account-data">@ViewBag.Email</span>&nbsp;
+                        <span class="account-status account-status--approve">（已認證）</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-item">
+                <label for="fileField1" class="control-label mb-3">上傳身分證</label>
+                <div class="upload-content">
+                    <div class="row no-gutters">
+                        <div class="col-6">
+                            <div class="file-container input-group mb-3">
+                                <div class="file-error-info">
+                                    <p>檔案資料模糊<br>請重新拍照上傳</p>
+                                </div>
+                                <div class="js-file-preview file-img face"></div>
+                                <input type="file" id="fileField1" name="fileField1"
+                                       accept="image/gif, image/jpeg, image/jpg, image/png" required
+                                       class="js-input-file input-file ga_advanced_step2_input_upload_idcard--front">
+                                <p class="file-name js-file-name d-none">檔名顯示</p>
+                                <div class="btn--type btn--type-2 file-btn">選擇檔案</div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="file-container input-group mb-3">
+                                @*error*@
+                                <div class="file-error-info">
+                                    <p>檔案資料模糊<br>請重新拍照上傳</p>
+                                </div>
+                                <div class="js-file-preview file-img back"></div>
+                                <input type="file" id="fileField2" name="fileField2"
+                                       accept="image/gif, image/jpeg, image/jpg, image/png" required
+                                       class="js-input-file input-file ga_advanced_step2_input_upload_idcard--reverse">
+                                <p class="file-name js-file-name d-none">檔名顯示</p>
+                                <div class="btn--type btn--type-2 file-btn">選擇檔案</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-item">
+                <label for="userName" class="control-label">姓名</label>
+                <div class="input-group">
+                    <input type="text" id="userName" name="userName"
+                           placeholder="請填入真實姓名" autocomplete="name" required
+                           class="form-control has-btn-clear ga_advanced_step2_input_name">
+                    <div class='js-input-btn-clear input-btn-clear'></div>
+                </div>
+            </div>
+            <div class="form-item">
+                <label for="userID" class="control-label">身分證字號</label>
+                <div class="input-group">
+                    <input type="text" id="userID" name="userID"
+                           placeholder="請填入" autocomplete="name" required
+                           class="form-control has-btn-clear ga_advanced_step2_input_id">
+                    <div class='js-input-btn-clear input-btn-clear'></div>
+                </div>
+            </div>
+            <label for="EC_PROD_TYPE_CD_s3_1" class="control-label">生 日</label>
+            <div class="row no-gutters">
+                <div class="col">
+                    <div class="form-item">
+                        <div class="input-group">
+                            <div class="custom-select">
+                                <select id="EC_PROD_TYPE_CD_s3_1" name="EC_PROD_TYPE_CD_s3_1" required
+                                        class="form-control ga_advanced_step2_select_birthday--year">
+                                    <option value="" selected="" disabled="">年</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-item">
+                        <div class="input-group">
+                            <div class="custom-select">
+                                <select id="EC_PROD_TYPE_CD_s3_2" name="EC_PROD_TYPE_CD_s3_2" required
+                                        class="form-control ga_advanced_step2_select_birthday--month">
+                                    <option value="" selected="" disabled="">月</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-item">
+                        <div class="input-group">
+                            <div class="custom-select">
+                                <select id="EC_PROD_TYPE_CD_s3_3" name="EC_PROD_TYPE_CD_s3_3" required
+                                        class="form-control ga_advanced_step2_select_birthday--day">
+                                    <option value="" selected="" disabled="">日</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                    <option value="24">24</option>
+                                    <option value="25">25</option>
+                                    <option value="26">26</option>
+                                    <option value="27">27</option>
+                                    <option value="28">28</option>
+                                    <option value="29">29</option>
+                                    <option value="30">30</option>
+                                    <option value="31">31</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-item">
+                <label for="EC_PROD_TYPE_CD" class="control-label">性 別</label>
+                <div class="input-group">
+                    <div class="custom-select">
+                        <select id="EC_PROD_TYPE_CD" name="EC_PROD_TYPE_CD" required
+                                class="form-control ga_advanced_step2_select_sex">
+                            <option value="" selected="" disabled="">請選擇性別</option>
+                            <option value="M">男</option>
+                            <option value="F">女</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-item required">
+                <label for="reg_addr" class="control-label required">戶籍地址</label>
+                <div class="row no-gutters">
+                    <div class="col">
+                        <div class="form-item">
+                            <div class="input-group">
+                                <div class="custom-select">
+                                    <select id="reg_addr_city" name="reg_addr_city" required
+                                            class="form-control ga_advanced_step2_select_city--reg">
+                                        <option value="" selected="" disabled="">縣市</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-item">
+                            <div class="input-group">
+                                <div class="custom-select">
+                                    <select id="reg_addr_region" name="reg_addr_region" required
+                                            class="form-control ga_advanced_step2_select_region--reg">
+                                        <option value="" selected="" disabled="">鄉鎮區域</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group ">
+                    <input id="reg_addr" name="reg_addr" placeholder="詳細地址" required
+                           class="form-control has-btn-clear ga_advanced_step2_input_addr--reg">
+                    <div class='js-input-btn-clear input-btn-clear'></div>
+                </div>
+            </div>
+            <div class="form-item required">
+                <label for="cur_addr" class="control-label required mb-3">住家地址</label>
+                <div class="checkboxer checkboxer-inline">
+                    <input type="checkbox" name="sameAddr" id="sameAddr" class="ga_advanced_step2_checkbox_sameaddr">
+                    <label for="sameAddr">同戶籍地址</label>
+                </div>
+                <div class="row no-gutters">
+                    <div class="col">
+                        <div class="form-item mb-1">
+                            <div class="input-group">
+                                <div class="custom-select">
+                                    <select id="cur_addr_city" name="cur_addr_city" required
+                                            class="form-control ga_advanced_step2_select_city--contact">
+                                        <option value="" selected="" disabled="">縣市</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-item mb-1">
+                            <div class="input-group">
+                                <div class="custom-select">
+                                    <select id="cur_addr_region" name='cur_addr_region' required
+                                            class="form-control ga_advanced_step3_select_region--contact">
+                                        <option value="" selected="" disabled="">鄉鎮區域</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-0">
+                    <input id="cur_addr" name="cur_addr" placeholder="詳細地址" required
+                           class="form-control has-btn-clear ga_advanced_step2_input_addr--contact">
+                    <div class='js-input-btn-clear input-btn-clear'></div>
+                </div>
+            </div>
+
+            <button class="center btn--common btn--common-1 btn--form-send ga_advanced_step2_btn_finish">下一步</button>
+        </form>
+    </div>
+</div>
+
+
+@section scripts    {
+
+    <script src="~/Scripts/image-compressor.js"></script>
+    <script>
+    const email = '@ViewBag.Email';
+    const init = '@Url.Action("RequestFormInit", "AdvancedPurchase")';
+    const imgUrl = '@Url.Action("RequestFormImg")';
+    const postUrl = '@Url.Action("RequestForm")';
+    var tForm = $('form.page-content-form');
+        $(function () {
+
+        //GA: 集客/出資會員/第2步驟/PV
+        dataLayer.push(
+            {
+                "event": "popupPageView",
+                "popPATH": "/AdvancedPurchase/requestForm",
+                "popTitle": "出資會員-Step2-身分資料"
+            }
+        );
+        if ('@ViewBag.FirstInto')
+            $('#modalBuyInfo').modal('show');
+
+        tForm.validate(validateParams);
+        tForm.find('input[type=file]').rules("add", { filesize: 30 * 1024 * 1024 });
+        tForm.find('input#userID').rules("add", { idcheck: true });
+        tForm.find('#EC_PROD_TYPE_CD_s3_1').rules("add", { minimumAge: { minAge: 20, mon: "#EC_PROD_TYPE_CD_s3_2", day: "#EC_PROD_TYPE_CD_s3_3" }, messages: { minimumAge: "申請會員年齡不得小於20歲" } });
+
+        $('#EC_PROD_TYPE_CD_s3_2, #EC_PROD_TYPE_CD_s3_3').change(function () { $('#EC_PROD_TYPE_CD_s3_1').valid(); });
+
+        var sltCity = tForm.find('#cur_addr_city,#reg_addr_city').change(function (e) {
+            $(this).parents('div.col').next().find('select').val('').children().addClass('d-none');
+            $(this).parents('div.col').next().find('select option[value^=' + $(this).val() + ']').removeClass('d-none');
+        });
+        var sltRegion = tForm.find('#cur_addr_region,#reg_addr_region');
+
+        $ajax.Post(init, {}, function (d) {
+            if (d) {
+                $.each(d.county, function (i, v) { $('<option></option>', { value: v.key }).html(v.value).appendTo(sltCity); });
+                $.each(d.dist, function (i, v) { $('<option></option>', { value: v.key, class: 'd-none' }).html(v.value).appendTo(sltRegion); });
+            }
+        });
+        //tForm.find('div.account-data-containter span:nth(0)').html(email);
+
+        var md = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        tForm.find('#EC_PROD_TYPE_CD_s3_2').click(function () {
+            var maxday = md[$(this).val()];
+            tForm.find('#EC_PROD_TYPE_CD_s3_3 option').removeClass('d-none').each(function (i, v) {
+                if (parseInt($(v).val()) > maxday) {
+                    $(v).addClass('d-none');
+                }
+            });
+        });
+
+        var year = new Date(Date.now()).getFullYear();
+        var sltYear = tForm.find('#EC_PROD_TYPE_CD_s3_1');
+        for (i = 1911; i <= (year - 20); i++) {
+            sltYear.append($('<option></option>', { value: i }).html(i));
+        }
+
+        tForm.find('input#sameAddr').change(function () {
+            if (this.checked) {
+                tForm.find('#cur_addr_city').val(tForm.find('#reg_addr_city').val()).change();
+                tForm.find('#cur_addr_region').val(tForm.find('#reg_addr_region').val());
+                tForm.find('#cur_addr').val(tForm.find('#reg_addr').val());
+                tForm.find('#cur_addr_city,#cur_addr_region,#cur_addr').valid();
+            }
+        });
+
+        tForm.find('input#fileField1,input#fileField2').change(function () {
+
+            if (tForm.find('input[type=file]').valid()) {
+                var img1 = tForm.find('input#fileField1')[0].files[0];
+                var img2 = tForm.find('input#fileField2')[0].files[0];
+
+                //send
+                ocrloading.show();
+                var formData = new FormData();
+                var process = new imgcompress();
+                var maxSize = 1;
+                //Front
+                process.compress(img1, maxSize, function (d1) {
+                    formData.append('Front', d1, img1.name);
+                    //Back
+                    process.compress(img2, maxSize, function (d2) {
+                        formData.append('Back', d2, img2.name);
+                        $ajax.FormPost(imgUrl, formData, function (d) {
+                            //ajaxIdcardSucc(d);
+                            tForm.find('button').removeClass('disable').attr('disabled', false);
+                            ocrloading.hide();
+                        }, null, false);
+                    }, function (d2) { showMsg('File upload fail - ' + d2, 'error') });
+                }, function (d1) { showMsg('File upload fail - ' + d1, 'error') });
+            }
+        });
+
+        tForm.submit(function () {
+
+            if (!tForm.valid()) return false;
+            $(document).scrollTop(0);
+            var datta = {
+                Id: tForm.find('#userID').val(),
+                Name: tForm.find('#userName').val(),
+                BirthdayYear: tForm.find('#EC_PROD_TYPE_CD_s3_1').val(),
+                BirthdayMonth: tForm.find('#EC_PROD_TYPE_CD_s3_2').val(),
+                BirthdayDay: tForm.find('#EC_PROD_TYPE_CD_s3_3').val(),
+                Gender: tForm.find('#EC_PROD_TYPE_CD').val(),
+                RegZipCode: tForm.find('#reg_addr_region').val().substring(2, 5),
+                RegCounty: tForm.find('#reg_addr_city option:selected').html(),
+                RegDist: tForm.find('#reg_addr_region option:selected').html(),
+                RegAddr: tForm.find('#reg_addr').val(),
+                ContactZipCode: tForm.find('#cur_addr_region').val().substring(2, 5),
+                ContactCounty: tForm.find('#cur_addr_city option:selected').html(),
+                ContactDist: tForm.find('#cur_addr_region option:selected').html(),
+                ContactAddr: tForm.find('#cur_addr').val()
+            }
+
+            $ajax.Post(postUrl, datta, function (d) {
+                if (d.result) {
+                    // GA: 圖靈/出資會員/1.身份資料填寫下一步點擊/成功
+                    dataLayer.push({
+                        'event': 'td_fundingMemberRegister',
+                        'register_step': '1',
+                        'register_step_status': 'success'
+                    });
+                    window.location.reload();
+                }
+                else {
+                    showMsg(d.message, 'error');
+                    // GA: 圖靈/出資會員/1.身份資料填寫下一步點擊/失敗
+                    dataLayer.push({
+                        'event': 'td_fundingMemberRegister',
+                        'register_step': '1',
+                        'register_step_status': 'fail'
+                    });
+                }
+            });
+            return false;
+        });
+    });
+
+    var ajaxIdcardSucc = function (d) {
+        if (d.FrontAnalyeResult) {
+            tForm.find('input#fileField1').parents('div.file-container').removeClass('error');
+            tForm.find('#userID').val(d.Id);
+            tForm.find('#userName').val(d.Name);
+            tForm.find('#EC_PROD_TYPE_CD_s3_1').val(d.YYYY);
+            tForm.find('#EC_PROD_TYPE_CD_s3_2').val(d.MM);
+            tForm.find('#EC_PROD_TYPE_CD_s3_3').val(d.DD);
+            tForm.find('#EC_PROD_TYPE_CD').val(d.Gender);
+        }
+        else {
+            tForm.find('input#fileField1').parents('div.file-container').addClass('error');
+            //tForm.find('input#fileField1').val('');
+        }
+
+        if (d.BackAnalyeResult) {
+            tForm.find('input#fileField2').parents('div.file-container').removeClass('error');
+
+            tForm.find('#reg_addr_city').val(d.RegCounty).change();
+            tForm.find('#reg_addr_region').val(d.RegDist);
+            tForm.find('#reg_addr').val(d.RegAddr);
+
+            tForm.find('input#sameAddr').change();
+        }
+        else {
+            tForm.find('input#fileField2').parents('div.file-container').addClass('error');
+            //tForm.find('input#fileField2').val('');
+        }
+    }
+
+    var ocrloading = new function () {
+        this.show = function () {
+            $("#loadingContainerOCR").fadeIn(100);
+            $("body").css("overflow", "hidden");
+        }
+        this.hide = function () {
+            $("#loadingContainerOCR").fadeOut(300);
+            $("body").css("overflow", "auto");
+        }
+    }
+    </script>
+
+}

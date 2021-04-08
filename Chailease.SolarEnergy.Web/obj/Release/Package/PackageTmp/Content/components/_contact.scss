@@ -1,0 +1,146 @@
+﻿/* contact btn desktop: contactBtn.cshtml */
+.contact-btn {
+    &-desktop {
+        width: 7.38rem;
+        height: 7.38rem;
+        background-image: url("images/contact_icon.svg");
+        background-size: cover;
+        position: fixed;
+        left: 20px;
+        bottom: 20px;
+        z-index: $contact-z;
+        cursor: pointer;
+        &:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("images/contact_iconX.svg");
+            background-size: cover;
+            z-index: 5;
+            opacity: 0;
+            @include change(opacity, linear, 0.5s);
+        }
+        &.active {
+            &:after {
+                opacity: 1;
+            }
+            &:before {
+                opacity: 0 !important;
+            }
+        }
+    }
+}
+
+/*contact btn mobile: menu.cshtml*/
+.contact-btn-mobile {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    z-index: $contact-z;
+    cursor: pointer;
+    width: 9.69rem;
+    height: 2.5rem;
+    background: rgba(0,0,0,0.69);
+    .icon {
+        height: 2.5rem;
+        width: 2.5rem;
+        background-color: $color-primary-blue;
+        display: inline-block;
+    }
+    .text {
+        width: calc(100% - 2.5rem);
+        line-height: 2.5rem;
+        color: #fff;
+        text-align: center;
+        display: inline-block;
+    }
+}
+.contact-btn-mobile {
+    display: none;
+}
+
+@include rwd(#{$ipad - 1px}) {
+    .contact-btn-desktop {
+        display: none;
+    }
+    .contact-btn-mobile {
+        display: block;
+    }
+}
+
+
+/* contact-modal */
+$modalSize: 24rem;
+.contact-modal {
+    .modal-dialog {
+        width: 95%;
+        max-width: $modalSize;
+        left: 20px;                                                         
+        position: absolute;
+        bottom: 20px;
+        box-shadow: 0 2px 8px 0 rgba(0,0,0,0.20);
+        margin: 0;
+    }
+    .modal-content {
+        position: relative;
+        .close {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            right: 0;
+            top: -50px;
+            background-color: transparent;
+            cursor: pointer;
+        }
+    }
+    .modal-body {
+        width: 100%;
+        padding: 0;
+    }
+    .contact-header {
+        height: 15.75rem;
+        padding: 2.88rem 10% 0;
+        background-color: $color-primary-blue;
+        color: #fff;
+        &--title {
+            font-size: 2.5rem;
+            
+        }
+        .contact-btn {
+            width: 100%;
+            margin-top: 1.5rem;
+            background-color: #fff;
+            border: 2px solid $color-dark;
+            >span {
+                font-size: 1.13rem;
+            }
+        }
+    }
+    .contact-body {
+        height: 13.19rem;
+        padding: 1.44rem 10% 2.5rem;
+        color: #8a8a8a;
+        line-height: 1.5;
+        >a {
+            display: block;
+            color: inherit;
+        }
+        &--text {
+            text-decoration: underline;
+            margin-top: 1rem;
+            margin-bottom: 1.74rem;
+        }
+    }
+}
+
+@include rwd(#{$ipad - 1px}) {
+    .contact-modal {
+        .modal-dialog {
+            left: 2.5%;
+            bottom: 0;
+        }
+    }
+}

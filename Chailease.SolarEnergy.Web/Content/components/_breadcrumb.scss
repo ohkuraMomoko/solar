@@ -1,0 +1,58 @@
+﻿/* BLOCK: breadcrumb ============================*/
+/* RESET: */
+.breadcrumb-item+.breadcrumb-item::before {
+    content: "";
+    width: 2.25rem;
+    height: 0.68rem;
+    background-image: url("images/bread_arrow_icon.svg");
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: contain;
+}
+
+.breadcrumb-container {
+    width: 80%;
+    // max-width: 71.25rem;
+    margin: 0 auto;
+}
+.breadcrumb {
+    &-item {
+        a {
+            color: $color-secondary;
+            font-size: 0.94rem;
+            line-height: 1.31rem;
+            letter-spacing: 0.06rem;
+            &:hover {
+                color: $color-primary-blue;
+            }
+            &:active {
+                color: $color-dark;
+            }
+        }
+    }
+}
+/* status: current item ---*/
+.breadcrumb-item.active>a {
+    color: $color-dark;
+}
+
+@include rwd(#{$ipad - 1px}) {
+    .breadcrumb-container {
+        width: 95%;
+    }
+    .breadcrumb {
+        padding: 0;
+        a {
+            font-size: 0.5rem;
+            line-height: 0.69rem;
+            letter-spacing: 0.03rem;
+            img {
+                height: 60%;
+                margin-top: 25%;
+            }
+        }
+    }
+    .breadcrumb-item+.breadcrumb-item::before {
+        width: 1.5rem;
+    }
+}

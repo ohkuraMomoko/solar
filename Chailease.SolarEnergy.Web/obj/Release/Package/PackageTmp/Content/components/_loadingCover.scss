@@ -1,0 +1,88 @@
+﻿.loading-container {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: rgba(#000, 0.6);
+    display: none;
+    z-index: $loadingCover-z;
+    > .loading {
+        $size: 15rem;
+        width: $size;
+        height: $size;
+        position: relative;
+        top: calc(50vh - #{$size/2});
+        left: calc(50vw - #{$size/2});
+        z-index: 1;
+        @include prefix(transform, scale(0.6));
+        @include prefix(transform-origin, center);
+        // &:after {
+        //     content: '';
+        //     position: absolute;
+        //     left: 0;
+        //     top: 0;
+        //     width: 100%;
+        //     height: 100%;
+        //     border-radius: 50%;
+        //     border: 10px solid rgba($color-secondary--2, 0.6);
+        //     z-index: -1;
+        // }
+        .loader-circle {
+            width: 100%;
+            height: 100%;
+            border: {
+                top: 10px solid $color-primary-blue;
+                bottom: 10px solid transparent;
+                left: 10px solid transparent;
+                right: 10px solid transparent;
+                radius: 50%;
+            }
+            @include prefix(animation, loader 1.5s infinite linear);
+        }
+    }
+    .loading-text {
+        width: 100%;
+        text-align: center;
+        font-size: 1.5rem;
+        color: #fff;
+        padding-top: 30px;
+        >span {
+            font-size: 0.8em;
+            margin-top: 0.44rem;
+        }
+    }
+}
+
+@include keyframes(loader) {
+    from {
+        @include prefix(transform, rotate(0deg));
+    }
+    to {
+        @include prefix(transform, rotate(360deg));
+    }
+}
+@include rwd($ipad) {
+    .loading-container {
+        >.loading {
+            $size: 240px;
+            width: $size;
+            height: $size;
+            position: relative;
+            top: calc(50vh - #{$size/2});
+            left: calc(50vw - #{$size/2});
+            &:after {
+                border-width: 5px;
+            }
+            .loader-circle {
+                border: {
+                    width: 5px;
+                }
+            
+            }
+        }
+        .loading-text {
+            font-size: 16px;
+        }
+    }
+}

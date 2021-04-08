@@ -1,0 +1,443 @@
+﻿@model HomeViewModel
+@{
+    ViewBag.Title = "會員中心";
+}
+@section header {
+    @Styles.Render("~/Content/pages/member/profile.min.css")
+}
+@section metatags {
+    @Html.Action("GetMetaByType", "Base", new { id = 1 })
+}
+<div class="page-container">
+    <div class="page-kv">
+        <h1 class="page-kv--title">會員中心</h1>
+    </div>
+    <div class="page-content">
+        <div class="breadcrumb-container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/" href="@Url.Content("~/Home/")">
+                            <span itemprop="name"><img src="@Url.Content("~/Content/images/bread_home_icon.svg")" alt="首頁"></span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Member/" href="@Url.Content("~/Member/")">
+                            <span itemprop="name">會員中心</span>
+                        </a>
+                        <meta itemprop="position" content="2" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                            <span itemprop="name">我的資料</span>
+                        </a>
+                        <meta itemprop="position" content="3" />
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <div class="profile-container">
+            <div class="profile-tag-container">
+                <ul class="profile-tag">
+                    <li class="profile-tag--item active">
+                        <a href="@Url.Content("~/Member/Profile")">我的資料</a>
+                    </li>
+                    <li class="profile-tag--item">
+                        <a href="@Url.Content("~/Member/BankInfo")">銀行帳戶</a>
+                    </li>
+                    <li class="profile-tag--item">
+                        <a href="@Url.Content("~/Member/Password")">修改密碼</a>
+                    </li>
+                    <li class="profile-tag--item">
+                        <a href="@Url.Content("~/Member/Event")">會員活動</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="profile-content">
+                <form action="">
+                    <div class="form-item">
+                        <label class="control-label">會員編號</label>
+                        <span class="ml-3 member-account"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="form-item">
+                                <label for="memberUserName" class="control-label">姓名</label>
+                                <div class="input-group lock">
+                                    <input type="text" id="memberUserName" name="memberUserName" class="form-control" value="" readonly>
+                                </div>
+                            </div>
+                            <div class="form-item">
+                                <label for="memberUserId" class="control-label">身分證字號</label>
+                                <div class="input-group lock">
+                                    <input type="text" id="memberUserId" name="memberUserId" class="form-control" value="" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-item">
+                                <label for="memberUserBirthday" class="control-label">生日</label>
+                                <div class="input-group lock">
+                                    <input type="text" id="memberUserBirthday" name="memberUserBirthday" class="form-control" value="" readonly>
+                                </div>
+                            </div>
+                            <div class="form-item">
+                                <label for="memberUserAddr" class="control-label">戶籍地址</label>
+                                <div class="input-group lock">
+                                    <input type="text" id="memberUserAddr" name="memberUserAddr" class="form-control" value="" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <label for="memberAddress" class="control-label">聯絡地址</label>
+                        <div class="input-group has-btn">
+                            <input type="text" id="memberAddress" name="memberAddress" class="form-control" value="" readonly>
+                            <div class="input-change memberaddredit">編輯</div>
+                        </div>
+                    </div>
+                    @* TODO: 按下聯絡地址的編輯按鈕，顯示下方結構 *@
+                    <div class="form-item">
+                        <label for="" class="control-label">聯絡地址</label>
+                        <div class="row no-gutters">
+                            <div class="col-6 col-md-3">
+                                <div class="form-item">
+                                    <div class="input-group">
+                                        <div class="custom-select">
+                                            <select class="form-control" id="editcity" name="editcity" required></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="form-item">
+                                    <div class="input-group">
+                                        <div class="custom-select">
+                                            <select class="form-control" id="editregion" name="editregion" required></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="input-group has-btn">
+                                    <input type="text" id="editaddr" name="editaddr" class="form-control" value="詳細地址" required>
+                                    <div class="input-change memberaddrclick">確認</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="form-item">
+                                <label for="memberEmail" class="control-label">E-mail</label>
+                                <div class="input-group lock">
+                                    <input type="text" id="memberEmail" name="memberEmail" class="form-control" value="" readonly>
+                                    @*<div class="input-change" data-toggle="modal" data-target="#modalChangeEmail">編輯</div>*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-item">
+                                <label for="memberCellphone" class="control-label">行動電話</label>
+                                <div class="input-group has-btn">
+                                    <input type="text" id="memberCellphone" name="memberCellphone" class="form-control" value="" readonly>
+                                    <div class="input-change" data-toggle="modal" data-target="#modalChangeCellphone">編輯</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @* TODO:
+                        審核狀態請參閱Guideline的Form MemberCenter部分的HTML結構
+                        會員中心身分證狀態:
+                        1. 已審核(身分證此處僅展示，無法修改。請套上上傳圖檔)
+                        2. 審核中(身分證此處僅展示，無法修改。請套上上傳圖檔)
+                        3. 未審核
+                        4. 審核失敗(說明文字不確定，可能由後台給?。請套上上傳圖檔)
+                    *@
+                    <div class="form-item profile-idcard-container">
+                        <div class="idcard-status">
+                            <label class="control-label mb-3">身分證</label>
+                            @* 1. 已審核 *@
+                            <img src="~/Content/images/success_info_icon.svg" class="ml-3 idcard-status--icon d-none baseidststus03">
+
+                            @* 2. 審核中 *@
+                            <img src="~/Content/images/search_info_icon.svg" class="ml-md-3 idcard-status--icon d-none baseidststus02">
+                            <span class="ml-md-3 idcard-status--text d-none baseidststus02">身分證尚在查核中</span>
+
+                            @* 3. 未審核*@
+                            <img src="~/Content/images/warning_info_icon.svg" class="ml-md-3 idcard-status--icon d-none  baseidststus01">
+                            <span class="ml-md-3 idcard-status--text text-heightline d-none baseidststus01">身分證尚未確認，會影響到您的會員權利</span>
+
+                            @* 4. 審核失敗 *@
+                            <img src="~/Content/images/warning_info_icon.svg" class="ml-md-3 idcard-status--icon d-none baseidststus04">
+                            <span class="ml-md-3 idcard-status--text text-heightline d-none baseidststus04">審核失敗，請重新上傳</span>
+
+                        </div>
+                        <div class="upload-content">
+                            <div class="row no-gutters">
+                                <div class="col-6">
+                                    @* 1. 已審核/2. 審核中 *@
+                                    <div class="file-container d-none baseidststus02 baseidststus03">
+                                        <div class="js-file-preview file-img face"></div>
+                                        @*<div class="js-file-preview file-img face" style="background-image:url('../Content/images/news_report_bigimage.jpg')"></div>*@
+                                    </div>
+                                    @* 3. 未審核/4. 審核失敗*@
+                                    <div class="file-container d-none baseidststus01 baseidststus04 input-group">
+                                        <div class="js-file-preview file-img face"></div>
+                                        <input type="file" id="fileField1" class="js-input-file input-file" accept="image/gif, image/jpeg, image/jpg, image/png" required>
+                                        <p class="file-name js-file-name d-none">檔名顯示</p>
+                                        <div class="btn--type btn--type-2 file-btn">選擇檔案</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 pl-0 pl-md-4">
+                                    @* 1. 已審核/2. 審核中 *@
+                                    <div class="file-container d-none baseidststus02 baseidststus03">
+                                        <div class="js-file-preview file-img back"></div>
+                                        @*<div class="js-file-preview file-img back" style="background-image:url('../Content/images/news_report_bigimage.jpg')"></div>*@
+                                    </div>
+                                    @* 3. 未審核/4. 審核失敗*@
+                                    <div class="file-container d-none baseidststus01 baseidststus04 input-group">
+                                        <div class="js-file-preview file-img back"></div>
+                                        <input type="file" id="fileField2" class="js-input-file input-file" accept="image/gif, image/jpeg, image/jpg, image/png" required>
+                                        <p class="file-name js-file-name d-none">檔名顯示</p>
+                                        <div class="btn--type btn--type-2 file-btn">選擇檔案</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="center btn--common btn--common-1 mt-5 d-none baseidststus01 baseidststus04">身分證重新送審</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@{
+    Html.RenderPartial("~/Views/Components/_ModalChangeEmail.cshtml");
+    Html.RenderPartial("~/Views/Components/_ModalChangeCellphone.cshtml");
+}
+
+@section scripts{
+    <script src="~/Scripts/image-compressor.js"></script>
+    <script>
+        const addrUrl = '@Url.Action("RequestFormInit", "AdvancedPurchase")';
+        const initUrl = '@Url.Action("ProfileInit")';
+        const modifyAddrUrl = '@Url.Action("ModifyAddress")';
+        const emailValidataUrl = '@Url.Action("SendEmailValidata")';
+        const memberRegPhoneMessage = '@Url.Action("GetRegPhoneMessage")';
+        const memberVerifyRegPhoneMessage = '@Url.Action("VerifyRegPhoneMessage")';
+        const uploadIdCardUrl = '@Url.Action("UploadIdCard")';
+
+        var tform = $('div.profile-content form');
+        var emailForm = $('#inputChangeEmail').parents('form.modal-form--forgetEmail');
+        var phoneForm = $('#modalChangeCellphone').find('form');
+        $(function () {
+            tform.validate(validateParams);
+
+            $('#editcity').parents('div.form-item').hide();
+            $('.memberaddredit').click(function () {
+                selectaddrbind('#editcity', '#editregion');
+                $('#editaddr').val('');
+                $('#editcity').parents('div.form-item').show(300);
+                //$(this).unbind();
+            });
+            $('.memberaddrclick').click(function () {
+
+                if (!$('#editcity, #editregion, #editaddr').valid())
+                    return false;
+
+                var addr = {
+                    ContactZipCode: $('#editregion').val().substring(2, 5),
+                    ContactCounty: $('#editcity option:selected').html(),
+                    ContactDist: $('#editregion option:selected').html(),
+                    ContactAddr: $('#editaddr').val()
+                }
+                $ajax.Post(modifyAddrUrl, addr, function (d ) {
+                    if (d.result) {
+                        tform.find('#memberAddress').val(addr.ContactCounty + addr.ContactDist + addr.ContactAddr);
+                        $('#editcity').parents('div.form-item').hide(300);
+                        //showMsg('地址更新成功');
+                    }
+                    else {
+                        showMsg('地址更新失敗 - ' + d.message, 'error');
+                    }
+                })
+            });
+
+            $ajax.Post(initUrl, {}, function (d) {
+                if (d) {
+                    if (d.info) infobind(d.info);
+                    if (d.auth) {
+                        if (!d.auth.isEdit) {
+                            tform.find('button,div.input-change').not('.baseidststus01').remove();
+                        }
+                        if (d.auth.idStatus) {
+                            //基本資料是否送審狀態(01：從未送過, 02：送審中, 03：審核完畢 ,04：退件)
+                            idclassname = 'baseidststus' + d.auth.idStatus;
+                            tform.find('.' + idclassname).removeClass('d-none');
+                        }
+                    }
+                }
+            });
+
+            tform.find('button').click(function () {
+                if (tform.find('input[type=file]').valid()) {
+                    var img1 = tform.find('input#fileField1')[0].files[0];
+                    var img2 = tform.find('input#fileField2')[0].files[0];
+
+                    var formData = new FormData();
+                    var process = new imgcompress();
+                    var maxSize = 1;
+                    //Front
+                    process.compress(img1, maxSize, function (d1) {
+                        formData.append('Front', d1, img1.name);
+                        //Back
+                        process.compress(img2, maxSize, function (d2) {
+                            formData.append('Back', d2, img2.name);
+                            $ajax.FormPost(uploadIdCardUrl, formData, function (s) {
+                                if (s.result) {
+                                    showMsg('已送出');
+
+                                    //基本資料是否送審狀態(01：從未送過, 02：送審中, 03：審核完畢 ,04：退件)
+                                    tform.find('.baseidststus01,.baseidststus02,.baseidststus03,.baseidststus04').addClass('d-none');
+                                    tform.find('.baseidststus' + s.status).removeClass('d-none');
+                                }
+                                else
+                                    showMsg(s.message, 'error')
+                            });
+                        }, function (d2) { showMsg('File upload fail - ' + d2, 'error') });
+                    }, function (d1) { showMsg('File upload fail - ' + d1, 'error') });
+                }
+            });
+
+            //change email
+            emailForm.validate(validateParams);
+            $('#inputChangeEmail').rules('add', { hasaccount: true });
+            emailForm.find('button.changeemailbtn').click(function () {
+                if (emailForm.valid()) {
+
+                    $ajax.Post(emailValidataUrl, { NewMemberAcct: $('#inputChangeEmail').val() }, function (d ) {
+                        if (d.result) {
+                            $('#modalChangeEmail').modal('hide');
+                            showMsg('已送出');
+                        }
+                        else {
+                            showMsg('Email更新失敗 - ' + d.message, 'error');
+                        }
+                    });
+
+                }
+                return false;
+            });
+
+            //change phone
+            phoneForm.validate(validateParams);
+            $('#InputChangePhone').rules('add', { phonecheck: true });
+            phoneForm.find('div.show-resend-time').hide();  //btn-sendotpcode,show-resend-time
+            phoneForm.find('div.btn-sendotpcode').click(memberSendVerificationCodeCkick);
+            phoneForm.find('button').click(function () {
+                if (phoneForm.valid()) {
+
+                    var message = phoneForm.find('#InputPhoneOtpCode');
+                    var phoneNo = phoneForm.find('#InputChangePhone');
+
+                    $ajax.Post(memberVerifyRegPhoneMessage, { Message: message.val(), PhoneNo: phoneNo.val() }, function (d) {
+                        if (d.result) {
+                            showMsg('更新成功');;
+
+                            stopTimer();
+                            var countdowndisplay = phoneNo.parent().find('div.show-resend-time');
+                            var sendBtn = phoneNo.parent().find('div.btn-sendotpcode');
+                            countdowndisplay.hide();
+                            sendBtn.show().unbind('click').click(memberSendVerificationCodeCkick);
+
+                            tform.find('#memberCellphone').val(phoneNo.val())
+                            phoneForm.find('span.account-data').html(phoneNo.val());
+                            message.val('');
+                            phoneNo.val('');
+
+                            $('#modalChangeCellphone').modal('hide');
+                        }
+                        else {
+                            showMsg(d.message, 'error');
+                            message.val('');
+                        }
+                    });
+                }
+                return false;
+            });
+
+
+
+        });
+
+        var memberSendVerificationCodeCkick = function () {
+            var sendBtn = $(this);
+            var phoneNo = sendBtn.parent().find('input');
+            var countdowndisplay = phoneNo.parent().find('div.show-resend-time');
+            if (!phoneNo.valid()) return false;
+            $ajax.Post(memberRegPhoneMessage, { PhoneNo: phoneNo.val() }, function (d) {
+                if (d.result) {
+                    countdowndisplay.show();
+                    phoneNo.attr('readonly', 'readonly');
+                    sendBtn.hide().unbind('click');
+                    startTimer(d.RES_SEC, sendBtn.parent().find('span#countdown'), function ()  {
+                        countdowndisplay.hide();
+                        sendBtn.show().click(SendVerificationCodeCkick);
+                        phoneNo.removeAttr('readonly');
+                    });
+                }
+                else {
+                    showMsg(d.message, 'error');
+                }
+            });
+        }
+
+
+        var infobind = function (d) {
+            tform.find('span.member-account').html(d.MBR_ID);
+            tform.find('#memberUserName').val(d.CUST_NAME);
+            tform.find('#memberUserId').val(d.CUST_ID);
+            tform.find('#memberUserBirthday').val(d.BIRTHDAY);
+            tform.find('#memberUserAddr').val(d.PSN_ADDR);
+            tform.find('#memberAddress').val(d.CONTACT_ADDR);
+            tform.find('#memberEmail').val(d.EMAIL);
+            tform.find('#memberCellphone').val(d.MOBILE);
+
+            emailForm.find('span.account-data').html(d.EMAIL);
+            phoneForm.find('span.account-data').html(d.MOBILE);
+        }
+
+
+
+        var ajaxaddrdata = undefined;
+        var selectaddrbind = function (cityselect, regionselect) {
+            var city = $(cityselect);
+            var region = $(regionselect);
+
+            city.html('').append('<option value="" selected="" disabled="">縣市</option>').change(function (e) {
+                region.val('').children().addClass('d-none');
+                region.find('option[value^=' + $(this).val() + ']').removeClass('d-none');
+            });
+            region.html('').append('<option value="" selected="" disabled="">鄉鎮區域</option>');
+
+            if (!ajaxaddrdata) {
+                $ajax.Post(addrUrl, {}, function (d) {
+                    if (d) {
+                        ajaxaddrdata = d;
+                        bind(d);
+                    }
+                });
+            }
+            else bind(ajaxaddrdata);
+
+            this.bind = function (d) {
+                $.each(d.county, function (i, v) { $('<option></option>', { value: v.key }).html(v.value).appendTo(city); });
+                $.each(d.dist, function (i, v) { $('<option></option>', { value: v.key, class: 'd-none' }).html(v.value).appendTo(region); });
+            }
+        }
+
+    </script>
+}

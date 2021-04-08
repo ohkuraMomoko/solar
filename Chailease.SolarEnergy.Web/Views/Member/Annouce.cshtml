@@ -1,0 +1,229 @@
+﻿@model Chailease.SolarEnergy.Web.ViewModel.MemberViewModel
+@{
+    ViewBag.Title = "出售公告管理";
+}
+@section header {
+    @Styles.Render("~/Content/pages/member/annouce.min.css")
+}
+@section metatags {
+    @Html.Action("GetMetaByType", "Base", new { id = 1 })
+}
+<div class="page-container annouce">
+    <div class="page-kv">
+        <h1 class="page-kv--title">出售公告管理</h1>
+    </div>
+    <div class="page-content">
+        <div class="breadcrumb-container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/" href="@Url.Content("~/Home/")">
+                            <span itemprop="name"><img src="@Url.Content("~/Content/images/bread_home_icon.svg")" alt="首頁"></span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Member/" href="@Url.Content("~/Member/")">
+                            <span itemprop="name">會員中心</span>
+                        </a>
+                        <meta itemprop="position" content="2" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                            <span itemprop="name">出售公告管理</span>
+                        </a>
+                        <meta itemprop="position" content="3" />
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <div class="select-reorder-container">
+            <select class="select-reorder" id="solarItemSearchSelect">
+                <option value="01" selected="">依最新關注排序</option>
+                <option value="02">依日期排序</option>
+            </select>
+        </div>
+        @* 依照裝置切換patical view*@
+        <div id="place" class="place"></div>
+        <br />
+        <div id="view_more_btn">
+            <button class="btn--type btn--type-3 solar-item-btn btn--readmore d-block m-auto">
+                <span>VIEW MORE</span>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="modal fade modelAnnouncement" id="modalNosold" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-subscription" role="document">
+        <div class="modal-content">
+            <button type="button" class="modal-btn--close" data-dismiss="modal" aria-label="Close">
+                <img src="@Url.Content("~/Content/images/bt_close_w.svg")" alt="">
+            </button>
+            <h2 class="modal-title">將公告下架</h2>
+            <p class="modal-text mb-4">
+                個別公告下架後，您無法再檢視完整之關注資訊，且其他會員無法在公佈欄檢視該公告，也無法表達關注(交換聯絡資訊)；但曾經關注之會員仍可於下架後30天內檢視該公告，惟將隱去已公告之聯絡資訊與存款帳戶資訊。
+            </p>
+            <div class="d-flex">
+                <button class="center btn--common btn--common-2" data-dismiss="modal">返回</button>
+                <button class="center btn--common btn--common-1" id="modalnosold-submit" onclick="service.MemOnSaleSellManageStatus(SELL_INST_CD,SELL_STATUS)">確定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade modelAnnouncement" id="modalFollow" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-subscription" role="document">
+        <div class="modal-content">
+            <button type="button" class="modal-btn--close" data-dismiss="modal" aria-label="Close">
+                <img src="@Url.Content("~/Content/images/bt_close_w.svg")" alt="">
+            </button>
+            <h2 class="modal-title">將公告暫停被關注</h2>
+            <p class="modal-text mb-4">
+                個別公告下架後，會員雖可在公佈欄檢視該公告，但無法再表示關注(交換聯絡資訊)；但曾經關注之會員仍可檢視已公告之聯絡資訊。
+            </p>
+            <p class="modal-text mb-4 text-sm">
+                ★小秘訣：您可利用「恢復被關注」功能，重新讓其他會員檢視並表達關注
+            </p>
+            <div class="d-flex">
+                <button class="center btn--common btn--common-2" data-dismiss="modal">返回</button>
+                <button class="center btn--common btn--common-1" id="modalFollow-submit" onclick="service.MemOnSaleSellManageStatus(SELL_INST_CD,SELL_STATUS)">確定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<input name="hidSELL_INST_CD" type="hidden" value="" />
+<input name="hidSELL_STATUS" type="hidden" value="" />
+<!-- <div id="printTemplate" class="print-template">
+    列印內容
+</div> -->
+@section scripts {
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+    <script id="template" type="text/x-jquery-tmpl">
+        <div class="item-box">
+            <div class="table-row">
+                <div class="table-data">${tempChartData[0]}</div>
+                <div class="table-data">${tempChartData[1]}</div>
+                <div class="table-data">${tempChartData[2]}</div>
+                <div class="table-data">${tempChartData[3]}</div>
+                <div class="table-data">${tempChartData[4]}</div>
+                <div class="table-data">${tempChartData[5]}</div>
+                <div class="table-data">${tempChartData[6]}</div>
+                <div class="table-data">${tempChartData[7]}</div>
+                <div class="table-data">${tempChartData[8]}</div>
+            </div>
+        </div>
+    </script>
+
+    <script>
+        var page_index = 1;
+        var brackPoint = 768;
+        var SELL_INST_CD = '';
+        var SELL_STATUS = '';
+        var service = {
+            MemOnSaleSellManageBuyerAcct : function (ele, sell_inst_cd, want_inst_cd, is_seller_acct) {
+                $ajax.Post('@Url.Action("MemOnSaleSellManageBuyerAcct", "MemOnSale")', { sell_inst_cd: sell_inst_cd, want_inst_cd: want_inst_cd, is_seller_acct: is_seller_acct },
+                    function (d) {
+                        if (d.RESULT) {
+                            $(ele).hide().parent('div').removeClass('status-green').addClass('status-gray').text('已提供帳戶');
+                        }
+                    })
+            },
+            MemOnSaleSellManageWantStatus: function (sell_inst_cd, index) {
+                if ($('#collapse-' + index).is(":hidden")) {
+                    $ajax.Post('@Url.Action("MemOnSaleSellManageWantStatus", "MemOnSale")', { sell_inst_cd: sell_inst_cd },
+
+                        function (d) {
+                            if (d.RESULT) {
+                                //do something
+                            }
+                            else {
+                                showMsg(d.ERRMSG, "error");
+                            }
+                        });
+                };
+            },
+            MemOnSaleSellManageStatus : function (sell_inst_cd, sell_status) {
+                $ajax.Post('@Url.Action("MemOnSaleSellManageStatus", "MemOnSale")', { sell_inst_cd: sell_inst_cd, sell_status: sell_status },
+                    function (d) {
+                        if (d.RESULT) {
+                            checkDevice(1);
+                        }
+                        else {
+                            showMsg(d.ERRMSG, "error");
+                        }
+                    });
+            }
+        }
+
+        $('#modalNosold').on('show.bs.modal', function (e) {
+            var $button = $(e.relatedTarget);
+            SELL_INST_CD = $button.data('id');
+            SELL_STATUS = $button.data('status');
+        });
+
+        $('#modalFollow').on('show.bs.modal', function (e) {
+            var $button = $(e.relatedTarget);
+            SELL_INST_CD = $button.data('id');
+            SELL_STATUS = $button.data('status');
+        });
+
+        function checkDevice(_page_index) {
+            var sort_type = $('#solarItemSearchSelect option:selected').val();
+            if (detectmob() && $(window).width() <= brackPoint) {
+                $('#place').load("@Url.Content("_AnnouceMobile")?sort_type=" + sort_type + '&page_index=' + _page_index, init);
+            } else {
+                $('#place').load("@Url.Content("_AnnouceDesktop")?sort_type=" + sort_type + '&page_index=' + _page_index, init);
+            }
+        }
+
+        function detectmob() {
+            if (navigator.userAgent.match(/Android/i)
+                || navigator.userAgent.match(/webOS/i)
+                || navigator.userAgent.match(/iPhone/i)
+                || navigator.userAgent.match(/iPad/i)
+                || navigator.userAgent.match(/iPod/i)
+                || navigator.userAgent.match(/BlackBerry/i)
+                || navigator.userAgent.match(/Windows Phone/i)
+            ) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+        $(function () {
+            $('#view_more_btn button').on('click', function (e) {
+                page_index += 1;
+                //alert(page_index);
+                checkDevice(page_index);
+            });
+            $('#solarItemSearchSelect').change(function () {
+                checkDevice(1);
+            });
+            var cachedWidth = $(window).width();
+
+            $(window).resize(function () {
+                var newWidth = $(window).width();
+                if (newWidth !== cachedWidth) {
+                    cachedWidth = newWidth;
+                    checkDevice(1);
+                }
+            });
+
+            checkDevice(1);
+        });
+
+        function init(){
+            // 停止/暫停被關注關閉modal
+            $('#modalFollow-submit').on('click', function () {
+                $('#modalFollow').modal('hide');
+            });
+
+            // 下架關閉modal
+            $('#modalnosold-submit').on('click', function () {
+                $('#modalNosold').modal('hide');
+            });
+        }
+    </script>
+}

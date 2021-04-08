@@ -1,0 +1,28 @@
+﻿
+@model MetaModel
+@{
+    var cur_url = System.Configuration.ConfigurationManager.AppSettings["url"] + Request.Url.LocalPath;
+}
+
+<meta http-equiv="Content-Language" content="zh-TW">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
+<meta name="format-detection" content="telephone=no"> <!-- 防止ios自動將文字轉換為電話 -->
+<meta name="author" content="@System.Configuration.ConfigurationManager.AppSettings["author"]">
+<meta name="copyright" content="@System.Configuration.ConfigurationManager.AppSettings["copyright"]">
+<meta name="keywords" content="@Model.KEYWORD">
+<meta name="description" content="@Model.DESC">
+<meta name="url" content="@cur_url">
+<link rel="canonical" href="@cur_url">
+<!-- FB Open Graphic -->
+<meta property="fb:app_id" content="@System.Configuration.ConfigurationManager.AppSettings["fbId"]" data-scope="@System.Configuration.ConfigurationManager.AppSettings["fbScope"]">
+<meta property="og:title" content="@Model.TITLE">
+<meta property="og:type" content="website">
+<meta property="og:image" content="@(System.Configuration.ConfigurationManager.AppSettings["FileServerPath"] + "meta/" + Model.KV_IMG)">
+<meta property="og:site_name" content="@System.Configuration.ConfigurationManager.AppSettings["title"]">
+<meta property="og:description" content="@Model.DESC">
+<meta property="og:url" content="@cur_url">
+<link rel="image_src" type="image/jpeg" href="@(System.Configuration.ConfigurationManager.AppSettings["FileServerPath"] + "meta/" + Model.KV_IMG)">
+<link rel="shortcut icon" type="image/x-icon" href="@System.Configuration.ConfigurationManager.AppSettings["favicon"]">

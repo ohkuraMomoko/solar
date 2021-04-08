@@ -1,0 +1,44 @@
+﻿/* @site: 全民電廠
+ * @author: nikki
+ * @update: nikki (2018-12-4)
+ * @page: Layout
+ * @description: 依照目前需要引入樣式檔，為專案主要樣式檔案
+ * @compiler: vistual studio (web compiler)
+ */
+
+/* plugin */
+@import "plugin/_slick.scss";
+@import "plugin/_slick-theme.scss";
+@import "plugin/_noty.scss";
+@import "plugin/aos/aos.scss";
+/*@import "plugin/_textoverflow.scss";*/ 
+
+/* setting */ 
+@import "setting/_variables.scss";
+@import "setting/_reset.scss";
+@import "setting/_mixins.scss";
+@import "setting/_extend.scss";
+
+/* components */  
+
+@import "components/_footer.scss";
+@import "components/_button.scss";
+@import "components/_menu.scss";
+@import "components/_form.scss";
+@import "components/_formSignup.scss";
+@import "components/_formStep.scss";
+@import "components/_solarItem.scss";
+@import "components/_modal.scss";
+@import "components/_modalSignup.scss";
+@import "components/_logo.scss";
+@import "components/_loadingCover.scss";
+@import "components/_breadcrumb.scss";
+@import "components/_progressBar.scss";
+@import "components/_contact.scss";
+
+/*
+@import "components/_tabs.scss";
+@import "components/_accordion.scss";
+@import "components/_templateClass.scss";
+@import "components/_pageParallax.scss";
+;*/

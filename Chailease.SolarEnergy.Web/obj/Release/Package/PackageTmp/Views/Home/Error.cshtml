@@ -1,0 +1,28 @@
+﻿@{
+ViewBag.Title = "Error";
+}
+
+@section header {
+@Styles.Render("~/Content/pages/home/error.min.css")
+}
+<div class="error">
+    <img src="@Url.Content("~/Content/images/error_image01.svg")" class="error-img">
+    <p class="error-text">似乎發生了一些問題</p>
+    
+    <a href="javascript:history.back()" class="error-link mt-3">回上頁</a>
+</div>
+
+@section scripts{
+<script>
+
+    $(document).ready(function () {
+        var errorMsg = '@TempData["errorMsg"]'
+        if (errorMsg !== '') {
+            $('.error-text').append('<br/>' + errorMsg);
+        }
+        
+    });
+
+</script>
+    
+}

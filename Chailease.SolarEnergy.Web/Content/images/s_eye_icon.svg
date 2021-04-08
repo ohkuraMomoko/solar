@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="7px" viewBox="0 0 18 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.3 (67297) - http://www.bohemiancoding.com/sketch -->
+    <title>s_eye_icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M0,3.89407627 C2.20760527,1.29802542 4.9036977,2.16828619e-16 8.0882773,0 C11.2728569,0 14.1700911,1.16947546 16.7799799,3.50842638 C14.3509205,5.63351793 11.5542572,6.6960637 8.38998996,6.6960637 C5.22572271,6.6960637 2.42905939,5.76206789 0,3.89407627 Z" id="path-1"></path>
+    </defs>
+    <g id="s_eye_icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-4">
+            <g id="Oval">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="Mask" fill-rule="nonzero"></g>
+                <ellipse stroke="#979797" fill="#D4F9F3" fill-rule="nonzero" mask="url(#mask-2)" cx="9.453125" cy="2.23076923" rx="3.453125" ry="3.23076923"></ellipse>
+            </g>
+            <path d="M1,4.07082953 C3.23655152,1.35694318 5.96799528,2.26670534e-16 9.19433127,0 C12.4206673,0 15.3558902,1.2225583 18,3.66767489 C15.5390906,5.88922496 12.7057573,7 9.5,7 C6.29424269,7 3.46090936,6.02360984 1,4.07082953 Z" id="Path-20" stroke="#979797" fill-rule="nonzero"></path>
+        </g>
+    </g>
+</svg>

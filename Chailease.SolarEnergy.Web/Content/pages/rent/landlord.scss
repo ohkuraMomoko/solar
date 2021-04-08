@@ -1,0 +1,91 @@
+﻿/* @site: 全民電廠
+ * @author: nikki
+ * @update: nikki (2018-12-28)
+ * @page: 出租屋頂獲利
+ * @description: 與我要留言頁面90%類似
+ */
+
+@import "../../setting/_variables.scss";
+@import "../../setting/_mixins.scss";
+
+/* common: page-container -------*/
+
+
+/* common: extend ---*/
+.page-kv {
+    background-image: url("../../images/rent_bigimage.jpg");
+}
+
+@include rwd($ipad) {
+    .page-content {
+        padding-bottom: 7rem;
+    }
+
+    .page-kv--img {
+        width: 35vw;
+        max-width: 259px;
+    }
+}
+
+/* common: page-content -----*/
+.page-content {
+    margin-top: -6rem;
+    padding-bottom: 8rem;
+
+    &-form {
+        width: 90%;
+        max-width: 38rem;
+        margin: 0 auto;
+        padding-top: 2.5rem;
+
+        &--title {
+            font-size: 1.25rem;
+            line-height: 1.75rem;
+            letter-spacing: 0.08rem;
+            color: $color-dark;
+            text-align: center;
+            margin-bottom: 1.56rem;
+        }
+
+        .form-step-container {
+            margin: 0 auto 3.25rem;
+        }
+
+        .btn--form-send {
+            width: 100%;
+            max-width: 18.75rem;
+            margin-top: 5%;
+        }
+    }
+}
+
+/* rwd: page-content ---*/
+@include rwd($ipad) {
+    .page-content {
+        margin-top: -2rem;
+    }
+}
+
+/* item: comments-info ---*/
+.comments-info {
+    line-height: 1.69rem;
+    color: $color-dark--2;
+    letter-spacing: 0.06rem;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+/* rwd: page-content ---*/
+@include rwd($ipad) {
+    .comments-info {
+        font-size: 0.88rem;
+        line-height: 1.69rem;
+        letter-spacing: 0.05rem;
+    }
+}
+
+.memner-law-text {
+    font-size: 0.88rem;
+    line-height: 1.25rem;
+    text-align: center;
+}

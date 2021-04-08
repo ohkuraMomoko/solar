@@ -1,0 +1,69 @@
+﻿@model Chailease.SolarEnergy.Web.ViewModel.WikiViewModel
+@using System.Text.RegularExpressions;
+@if (Model.WikiList.Count() > 0)
+{
+    foreach (var item in Model.WikiList)
+    {
+        switch (item.ART_TYPE)
+        {
+            case 1:
+                @* class type1: 圖+文 *@
+                <article class="article-item article--type1" id="@item.ROW_ID">
+                    <div class="article-item-source">
+                        <span class="article-item-source--class" style="background-color: @Model.MapRef[item.SUB_TYPE].COLOR;">@Model.MapRef[item.SUB_TYPE].NME</span>
+                        <span class="article-item-source--date">@item.OPEN_START.ToString("yyyy年MM月dd日")</span>
+                    </div>
+                    <a href="@Url.RouteUrl("WikiArticle", new { category = Model.ListType,articleAlias=item.ARTICLE_ALIAS })" class="article-item-content">
+                        <div data-lazy="true" class="article-item-content-img" data-bg="url('@Url.Action("Image", "File", new { uri = item.KV_IMG_LIST })')"></div>
+                        <div class="article-item-content-data">
+                            <p class="article-title">@item.ARTICLE_TITLE</p>
+                            <div class="article-description">
+                                @Regex.Replace(item.ARTICLE_BODY, "<.*?>", string.Empty);
+                            </div>
+                        </div>
+                    </a>
+                </article>
+                break;
+            case 2:
+                @* class type2: 圖(影片的圖片)+文 *@
+                <article class="article-item article--type2" id="@item.ROW_ID">
+                    <div class="article-item-source">
+                        <span class="article-item-source--class" style="background-color: @Model.MapRef[item.SUB_TYPE].COLOR;">@Model.MapRef[item.SUB_TYPE].NME</span>
+                        <span class="article-item-source--date">@item.OPEN_START.ToString("yyyy年MM月dd日")</span>
+                    </div>
+                    <a href="@Url.RouteUrl("WikiArticle", new { category = Model.ListType ,articleAlias=item.ARTICLE_ALIAS })" class="article-item-content">
+                        <div data-lazy="true" class="article-item-content-img" data-bg="url('@Url.Action("Image", "File", new { uri = item.KV_IMG_LIST })')"></div>
+                        <div class="article-item-content-data">
+                            <p class="article-title">@item.ARTICLE_TITLE</p>
+                            <div class="article-description">
+                                @Regex.Replace(item.ARTICLE_BODY, "<.*?>", string.Empty);
+                            </div>
+                        </div>
+                    </a>
+                </article>
+                break;
+            case 3:
+                @* class type3: 文 *@
+                <article class="article-item article--type3" id="@item.ROW_ID">
+                    <div class="article-item-source">
+                        <span class="article-item-source--class" style="background-color: @Model.MapRef[item.SUB_TYPE].COLOR;">@Model.MapRef[item.SUB_TYPE].NME</span>
+                        <span class="article-item-source--date">@item.OPEN_START.ToString("yyyy年MM月dd日")</span>
+                    </div>
+                    <a href="@Url.RouteUrl("WikiArticle", new {category = Model.ListType , articleAlias=item.ARTICLE_ALIAS  })" class="article-item-content">
+                        <div class="article-item-content-data">
+                            <p class="article-title">@item.ARTICLE_TITLE</p>
+                            <div class="article-description">
+                                @Regex.Replace(item.ARTICLE_BODY, "<.*?>", string.Empty);
+                            </div>
+                        </div>
+                    </a>
+                </article>
+                break;
+        }
+
+    }
+    if (!String.Equals(Model.WikiList.LastOrDefault().ROW_ID, Model.Article_Count))
+    {
+        <div id="load_next"></div>
+    }
+}

@@ -1,0 +1,226 @@
+﻿@Styles.Render("~/Content/pages/member/interestDesktop.min.css")
+
+@*  TODO:
+    此頁資料預設值為，今日至前六個月內的數值。
+*@
+<div class="interset-container">
+    <div class="interest-header">
+        <div class="custom-select">
+            <select class="select-article-class" id="powerplants">
+                <option value="*" selected="">全部電廠</option>
+            </select>
+        </div>
+        <div class="date-select">
+            <input type="text" id="datepickerStart" placeholder="分配 起始日" class='datepicker-here'>
+            <input type="text" id="datepickerEnd" placeholder="截至日" class='datepicker-here'>
+        </div>
+        <div class="data-show">
+            <p class="user-owner owner-pic">持有太陽能板數量
+                <span id="owner-pic"></span>
+            </p>
+            <p class="user-owner owner-total">合計購買金額
+                <span id="owner-total"></span>
+            </p>
+        </div>
+    </div>
+    <div class="interest-body">
+        <ul class="all-interest">
+            @*<li class="all-interest-item">
+                <p class="all-interest-item--title">合計購買金額</p>
+                <p class="all-interest-item--data dollar"></p>
+            </li>*@
+            <li class="all-interest-item">
+                <p class="all-interest-item--title">總分配次數</p>
+                <p class="all-interest-item--data frequency"></p>
+            </li>
+            <li class="all-interest-item">
+                <p class="all-interest-item--title">發電總收益</p>
+                <p class="all-interest-item--data dollar benefit"></p>
+            </li>
+        </ul>
+
+        <ul class="interest-collapse-header">
+            <li class="interest-collapse-header--item">電費分配日</li>
+            <li class="interest-collapse-header--item">電廠名稱</li>
+            <li class="interest-collapse-header--item">分配次</li>
+            <li class="interest-collapse-header--item">當次分配金額</li>
+            <li class="interest-collapse-header--item">電費計算起迄日</li>
+        </ul>
+        <div id="accordion" class="interest-collapse">
+            @*TODO:
+                以.interest-collapse-block為一筆電廠資料單位。
+                collapse效果相依於ID，collapse1的部分都要替換掉，命名範例EX:collapse1、collapse2...
+            *@
+        </div>
+    </div>
+</div>
+<script>
+    $.fn.datepicker.language['tw'] = {
+        days: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+        daysShort: ['週日', '週一', '週二', '週三', '週四', '週五', '週六'],
+        daysMin: ['週日', '週一', '週二', '週三', '週四', '週五', '週六'],
+        months: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+        monthsShort: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+        today: 'Today',
+        clear: 'Clear',
+        dateFormat: 'yyyy/mm/dd',
+        firstDay: 0,
+    };
+
+    // 改變起始日
+    $('#datepickerStart').datepicker({
+        language: 'tw',
+        autoClose: true,
+        maxDate: new Date(),
+        onSelect: function (formattedDate, data, inst) {
+            //console.log("startDay: " + formattedDate);
+            $('#powerplants').change();
+        }
+    });
+
+    // 改變截止日
+    $('#datepickerEnd').datepicker({
+        language: 'tw',
+        autoClose: true,
+        maxDate: new Date(),
+        onSelect: function (formattedDate, date, inst) {
+            //console.log("endDay: " + formattedDate);
+            $('#powerplants').change();
+        }
+    });
+</script>
+<script type="text/html" id="interestSection">
+    <section class="interest-collapse-block">
+        <a class="interest-button" data-toggle="collapse" href="#collapse{{index}}" role="button" aria-expanded="false" aria-controls="collapse{{index}}" data-majseqid="{{MAJ_SEQ_ID}}" data-prdid="{{PRD_ID}}">
+            <div class="interest-button--item">{{PRD_DSB_DT}}</div>
+            <div class="interest-button--item">{{CASE_NAME}}</div>
+            <div class="interest-button--item">{{PRD_ID}}</div>
+            <div class="interest-button--item">{{PRD_DSB_AMT}} 元</div>
+            <div class="interest-button--item">{{POWER_FEE_START_DATE}} ～ {{POWER_FEE_END_DATE}}</div>
+        </a>
+        <!-- TIP: collapse加show會預設為開啟狀態 -->
+        <div class="collapse" id="collapse{{index}}" data-parent="#accordion" data-majseqid="{{MAJ_SEQ_ID}}" data-prdid="{{PRD_ID}}" data-stratdate="{{POWER_FEE_START_DATE}}" data-enddate="{{POWER_FEE_END_DATE}}">
+            <div class="interest-content">
+                <a class="collapse-footer-btn" data-toggle="collapse" href="#collapse{{index}}" role="button" aria-expanded="false" aria-controls="collapse{{index}}"></a>
+            </div>
+        </div>
+    </section>
+</script>
+<script type="text/html" id="interestSectioncollapse">
+    <div class="interest-content-block">
+        <div class="interest-content-header">
+            <span class="interest-content-header--title">個別會員分配紀錄</span>
+            <div class="tip">
+                <img src="@Url.Content("~/Content/images/s_bulb_icon.svg")" alt="" class="tip--icon">
+                <div class="tip--content">
+                    <img src="@Url.Content("~/Content/images/s_bulb_icon.svg")" alt="" class="tip--icon">
+                    本期分配電費(元)＝ <br>
+                    電廠總電費收入(元)×會員購買總片數(片)/電廠總片數
+                </div>
+            </div>
+        </div>
+        <div class="interest-content-body">
+            <div class="interest-detail">
+                <p class="interest-detail--title">本期收入</p>
+                <ul class="interest-detail--data">
+                    <li class="interest-detail--data--first">電費收入</li>
+                    @* TODO: 電廠編號明細
+                        請在下方JS處的modal event進行資料替換 (#modalSolarList)
+                    *@
+                    <li class="interest-detail--data--second" data-toggle="modal" data-target="#modalSolarList" data-solar-id="{{MAJ_SEQ_ID}}">
+                        <img src="@Url.Content("~/Content/images/s_paper_icon.svg")" alt="">
+                        {{INVEST_NUM}}片
+                    </li>
+                    <li class="interest-detail--data--money">{{INCOME_AMT}}元</li>
+                </ul>
+            </div>
+            <div class="interest-detail">
+                <p class="interest-detail--title">本期支出</p>
+                @* TODO: 發票資訊明細
+                    請在下方JS處的modal event進行資料替換 (#modalInvoice)
+                    ps. 分攤屋頂租金/保費、管理費、維護費、服務費 共用，MODAL內容皆為發票資訊明細
+                *@
+                <ul class="interest-detail--data">
+                    <li class="interest-detail--data--first">分攤屋頂租金/保費</li>
+                    @*<li class="interest-detail--data--second" data-toggle="modal" data-target="#modalInvoice" data-invoice-number="{{nothing..}}">
+                            <img src="@Url.Content("~/Content/images/s_paper_icon.svg")" alt="">
+                            查看
+                        </li>*@
+                    <li class="interest-detail--data--money">{{INCOME_DEC_AMT}}元</li>
+                </ul>
+                <ul class="interest-detail--data">
+                    <li class="interest-detail--data--first">管理費</li>
+                    <li class="interest-detail--data--second" data-toggle="modal" data-target="#modalInvoice" data-invoice-number="{{MANAGEMENT_COSTS_INVNO}}" data-compid="1">
+                        <img src="@Url.Content("~/Content/images/s_paper_icon.svg")" alt="">
+                        查看
+                    </li>
+                    <li class="interest-detail--data--money">{{MANAGEMENT_COSTS}}元</li>
+                </ul>
+                <ul class="interest-detail--data">
+                    <li class="interest-detail--data--first">維護費</li>
+                    <li class="interest-detail--data--second" data-toggle="modal" data-target="#modalInvoice" data-invoice-number="{{MAINTENANCE_FEE_INVNO}}" data-compid="41">
+                        <img src="@Url.Content("~/Content/images/s_paper_icon.svg")" alt="">
+                        查看
+                    </li>
+                    <li class="interest-detail--data--money">{{MAINTENANCE_FEE}}元</li>
+                </ul>
+                <ul class="interest-detail--data">
+                    <li class="interest-detail--data--first">服務費</li>
+                    <li class="interest-detail--data--second" data-toggle="modal" data-target="#modalInvoice" data-invoice-number="{{SERVICE_FEE_INVNO}}" data-compid="32">
+                        <img src="@Url.Content("~/Content/images/s_paper_icon.svg")" alt="">
+                        查看
+                    </li>
+                    <li class="interest-detail--data--money">{{SERVICE_FEE}}元</li>
+                </ul>
+            </div>
+            <div class="interest-detail">
+                <p class="interest-detail--title">本期收益</p>
+                <ul class="interest-detail--data total">
+                    <li>{{BENEFIT}}元</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="interest-content-block">
+        <div class="interest-content-header">
+            <span class="interest-content-header--title">電廠整體營運紀錄</span>
+            <span class="interest-content-header--date">{{POWER_FEE_START_DATE}} ～ {{POWER_FEE_END_DATE}}</span>
+        </div>
+        <div class="interest-body">
+            <div class="interest-detail">
+                <p class="interest-detail--title">本期電廠收支</p>
+                <ul class="interest-detail--data">
+                    @* 發電總度數，請代上片數 *@
+                    <li class="interest-detail--data--first">發電總度數(<span>{{CASE_INVEST_TOTAL_NUM}}</span>片)</li>
+                    @* 發電總度數為連結PDF檔案*@
+                    <li class="interest-detail--data--second">
+                        {{linkGetFile}}
+                    </li>
+                    <li class="interest-detail--data--money">{{POWER_GEN_NUM}}度</li>
+                </ul>
+                <ul class="interest-detail--data">
+                    <li class="interest-detail--data--first">電費總收入</li>
+                    <li class="interest-detail--data--money">{{POWER_GEN_TTL_AMT}}元</li>
+                </ul>
+                <ul class="interest-detail--data">
+                    <li class="interest-detail--data--first">屋頂租金</li>
+                    <li class="interest-detail--data--money">{{RENT_FEE}}元</li>
+                </ul>
+                <ul class="interest-detail--data">
+                    <li class="interest-detail--data--first">保費</li>
+                    <li class="interest-detail--data--money">{{INSURANCE_FEE}}元</li>
+                </ul>
+                <ul class="interest-detail--data">
+                    <li class="interest-detail--data--first">電費總收益</li>
+                    <li class="interest-detail--data--total">{{CASE_TOTAL_BENEFIT}}元</li>
+                </ul>
+            </div>
+            <div class="interest-detail">
+                <p class="interest-detail--title">備註說明</p>
+                <ul class="interest-detail-desc">
+                    <li>{{MEMO}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</script>

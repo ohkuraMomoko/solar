@@ -1,0 +1,193 @@
+﻿/* @site: 全民電廠
+ * @author: nikki
+ * @update: nikki (2019-1-4)
+ * @page: 電廠小百科文章內頁
+ * @description: 電廠小百科文章類型,  1.圖+文 2.影片+文, 3.純文章
+ */
+
+@import "../../setting/_variables.scss";
+@import "../../setting/_mixins.scss";
+
+/* common: extend ---*/
+.page-kv {
+    background-image: url("../../images/news_bigimage.jpg");
+}
+
+@include rwd($ipad){
+    .page-content {
+        padding-bottom: 3rem;
+    }
+    .page-kv--img {
+        width: 35vw;
+        max-width: 259px;
+    }
+}
+
+
+/* block: article ---*/
+.article-container {
+    width: 100%;
+    max-width: 54.38rem;
+    margin: 0 auto;
+}
+
+
+/* item: article-item-source ---*/
+.article-item-source {
+    width: 100%;
+    height: 1.75rem;
+    margin-bottom: 0.63rem;
+    @include flexbox;
+    @include justify-content(space-between);
+    @include align-items(center);
+    &--class {
+        height: 1.63rem;
+        padding: 0 8px;
+        text-align: center;
+        border-width: 2px;
+        border-style: solid;
+    }
+    &--date {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        color: $color-primary-blue;
+    }
+}
+
+/* rwd: article-item-source ---*/
+@include rwd($ipad){
+    .article-item-source {
+        &--class {
+            height: 1.06rem;
+            line-height: 15px;
+            font-size: 0.6rem;
+            border-width: 1px;
+        }
+        &--date {
+            font-size: 0.75rem;
+            line-height: 1rem;
+        }
+    }
+}
+
+/* status: article-item-source--class  --- */
+.article-item-source--class {
+    &.class {
+        &-1 {
+            color: $color-news-class--1;
+            border-color: $color-news-class--1;
+        }
+
+        &-2 {
+            color: $color-news-class--2;
+            border-color: $color-news-class--2;
+        }
+
+        &-3 {
+            color: $color-news-class--3;
+            border-color: $color-news-class--3;
+        }
+    }
+}
+
+/* item: article-content ---*/
+.article-content {
+    padding-top: 1.88rem;
+    margin-top: 0.69rem;
+    &--title {
+        font-size: 2.25rem;
+        color: $color-dark--2;
+        line-height: 3.13rem;
+        letter-spacing: 0.15rem;
+        font-weight: bold;
+        margin-top: 1.63rem;
+        margin-bottom: 2rem;
+    }
+    &--data {
+        font-size: 1rem;
+        line-height: 1.75rem;
+        letter-spacing: 0.08rem;
+        color: $color-dark--2;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid $color-secondary--2;
+    }
+}
+
+/* rwd: article-content ---*/
+@include rwd($ipad) {
+    .article-content {
+        padding-top: 0;
+        &--title {
+            font-size: 1.13rem;
+            line-height: 1.56rem;
+            letter-spacing: 0.06rem;
+            margin: 0.63rem auto 0.22rem;
+        }
+        &--data {
+            font-size: 0.81rem;
+            line-height: 1.38rem;
+        }
+    }
+}
+
+/* item: article-footer ---*/
+.article-footer {
+    margin-top: 1.68rem;
+    &--social {
+        margin-bottom: 3.44rem;
+        @include flexbox;
+        @include justify-content(flex-end);
+        > button:first-child {
+            margin-right: 1.56rem;
+        }
+    }
+    &--read {
+        @include flexbox;
+        @include justify-content(space-between);
+    }
+}
+
+/* rwd: article-footer ---*/
+@include rwd($ipad){
+    .article-footer {
+        &--social {
+            margin-bottom: 1.2rem;
+        }
+    }
+}
+
+/* status: article-content-type ---*/
+.article-content {
+    &--type {
+        &-img {
+            width: 100%;
+            height: 38.13rem;
+            background-repeat: no-repeat;
+            background-position: 50% 50%;
+            background-size: cover;
+        }
+        &-video {
+            width: 100%;
+            height: 38.13rem;
+            > iframe {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+}
+
+
+/* rwd: article-content-type ---*/
+@include rwd($ipad) {
+    .article-content {
+        &--type {
+            &-img {
+                height: 13.31rem;
+            }
+            &-video {
+                height: 13.31rem;
+            }
+        }
+    }
+}

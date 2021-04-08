@@ -1,0 +1,924 @@
+﻿@import "../setting/_variables.scss";
+@import "../setting/_mixins.scss";
+
+/*=form--------------------------------*/
+
+/*common: required -----------------*/
+%required-element {
+    content: '必填';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4.5rem;
+    height: 1.56rem;
+    background: #FFF3B5;
+    border-radius: 100px;
+    color: #7B7B7B;
+    text-align: center;
+}
+@mixin required-element-mobile {
+    width: 2.16rem;
+    $rqH: 1.09rem;
+    height: $rqH;
+    font-size: 0.7rem;
+    line-height:  $rqH;
+    top: calc(50% - #{$rqH/2});
+    border-radius: rem(70px);
+}
+
+/*item: label ==============================*/
+.control-label {
+    font-size: 1rem;
+    line-height: 1.38rem;
+    color: $color-primary-blue;
+    margin-bottom: 0.19rem;
+    // position: relative;
+    // &.required {
+    //     &:before {
+    //         @extend %required-element;
+    //         left: auto;
+    //         right: -105px;
+    //     }
+    // }
+}
+
+/*rwd: control-label ----------------*/
+@include rwd($ipad) {
+    .control-label {
+        font-size: 0.88rem;
+        line-height: 1.25rem;
+        // &.required {
+        //     &:before {
+        //         @include required-element-mobile;
+        //         right: -(2.16rem+0.88rem);
+        //     }
+        // }
+    }
+}
+
+/* block: */
+.row {
+    div{
+        .form-item {
+            padding-right: 0.63rem;
+        }
+        &:last-child {
+            .form-item {
+                padding-right: 0;
+            }
+        }
+    }
+    
+}
+
+/* item: form-item ======================== */ 
+.form-item {
+    margin-bottom: 2.5rem;
+    .input-group {
+		position: relative;
+        .form-control {
+            height: 44px;
+            font-size: 1rem;
+            line-height: 2.81rem;
+			color: $color-dark--2;
+			border: 1px solid transparent;
+			border-bottom: 1px solid $color-secondary--2;
+			padding: 0;
+			padding-left: .5rem;
+			outline: none;
+			box-shadow: none;
+			@include prefix(transition, all linear 0.2s);
+            &:hover,
+            &:focus,
+            &:active {
+                background-color: $color-hover;
+            }
+		}
+	}
+}	
+
+/* status: form-item ---------------*/
+.form-item {
+    .input-group {
+        &.error {
+            position: relative;
+
+            .form-control {
+                background-color: rgba(174,0,0,0.10);
+            }
+
+            &:after {
+                content: '';
+                position: absolute;
+                right: 1.18rem;
+                top: calc(50% - #{1.63rem/2});
+                width: 1.63rem;
+                height: 1.63rem;
+                background-color: $color-warning;
+                background-repeat: no-repeat;
+                background-size: 50%;
+                background-position: 50% 50%;
+                background-image: url("images/icon_close_white.svg");
+                border-radius: 50%;
+            }
+        }
+
+        &.success {
+            position: relative;
+
+            .form-control {
+                padding-right: 1.18rem+1.63rem;
+            }
+
+            &:after {
+                content: '';
+                position: absolute;
+                right: 1.18rem;
+                top: calc(50% - #{1.63rem/2});
+                width: 1.63rem;
+                height: 1.63rem;
+                background-color: $color-primary-blue;
+                background-repeat: no-repeat;
+                background-size: 50%;
+                background-position: 50% 50%;
+                background-image: url("images/Icon_check_white.svg");
+                border-radius: 50%;
+            }
+        }
+
+        &.disabled {
+            .form-control {
+                background-color: $color-secondary--4;
+                cursor: not-allowed;
+            }
+        }
+        // 會員中心>我的資料頁 無法修改的表單INPUT
+        &.lock {
+            &:after {
+                content: '';
+                position: absolute;
+                right: 1.18rem;
+                top: calc(50% - #{1.63rem/2});
+                width: 1.63rem;
+                height: 1.63rem;
+                background-repeat: no-repeat;
+                background-size: 50%;
+                background-position: 50% 50%;
+                background-image: url("images/s_lock_icon.svg");
+                border-radius: 50%;
+            }
+
+            input {
+                background-color: #fff;
+            }
+        }
+        // 會員中心>我的資料頁 包含修改按鈕的INPUT
+        &.has-btn {
+            $btnSize: 5rem;
+            border-bottom: 1px solid #d8d8d8;
+            @include flexbox;
+
+            input {
+                width: calc(100% - 5rem);
+                background-color: #fff;
+                border: none;
+            }
+
+            .input-change {
+                width: $btnSize;
+                height: 2.56rem;
+                line-height: 2.56rem;
+                color: #ffffff;
+                text-align: center;
+                background-color: $color-primary-blue;
+                border-radius: 11px;
+                cursor: pointer;
+                @include change(background-color);
+                cursor: pointer;
+
+                &:hover {
+                    background-color: $color-primary-blue--2;
+                }
+            }
+        }
+    }
+}
+
+
+.input-error-info {
+    color: $color-warning;
+    margin-top: 0.3rem;
+}
+.input-care-info {
+    color: $color-primary-blue;
+	font-size: 0.81rem;
+	line-height: 1.13rem;
+	margin-top: 0.25rem;
+	padding-right: 2px;
+    text-align: right;
+}
+
+@include rwd($ipad) {
+    .form-item {
+        margin-bottom: 1.13rem;
+        .input-group {
+            .form-control {
+                font-size: 0.88rem;
+                line-height: 1;
+                padding: .63rem .3rem;
+            }
+            &.required {
+                .form-control {
+                    padding-left: 3.5rem;
+                }
+                // &:before {
+                //     @include required-element-mobile;
+                // }
+            }
+        }
+    }
+    .input-error-info,
+    .input-care-info {
+        font-size: 0.88rem;
+    }
+}
+
+/* item: textarea ==========================*/
+.form-textarea {
+    width: 100%;
+    height: 30%;
+    max-height: 16.44rem;
+    border: 1px solid #979797;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: $color-dark--2;
+    background-color: $color-secondary--5;
+    padding: 20px;
+    outline: none !important;
+    // @include change(border-color);
+    // &:hover {
+    //     box-shadow: none;
+    //     border-color: $color-primary-blue--2;
+    // }
+    // &:focus,
+    // &:active {
+    //     border-color: $color-primary-blue;
+    // }
+}
+
+/* rwd: textarea -----------------------*/
+@include rwd($ipad) {
+    .form-textarea {
+        border-radius: 0;
+        font-size: 0.88rem;
+        line-height: 1.25rem;
+    }
+}
+
+/* item: select ================================*/
+// 隱藏ie select的箭頭樣式
+select::-ms-expand {
+    display: none;
+}
+select.form-control:not([size]):not([multiple]) {
+    height: auto;
+}
+select.form-control {
+    width: 100%;
+    height: 1.56rem;
+    -webkit-appearance: none;
+    background-image: url("images/icon_arrow_down_g.svg");
+    background-color: #ffffff;
+    background-repeat: no-repeat;
+    background-position: calc(100% - 20px) 50%;
+    background-size: 18px;
+    padding-left: 1.63rem+0.88rem;
+    font-size: 1.0625rem;
+    line-height: 1.5;
+    letter-spacing: 1.2px;
+    color: #000000;
+    margin: 0;
+    border-radius: 0;
+    cursor: pointer;
+    option {
+        font-size: 1.13rem;
+        line-height: 2rem;
+        @include change(box-shadow, ease-in-out);
+        &:hover,
+        &:focus,
+        &:checked {
+            box-shadow: 0 0 10px 100px $color-primary-blue inset;
+        }
+    }
+}
+/*rwd : select --------------------------*/
+@include rwd($ipad) {
+    select.form-control {
+        background-position: 99% 50%;
+        background-size: 1rem;
+    }
+}
+
+/* item: select-article-class ---*/
+select.select-article-class {
+    width: 15.88rem;
+    height: 3.25rem;
+    background-image: url("images/icon_arrow_down_g.svg");
+    background-color: #ffffff;
+    background-repeat: no-repeat;
+    background-position: calc(100% - 20px) 50%;
+    background-size: 18px;
+    padding-left: 1.63rem+0.88rem;
+    font-size: 1.0625rem;
+    line-height: 1.5;
+    letter-spacing: 1.2px;
+    color: $color-primary-blue;
+    border-radius: 10px;
+    border: 1px solid #B4B4B4;
+    outline: none;
+    -webkit-appearance: none;
+    margin: 0;
+    cursor: pointer;
+    option {
+        font-size: 1.13rem;
+        line-height: 2rem;
+        @include change(box-shadow, ease-in-out);
+        &:hover,
+        &:focus,
+        &:checked {
+            box-shadow: 0 0 10px 100px $color-primary-blue inset;
+        }
+    }
+}
+
+/* rwd: .select-article-class ---*/
+@include rwd($ipad){
+    select.select-article-class {
+        width: 7.94rem;
+        height: 1.63rem;
+        border-radius: 5px;
+        font-size: .63rem;
+        line-height: 1.63rem;
+        padding-left: 1.5rem;
+        background-size: 10px;
+        background-position-x: 90%;
+    }
+}
+
+/* item: select ================================*/
+.select-reorder-container {
+    width: 100%;
+    height: 2.81rem;
+    position: relative;
+    margin: 0 auto;
+    &:after {
+        content: '';
+        position: absolute;
+        right: 1rem;
+        top: calc(50% - 9px);
+        width: 18px;
+        height: 18px;
+        background-image: url(images/icon_arrow_right_black.svg);
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        background-size: 100%;
+        @include prefix(transform,rotate(90deg));
+        z-index: 5;
+    }
+}
+select.select-reorder {
+    width: 100%;
+    max-width: 25rem;
+    height: 100%;
+    -webkit-appearance: none;
+    padding-left: 1.63rem+0.88rem;
+    font-size: 1.0625rem;
+    line-height: 1.5;
+    letter-spacing: 1.2px;
+    color: #000000;
+    background-color: #FEFCEC;;
+    margin: 0;
+    border: none;
+    border-bottom: 1px solid $color-dark--2;
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+    option {
+        font-size: 1.13rem;
+        line-height: 2rem;
+        @include change(box-shadow, ease-in-out);
+        &:hover,
+        &:focus,
+        &:checked {
+            box-shadow: 0 0 10px 100px $color-primary-blue inset;
+        }
+    }
+}
+/*rwd : select --------------------------*/
+@include rwd($ipad) {
+    .select-reorder-container {
+        width: 9.38rem;
+        height: 2rem;
+        &:after {
+            width: 10px;
+            right: 5%;
+        }
+    }
+    select.select-reorder {
+        line-height: 2rem;
+        font-size: 0.75rem;
+        letter-spacing: 0.02rem;
+        padding-left: 5%;
+    }
+}
+
+/* item: input-file ================================*/
+.file-container {
+    $imgWidth: 18.13rem;
+    $imgHeight: 12.5rem;
+    width: 100%;
+    max-width: $imgWidth;
+    height: $imgHeight;
+    position: relative;
+    cursor: pointer;
+    // overflow: hidden;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    .input-file {
+        width: 100%;
+        height: 113%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        @include opacity(0);
+        cursor: pointer;
+        z-index: 3;
+    }
+    .file-img {
+        width: 100%;
+        height: 100%;
+        background-position: 50% 0%;
+        background-repeat: no-repeat;
+        background-size: contain;
+        &.face {
+            background-image: url("images/register_images_ID1.svg");
+        }
+        &.back {
+            background-image: url("images/register_images_ID2.svg");
+        }
+    }
+    // .file-name {
+    //     position: absolute;
+    //     left: ($imgWidth + 0.81rem);
+    //     top: 0;
+    // }
+    .file-btn {
+        $btnHeight: 2.5rem;
+        width: 80%;
+        height: $btnHeight;
+        line-height: $btnHeight;
+        color: #fff;
+        text-align: center;
+        background-color: $color-primary-blue;
+        border: none;
+        border-radius: 7.6px;
+        position: absolute;
+        bottom: -#{$btnHeight/2};
+        left: 10%;
+        @include textrow(1,$btnHeight);
+    }
+}
+
+/* action: OCR資料辨識失敗 ===*/
+.file-container {
+    .file-error-info {
+        font-size: 1rem;
+        line-height: 1.38rem;
+        color: #fff;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(black, 0.6);
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+        @include flexbox;
+        @include justify-content(center);
+        @include align-items(center);
+        >p {
+            font-size: 1rem;
+            line-height: 1.38rem;
+            color: #fff;
+            text-align: center;
+        }
+        &:after {
+            content: '';
+            position: absolute;
+            right: calc(50% - #{2.06rem/2});
+            top: -(2.06rem/2);
+            width: 2.06rem;
+            height: 2.06rem;
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: 50% 50%;
+            background-image: url("images/warning_info_icon.svg");
+        }
+    }
+    &.error {
+        .file-error-info {
+            opacity: 1;
+        }
+    }
+}
+/* rwd: input-file --------------------*/
+@include rwd(#{$ipad - 1px}) {
+    .file-container {
+        width: 7.25rem;
+        height: 5rem;
+        margin: 0 auto;
+        display: block;
+        .file-btn {
+            height: 1.56rem;
+            font-size: .88rem;
+            line-height: 1.56rem;
+            bottom: -15%;
+            border-radius: 3px;
+        }
+        &.error {
+            .file-error-info {
+                >p {
+                    font-size: 0.88rem;
+                    line-height: 1.3;
+                }
+                &:after {
+                    @include prefix(transform, scale(0.8));
+                }
+            }
+        }
+    }
+}
+/* item: input-file 帳戶存摺 ================================*/
+.file-container-account {
+    $imgWidth: 28.75rem;
+    $imgHeight: 13rem;
+    width: 100%;
+    max-width: $imgWidth;
+    height: $imgHeight;
+    position: relative;
+    cursor: pointer;
+    // overflow: hidden;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    .input-file {
+        width: 100%;
+        height: 113%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        @include opacity(0);
+        cursor: pointer;
+        z-index: 3;
+    }
+    .file-img {
+        width: 100%;
+        height: 100%;
+        background-position: 50% 0%;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-image: url("images/register_images_bank.svg");
+    }
+    .file-btn {
+        $btnHeight: 2.5rem;
+        $btnWidth: 10rem;
+        width: $btnWidth;
+        height: $btnHeight;
+        line-height: $btnHeight;
+        color: #fff;
+        text-align: center;
+        background-color: $color-primary-blue;
+        border: none;
+        border-radius: 7.6px;
+        position: absolute;
+        bottom: -#{$btnHeight/2};
+        left: calc(50% - #{$btnWidth/2});
+        @include textrow(1,$btnHeight);
+    }
+}
+
+/* rwd: input-file 帳戶存摺--------------------*/
+@include rwd($ipad) {
+    .file-container-account {
+        width: 11.25rem;
+        height: 5.25rem;
+        margin: 0 auto;
+        display: block;
+        .file-btn {
+            height: 1.56rem;
+            font-size: .88rem;
+            line-height: 1.56rem;
+            bottom: -15%;
+            border-radius: 3px;
+        }
+    }
+}
+
+/* item: radio ================================*/
+.radioer {
+    position: relative;
+    display: block;
+    margin: 0.5rem 0;
+    transform: translateX(10px);
+}
+
+.radioer input[type="radio"] {
+    display: none;
+}
+
+.radioer input[type="radio"] + label {
+    position: relative;
+    display: inline-block;
+    padding-left: 2.5rem;
+    font-size: 0.88rem;
+    line-height: 1.25rem;
+    color: $color-dark--2;
+    cursor: pointer;
+    @include prefix(user-select, none);
+    @include prefix(transition, color 280ms cubic-bezier(0.82,0.14,0.44,0.41));
+}
+
+// @include rwd(#{$ipad - 1px}) {
+//     .radioer input[type="radio"] + label {
+//         font-size: 0.88rem;
+//         line-height: 1.25rem;
+//     }
+// }
+
+.radioer input[type="radio"] + label:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: " ";
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 transparent inset,0 0 0 0 transparent inset,0 0 0 1px $color-secondary--2 inset,0 0 0 0 transparent;
+    @include prefix(transition,box-shadow 280ms cubic-bezier(0.82,0.14,0.44,0.41));
+    // @include prefix(transform, scale(1.7));
+}
+
+/* action: radio hover/active---------*/
+.radioer input[type="radio"] + label:hover {
+    // color: $color-primary-blue;
+}
+
+.radioer input[type="radio"] + label:hover:before {
+    box-shadow: 0 0 0 0 transparent inset,0 0 0 0 transparent inset,0 0 0 2px $color-primary-blue--2 inset,0 0 0 0 $color-primary-blue;
+}
+
+.radioer input[type="radio"] + label:active:before {
+    box-shadow: 0 0 0 0 transparent inset,0 0 0 0 transparent inset,0 0 0 2px $color-primary-blue inset,0 0 0 24px $color-dark--2;
+}
+
+/* action: radio checked ---------*/
+.radioer input[type="radio"]:checked + label {
+    // color: $color-primary-blue;
+}
+.radioer input[type="radio"]:checked + label:before {
+    box-shadow: 0 0 0 1px $color-secondary--2 inset,0 0 0 6px #fff inset,0 0 0 12px $color-primary-blue inset,0 0 0 24px transparent;
+}
+
+/* action: radio disabled ---------*/
+.radioer input[type="radio"]:disabled ~ label {
+    cursor: not-allowed;
+    color: $color-secondary;
+}
+.radioer input[type="radio"]:disabled ~ label:before {
+    box-shadow: 0 0 0 0 transparent inset, 0 0 0 0 transparent inset, 0 0 0 15px #d8d8d8 inset, 0 0 0 0 transparent;
+}
+
+// .radioer input[type="radio"]:disabled:checked ~ label {
+//     @include opacity(1);
+//     color: $color-primary-blue;
+// }
+
+// .radioer input[type="radio"]:disabled:checked ~ label:before {
+//     @include opacity(1);
+//     box-shadow: 0 0 0 2px $color-primary-blue inset,0 0 0 6px #fff inset,0 0 0 12px $color-primary-blue inset,0 0 0 24px transparent;
+// }
+
+// @include rwd($ipad-pro) {
+//     .radioer input[type="radio"]+label:before {
+//         transform: none;
+//     }
+// }
+
+// .radioer-inline,
+// .checkboxer-inline
+// display: inline-block
+// min-height: 40px
+// &:first-child
+// margin-right: 48px
+
+/* item: checkbox ================================*/
+.checkboxer {
+    position: relative;
+    display: block;
+}
+
+.checkboxer input[type="checkbox"] {
+    display: none;
+}
+
+.checkboxer input[type="checkbox"] + label {
+    position: relative;
+    display: inline-block;
+    padding-left: 2rem;
+    font-size: 0.88rem;
+    line-height: 1.25rem;
+    color: $color-dark--2;
+    cursor: pointer;
+    @include prefix(user-select, none);
+    @include prefix(transition, color 140ms ease-out);
+}
+
+.checkboxer input[type="checkbox"] + label:before {
+    content: " ";
+    position: absolute;
+    display: inline-block;
+    top: -5px;
+    left: 0;
+    width: 1.75rem;
+    height: 1.75rem;
+	border: 1px solid $color-secondary--2;
+	border-radius: 3px;
+    @include prefix(transition, all 280ms ease-out);
+    // @include prefix(transform, 140ms ease-out);
+}
+
+.checkboxer input[type="checkbox"] + label:after {
+    content: " ";
+    position: absolute;
+    display: inline-block;
+    top: 5%;
+    left: 12%;
+    width: 2px;
+    height: 2px;
+    border: 2px solid transparent;
+    @include prefix(transform, rotate(0deg));
+    @include prefix(transition, all 140ms ease-out);
+}
+
+/* action: checkbox hover --------------*/
+.checkboxer input[type="checkbox"] + label:hover {
+    // color: $color-primary-blue;
+}
+
+.checkboxer input[type="checkbox"] + label:hover:before {
+    border-color: $color-primary-blue--2;
+}
+
+/* action: checkbox checked --------------- */
+.checkboxer input[type="checkbox"]:checked + label {
+    // color: $color-primary-blue;
+}
+
+.checkboxer input[type="checkbox"]:checked + label:before {
+    opacity: 0;
+}
+
+.checkboxer input[type="checkbox"]:checked + label:after {
+    top: -5px;
+    left: 10px;
+    width: 12px;
+    height: 20px;
+    border: 2px solid $color-primary-blue;
+    border-top: 0;
+    border-left: 0;
+    @include prefix(transform, rotate(45deg));
+    @include prefix(transition-delay, 140ms);
+}
+
+/* action: checkbox disabled --------------- */
+.checkboxer input[type="checkbox"]:disabled ~ label {
+    cursor: not-allowed;
+    color: $color-secondary;
+}
+
+.checkboxer input[type="checkbox"]:disabled ~ label:before {
+    background-color: $color-secondary--2;
+}
+
+// .checkboxer input[type="checkbox"]:disabled:checked ~ label {
+//     @include opacity(1);
+//     color: $color-primary-blue;
+// }
+
+// .checkboxer input[type="checkbox"]:disabled:checked ~ label:after {
+//     @include opacity(1);
+//     border-color: $color-primary-blue;
+// }
+
+// @include rwd($ipad-pro) {
+//     .checkboxer input[type="checkbox"] + label:before {
+//         width: 1.75rem;
+//         height: 1.75rem;
+//     }
+//     .checkboxer input[type="checkbox"]:checked+label:after {
+//         top: -0.5rem;
+//     }
+//     .checkboxer input[type="checkbox"]+label:before {
+//         border-width: 1px;
+//     }
+// }
+// @include rwd(#{$ipad - 1px}) {
+//     .checkboxer input[type="checkbox"] + label {
+//         font-size: 0.88rem;
+//         line-height: 1.25rem;
+//     }
+// }
+
+
+/* item: account-data -------------*/
+.account-data {
+    font-size: 1.13rem;
+    line-height: 1.56rem;
+    letter-spacing: 0.06rem;
+    color: $color-dark;
+}
+.account-status {
+    font-size: 1rem;
+    line-height: 1.38rem;
+    letter-spacing: 0.05rem;
+    font-weight: bold;
+}
+
+.account-care-text {
+    text-align: right;
+    font-size: 0.94rem;
+    line-height: 1.31rem;
+    letter-spacing: 0.09rem;
+    color: $color-secondary;
+    margin-top: 0.75rem;
+    >img {
+        display: inline-block;
+        margin-right: 0.38rem;
+    }
+}
+/* status: .account-status*/
+.account-status {
+    &--approve {
+        color: $color-primary-blue;
+    }
+    &--not-certified{
+        color: $color-warning;
+    }
+}
+
+/* rwd: account-data ---*/
+@include rwd($ipad) {
+    .account-data {
+        font-size: 1rem;
+        line-height: 1.38rem;
+        word-break: break-all;
+    }
+    .account-status {
+        font-size: 0.81rem;
+        line-height: 1.13rem;
+    }
+}
+
+/*item: idcard-status ----*/
+.idcard-status {
+    &--text {
+        font-size: 0.88rem;
+        line-height: 2.06rem;
+        color: #6F6F6F;
+    }
+    &--icon {
+        width: 2.06rem;
+        display: inline-block;
+    }
+}
+/*rwd: idcard-status -----*/
+@include rwd($ipad) {
+    .idcard-status {
+        &--text {
+            font-size: 0.69rem;
+            line-height: 1.5;
+            width: 150px;
+            display: inline-block;
+        }
+        &--icon {
+            width: 1.25rem;
+            display: inline-block;
+        }
+    }
+}
+/*=form--------------------------------*/
+
+input::-ms-clear {
+    display: none;
+  }

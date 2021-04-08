@@ -1,0 +1,152 @@
+﻿@model HomeViewModel
+@{
+    ViewBag.Title = "出資資料填寫";
+}
+@section header{
+    @Styles.Render("~/Content/pages/advancedPurchase.min.css")
+}
+
+@section metatags {
+    @Html.Action("GetMetaByType", "Base", new { id = 1 })
+}
+
+@*
+    STEP1: Index 信箱認證
+    STEP2: RequestForm 身分資料+OCR辨識
+    STEP3: RequestFormBank 銀行資訊
+    STEP4: FormResult 送出審核
+*@
+<div class="page-container advanced-purchase">
+    <div class="page-kv">
+        <h1 class="page-kv--title">資料填寫</h1>
+    </div>
+    <div class="page-content">
+        <form action="" class="page-content-form">
+            <h2 class="page-content-form--title">請輸入/上傳身分資料</h2>
+            <div class="form-step-container form-step-container--3">
+                <div class="form-step form-step--active">
+                    <div class="form-step--number">1</div>
+                    <p class="form-step--title">E-mail認證</p>
+                </div>
+                <div class="form-step">
+                    <div class="form-step--number">2</div>
+                    <p class="form-step--title">身分資料</p>
+                </div>
+                <div class="form-step">
+                    <div class="form-step--number">3</div>
+                    <p class="form-step--title">帳戶銀行資料</p>
+                </div>
+            </div>
+            <div class="form-item">
+                <label class="control-label">帳號</label>
+                <div class="input-group">
+                    <div class="account-data-containter">
+                        <span class="account-data"></span>&nbsp;
+                        <span class="account-status account-status--not-certified">（未認證）</span>
+                    </div>
+                    <p class="account-care-text">
+                        <img src="@Url.Content("~/Content/images/s_bulb_icon.svg")" alt="" srcset="">
+                        請您至帳號信箱進行認証
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <button class="center btn--common btn--common-1 mb-3 ga_advanced_step1_btn_sendmail">寄送認證信</button>
+                <button class="center btn--common btn--common-1">下一步</button>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        const email = '@ViewBag.Email';
+        const emailValidUrl = '@Url.Action("SendEmailValidata")';
+        const userAuthUrl = '@Url.Action("GetUserAuth")';
+
+        $(function () {
+            // GA: 集客/出資會員/步驟1/PV
+            dataLayer.push(
+                {
+                    "event": "popupPageView",
+                    "popPATH": "/AdvancedPurchase/email",
+                    "popTitle": "出資會員-Step1-E-mail認證"
+                }
+            );
+
+            if ('@ViewBag.FirstInto')
+                modalc.BuyInfo.show();
+
+            $('form.page-content-form div.account-data-containter span:nth(0)').html(email);
+
+            $('form.page-content-form button:nth(0)').click(function () {
+
+                $ajax.Post(emailValidUrl, {}, function (d) {
+                    if (d.result) {
+                        showMsg("已送出驗證Email");
+                        checkEmailVrf();
+                        bthSettimeout();
+                    }
+                    else {
+                        showMsg(d.message, 'error');
+                    }
+                });
+                return false;
+            }, null, false);
+
+            $('form.page-content-form button:nth(1)').click(function () {
+                checkEmailValid(function () {
+                    showMsg('請您至帳號信箱進行認証');
+                });
+                return false;
+            });
+
+        });
+
+        var emailSettimeout;
+        var checkEmailVrf = function () {
+            if (emailSettimeout) clearTimeout(emailSettimeout);
+            emailSettimeout = setInterval(checkEmailValid, 5000);
+        }
+        var checkEmailValid = function (fail) {
+            $ajax.Post(userAuthUrl, {}, function (d) {
+                if (d.VRF_EMAIL.toUpperCase() == "Y") {
+                    EmailValidSucc();
+                }
+                else {
+                    if (fail) fail();
+                }
+            }, null, false);
+        }
+        var EmailValidSucc = function () {
+            clearInterval(emailSettimeout);
+            var status = $('form.page-content-form div.account-data-containter span:nth(1)');
+            status.removeClass('account-status--not-certified').addClass('account-status--approve').html('（已認證）');
+            window.location.reload();
+        }
+
+        var btnCountDownSec = 60;
+        var btnCountDownSettimeout ;
+        var bthSettimeout = function () {
+            btnCountDownSettimeout = setInterval(function () {
+                if (btnCountDownSec > 0) {
+                    $('form.page-content-form button:nth(0)').attr('disabled', 'true').addClass('disable').html('重發(' + (--btnCountDownSec) + ')');
+                }
+                else {
+                    if (btnCountDownSettimeout) clearTimeout(btnCountDownSettimeout);
+                    btnCountDownSec = 60;
+                    $('form.page-content-form button:nth(0)').removeClass('disable').removeAttr('disabled').html('寄送認證信');
+                }
+            }, 1000);
+        }
+
+        var modalc = new function () {
+            this.BuyInfo = new function () {
+                this.show = function () { $('#modalBuyInfo').modal('show') };
+                this.hide = function () { $('#modalBuyInfo').modal('hide') };
+            }
+        }
+    </script>
+}

@@ -1,0 +1,62 @@
+﻿/* @site: 全民電廠
+ * @author: nikki
+ * @update: nikki (2018-12-5)
+ * @page: index
+ * @description: 
+ */
+
+@import "../../setting/_variables.scss";
+@import "../../setting/_mixins.scss";
+
+main {
+    background-image: url(../../images/error_bg.jpg);
+    background-size: cover;
+
+}
+.error {
+    height: 59rem;
+    max-height: 100vh;
+    @include flexbox;
+    @include flex-direction(column);
+    @include align-items(center);
+    @include justify-content(Center);
+    &-text{
+        font-size: 1.88rem;
+        text-align: center;
+        color: #fff;
+    }
+    &-link{
+        width: 14.13rem;
+        height: 3.75rem;
+        line-height: 3.75rem;
+        text-align: center;
+        font-size: 1.13rem;
+        letter-spacing: 0.03rem;
+        color: #fff;
+        background-color: $color-primary-blue--4;
+        border-radius: 5px;
+        cursor: pointer;
+        @include change();
+        &:hover {
+            color: $color-primary-blue--4;
+            background-color: #fff;
+        }
+    }
+}
+@include rwd(#{$ipad - 1px}){
+    .error {
+        &-img {
+            width: 9rem;
+        }
+        &-text{
+            font-size: 0.84rem;
+        }
+        &-link{
+            width: 80%;
+            max-width: 14.13rem;
+            height: 2rem;
+            line-height: 2rem;
+            font-size: 1rem;
+        }
+    }
+}

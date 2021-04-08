@@ -1,0 +1,153 @@
+﻿@model HomeViewModel
+@{
+    ViewBag.Title = "會員中心";
+}
+@section header{
+    @Styles.Render("~/Content/pages/member/profile.min.css")
+}
+@section metatags {
+    @Html.Action("GetMetaByType", "Base", new { id = 1 })
+}
+<div class="page-container">
+    <div class="page-kv">
+        <h1 class="page-kv--title">會員中心</h1>
+    </div>
+    <div class="page-content">
+        <div class="breadcrumb-container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/" href="@Url.Content("~/Home/")">
+                            <span itemprop="name">
+                                <img src="@Url.Content("~/Content/images/bread_home_icon.svg")" alt="首頁">
+                            </span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope
+                        itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Member/" href="@Url.Content("~/Member/")">
+                            <span itemprop="name">會員中心</span>
+                        </a>
+                        <meta itemprop="position" content="2" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Member/Profile" href="@Url.Content("~/Member/Profile")">
+                            <span itemprop="name">會員資料</span>
+                        </a>
+                        <meta itemprop="position" content="3" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                            <span itemprop="name">會員活動</span>
+                        </a>
+                        <meta itemprop="position" content="4" />
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <div class="profile-container">
+            <div class="profile-tag-container">
+                <ul class="profile-tag">
+                    @if (ViewBag.IsShow)
+                    {
+                        <li class="profile-tag--item">
+                            <a href="@Url.Content("~/Member/Profile")">我的資料 </a>
+                        </li>
+                        <li class="profile-tag--item">
+                            <a href="@Url.Content("~/Member/BankInfo")">銀行帳戶 </a>
+                        </li>
+                    }
+                    <li class="profile-tag--item">
+                        <a href="@Url.Content("~/Member/Password")">修改密碼 </a>
+                    </li>
+                    <li class="profile-tag--item active">
+                        <a href="@Url.Content("~/Member/Event")">會員活動 </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="event-content">
+                <h2 class="event-title">邀請好友入主全民電廠</h2>
+                <p class="event-subtitle">分享您的好友邀請連結</p>
+                <div class="userid">
+                    <div class="userid-text">
+                        <span class="userid-text--title">會員編號</span>
+                        <span class="userid-text--data">@ViewBag.id</span>
+                    </div>
+                    @* TODO: 請在ATTR[data-clipboard-text]套上會員編號*@
+                    <button id="userIdCopyBtn" class="userid-btn" data-clipboard-text="@ViewBag.id">複製編號</button>
+                </div>
+                <div class="d-flex justify-content-around mb-5">
+                    @* TODO: 請在ATTR[data-clipboard-text]&[data-share]套上邀請連結
+                        在LINE分享按鈕，會讀取data-share的內容，
+                        *在註冊流程時，判斷網址是否戴上參數，會填入推薦人
+                    *@
+                    <button class="btn--common btn--common-1" data-clipboard-text="@ViewBag.baseUrl">複製邀請連結</button>
+                    <button class="btn--common btn--line js-share-line" data-share="@ViewBag.lineBaseUrl">
+                        <img src="~/Content/images/icon_line.svg">
+                        轉發LINE好友
+                    </button>
+                </div>
+                @* TODO: 推薦人輸入
+                    狀態: 1. 已輸入(在此頁輸入OR註冊時有填寫) 2.未輸入
+                *@
+                @* 1. 已輸入*@
+                <div class="form-item d-none">
+                    <label for="peferrerDisplay" class="control-label">推薦人編號</label>
+                    <div class="input-group lock">
+                        <input type="text" id="peferrerDisplay" name="peferrerDisplay" class="form-control" value="@ViewBag.recommendId" readonly>
+                    </div>
+                </div>
+
+                @* 2.未輸入 *@
+                <form action="" class="d-none">
+                    <div class="form-item">
+                        <label for="peferrer" class="control-label">推薦人編號</label>
+                        <div class="input-group">
+                            <input type="text" id="peferrer" name="peferrer" class="form-control" placeholder="請輸入推薦人，輸入後不可修改">
+                        </div>
+                    </div>
+                    <button class="center btn--common btn--common-1 mt-5">確定送出</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <script>
+        const updateRecommendUrl = '@Url.Action("Event")';
+        $(function () {
+            const clipboard = new ClipboardJS('[data-clipboard-text]');
+            clipboard.on('success', function (e) {
+                // console.info('Action:', e.action);
+                // console.info('Text:', e.text);
+                // console.info('Trigger:', e.trigger);
+                e.clearSelection();
+                showMsg('已複製')
+            });
+
+            if ($('#peferrerDisplay').val()) {
+                $('#peferrerDisplay').parents('div.d-none').removeClass('d-none').next('form').remove();
+            }
+            else {
+                var evenform = $('#peferrer').parents('form');
+                evenform.removeClass('d-none');
+                evenform.validate(validateParams);
+                $('#peferrer').rules('add', { recommender: true, required: true });
+                evenform.find('button').click(function () {
+                    if (evenform.valid()) {
+                        $ajax.Post(updateRecommendUrl, { id: $('#peferrer').val() }, function (d) {
+                            if (d.result)
+                                showMsg('更新成功');
+                            else
+                                showMsg(d.message, 'error');
+                        });
+                    }
+                    return false;
+                });
+            }
+        });
+    </script>
+
+}

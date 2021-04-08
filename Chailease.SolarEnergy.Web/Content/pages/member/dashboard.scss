@@ -1,0 +1,394 @@
+﻿/* @site: 全民電廠
+ * @author: nikki
+ * @update: nikki (2019-1-25)
+ * @page: 會員專區-電廠總覽
+ * @description: 
+ */
+
+@import "../../setting/_variables.scss";
+@import "../../setting/_mixins.scss";
+
+.page-container {
+    background-image: linear-gradient(0deg, rgba(30,181,172,0.00) 30%, rgba(30,181,172,0.80) 100%);
+}
+
+.page-kv {
+    padding-top: 10rem;
+    height: 25rem;
+
+    &--title {
+        color: $color-dark;
+    }
+}
+
+@include rwd(#{$ipad - 1px}) {
+    .page-kv {
+        height: 15rem;
+        padding: 7rem 5% 0;
+    }
+}
+
+/*item: .solar-page-top ----*/
+.solar-page-top {
+    width: 95%;
+    max-width: 66rem;
+    padding-bottom: 11px;
+    border-bottom: 2px solid #e9e9e9;
+    margin: 0 auto .69rem;
+    @include flexbox;
+    @include justify-content(space-between);
+    @include align-items(flex-end);
+    .download-text {
+        img {
+            display: inline-block;
+        }
+        &-desktop {
+            color: #8a8a8a;
+        }
+        &-mobile {
+            display: none;
+        }
+    }
+}
+/*rwd: .solar-page-top ---*/
+@include rwd($ipad) {
+    .solar-page-top {
+        .download-text {
+            &-desktop {
+                display: none;
+            }
+            &-mobile {
+                display: block;
+            }
+        }
+    }
+}
+
+/*status: 尚無電廠專案  */
+.solar--nosolar {
+    width: 90%;
+    max-width: 300px;
+    margin-top: 53px;
+    &-text {
+        color: #6f6f6f;
+        letter-spacing: 0.1px;
+        text-align: center;
+        line-height: 28px;
+        font-weight: bold;
+        margin-top: 28px;
+        img {
+            display: inline-block;
+            margin-right: 8px;
+        }
+    }
+}
+@include rwd($ipad) {
+    .solar--nosolar {
+        .img {
+            width: 190px;
+        }
+        &-text {
+            font-size: 14px;
+        }
+    }
+}
+/*item: solar ----*/
+.solar {
+    width: 100%;
+    max-width: 66rem;
+    border-top: 3px solid #E9E9E9;
+    background-image: linear-gradient(-180deg, rgba(242,242,242,0.99) 0%, rgba(243,243,243,0.99) 41%, #FFFFFF 85%);
+    margin: 0 auto 2.69rem;
+    padding: 1rem .69rem;
+    position: relative;
+    @include flexbox;
+
+    &:after {
+        content: '';
+        width: 100%;
+        height: 1px;
+        background-color: #e3e3e3;
+        position: absolute;
+        bottom: -2.69rem;
+        left: 0;
+    }
+
+    &-title {
+        font-size: 1.75rem;
+        color: $wiki-color-class-3;
+        font-weight: bold;
+        position: absolute;
+        left: 17rem;
+        top: 10%;
+    }
+
+    &-pic {
+        width: 15rem;
+        height: 12rem;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+    }
+
+    &-content {
+        width: calc(100% - 15rem);
+        padding: 0 0.88rem;
+        @include flexbox;
+        @include flex-direction(column);
+    }
+}
+
+/*rwd: .solar -----*/
+@include rwd($ipad) {
+    .solar {
+        padding-top: 2.5rem;
+        @include flex-direction(column);
+        &-title {
+            font-size: 1.38rem;
+            top: 6px;
+            left: 5%;
+        }
+        &-pic {
+            width: 100%;
+            height: 9rem;
+        }
+        &-content {
+            width: 100%;
+            padding: 0;
+            
+        }
+    }
+}
+
+/*item: .solar-header ----*/
+.solar-header {
+    margin: 0.75rem 0;
+    @include flexbox;
+    @include justify-content(flex-end);
+    &-item {
+        color: $color-secondary;
+        line-height: 2;
+        >span {
+            font-size: 1.2em;
+            color: $color-primary-blue;
+            font-weight: bold;
+            margin-left: 0.75rem;
+        }
+        &:last-child {
+            margin-left: 5%;
+        }
+    }
+}
+
+/*rwd: .solar-header -----*/
+@include rwd($ipad) {
+    .solar-header {
+        font-size: 0.81rem;
+        @include justify-content(space-between);
+        &:last-child {
+            margin-left: 0;
+        }
+    }
+}
+
+/*item: .solar-body ----*/
+.solar-body {
+    @include flexbox;
+    @include justify-content(space-between);
+}
+/*rwd: .solar-body ----*/
+@include rwd($ipad) {
+    .solar-body {
+        @include flex-direction(column);
+    }
+}
+
+/*item: .solar-body-item ---*/
+.solar-body-item {
+    width: 49%;
+    height: 6.56rem;
+    background-color: #fff;
+    border-radius: 10px;
+    position: relative;
+    @include flexbox;
+    @include flex-direction(column);
+    @include justify-content(center);
+    @include align-items(center);
+    &:before {
+        content: '';
+        width: 23px;
+        height: 50px;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        position: absolute;
+        left: 18%;
+        top: calc(50% - 25px);
+    }
+    
+    &.power:before {
+        background-image: url(../../images/Member_center_power_plant_icon01.svg);
+    }
+    &.money:before {
+        background-image: url(../../images/Member_center_power_plant_icon02.svg);
+    }
+    &:after {
+        content: '';
+        width: 23px;
+        height: 50px;
+        background-image: url(../../images/icon_arrow_right_blue.svg);
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        position: absolute;
+        right: 3%;
+        top: calc(50% - 25px);
+    }
+}
+
+.content-title {
+    color: $color-dark;
+    >span {
+        font-size: 1.5em;
+        color: $color-primary-blue;
+        font-weight: bold;
+        margin-left: 0.81rem;
+        position: relative;
+        &:after {
+            font-size: 0.7em;
+            color: $color-dark--2;
+            position: absolute;
+            right: -1.5rem;
+            bottom: 0;
+        }
+        &.power {
+            &:after {
+                content: '度';
+            }
+        }
+        &.money {
+            &:after {
+                content: '元';
+            }
+        }
+    }
+}
+
+.content-text {
+    font-size: 0.94rem;
+    color: #8a8a8a;
+    >span {
+        font-size: 1.2em;
+        font-weight: bold;
+        margin-left: 0.31rem;
+    }
+}
+
+/*rwd: .solar-body-item ----*/
+@include rwd($ipad) {
+    .solar-body-item {
+        width: 100%;
+        &:before {
+            left: 12%;
+        }
+    }
+}
+/*item: .solar-body-item ---*/
+
+/*item: .solar-body-item--end(追加:募資完成狀態) ---*/
+.solar-body-item--end {
+    width: 49%;
+    height: 6.56rem;
+    background-color: #fff;
+    border-radius: 10px;
+    position: relative;
+    @include flexbox;
+    @include flex-direction(column);
+    @include justify-content(center);
+    @include align-items(center);
+    &:before {
+        content: '';
+        width: 23px;
+        height: 50px;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        position: absolute;
+        left: 18%;
+        top: calc(50% - 25px);
+    }
+    &:after {
+        content: '';
+        width: 23px;
+        height: 50px;
+        background-image: url(../../images/icon_arrow_right_blue.svg);
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        position: absolute;
+        right: 3%;
+        top: calc(50% - 25px);
+    }
+    .end-text {
+        color: $color-primary-blue--4;
+        text-align: center;
+        font-weight: bold;
+        font-size: 1.13rem;
+        span {
+            font-size: 0.8em;
+        }
+    }
+}
+/*rwd: .solar-body-item--end ----*/
+@include rwd($ipad) {
+    .solar-body-item--end {
+        width: 100%;
+    }
+}
+/*item: .solar-body-item--end(追加:募資完成狀態) ---*/
+
+/*item: .solar-footer ---*/
+.solar-footer {
+    @include flexbox;
+    @include justify-content(flex-end);
+    &-item {
+        font-size: 0.88rem;
+        color: #8a8a8a;
+        margin: 0 3%;
+    }
+}
+
+/*rwd: .solar-footer ----*/
+@include rwd($ipad) {
+    .solar-footer {
+        @include justify-content(space-between);
+        &-item {
+            font-size: 0.7rem;
+            margin: 0;
+        }
+    }
+}
+
+
+// 二手交易
+.btn-sell{ 
+    width: 7rem;
+    margin-left: 1.5rem;
+    font-size: rem(18px);
+    background-color: $color-primary-blue--4;
+}
+.btn-sell-m{ 
+    display: none !important;
+}
+@include rwd($ipad) {
+    .btn-sell{ 
+        display: none !important;
+    }
+    .btn-sell-m{
+        display: block !important;
+        position: absolute;
+        top: rem(6px);
+        right: 3%;
+        width: 7rem;
+        height: 1.88rem;
+        line-height: 1.88rem;
+        font-size: rem(18px);
+        background-color: $color-primary-blue--4;
+    }
+}

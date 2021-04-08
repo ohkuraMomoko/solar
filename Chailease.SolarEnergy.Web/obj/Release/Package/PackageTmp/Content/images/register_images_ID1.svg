@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="276px" height="190px" viewBox="0 0 276 190" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.3 (67297) - http://www.bohemiancoding.com/sketch -->
+    <title>register_images_ID1</title>
+    <desc>Created with Sketch.</desc>
+    <g id="register_images_ID1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-4">
+            <path d="M0.475,0.475 L0.475,189.525 L275.525,189.525 L275.525,0.475 L0.475,0.475 Z" id="Rectangle-15" stroke="#A0A0A0" stroke-width="0.95" opacity="0.5"></path>
+            <path d="M0.475,0.475 L0.475,189.525 L275.525,189.525 L275.525,0.475 L0.475,0.475 Z" id="Rectangle-15" stroke="#A0A0A0" stroke-width="0.95" opacity="0.5"></path>
+            <path d="M156.6,26.95 C152.927306,26.95 149.95,29.9273064 149.95,33.6 L149.95,132.4 C149.95,136.072694 152.927306,139.05 156.6,139.05 L251.4,139.05 C255.072694,139.05 258.05,136.072694 258.05,132.4 L258.05,33.6 C258.05,29.9273064 255.072694,26.95 251.4,26.95 L156.6,26.95 Z" id="Rectangle-60" stroke="#D8D8D8" stroke-width="1.9" opacity="0.5"></path>
+            <circle id="Oval-9" stroke="#D8D8D8" stroke-width="1.9" cx="205.5" cy="64.5" r="14.5"></circle>
+            <path d="M232,112 C232,97.0883118 220.135546,85 205.5,85 C190.864454,85 179,97.0883118 179,112 C193.505127,112 211.208887,112 232,112 Z" id="Oval-2" stroke="#D8D8D8" stroke-width="1.9"></path>
+            <text id="正面" font-family="PingFangTC-Regular, PingFang TC" font-size="19" font-weight="normal" fill="#A0A0A0">
+                <tspan x="57" y="49">正面</tspan>
+            </text>
+            <polygon id="Rectangle-2" fill="#D8D8D8" points="20 75 132 75 132 81 20 81"></polygon>
+            <polygon id="Rectangle-2-Copy" fill="#D8D8D8" points="20 88 132 88 132 94 20 94"></polygon>
+            <polygon id="Rectangle-2-Copy-2" fill="#D8D8D8" points="20 100 132 100 132 106 20 106"></polygon>
+            <polygon id="Rectangle-2-Copy-3" fill="#D8D8D8" points="20 113 132 113 132 119 20 119"></polygon>
+        </g>
+    </g>
+</svg>

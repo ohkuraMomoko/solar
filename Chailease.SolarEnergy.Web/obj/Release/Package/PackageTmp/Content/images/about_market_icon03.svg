@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="76px" height="70px" viewBox="0 0 76 70" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.3 (67297) - http://www.bohemiancoding.com/sketch -->
+    <title>about market icon03</title>
+    <desc>Created with Sketch.</desc>
+    <g id="about-market-icon03" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-11" transform="translate(1.000000, 1.000000)">
+            <g id="Group-20" transform="translate(0.000000, 6.800000)" fill-rule="nonzero">
+                <g id="Group-19">
+                    <polygon id="Rectangle-6" fill="#1BBFA4" points="6.42631579 0 66.6 0 74 48.5714286 0 48.5714286"></polygon>
+                    <polygon id="Rectangle-6" fill="#FFFFFF" points="9.86495845 1.94285714 63.1613573 1.94285714 68.1578947 42.7428571 4.86842105 42.7428571"></polygon>
+                    <polygon id="Path-3" fill="#1BBFA4" points="13.4595359 5.82857143 10.7105263 37.8857143 62.3157895 37.8857143 59.2314717 5.82857143"></polygon>
+                    <path d="M10.7105263,21.3714286 L62.3157895,21.3714286" id="Path-5" stroke="#FFFFFF" stroke-width="3.88571429"></path>
+                    <path d="M27.6130757,5.45385045 L26.0907432,40.2858259" id="Path-4" stroke="#FFFFFF" stroke-width="3.4"></path>
+                    <path d="M44.3644377,5.82857143 L46.7368421,40.6605469" id="Path-4" stroke="#FFFFFF" stroke-width="3.4"></path>
+                </g>
+                <polygon id="Rectangle-6" fill="#1BBFA4" points="23.2293233 52.4571429 51.5853921 52.4571429 54.3673469 60.2 20.4473684 60.2"></polygon>
+            </g>
+            <ellipse id="Oval" stroke="#FFFFFF" stroke-width="1.94285714" fill="#FFFFFF" fill-rule="nonzero" cx="36.5131579" cy="20.4" rx="19.9605263" ry="20.4"></ellipse>
+            <ellipse id="Oval" fill="#1BBFA4" fill-rule="nonzero" cx="36.4996343" cy="19.4424488" rx="17.9996343" ry="18.4710202"></ellipse>
+            <text id="$" font-family="LucidaGrande-Bold, Lucida Grande" font-size="27.2" font-weight="bold" letter-spacing="0.679999988" fill="#FFFFFF">
+                <tspan x="27.2016735" y="28.9142857">$</tspan>
+            </text>
+        </g>
+    </g>
+</svg>

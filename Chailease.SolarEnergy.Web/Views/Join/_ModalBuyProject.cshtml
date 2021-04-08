@@ -1,0 +1,558 @@
+﻿@model JoinViewModel
+@{
+    var projectIntro = Model.LoanCaseIntroduct.CASELOAN_INTRODCT;
+    decimal perPrice = 0;
+    decimal.TryParse(projectIntro.PANELS_PRICE, out perPrice);
+}
+
+<div class="modal fade modal-buy-project" id="modalBuyProject" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered " role="document">
+        <div class="modal-content">
+            <button type="button" class="modal-btn--close" data-dismiss="modal" aria-label="Close">
+                <img src="@Url.Content("~/Content/images/bt_close_w.svg")" alt="">
+            </button>
+            <div id="step1" class="buy-item buy-item--step1">
+                <p class="buy-item-title">購買&nbsp;<span> @projectIntro.CASE_NAME</span></p>
+                <div class="form-step-container form-step-container--3">
+                    <div class="form-step form-step--active">
+                        <div class="form-step--number">1</div>
+                        <p class="form-step--title">購買片數</p>
+                    </div>
+                    <div class="form-step">
+                        <div class="form-step--number">2</div>
+                        <p class="form-step--title">檢視合約</p>
+                    </div>
+                    <div class="form-step">
+                        <div class="form-step--number">3</div>
+                        <p class="form-step--title">確認訂單</p>
+                    </div>
+                </div>
+                <div class="buy-data">
+                    <p class="buy-data-title">@projectIntro.CASE_NAME</p>
+                    <div class="buy-data-item">
+                        <span class="buy-data-item--title">單片售價</span>
+                        <span class="buy-data-item--value">@perPrice.ToString("N0") 元</span>
+                    </div>
+                    <div class="buy-data-item">
+                        <span class="buy-data-item--title">購買片數</span>
+                        <div class="input-buy-pic">
+                            <input type="number" id="txtBuyPic" min="1" value="1"
+                                class="js-inputBuyValue ga_buy_step1_input_pecnumber">
+                        </div>
+
+                    </div>
+                    <p class="input-error-info d-none" id="txtBuyPicInfo">購買片數錯誤</p>
+                    <div class="buy-data-item mt-3 mb-3">
+                        <div class="input-buy-coupon">
+                            <input type="text" placeholder="輸入活動折扣代碼" 
+                            id="txtDiscountCode" onblur="getDiscount()" 
+                            class="ga_buy_step1_input_coupon">
+                        </div>
+                    </div>
+                    <p class="input-error-info d-none" id="txtDiscountCodeInfo">活動折扣代碼錯誤</p>
+                    <div class="buy-data-item">
+                        <span class="buy-data-item--title">總購金額</span>
+                        <span class="buy-data-item--value" id="txtPrice" style="display:none;"></span>
+                        <span class="buy-data-item--value" id="txtPriceShow"></span>元
+                    </div>
+                    <div class="buy-data-item">
+                        <span class="buy-data-item--title">活動折抵</span>
+                        -<span class="buy-data-item--value" id="txtDiscount">0</span>元
+                    </div>
+                    <div class="buy-data-item mt-3">
+                        <span class="buy-data-item--title">應付金額</span>
+                        <span class="buy-data-item--value total" id="txtTotalPrice"></span>元
+                    </div>
+                </div>
+                <button id="buyProjectBtnStep1" 
+                    class="btn--common btn--common-1 center ga_buy_step1_btn_finish">
+                    下一步</button>
+            </div>
+            <div id="step2" class="buy-item buy-item--step2 d-none">
+                <p class="buy-item-title">@projectIntro.CASE_NAME</p>
+                <div class="form-step-container form-step-container--3">
+                    <div class="form-step form-step--active">
+                        <div class="form-step--number">1</div>
+                        <p class="form-step--title">購買片數</p>
+                    </div>
+                    <div class="form-step form-step--active">
+                        <div class="form-step--number">2</div>
+                        <p class="form-step--title">檢視合約</p>
+                    </div>
+                    <div class="form-step">
+                        <div class="form-step--number">3</div>
+                        <p class="form-step--title">確認訂單</p>
+                    </div>
+                </div>
+                <p class="buy-raw-text">
+                    <img src="@Url.Content("~/Content/images/s_bulb_icon.svg")" alt="">
+                    請先下滑至底詳閱，方可點同意
+                </p>
+                <div id="buyRaw" class="buy-raw">
+                    @{
+                        Html.RenderPartial("~/Views/Join/_BuyRaw.cshtml");
+                    }
+                </div>
+                <div class="mt-3 buy-btn">
+                    <button id="buyProjectBtnStep2Back" 
+                        class="btn--common btn--common-1 ga_buy_step2_btn_back">
+                        回上一步</button>
+                    <button id="buyProjectBtnStep2" 
+                        class="btn--common btn--common-1 disable ga_buy_step2_btn_finish">
+                        我同意</button>
+                </div>
+            </div>
+            <div id="step3" class="buy-item buy-item--step3 d-none">
+                <p class="buy-item-title">購買&nbsp;<span>@projectIntro.CASE_NAME</span></p>
+                <div class="form-step-container form-step-container--3">
+                    <div class="form-step form-step--active">
+                        <div class="form-step--number">1</div>
+                        <p class="form-step--title">購買片數</p>
+                    </div>
+                    <div class="form-step form-step--active">
+                        <div class="form-step--number">2</div>
+                        <p class="form-step--title">檢視合約</p>
+                    </div>
+                    <div class="form-step form-step--active">
+                        <div class="form-step--number">3</div>
+                        <p class="form-step--title">確認訂單</p>
+                    </div>
+                </div>
+                <div class="buy-data">
+                    <p class="buy-data-title">您本次認購內容如下</p>
+                    <div class="buy-data-item">
+                        <span class="buy-data-item--title">單片售價</span>
+                        <span class="buy-data-item--value">@perPrice.ToString("N0") 元</span>
+                    </div>
+                    <div class="buy-data-item">
+                        <span class="buy-data-item--title">購買片數</span>
+                        <!-- TODO: 顯示購買片數 -->
+                        <div class="check-pic">
+                            <span id="checkBuyPic"></span>片
+                            <div id="changePicBtn" 
+                                class="change-pic ga_buy_step3_btn_modify">
+                                修改數量</div>
+                        </div>
+                    </div>
+                    <div class="buy-data-item mt-3 mb-3">
+                        <!-- 此處活動碼，應為readonly -->
+                        <div class="input-buy-coupon">
+                            <input type="text" placeholder="活動折扣代碼" value="" readonly id="checkDisCode">
+                        </div>
+                    </div>
+                    <div class="buy-data-item">
+                        <span class="buy-data-item--title">總購金額</span>
+                        <span class="buy-data-item--value" id="checkPrice" style="display:none;"></span>
+                        <span class="buy-data-item--value" id="checkPriceShow"></span>元
+                    </div>
+                    <div class="buy-data-item">
+                        <span class="buy-data-item--title">活動折抵</span>
+                        -<span class="buy-data-item--value" id="checkDiscount"></span>元
+                    </div>
+                    <div class="buy-data-item mt-3">
+                        <span class="buy-data-item--title">應付金額</span>
+                        <span class="buy-data-item--value total" id="checkTotalPrice"></span>元
+                    </div>
+                </div>
+                <button id="buyProjectBtnStep3" 
+                    class="btn--common btn--common-1 center ga_buy_step3_btn_finish">
+                    確定送出</button>
+            </div>
+            @* TODO:
+                依照目前會員類型區分兩種結果
+                1.未認證
+                2.已認證
+            *@
+            <div id="step4NotCertified" class="buy-item buy-item--result not-certified d-none">
+                <img src="@Url.Content("~/Content/images/success_info_icon.svg")" alt="" class="center result-icon">
+                <p class="result-title mb-3">已確認訂單</p>
+                <p class="result-text">
+                    <span class="result-text-sub">[ 您的訂單已成立並已保留 ]</span><br>
+                    <br>
+                    因您會員認證需1～2工作天，待審核完成後我們將會寄發<br>
+                    匯款資訊至您的Ｅmail<br>
+                    @*<span class="send-mail">xxxxx@test.com.tw</span>*@
+                    收到後請於期限內完成繳款<br>
+                    <br>
+                    如有相關問題請與我們聯繫<br>
+                    服務電話：(02) 2658-1677<br>
+                    服務時間：週一至週五 9:30-17:30<br>
+                </p>
+                <p class="result-text-bottom mt-5 mb-4">
+                    認購者於本網站中支付任何款項均須以出資者本人帳戶為之，如經查非出資者本人之帳戶所為，將認定為申請不成功而退回款項，如因此影響對專案計畫之申請或致申請不成功，概由出資者自行負責。
+                </p>
+                <button class="js-print-btn btn--common btn--common-1 center ga_buy_result_btn_print--general" data-print="#step4NotCertified">列印本頁</button>
+                <button class="btn--common btn--common-1 center mt-3 btn--member ga_buy_result_btn_member--general">查看審核狀態</button>
+            </div>
+            <div id="step4Verified" class="buy-item buy-item--result verified d-none">
+                <img src="@Url.Content("~/Content/images/success_info_icon.svg")" alt="" class="center result-icon">
+                <p class="result-title mb-3 mb-md-5">已確認訂單</p>
+                <div class="row result-order">
+                    <div class="col-12 col-md-4 result-order-name">申購確認單號</div>
+                    <div class="col-12 col-md-8 result-order-value" id="txtInvestNo">OR181129010837</div>
+                </div>
+                <div class="row result-order">
+                    <div class="col-12 col-md-4 result-order-name">申購確認時間</div>
+                    <div class="col-12 col-md-8 result-order-value" id="txtInvestTime">20181129154618</div>
+                </div>
+                <div class="row result-order">
+                    <div class="col-12 col-md-4 result-order-name">專案名稱</div>
+                    <div class="col-12 col-md-8 result-order-value" id="txtInvestName"></div>
+                </div>
+                <div class="row result-order mb-3">
+                    <div class="col-12 col-md-4 result-order-name">繳款金額</div>
+                    <div class="col-12 col-md-8 result-order-value text-bold" id="txtInvestAmt"></div>
+                </div>
+                <div class="row result-order">
+                    <div class="col-12 col-md-4 result-order-name">繳款銀行</div>
+                    <div class="col-12 col-md-8 result-order-value" id="txtInvestBank"></div>
+                </div>
+                <div class="row result-order">
+                    <div class="col-12 col-md-4 result-order-name">繳款戶名</div>
+                    <div class="col-12 col-md-8 result-order-value" id="txtInvestAccountName"></div>
+                </div>
+                <div class="row result-order">
+                    <div class="col-12 col-md-4 result-order-name">繳款帳號</div>
+                    <div class="col-12 col-md-8 result-order-value">
+                        <span class="text-heightline account" id="txtInvestAccountNo"></span>
+                    </div>
+                </div>
+                <div class="row result-order">
+                    <div class="col-12 col-md-4 result-order-name">繳款期限</div>
+                    <div class="col-12 col-md-8 result-order-value">
+                        <span class="text-heightline text-bold" id="txtDueDate"></span>
+                    </div>
+                </div>
+                <p class="mt-4 text-blue text-center order-text">請於期限內付款以完成購買</p>
+                <p class="result-text-bottom mt-2 mb-3">
+                    認購者於本網站中支付任何款項均須以出資者本人帳戶為之，如經查非出資者本人之帳戶所為，將認定為申請不成功而退回款項，如因此影響對專案計畫之申請或致申請不成功，概由出資者自行負責。
+                </p>
+                <button data-print="step4Verified"
+                    class="js-print-btn btn--common btn--common-1 center ga_buy_result_btn_print--advance">列印本頁</button>
+                <button class="btn--common btn--common-1 center mt-3 btn--member ga_buy_result_btn_backpage--advance">回我的交易</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+<script>
+    $(function () {
+        $(".js-inputBuyValue").change(function () {
+            calculatePrice();
+        });
+
+        $(".js-inputBuyValue").keyup(function () {
+            calculatePrice();
+        });
+    });
+    // 列印 ============================
+    $(".js-print-btn").on('click', function () {
+        let target = $(this).data("print");
+        $(this).parents().find(target).addClass("printPart");
+        window.print();
+    });
+
+    let topPoint = 30;
+    $("#buyProjectBtnStep1").on("click", function () {
+        if ($('#txtBuyPic').val() == '' || $('#txtBuyPic').val() <= 0) {
+            $('#txtBuyPicInfo').removeClass('d-none');
+            return false;
+        } else {
+            $('#txtBuyPicInfo').addClass('d-none');
+        }
+        if (!$("#txtDiscountCodeInfo").hasClass('d-none')) {
+            return false;
+        }
+        $("#step1").addClass("d-none");
+        $("#step2").removeClass("d-none");
+        $("#modalBuyProject").animate({ scrollTop: topPoint }, 600);
+        //GA: 集客/立即購買流程/專案購買/專案購買-Step2-檢視合約
+        dataLayer.push(
+            {
+                "event": "popupPageView",
+                "popPATH": "/buy/contract",
+                "popTitle": "專案購買-Step2-檢視合約"
+            }
+        );
+        //GA: 圖靈/增強型電子商務-Add to Cart
+        dataLayer.push({
+            'addToCart': {
+                'products': [{
+                    'id': '@projectIntro.POWER_PLANT_NUM',
+                    'name': '@projectIntro.CASE_NAME',
+                    'category': "太陽能板",
+                    'price': @projectIntro.PANELS_PRICE,
+                    'quantity': $('#txtBuyPic').val()
+                }]
+            },
+            'event': 'td_AddToCart'
+        });
+    });
+
+    let scrolled = false;
+    $('#buyRaw').bind('scroll', function () {
+        //console.log("$(this).scrollTop():" + $(this).scrollTop());
+        //console.log("$(this).innerHeight():" + $(this).innerHeight());
+        //console.log("$(this)[0].scrollHeight:" + $(this)[0].scrollHeight);
+
+        if ($(this).scrollTop() + $(this).innerHeight() >= ($(this)[0].scrollHeight - 100)) {
+            scrolled = true;
+            $("#buyProjectBtnStep2").removeClass("disable");
+        }
+    });
+
+    $("#buyProjectBtnStep2").on("click", function () {
+        if (scrolled) {
+            $("#step2").addClass("d-none");
+            $("#step3").removeClass("d-none");
+            $("#modalBuyProject").animate({ scrollTop: topPoint }, 600);
+
+            $('#checkBuyPic').html($('#txtBuyPic').val())
+            $('#checkDisCode').val($('#txtDiscountCode').val())
+            $('#checkPrice').html($('#txtPrice').html())
+            $('#checkPriceShow').html($('#txtPriceShow').html())
+            $('#checkTotalPrice').html($('#txtTotalPrice').html())
+            $('#checkDiscount').html($('#txtDiscount').html())
+            ////GA: 集客/立即購買流程/專案購買/專案購買-Step3-確認訂單
+            dataLayer.push(
+                {
+                    "event": "popupPageView",
+                    "popPATH": "/buy/order_review",
+                    "popTitle": "專案購買-Step3-確認訂單"
+                }
+            );
+            //GA: 圖靈/增強型電子商務-checkout/STEP1
+            dataLayer.push({
+                'ecommerce': {
+                    'checkout': {
+                        'step': 1,
+                        'products': [{
+                            'id': '@projectIntro.POWER_PLANT_NUM',
+                            'name': '@projectIntro.CASE_NAME',
+                            'category': "太陽能板",
+                            'price': @projectIntro.PANELS_PRICE,
+                            'quantity': $('#txtBuyPic').val()
+                        }]
+                    }
+                },
+                'event': 'td_checkout_step'
+            });
+        } else {
+            showMsg("請詳閱合約內容","error");
+        }
+    });
+    $("#buyProjectBtnStep2Back").on("click", function () {
+        $("#step2").addClass("d-none");
+        $("#step1").removeClass("d-none");
+        $("#modalBuyProject").animate({ scrollTop: topPoint }, 600);
+        //GA: 集客/立即購買流程/專案購買/專案購買-Step1-購買片數
+        dataLayer.push(
+            {
+                "event": "popupPageView",
+                "popPATH": "/buy/order",
+                "popTitle": "專案購買-Step1-購買片數"
+            }
+        );
+        
+    });
+    $("#buyProjectBtnStep3").on("click", function () {
+        $("#loadingContainer").fadeIn(400);
+        $("body").css("overflow", "hidden");
+
+        $ajax.Post('@Url.Action("GetInstantUserInfo")', {}, function (uinfo) {
+            
+        $.ajax({
+            url: '@Url.Action("LoanCaseInvest")',
+            type: "POST",
+            dataType: 'json',
+            cache: false,
+            data: {
+                MBR_ID: uinfo.ID, CASE_NO: '@projectIntro.CASE_NO', INVEST_AMT: $('#checkPrice').html(),
+                INVEST_NUM: $('#checkBuyPic').html(), MBR_LVL: uinfo.LEVEL, DISCOUNT_CODE: $('#checkDisCode').val(),
+                DISCOUNT_AMT: $('#checkDiscount').html(), CONTRACT_VERSION: '@projectIntro.VERSION'
+            }
+        }).done(function (res) {
+            $("#loadingContainer").fadeOut(400);
+            $("body").css("overflow", "auto");
+
+            if (!res.response.RESULT) {
+                showMsg(res.response.ERRMSG,'error');
+            }
+            else if (res.response.RESULT && res.response.ERRCODE == 0) {
+                $("#step3").addClass("d-none");
+                //GA: 圖靈/增強型電子商務-Purchase
+                //辨別出資會員狀態 02:出資會員(審核中) 03:出資會員(完成實名認證)，若為審核中，訂單編號前則加上"A_"
+                var gaOrderId;
+                if (uinfo.LEVEL == "02") {
+                    gaOrderId = "A_" + res.response.INVEST_ORDER_NO;
+                } else {
+                    gaOrderId = res.response.INVEST_ORDER_NO;
+                }
+                dataLayer.push({
+                    'purchase': {
+                        'id': gaOrderId,
+                        'revenue': res.response.SUBSCRIPTION_AMT,
+                        'coupon': $('#txtDiscountCode').val(),
+                        'products': [{
+                            "id": '@projectIntro.POWER_PLANT_NUM',
+                            "name": '@projectIntro.CASE_NAME',
+                            "category": "太陽能板",
+                            "price": @projectIntro.PANELS_PRICE,
+                            "quantity": $('#txtBuyPic').val()
+                        }]
+                    },
+                    'event': 'td_purchaseComplete'
+                });
+                //GA: 圖靈/增強型電子商務-checkout/STEP2
+                dataLayer.push({
+                    'ecommerce': {
+                        'checkout': {
+                            'step': 2,
+                            'products': [{
+                                'id': '@projectIntro.POWER_PLANT_NUM',
+                                'name': '@projectIntro.CASE_NAME',
+                                'category': "太陽能板",
+                                'price': @projectIntro.PANELS_PRICE,
+                                'quantity': $('#txtBuyPic').val()
+                            }]
+                        }
+                    },
+                    'event': 'td_checkout_step'
+                });
+                // 依照目前會員類型區分兩種結果
+                // 1.未認證 #step4NotCertified
+                // 2.已認證 #step4Verified
+                if (uinfo.LEVEL == "02") {
+                    $("#step4NotCertified").removeClass("d-none");
+                
+                    //GA: 集客/立即購買流程/專案購買/02:出資會員(審核中)
+                    dataLayer.push(
+                        {
+                            "event": "popupPageView",
+                            "popPATH": "/buy/result_general",
+                            "popTitle": "專案購買-Step4-完成_一般會員"
+                        }
+                    );
+                }
+                else if (uinfo.LEVEL == "03") {
+                    $("#step4Verified").removeClass("d-none");
+
+                    //GA: 集客/立即購買流程/專案購買/03:出資會員(完成實名認證)
+                    dataLayer.push(
+                        {
+                            "event": "popupPageView",
+                            "popPATH": "/buy/result_advance",
+                            "popTitle": "專案購買-Step4-完成_出資會員"
+                        }
+                    );
+
+
+                    $('#txtInvestNo').html(res.response.INVEST_ORDER_NO)
+                    $('#txtInvestTime').html(res.response.SUBSCRIPTION_DT)
+                    $('#txtInvestName').html('@projectIntro.CASE_NAME')
+                    $('#txtInvestAmt').html(setSymbol(res.response.SUBSCRIPTION_AMT))
+                    $('#txtInvestBank').html(res.response.BNK_VR_BNKNME)
+                    $('#txtInvestAccountName').html(res.response.BNK_VR_ACCNTNME)
+                    $('#txtInvestAccountNo').html(res.response.BNK_VR_ACCNTNO)
+                    $('#txtDueDate').html(res.response.PAY_DUE_DT)
+
+                    let remPic = $("#progressPic").text() - $('#checkBuyPic').text()
+                    $("#progressPic").text(remPic)
+                }
+                
+            } else {
+                showMsg(res.response.ERRMSG, 'error');
+            }
+        });
+        });
+
+        $("#modalBuyProject").animate({ scrollTop: topPoint }, 600);
+    });
+
+    $("#changePicBtn").on("click", function () {
+        $("#step3").addClass("d-none");
+        $("#step1").removeClass("d-none");
+    });
+
+    $('.btn--member').on("click", function () {
+        window.location.href = '@Url.Action("Index", "Member")'
+    })
+
+    $('#step4Verified').on('hidden.bs.modal', function (e) {
+        //console.log()
+    });
+
+    $('#txtBuyPic').blur(function () {
+        var picTxt = $('#txtBuyPic').val();
+        var pic = parseInt(picTxt, 0);
+        if (picTxt == '' || isNaN(picTxt) ) {
+            pic = 1;
+        }
+        var rem = parseInt($("#progressPic").text().replace(',', ''), 0);
+        if (pic < 1) pic = 1; //確保為正數(售完外)
+        if (pic >= rem) pic = rem; //確保購買片數不大於庫存
+        $('#txtBuyPic').val(pic);
+        calculatePrice();
+    });
+
+
+    function calculatePrice() {
+
+        let panel_price = '@perPrice'
+        let panel_cnt = $('#txtBuyPic').val()
+        let discount_price = $('#txtDiscount').html()
+
+        let total_price = 0;
+        let total_price_F = 0;
+        total_price = panel_price * panel_cnt
+        total_price_F = panel_price * panel_cnt - discount_price
+
+        $('#txtPrice').html(total_price)
+        $('#txtPriceShow').html(setSymbol(total_price_F))
+        $('#txtTotalPrice').html(setSymbol(total_price_F))
+
+        if (total_price <= 0 || total_price_F <= 0) {
+            $('#buyProjectBtnStep1').attr('disabled', true);
+        } else {
+            $('#buyProjectBtnStep1').attr('disabled', false);
+        }
+    }
+
+    function getDiscount() {
+        let dis_code = $('#txtDiscountCode').val();
+        let panel_cnt = $('#txtBuyPic').val()
+        var id = "@Model.UserInfoDetail.MBR_ID";
+        if (dis_code == "") {
+            $('#txtDiscount').html(0);
+            $('#txtDiscountCodeInfo').addClass('d-none');
+            calculatePrice();
+            return;
+        }
+        $("#loadingContainer").fadeIn(300);
+        $("body").css("overflow", "hidden");
+        $.ajax({
+            url: '@Url.Action("GetDiscount")',
+            type: "POST",
+            dataType: 'json',
+            cache: false,
+            data: { id: '@projectIntro.CASE_NO', discountCode: dis_code, count: panel_cnt, memid: id }
+        }).done(function (res) {
+            $("#loadingContainer").fadeOut(300);
+            $("body").css("overflow", "auto");
+            if (res.discountInfo.ERRCODE == 0) {
+                $('#txtDiscount').html(res.discountInfo.DISCOUNT);
+                $('#txtDiscountCodeInfo').addClass('d-none');
+            } else {
+                $('#txtDiscount').html(0);
+                $('#buyProjectBtnStep1').attr('disabled', true);
+                $('#txtDiscountCodeInfo').removeClass('d-none');
+            }
+
+            calculatePrice();
+        });
+    }
+
+
+
+</script>

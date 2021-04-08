@@ -1,0 +1,243 @@
+﻿/* @site: 全民電廠
+ * @author: nikki
+ * @update: nikki (2019-1-25)、mickey (2019-11-22)
+ * @page: 會員專區首頁
+ * @description: 
+ */
+
+@import "../../setting/_variables.scss";
+@import "../../setting/_mixins.scss";
+
+.page-container {
+    background-image: linear-gradient(0deg, rgba(30,181,172,0.00) 30%, rgba(30,181,172,0.80) 100%);
+}
+.page-kv {
+    padding-top: 10rem;
+    height: 25rem;
+    &--title {
+        color: $color-dark;
+    }
+}
+
+@include rwd(#{$ipad - 1px}){
+    .page-kv {
+        height: 15rem;
+        padding: 7rem 5% 0;
+    }
+}
+
+/*block: member-container ----*/
+.member-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    @include flexbox;
+    @include justify-content(center);
+    @include flex-wrap(wrap);
+}
+
+/*item: member ----*/
+.member { 
+    width: calc(50% - 1rem);
+    max-width: 32rem;
+    margin: 2rem 0.5rem;  
+    &-title {
+        font-size: 1.25rem;
+        letter-spacing: 0.08rem;
+        color: $color-dark--2;
+        margin-bottom: 0.88rem;
+    }
+}
+
+/*rwd: member ---*/
+@include rwd(#{$ipad - 1px}){
+    .member {
+        width: 100%;
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+    }
+}
+
+/*item: member-card 除了會員資料，為共通設計 ---*/
+$bdrs: 25px 0 0 0;
+$memberCardHeight: 10.81rem;
+.member-card {
+    height: $memberCardHeight;
+    background-color: $color-secondary--2;
+    border-radius: $bdrs;
+    position: relative;
+    &-row {
+        width: 100%;
+        height: calc(100% - 3.19rem);
+        margin: 0;
+        align-items: center;
+    }
+    &-item {
+        color: $color-dark;
+        text-align: center;
+        >span {
+            font-family: arial;
+            font-size: 2em;
+            font-weight: bold;
+            color: $color-primary-blue;
+            margin-left: 0.56rem;
+        }
+        
+    }
+    &-title {
+        width: 100%;
+        height: 3.19rem;
+        background-color: $wiki-color-class-3;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        padding: 0 3%;
+        @include flexbox;
+        @include justify-content(space-between);
+        cursor: pointer;
+        .title {
+            width: 50%;
+            line-height: 3.19rem;
+            color: #fff;
+            letter-spacing: 0.07rem;
+            font-weight: 500;
+            img {
+                display: inline-block;
+                margin-right: 3%;
+            }
+        }
+        .detail {
+            line-height: 3.19rem;
+            font-size: 0.94rem;
+            color: #fff;
+            img {
+                display: inline-block;
+                @include prefix(transform, rotate(-90deg));
+            }
+        }
+    }
+}
+
+.not-pay {
+    font-size: 0.81rem;
+    line-height: 1.13rem;
+}
+
+/*action: member-card ----*/
+.member-card {
+    -webkit-transition: -webkit-transform .5s, -webkit-box-shadow .5s;
+    transition: -webkit-transform .5s, -webkit-box-shadow .5s;
+    transition: transform .5s, box-shadow .5s;
+    transition: transform .5s, box-shadow .5s, -webkit-transform .5s, -webkit-box-shadow .5s;
+    &:hover {
+        -webkit-transform: translate3d(0, -2px, 0);
+        transform: translate3d(0, -2px, 0);
+        -webkit-box-shadow: 5px 10px 25px rgba(64, 64, 64, 0.35);
+        box-shadow: 5px 10px 25px rgba(64, 64, 64, 0.35);
+        -webkit-transition: -webkit-transform .3s, -webkit-box-shadow .5s;
+        transition: -webkit-transform .3s, -webkit-box-shadow .5s;
+        transition: transform .3s, box-shadow .5s;
+        transition: transform .3s, box-shadow .5s, -webkit-transform .3s, -webkit-box-shadow .5s;
+    }
+}
+
+/*status: member-card ---*/
+.member-card {
+    &.notallow {
+        position: relative;
+        &:after {
+            content: '尚無使用權限';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: $bdrs;
+            background-color: rgba(0,0,0,.5);
+            color: #ffffff;
+            text-align: center;
+            font-size: 1.25rem;
+            letter-spacing: 0.08rem;
+            line-height: $memberCardHeight;
+        }
+    }
+}
+
+/*rwd: .member-card ---*/
+@include rwd($ipad){
+    $memberCardHeight: 13.13rem;
+    .member-card {
+        height: $memberCardHeight;
+        &.notallow {
+            &:after {
+                line-height: $memberCardHeight;
+            }
+        }
+    }
+}
+
+/*item: member-card--profile 會員資料 ---*/
+$btnHeight: 2.19rem;
+.member-level-data {
+    font-size: 0.94rem;
+    color: $color-dark--2;
+    line-height: $btnHeight;
+    text-align: center;
+    span {
+        color: $color-primary-blue;
+        font-weight: bold;
+    }
+    .levelup {
+        background-color: $color-primary-blue;
+        width: 8.13rem;
+        height: $btnHeight;
+        line-height: $btnHeight;
+        border-radius: 5px;
+        text-align: center;
+        color: #fff;
+        text-decoration: underline;
+        display: block;
+        margin: 0 auto;
+        margin-top: 0.88rem;
+    }
+}
+
+@include rwd(#{$ipad - 1px}) {
+    .member-level-data {
+        @include flexbox;
+        @include justify-content(center);
+        @include align-items(center);
+        .levelup {
+            margin-top: 0;
+        }
+    }
+}
+
+.member-status {
+    display: inline-block;
+    margin: 0 2%;
+}
+
+@include rwd_between($ipad-pro, 1100px){
+    .member-status {
+        margin: 0;
+    }
+}
+@include rwd_between($ipad, #{$ipad-pro - 1px}){
+    .member-status {
+        @include prefix(transform, scale(0.8));
+    }
+}
+
+// mickey 20191119 update
+.member-card{
+    background-image: linear-gradient(0deg, #FAFAFA 32%, #F4F4F4 100%);
+    background-color: unset;
+}
+.member-card-title{
+    &.gray-bg{
+        background-color: #B4B4B4;
+    }
+    &.yellow-bg{
+        background-color: #DCCD86;
+    }
+} 

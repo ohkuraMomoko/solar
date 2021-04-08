@@ -1,0 +1,124 @@
+﻿@model ReportsViewModel
+@{
+    var article = Model.ArticleItem;
+    ViewBag.Title = article.ARTICLE_TITLE;
+    var cur_url = System.Configuration.ConfigurationManager.AppSettings["url"] + Request.Url.LocalPath;
+}
+@section header {
+    @Styles.Render("~/Content/pages/reports/article.min.css")
+}
+@section metatags {
+    @Html.Action("GetArticleMetaByType", "Base", new Chailease.SolarEnergy.Model.ArticleItem()
+    {
+        SEO_KWS = article.SEO_KWS,
+        KV_IMG_DESC = article.KV_IMG_DESC,
+        ARTICLE_TITLE = article.ARTICLE_TITLE,
+        ART_TYPE = article.ART_TYPE,
+        KV_IMG_LIST = article.KV_IMG_LIST,
+        KV_IMG_CONTENT = article.KV_IMG_CONTENT
+    });
+}
+
+
+<div class="page-container">
+    <div class="page-kv" data-aos="bg-scale">
+        <h2 class="page-kv--title" data-aos="fade-down" data-aos-delay="400">媒體報導</h2>
+        <img src="@Url.Content("~/Content/images/title_font_NEWS_REPORTS.svg")" alt="NEWS PEPORTS" class="page-kv--img" data-aos="fade-up" data-aos-delay="200">
+    </div>
+    <div class="page-content">
+        <div class="breadcrumb-container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/" href="@Url.Content("~/Home/")">
+                            <span itemprop="name"><img src="@Url.Content("~/Content/images/bread_home_icon.svg")" alt="首頁"></span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/About" href="@Url.Content("~/Home/About")">
+                            <span itemprop="name">認識電廠專家</span>
+                        </a>
+                        <meta itemprop="position" content="2" />
+                    </li>
+                    <li class="breadcrumb-item" aria-current="page" itemprop="itemListElement" itemscope
+                        itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="@Url.Content("~/Reports/")">
+                            <span itemprop="name">媒體報導</span>
+                        </a>
+                        <meta itemprop="position" content="3" />
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page" itemprop="itemListElement" itemscope
+                        itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                            <span itemprop="name">@article.ARTICLE_TITLE</span>
+                        </a>
+                        <meta itemprop="position" content="4" />
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <div class="article-header">
+            <a href="@Url.Content("~/Reports/")" class="btn--back article-header--link">BACK</a>
+        </div>
+        <article class="article-container">
+            <span class="article-source">
+                <span class="article-source--media">@Model.MapMediaTitle[article.MEDIA_TYPE]</span>
+                <span class="article-source--date">@article.OPEN_START.ToString("yyyy年MM月dd日")</span>
+            </span>
+            <div class="article-content">
+                @* type3種, 1. 圖片 2.YOUTUBE 3.沒有 *@
+                <div class="article-content--type">
+                    @if (article.ART_TYPE == 1)
+                    {
+                        <div class="article-content--type-img" style="background-image:url('@Url.Action("Image", "File", new { uri = article.KV_IMG_CONTENT })')"></div>
+                    }
+                    else if (article.ART_TYPE == 2)
+                    {
+                        <div class="article-content--type-video">
+                            <iframe width="560" height="315" src="@article.ARTICLE_VIDEO_URL" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    }
+                </div>
+                <h1 class="article-content--title">@article.ARTICLE_TITLE</h1>
+                <div class="article-content--data">@MvcHtmlString.Create(article.ARTICLE_BODY)</div>
+            </div>
+            <div class="article-footer">
+                <div class="article-footer--social">
+                    @if (!String.IsNullOrEmpty(article.MEDIA_NET))
+                    {
+                        foreach (var media in article.MEDIA_NET.Split(','))
+                        {
+                            switch (media)
+                            {
+                                case "1":
+                                    <button class="btn--social-1 btn--social-1-line js-share-line" 
+                                            data-share="@cur_url"
+                                            data-ga-target="ga_reports_btn_share_line"
+                                            data-ga-article-id="@article.ARTICLE_ALIAS"></button>
+                                    break;
+                                case "2":
+                                    <button class="btn--social-1 btn--social-1-fb js-share-fb" 
+                                            data-share="@cur_url"
+                                            data-ga-target="ga_reports_btn_share_fb"
+                                            data-ga-article-id="@article.ARTICLE_ALIAS"></button>
+                                    break;
+                            }
+                        }
+                    }
+                </div>
+                <div class="article-footer--read">
+                    @if (Model.Prev_Article_Alias != null)
+                    {
+                        <a href="@Url.RouteUrl("ReportsArticle", new { articleAlias = Model.Prev_Article_Alias })" class="btn--article-read">上一篇</a>
+                    }
+                    @if (Model.Next_Article_Alias != null)
+                    {
+                        <a href="@Url.RouteUrl("ReportsArticle", new { articleAlias = Model.Next_Article_Alias })" class="btn--article-read">下一篇</a>
+                    }
+                </div>
+            </div>
+        </article>
+    </div>
+</div>
+

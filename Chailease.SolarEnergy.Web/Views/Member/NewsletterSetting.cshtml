@@ -1,0 +1,125 @@
+﻿
+@{
+    ViewBag.Title = "管理電子報偏好設定";
+}
+@section header {
+    @Styles.Render("~/Content/pages/member/newsletterSetting.min.css")
+}
+@section metatags {
+    @Html.Action("GetMetaByType", "Base", new { id = 1 })
+}
+<div class="page-container">
+    <div class="page-kv">
+        <h1 class="page-kv--title">@ViewBag.Title</h1>
+    </div>
+    <div class="page-content">
+        <div class="breadcrumb-container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/" href="@Url.Content("~/Home/")">
+                            <span itemprop="name"><img src="@Url.Content("~/Content/images/bread_home_icon.svg")" alt="首頁"></span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Member"]/Member/" href="@Url.Content("~/Member/")">
+                            <span itemprop="name">會員中心</span>
+                        </a>
+                        <meta itemprop="position" content="2" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                            <span itemprop="name">電子報偏好設定</span>
+                        </a>
+                        <meta itemprop="position" content="3" />
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <div class="setting-container">
+            <ul class="setting-list">
+                @*<il class="row no-gutters setting-item align-items-center">
+                        <div class="col-12 col-md-9">
+                            <p class="setting-item--title">促銷及優惠</p>
+                            <p class="setting-item--text">所有關於優惠、個人獎勵、省錢折扣。</p>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="d-flex toggle-model-1 js-toggle-btn">
+                                <div class="toggle">
+                                    <input type="checkbox" />
+                                    <label></label>
+                                </div>
+                                <span class="ml-5 toggle-text">已退訂</span>
+                            </div>
+                        </div>
+                    </il>*@
+                <il class="row no-gutters setting-item align-items-center">
+                    <div class="col-12 col-md-9">
+                        <p class="setting-item--title">電廠訊息通知</p>
+                        <p class="setting-item--text">電廠新上架、未繳費釋出、特定電廠開賣。</p>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <div class="d-flex toggle-model-1 js-toggle-btn">
+                            <div class="toggle">
+                                <input type="checkbox" checked />
+                                <label></label>
+                            </div>
+                            <span class="ml-5 toggle-text"></span>
+                        </div>
+                    </div>
+                </il>
+            </ul>
+            <div class="d-flex justify-content-center mt-5">
+                <button class="btn--common btn--common-1">放棄修改</button>
+                <button class="btn--common btn--common-1 ml-3">確定送出</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(function () {
+            // toggle btn ---
+            $('.js-toggle-btn').click(function () {
+                var checkbox = $(this).find(':checkbox');
+                var subscribeText = $(this).find(".toggle-text");
+                checkbox.prop('checked', checkbox.prop('checked'));
+                if (checkbox.prop('checked')) {
+                    subscribeText.text("已訂閱");
+                    $('div.justify-content-center button:nth(1)').addClass('disable');
+                } else {
+                    subscribeText.text("已退訂");
+                    $('div.justify-content-center button:nth(1)').removeClass('disable');
+                }
+            }).click();
+
+            var homeUrl = '@Url.Action("index", "home")';
+            var postUrl = '@Url.Action("NewsNoticeClose")';
+
+            $('div.justify-content-center button:nth(0)').click(function () {
+                window.location = homeUrl;
+            });
+
+            $('div.justify-content-center button:nth(1)').click(function () {
+                var checkbox = $('.js-toggle-btn').find(':checkbox');
+                if (!checkbox.prop('checked')) {
+                    $ajax.Post(postUrl, {}, function (d) {
+                        if (d.result) {
+                            showMsg('訂閱已取消');
+                            $('.js-toggle-btn').unbind('click');
+                            $('input:checkbox').attr('disabled', 'disabled');
+                            $('div.justify-content-center button:nth(1)').addClass('disable').unbind('click');
+                            $('div.justify-content-center button:nth(0)').html('回首頁')
+                        }
+                        else {
+                            showMsg(d.message, 'error');
+                        }
+                    });
+                }
+            });
+
+        });
+    </script>
+}

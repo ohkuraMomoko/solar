@@ -1,0 +1,198 @@
+﻿@model HomeViewModel
+@{
+    ViewBag.Title = "交易紀錄";
+}
+@section metatags {
+    @Html.Action("GetMetaByType", "Base", new { id = 1 })
+}
+<div class="page-container">
+    <div class="page-kv">
+        <h1 class="page-kv--title">交易紀錄</h1>
+    </div>
+    <div class="page-content">
+        <div class="breadcrumb-container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/" href="@Url.Content("~/Home/")">
+                            <span itemprop="name"><img src="@Url.Content("~/Content/images/bread_home_icon.svg")" alt="首頁"></span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Member/" href="@Url.Content("~/Member/")">
+                            <span itemprop="name">會員中心</span>
+                        </a>
+                        <meta itemprop="position" content="2" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                            <span itemprop="name">交易紀錄</span>
+                        </a>
+                        <meta itemprop="position" content="3" />
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        @* 依照裝置切換patical view*@
+        <div id="place" class="place"></div>
+    </div>
+</div>
+<div class="modal fade" id="modalCancle" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-subscription" role="document">
+        <div class="modal-content">
+            <button type="button" class="modal-btn--close" data-dismiss="modal" aria-label="Close">
+                <img src="@Url.Content("~/Content/images/bt_close_w.svg")" alt="">
+            </button>
+            <p class="modal-subscription--title text-bold">確認取消認購 <span id="cancleName">xxx</span></p>
+            <p class="modal-subscription--text">確認是否取消此專案認購？</p>
+            <div class="d-flex justify-content-center">
+                <button class="center btn--common btn--common-2" data-dismiss="modal">返回</button>
+                <button class="center btn--common btn--common-1">確定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div id="printTemplate" class="print-template">
+    列印內容
+</div> -->
+@section scripts {
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+    <script id="template" type="text/x-jquery-tmpl">
+        <div class="item-box">
+            <div class="table-row">
+                <div class="table-data">${tempChartData[0]}</div>
+                <div class="table-data">${tempChartData[1]}</div>
+                <div class="table-data">${tempChartData[2]}</div>
+                <div class="table-data">${tempChartData[3]}</div>
+                <div class="table-data">${tempChartData[4]}</div>
+                <div class="table-data">${tempChartData[5]}</div>
+                <div class="table-data">${tempChartData[6]}</div>
+                <div class="table-data">${tempChartData[7]}</div>
+                <div class="table-data">${tempChartData[8]}</div>
+            </div>
+        </div>
+    </script>
+
+    <script>
+        $(function () {
+            var cachedWidth = $(window).width();
+            var brackPoint = 768;
+            $(window).resize(function () {
+                var newWidth = $(window).width();
+                if (newWidth !== cachedWidth) {
+                    cachedWidth = newWidth;
+                    //    location.reload();
+                    checkDevice();
+                }
+            });
+
+            function detectmob() {
+                if (navigator.userAgent.match(/Android/i)
+                    || navigator.userAgent.match(/webOS/i)
+                    || navigator.userAgent.match(/iPhone/i)
+                    || navigator.userAgent.match(/iPad/i)
+                    || navigator.userAgent.match(/iPod/i)
+                    || navigator.userAgent.match(/BlackBerry/i)
+                    || navigator.userAgent.match(/Windows Phone/i)
+                ) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+            function checkDevice() {
+                if (detectmob() && $(window).width() <= brackPoint) {
+                    $('#place').load("@Url.Content("_TransactionMobile")", init);
+                } else {
+                    $('#place').load("@Url.Content("_TransactionDesktop")", init);
+                }
+            }
+
+            checkDevice();
+
+            // 取消出資 ==========================
+            $('#modalCancle').on('shown.bs.modal', function (e) {
+                $("#cancleName").text($(e.relatedTarget).data('transaction'));
+                $("#modalCancle button.btn--common-1").attr('data-orderno', $(e.relatedTarget).data('orderno')).attr('data-id', $(e.relatedTarget).data('id')).attr('data-orderseqid', $(e.relatedTarget).data('orderseqid'));
+            });
+
+
+            $('#modalCancle').on('hidden.bs.modal', function (e) {
+            });
+        });
+
+        const investTransTypeUrl = '@Url.Action("InvestTransType")';
+        const investListUrl = '@Url.Action("investList")';
+        const investCancelUrl = '@Url.Action("InvestCancel")';
+        var init = function () {
+            getInvestList($('#transactionStatus').val());
+
+            $('#transactionStatus').change(function () {
+                var v = $(this).val();
+                if (v == '*') {
+                    $('section.transaction-collapse-block').fadeIn(500);
+                    return;
+                }
+                if (v == 'AT') {
+                    $('section.transaction-collapse-block').not('section.success').fadeOut();
+                    $('section.success').fadeIn(500);
+                }
+                if (v == 'C0') {
+                    $('section.transaction-collapse-block').not('section.cancle').fadeOut();
+                    $('section.cancle').fadeIn(500);
+                }
+                if (v == 'OS') {
+                    $('section.transaction-collapse-block').not('section.notfinish').fadeOut();
+                    $('section.notfinish').fadeIn(500);
+                }
+            });
+
+            $("#modalCancle button.btn--common-1").click(function () {
+                var orderNo = $(this).attr('data-orderno');
+                var orderSeqId = $(this).attr('data-orderseqid');
+                var id = '#' + $(this).attr('data-id');
+                $ajax.Post(investCancelUrl, { OrderNo: orderNo, OrderSeqId: orderSeqId }, function (d) {
+                    if (d.result) {
+                        showMsg('取消成功');
+                        $('#modalCancle').modal('hide');
+                        $(id).removeClass('notfinish').addClass('cancle').find('.collapse').remove();
+                        $(id + ' a').removeAttr('href').find('div.text-bold').html('取消申請').removeClass('text-heightline');
+                    }
+                    else {
+                        showMsg('取消失敗', 'error');
+                    }
+                });
+            });
+        }
+        var getInvestList = function (statusId) {
+            $ajax.Post(investListUrl, { StatusId: statusId }, function (d) {
+                if (d.investList) {
+                    $.each(d.investList, function (i, v) {
+                        v.index = i;
+                        v.SUBSCRIPTION_AMT = setSymbol(v.SUBSCRIPTION_AMT);
+                        v.PAY_AMT = setSymbol(v.PAY_AMT);
+                        //成功申購
+                        if (v.STATUS == 'AT')
+                            $('div.transaction-body').append(templateBind($('#transactionsuccess').html(), v));
+                        //取消申請
+                        if (v.STATUS == 'C0')
+                            $('div.transaction-body').append(templateBind($('#transactioncancle').html(), v));
+                        //尚未匯款
+                        if (v.STATUS == 'OS')
+                            $('div.transaction-body').append(templateBind($('#transactionnotfinish').html(), v));
+                    });
+                    // 列印 ============================
+                    $(".js-print-btn").on('click', function () {
+                        let target = $(this).data("order");
+                        $($(target).prop('tagName')).removeClass('printPart');
+                        $(this).parents().find(target).addClass("printPart");
+                        window.print();
+                    });
+                }
+            });
+        }
+    </script>
+}

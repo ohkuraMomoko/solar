@@ -1,0 +1,103 @@
+﻿@import "../setting/_variables.scss";
+@import "../setting/_mixins.scss";
+
+.logo-container {
+    width: 100%;
+    max-width: 950px;
+    margin: 0 auto;
+    .logo-content {
+        @include flexbox;
+        @include flex-wrap(wrap);
+        position: relative;
+        &:after,
+        &:before {
+            content: '';
+            width: 5px;
+            height: 100%;
+            background-color: #fff;
+            position: absolute;
+            top: -5px;
+            z-index: 1;
+        }
+        &:before {
+            left: -2px;
+        }
+        &:after {
+            right: 0;
+        }
+    }
+    .logo-item {
+        width: 25%;
+        position: relative;
+        &:after,
+        &:before {
+            content: '';
+            width: 1px;
+            height: 44px;
+            background-color: $color-secondary--2;
+            position: absolute;
+            top: 3px;
+        }
+        &:after {
+            right: 0;
+        }
+        &:before {
+            left: 0;
+        }
+        &--link {
+            width: 130px;
+            height: 50px;
+            background-repeat: no-repeat;
+            background-position: 50% 50%;
+            background-size: cover;
+            margin: 0 auto 25px;
+            display: block;
+            cursor: pointer;
+        }
+        &:last-child {
+            &:after {
+                opacity: 0;
+            }
+        }
+    }
+}
+
+.logo-container--slider{
+    .slick-prev, .slick-next {
+        $btnSize: 2.38rem;
+        width: $btnSize;
+        height: $btnSize;
+        background-image: url("images/arrow_back_bt.svg");
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        background-size: contain;
+        top: calc(50% - #{$btnSize/2});
+        cursor: pointer;
+        z-index: 5;
+        @include change(background-image);
+        &:hover {
+            background-image: url("images/arrow_back_bt_hover.svg");
+        }
+        &:before{
+            display: none;
+        }
+    }
+    .slick-prev {
+        left: -5%;
+    }
+    .slick-next {
+        right: -5%;
+        @include prefix(transform, rotate(180deg) translateY(50%));
+    }
+}
+
+@include rwd($ipad) {
+    .logo-container .logo-item--link {
+        width: 69px;
+        height: 27px;
+        margin-bottom: 7px;
+    }
+    .logo-container .logo-item:after, .logo-container .logo-item:before {
+        display: none;
+    }
+}

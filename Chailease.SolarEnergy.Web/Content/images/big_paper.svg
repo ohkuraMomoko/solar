@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="113px" height="130px" viewBox="0 0 113 130" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.3 (67297) - http://www.bohemiancoding.com/sketch -->
+    <title>big_paper</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-10.6%" y="-9.2%" width="121.2%" height="118.5%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.804129464   0 0 0 0 0.804129464   0 0 0 0 0.804129464  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="big_paper" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-7" filter="url(#filter-1)" fill-rule="nonzero">
+            <rect id="Rectangle" stroke="#ADADAD" stroke-width="5" x="2.5" y="2.5" width="108" height="125" rx="9"></rect>
+            <path d="M29.0498047,3 C33.0853438,3.66666667 35.8817631,6.11111111 37.4390625,10.3333333 C39.7750115,16.6666667 42.8461915,15.943299 48.9989711,15.943299 C53.1008241,15.943299 58.8819845,15.943299 66.3424522,15.943299 C69.0374232,15.7588774 71.3008961,13.8888889 73.1328708,10.3333333 C75.8808328,5 75.1086782,3 81.09375,3 C85.0837979,3 67.7358161,3 29.0498047,3 Z" id="Path-57" stroke="#ADADAD" stroke-width="4"></path>
+            <rect id="Rectangle" fill="#ADADAD" x="20" y="39" width="73" height="5" rx="2.5"></rect>
+            <rect id="Rectangle-Copy-2" fill="#ADADAD" x="20" y="75" width="73" height="5" rx="2.5"></rect>
+            <rect id="Rectangle-Copy" fill="#ADADAD" x="20" y="57" width="73" height="5" rx="2.5"></rect>
+            <rect id="Rectangle-Copy-3" fill="#ADADAD" x="20" y="93" width="73" height="5" rx="2.5"></rect>
+        </g>
+    </g>
+</svg>

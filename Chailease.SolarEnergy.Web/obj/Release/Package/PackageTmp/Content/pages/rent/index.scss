@@ -1,0 +1,331 @@
+﻿/* @site: 全民電廠
+ * @author: nikki
+ * @update: nikki (2019-3-14)
+ * @page: 出租屋頂獲利
+ * @description: 出租屋頂獲利
+ */
+
+@import "../../setting/_variables.scss";
+@import "../../setting/_mixins.scss";
+
+/* common: extend ---*/
+.page-kv {
+    background-image: url("../../images/rent_bigimage.jpg");
+}
+
+@include rwd($ipad) {
+    .page-kv {
+        height:20rem;
+        padding: 7rem 5% 0;
+    }
+
+    .page-kv--img {
+        width: 35vw;
+        max-width: 259px;
+    }
+}
+
+.article {
+    width: 100%;
+    max-width: 66.31rem;
+    margin: 0 auto;
+    padding-top: 5%;
+    color: $color-dark;
+}
+
+/*common: .section-container ====*/
+.section-container {
+    &--title {
+        font-size: 2.25rem;
+        letter-spacing: 0.06rem;
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+}
+
+@include rwd(#{$ipad - 1px}){
+    .section-container {
+        &--title {
+            font-size: 1.13rem;
+            letter-spacing: 0.03rem;
+            margin-bottom: 1.75rem;
+        }
+    }
+}
+
+/*section: p1 ===========================*/
+/*block: .block-----*/
+.block {
+    margin-bottom: 5rem;
+    &-title {
+        font-size: 2rem;
+        letter-spacing: 0.06rem;
+        margin-bottom: 2rem;
+    }
+    &-desc{
+        line-height: 1.56rem;
+        color: $color-dark--2;
+        text-align: justify;
+    }
+}
+
+/*rwd: .block ------*/
+@include rwd(#{$ipad - 1px}) {
+    .block {
+        margin-bottom: 2.81rem;
+        &-title {
+            font-size: 1.38rem;
+            letter-spacing: 0.04rem;
+            margin: .5rem 0;
+        }
+        &-desc {
+            font-size: 0.88rem;
+            line-height: 1.56rem;
+        }
+    }
+}
+
+/*custome: .block-p$ ------*/
+.block {
+    &--p1 {
+        @include flexbox;
+        @include flex-direction(row-reverse);
+        .block-img {
+            width: 100%;
+            max-width: 36.25rem;
+        }
+        .block-content {
+            width: 93%;
+            max-width: 23rem;
+            margin-right: 4rem;
+        }
+    }
+    &--p2 {
+        height: 28rem;
+        background-image: url("../../images/rent_bigimage02.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center top;
+        position: relative;
+        .block-content {
+            width: 90%;
+            position: absolute;
+            bottom: 0;
+            left: 5%;
+        }
+    }
+    &--p3 {
+        padding-left: 5%;
+        @include flexbox;
+        .block-img {
+            width: 100%;
+            max-width: 27.69rem;
+        }
+        .block-content {
+            width: 93%;
+            max-width: 28rem;
+            margin-left: 4rem;
+            padding-top: 10%;
+        }
+    }
+}
+
+@include rwd(#{$ipad - 1px}) {
+    .block {
+        &--p1 {
+            @include flex-direction(column);
+            .block-content {
+                margin: 0 auto;
+            }
+        }
+        &--p2 {
+            height: auto;
+            padding-top: 9.5rem;
+            // background-size: 140%;
+            background: none;
+            position: relative;
+            z-index: 1;
+            &:after {
+                content: '';
+                position: absolute;
+                left: -6%;
+                top: 0;
+                width: 112%;
+                height: 12.13rem;
+                background-image: url("../../images/rent_bigimage02.jpg");
+                background-repeat: no-repeat;
+                background-size: 140%;
+                background-position: top center;
+                z-index: -1;
+            }
+            .block-content  {
+                width: 93%;
+                position: static;
+                margin: 0 auto;
+            }
+        }
+        &--p3 {
+            padding-left: 0;
+            @include flex-direction(column-reverse);
+            .block-img {
+                position: relative;
+                margin-top: -3rem;
+                &:after {
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    top: -3rem;
+                    width: 100%;
+                    height: 10rem;
+                    background-image: linear-gradient(-180deg, #FFFFFF 32%, rgba(255,255,255,0.00) 92%);
+                }
+            }
+            .block-content {
+                margin: 0 auto;
+                padding-top: 0;
+                position: relative;
+                z-index: 2;
+            }
+        }
+    }
+}
+
+/*section: p2 ===========================*/
+.section-container--2{
+    padding: 3.63rem 0 2.13rem;
+    background-image: linear-gradient(-180deg, #FFFCEF 0%, #FFFFFF 86%);
+}
+
+.table-container {
+    width: 100%;
+    max-width: 48.75rem;
+    margin: 0 auto;
+    background-color: #FFFFFF;
+    border: 1px solid #E4E4E4;
+    box-shadow: 0 3px 3px 0 rgba(224,224,224,0.50);
+    padding: 1rem .88rem;
+    &--text {
+        text-align: center;
+        margin-bottom: 1.19rem;
+    }
+}
+@include rwd(#{$ipad - 1px})  {
+    .table-container {
+        padding: 1rem 0;
+        &--text {
+            font-size: 0.94rem;
+            letter-spacing: 0.06rem;
+            line-height: 1.31rem;
+            text-align: left;
+            padding: 0 5%;
+        }
+    }
+}
+.table {
+    width: 100%;
+    text-align: center;
+    font-size: 1.13rem;
+    line-height: 3rem;
+    color: $color-dark;
+    thead {
+        background-color: $color-primary-blue;
+        color: #FFFCEF;
+    }
+    tbody {
+        font-weight: bold;
+        .sm-text {
+            font-size: .8em;
+        }
+        tr {
+            &:nth-child(even){
+                background: #FEFCEC;
+            }
+        }
+    }
+}
+@include rwd(#{$ipad - 1px})  {
+    .table {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        thead td {
+            padding: 0 3%;
+        }
+        tbody tr {
+            height: 2.31rem;
+        }
+    }
+}
+.ask-btn {
+    width: 100%;
+    max-width: 31.5rem;
+    font-size: 1.88rem;
+    border-radius: 9px;
+    margin-top: 2.5rem;
+}
+@include rwd(#{$ipad - 1px}) {
+    .ask-btn {
+        border-radius: 4px;
+        font-size: 1.13rem;
+        letter-spacing: 0.03rem;
+        >span {
+            font-size: 1.13rem;
+        }
+    }
+}
+
+.care-text {
+    margin-top: 1.63rem;
+    text-align: center;
+}
+@include rwd(#{$ipad - 1px}) {
+    .care-text {
+        width: 14rem;
+        font-size: 1rem;
+        line-height: 1.38rem;
+        margin: .81rem auto 0;
+    }
+}
+
+/*section: p3 ===========================*/
+.section-container--3 {
+    width: 90%;
+    margin: 0 auto;
+    padding-top: 5.13rem;
+}
+
+@include rwd(#{$ipad - 1px}){
+    .section-container--3 {
+        padding-top: 0;
+    }
+}
+
+.icon-container {
+    @include flexbox;
+    @include justify-content(space-between);
+    @include align-items(flex-end);
+    .icon {
+        &--title {
+            font-size: 1.38rem;
+            letter-spacing: 0.08rem;
+            color: $color-dark;
+            text-align: center;
+            margin-top: 1.19rem;
+        }
+    }
+}
+
+@include rwd(#{$ipad - 1px}) {
+    .icon-container {
+        @include flex-direction(column);
+        @include align-items(center);
+        .icon {
+            width: 5.63rem;
+            margin-bottom: 5.13rem;
+            &--title {
+                font-size: 1.13rem;
+                letter-spacing: 0.06rem;
+                margin-top: 0.19rem;
+            }
+        }
+    }
+}

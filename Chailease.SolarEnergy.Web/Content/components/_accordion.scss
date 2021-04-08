@@ -1,0 +1,64 @@
+﻿/* page tab 在手機板為accordion */
+.tabs-accordion {
+    $linkHeight: 3.13rem;
+    display: none;
+    margin-bottom: 0.63rem;
+    position: relative;
+    z-index: $tabs-accordion-z;
+
+    .card {
+        border: none;
+        &-header {
+            height: $linkHeight;
+            padding: 0;
+            border: none;
+            .btn-link {
+                width: 100%;
+                height: 100%;
+                text-align: left;
+                padding-left: 15%;
+                letter-spacing: 0.07rem;
+                color: #ffffff;
+                background-color: $color-primary-red;
+                position: relative;
+                &:after {
+                    content: '';
+                    position: absolute;
+                    right: 15%;
+                    top: 38%;
+                    width: 0.88rem;
+                    height: 0.88rem;
+                    background-image: url("images/icon_arrow_down_white.svg");
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                    background-position: 50% 50%;
+                    @include change();
+                }
+                &[aria-expanded="true"] {
+                    &:after {
+                        @include prefix(transform, rotate(180deg));
+                    }
+                }
+            }
+        }
+
+        &-body {
+            padding: 0;
+            padding-left: 15%;
+
+            > a {
+                height: $linkHeight;
+                line-height: $linkHeight;
+                display: block;
+                color: $color-dark--2;
+                padding: 0.1rem 0;
+            }
+        }
+    }
+}
+
+@include rwd($ipad) {
+    .tabs-accordion {
+        display: block;
+    }
+}

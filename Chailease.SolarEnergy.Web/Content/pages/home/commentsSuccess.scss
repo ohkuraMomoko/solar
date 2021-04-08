@@ -1,0 +1,104 @@
+﻿/* @site: 全民電廠
+ * @author: nikki
+ * @update: nikki (2019-4-23)
+ * @page: 我要出租屋頂-留言成功頁
+ * @description: 跟 會員專區-信箱驗證成功頁 一樣，僅上方page-kv不同
+ */
+
+@import "../../setting/_variables.scss";
+@import "../../setting/_mixins.scss";
+
+
+/* common: page-kv -----------*/
+.page-kv {
+    height: 27rem;
+    background-position: center 100%;
+    background-image: url('../../images/message_bigimage.jpg');
+    padding-top: 13rem;
+
+    &-title {
+        font-size: 2.25rem;
+        letter-spacing: 0.23rem;
+        color: #ffffff;
+        text-align: center;
+    }
+}
+/* rwd: page-kv ---*/
+@include rwd($ipad) {
+    .page-kv {
+        height: 12rem;
+        padding-top: 5rem;
+    }
+}
+
+
+.verify {
+    width: 100%;
+    max-width: 490px;
+    margin: 0 auto;
+    padding-top: 5%;
+}
+
+.verify {
+    &--icon {
+        width: 2.5rem;
+    }
+
+    &--title {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        text-align: center;
+        letter-spacing: 0.08rem;
+        color: $color-dark;
+        margin: 1.38rem auto 1.19rem;
+    }
+
+    &-bottom {
+        @include flexbox;
+        @include justify-content(center);
+
+        &--item {
+            width: 50%;
+            padding: 0 5%;
+
+            &:last-child {
+                border-left: 1px solid #d4d4d4;
+            }
+        }
+    }
+
+    &--btn {
+        width: 100%;
+        max-width: 11.25rem;
+        margin-bottom: 1.06rem;
+
+        &-text {
+            font-size: 0.94rem;
+            line-height: 1.31rem;
+            text-align: center;
+            color: $color-dark--2;
+            margin-bottom: 0.69rem;
+        }
+    }
+
+    &--highlight {
+        width: 100%;
+        border-radius: 6px;
+        background-color: #1BBFA4;
+        color: #ffffff;
+        text-align: center;
+        padding: 0.41rem;
+    }
+}
+/*rwd:*/
+@include rwd($ipad) {
+    .verify {
+        &--btn {
+            margin-bottom: 0.56rem;
+        }
+
+        &--btn-text {
+            text-align: left;
+        }
+    }
+}

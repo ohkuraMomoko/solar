@@ -1,0 +1,406 @@
+﻿@model MenuViewModel
+<header id="header" class="header">
+    <div class="header_wrap">
+        <div class="header_inner">
+            <a href="@Url.Content("~/Home/")"
+               class="ga_component_header_link_logo">
+                <h2 id="logo" class="header_logo">全民電廠-太陽能電廠專家</h2>
+            </a>
+            <nav class="menu_container">
+                <span class="menu_container_bg"></span>
+                <ul id="menu" class="menu">
+                    <li>
+                        <a class="menu-link ga_component_header_link_about"
+                           href="@Url.Content("~/Home/About")">認識電廠專家</a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a href="@Url.Content("~/Home/OperationModel")"
+                                   class="ga_component_menu_link_operationmodel">如何運作</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Content("~/Home/About")"
+                                   class="ga_component_menu_link_about">認識電廠專家</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Content("~/News")"
+                                   class="ga_component_menu_link_news">最新消息</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Content("~/Reports")"
+                                   class="ga_component_menu_link_reports">媒體報導</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Content("~/Wiki")"
+                                   class="ga_component_menu_link_wiki">電廠小百科</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Content("~/Home/Comments")"
+                                   class="ga_component_menu_link_comments">線上留言</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="menu-link ga_component_header_link_join"
+                           href="@Url.Content("~/Join")">我想參與認購</a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a href="@Url.Content("~/Join")"
+                                   class="ga_component_menu_link_join">購買太陽能板</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Content("~/Join/Calculate")"
+                                   class="ga_component_menu_link_calculate">獲利試算</a>
+                            </li>
+                                <li>
+                                    <a href="@Url.Content("~/Sell")"
+                                       class="ga_component_menu_link_calculate">二手交易公佈欄</a>
+                                </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="menu-link ga_component_header_link_rent"
+                           href="@Url.Content("~/Rent/Landlord")">我要出租屋頂</a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a href="@Url.Content("~/Rent")"
+                                   class="ga_component_menu_link_rent">出租屋頂獲利</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Content("~/Rent/Landlord")"
+                                   class="ga_component_menu_link_landlord">出租聯繫</a>
+                            </li>
+                        </ul>
+                    </li>
+                    @if (Model.FaqList.Count() > 0)
+                    {
+                        <li>
+                            <a class="menu-link ga_component_header_link_qa"
+                               href="@Url.Content("~/QA")">常見問題</a>
+                            <ul class="sub-menu">
+                                @foreach (var pub in Model.FaqList)
+                                {
+                                    <li>
+                                        @{
+                                            var qaClass = "ga_component_menu_link_" + pub.CD;
+                                        }
+                                        <a href="@Url.RouteUrl("QAIndex", new { CD = pub.CD })"
+                                           class="@qaClass">@pub.NME</a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    }
+                    <li>
+                        @* TODO: 依照會員是否登入區分狀態 *@
+                        @if (Model.LoginUserInfo != null)
+                        {
+                            if (Model.LoginUserInfo.Lvl == "01")
+                            {
+                                @* 一般會員 *@
+                                <a class="menu-link menu-login-info">
+                                    <img src="@Url.Content("~/Content/images/member_icon.svg")" alt="" class="member-icon">
+                                    <span class="welcome">親愛的用戶您好</span>
+                                    @*<span class="name">@Model.LoginUserInfo.CustName</span>*@
+                                </a>
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a href="@Url.Content("~/Member")"
+                                           class="ga_component_menu_link_member">會員中心</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("logout","account")"
+                                           class="ga_component_menu_btn_logout">登出</a>
+                                    </li>
+                                </ul>
+                            }
+                            else
+                            {
+                                @* 出資會員,出資會員(審核中) *@
+                                <a class="menu-link menu-login-info">
+                                    <img src="@Url.Content("~/Content/images/member_icon.svg")" alt="" class="member-icon">
+                                    <span class="welcome">您好</span>
+                                    <span class="name">@Model.LoginUserInfo.CustName</span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a href="@Url.Content("~/Member")"
+                                           class="ga_component_menu_link_member">會員中心</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Content("~/Member/dashboard")"
+                                           class="ga_component_menu_link_dashboard">我的電廠總覽</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Content("~/Member/Interest")"
+                                           class="ga_component_menu_link_interest">電費收益</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Content("~/Member/Transaction")"
+                                           class="ga_component_menu_link_transaction">交易紀錄</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Content("~/Member/Profile")"
+                                           class="ga_component_menu_link_profile">我的資料</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("logout","account")"
+                                           class="ga_component_menu_btn_logout">登出</a>
+                                    </li>
+                                </ul>
+                            }
+                        }
+                        else
+                        {
+                            @* 未登入 *@
+                            <div class="menu-link">
+                                <a class="menu-link-member ga_component_header_btn_login"
+                                   data-toggle="modal"
+                                   data-target="#modalMember"
+                                   data-action="login">
+                                    <img src="@Url.Content("~/Content/images/add_member_icon.svg")" alt="" class="member-icon">
+                                    <span>會員登入&nbsp;&nbsp;</span>
+                                </a>
+                                <a class="menu-link-member ga_component_header_btn_signup"
+                                   data-toggle="modal"
+                                   data-target="#modalMember"
+                                   data-action="signup">
+                                    <span>/ &nbsp; 註冊</span>
+                                </a>
+                            </div>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="#"
+                                       data-toggle="modal"
+                                       data-target="#modalMember"
+                                       data-action="login"
+                                       class="ga_component_menu_btn_login">登入</a>
+                                </li>
+                                <li>
+                                    <a href="#"
+                                       data-toggle="modal"
+                                       data-target="#modalMember"
+                                       data-action="signup"
+                                       class="ga_component_menu_btn_signup">註冊</a>
+                                </li>
+                            </ul>
+                        }
+                    </li>
+                </ul>
+            </nav>
+            @* <nav lang="en" class="js-lang_container lang_container">
+                    <img src="@Url.Content("~/Content/images/member_icon.svg")" alt="" class="member-icon">
+                    <ul class="lang_menu">
+                        <li class="lang_menu_kor">
+                            <a href="#" class="member-btn">會員登入&nbsp;&nbsp;</a>
+                        </li>
+                        <li class="lang_menu_eng">
+                            <a href="#" class="member-btn">/ &nbsp; 註冊</a>
+                        </li>
+                    </ul>
+                </nav>
+            *@
+        </div>
+
+        @* rwd: mobile menu================ *@
+        <div id="small_menu_btn" class="small_menu_btn">
+            <button>
+                <span class="small_menu_btn_line small_menu_btn_line_01"></span>
+                <span class="small_menu_btn_line small_menu_btn_line_02"></span>
+                <span class="small_menu_btn_line small_menu_btn_line_03"></span>
+            </button>
+        </div>
+        <div id="small_menu_close" class="small_menu_close"></div>
+        <div id="small_menu_overlay" class="small_menu_overlay"></div>
+        <div id="small_menu_container" class="small_menu_container">
+            <div class="small_menu_container_inner">
+                <nav id="small_menu_nav" class="small_menu_nav">
+                    <ul id="small_menu" class="inner_list">
+                        <li id="menu-item-01" class="inner_list--item open">
+                            <a href="#">
+                                <span>認識電廠專家</span>
+                            </a>
+                        </li>
+                        <li id="menu-item-02" class="inner_list--item">
+                            <a href="#">
+                                <span>我想參與認購</span>
+                            </a>
+                        </li>
+                        <li id="menu-item-03" class="inner_list--item">
+                            <a href="#">
+                                <span>我要出租屋頂</span>
+                            </a>
+                        </li>
+                        <li id="menu-item-04" class="inner_list--item">
+                            <a href="#">
+                                <span>常見問題</span>
+                            </a>
+                        </li>
+                        @if (Model.LoginUserInfo != null)
+                        {
+                            <li id="menu-item-05" class="inner_list--item">
+                                <a href="#">
+                                    <span>會員專區</span>
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li id="mobileLoginBtn"
+                                class="inner_list--item ga_component_menu_btn_login">
+                                <a href="#">
+                                    <span>登入</span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+                <nav id="small_depth_menu_nav" class="small_depth_menu_nav">
+                    <ul id="small_depth_menu" class="small_depth_menu">
+                        <li class="parent-menu-item-01">
+                            <ul class="sub-menu">
+                                <li>
+                                    <a class="ga_component_menu_link_operationmodel"
+                                       href="@Url.Content("~/Home/OperationModel")">如何運作</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Content("~/Home/About")"
+                                       class="ga_component_menu_link_about">認識電廠專家</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Content("~/News")"
+                                       class="ga_component_menu_link_news">最新消息</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Content("~/Reports")"
+                                       class="ga_component_menu_link_reports">媒體報導</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Content("~/Wiki")"
+                                       class="ga_component_menu_link_wiki">電廠小百科</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Content("~/Home/Comments")"
+                                       class="ga_component_menu_link_comments">線上留言</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="parent-menu-item-02">
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="@Url.Content("~/Join")"
+                                       class="ga_component_menu_link_join">購買太陽能板</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Content("~/Join/Calculate")"
+                                       class="ga_component_menu_link_calculate">獲利試算</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Content("~/Sell")"
+                                       class="ga_component_menu_link_calculate">二手交易公佈欄</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="parent-menu-item-03">
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="@Url.Content("~/Rent")"
+                                       class="ga_component_menu_link_rent">出租屋頂獲利</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Content("~/Rent/Landlord")"
+                                       class="ga_component_menu_link_landlord">出租聯繫</a>
+                                </li>
+                            </ul>
+                        </li>
+                        @if (Model.FaqList.Count() > 0)
+                        {
+                            <li class="parent-menu-item-04">
+                                <ul class="sub-menu">
+                                    @foreach (var pub in Model.FaqList)
+                                    {
+                                        <li>
+                                            @{
+                                                var qaClass = "ga_component_menu_link_" + pub.CD;
+                                            }
+                                            <a href="@Url.RouteUrl("QAIndex", new { CD=pub.CD })"
+                                               class="@qaClass">@pub.NME</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+                        <li class="parent-menu-item-05">
+                            @if (Model.LoginUserInfo != null)
+                            {
+                                @* 已登入 *@
+                                if (Model.LoginUserInfo.Lvl == "01")
+                                {
+                                    //一般會員
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="@Url.Content("~/Member")"
+                                               class="ga_component_menu_link_member">會員中心</a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("logout","account")"
+                                               class="ga_component_menu_btn_logout">登出</a>
+                                        </li>
+                                    </ul>
+                                }
+                                else
+                                {
+                                    //出資會員
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="@Url.Content("~/Member")"
+                                               class="ga_component_menu_link_member">會員中心</a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Content("~/Member/dashboard")"
+                                               class="ga_component_menu_link_dashboard">我的電廠總覽</a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Content("~/Member/Interest")"
+                                               class="ga_component_menu_link_interest">電費收益</a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Content("~/Member/Transaction")"
+                                               class="ga_component_menu_link_transaction">交易紀錄</a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Content("~/Member/Profile")"
+                                               class="ga_component_menu_link_profile">我的資料</a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("logout","account")"
+                                               class="ga_component_menu_btn_logout">登出</a>
+                                        </li>
+                                    </ul>
+                                }
+
+                            }
+                            @*else
+                                {
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a id="mobileLoginBtn"
+                                               class="ga_component_menu_btn_login">登入</a>
+                                            <a id="mobileSignBtn"
+                                               class="ga_component_menu_btn_signup">註冊</a>
+                                        </li>
+                                    </ul>
+                                }*@
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
+            @if (Model.LoginUserInfo == null)
+            {
+                <div id="mobileSignBtn"
+                     class="btn--type btn--type-4 btn-mobile-sigbup ga_component_menu_btn_signup">加入會員</div>
+            }
+
+        </div>
+    </div>
+</header>

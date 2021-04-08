@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="25px" height="20px" viewBox="0 0 25 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.3 (67297) - http://www.bohemiancoding.com/sketch -->
+    <title>triangle</title>
+    <desc>Created with Sketch.</desc>
+    <g id="triangle" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <polygon id="Path-17" fill="#FFFFFF" fill-rule="nonzero" points="1.02359191 20 11.4476015 2 24.1777335 20"></polygon>
+        <path d="M22.4363133,20 L11.4653413,4.29495809 L2.4818117,20 L-0.0515136719,20 L11.274396,0.2 L25.105957,20 L22.4363133,20 Z" id="Combined-Shape" fill="#979797" fill-rule="nonzero"></path>
+    </g>
+</svg>

@@ -1,0 +1,67 @@
+﻿/* =Variables--------------------------*/
+
+/* font style ---*/
+$font-tw: '微軟正黑體', 'Noto Sans TC', Helvetica, Arial, '黑體-繁', 'Heiti TC', '儷黑', 'LiHei', 'Microsoft JhengHei', sans-serif;
+
+/* desktop & mobile size */
+$min-w: 1140px;
+$max-w: 1920px;
+$max-mac: 2560px;
+$content-w: 1290px;
+$ipad-pro: 1024px;
+$ipad: 768px;
+$i6: 375px;
+$i5: 320px;
+$i6p: 414px;
+$mobile-size: 480px;
+$template-w: 1440px;
+
+/* color */
+$color-primary-blue: #1C8886;
+$color-primary-blue--2: #8CD8DF;
+$color-primary-blue--3: #BAEEE8;
+$color-primary-blue--4: #1EB5AC;
+$color-primary-yellow: #FFC56C;
+$color-primary-yellow--2: #FFEF97;
+$color-primary-yellow--3: #FFF3B5;
+$color-menu-bg: #1A7B6D;
+$color-dark: #303030;
+$color-dark--2: #6F6F6F;
+$color-secondary: #A0A0A0;
+$color-secondary--2: #D8D8D8;
+$color-secondary--3: #ECECEC;
+$color-secondary--4: #E9E9E9;
+$color-secondary--5: #F5F5F5;
+$color-step: #d3d3d3;
+$color-warning: #AE0000;
+$yellow: #FFE051;
+$color-line: #00C800;
+$color-hover: #E5F9F6;
+$color-news-class--1: #6F6F6F;
+$color-news-class--2: #958226 ;
+$color-news-class--3: $color-primary-blue;
+$wiki-color-class-1: #B3A24D;
+$wiki-color-class-2: #0BA83F;
+$wiki-color-class-3: #1EB5AC;
+$blue-light: #d4f9f3;
+
+/*animation */
+$cb: cubic-bezier(.215, .61, .355, 1);
+$cb2: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+
+/*z-index */
+$tabs-accordion-z: 50;
+$menu-z: 4000;
+$loadingCover-z: 5000;
+$menuCloseBtn-z: 1000;
+$header-z: 800;
+$index-nav-z: 10;
+$index-splash: 1075;
+//modal bg z:1072;
+$contact-z: 500;
+$video-modal-z: 1074;
+$msg-modal-z: 1074;
+$index-scroll-cover-z: 1074;
+
+/* z-index順序 */
+/* contactBtn => meun mobile => signup/login */

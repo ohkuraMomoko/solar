@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="17px" viewBox="0 0 12 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.3 (67297) - http://www.bohemiancoding.com/sketch -->
+    <title>s_luck_icon</title>
+    <desc>Created with Sketch.</desc>
+    <g id="s_luck_icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-39" fill-rule="nonzero">
+            <g id="Group-34" stroke="#979797">
+                <rect id="Rectangle" stroke-width="1.57857143" x="3.18928571" y="0.789285714" width="5.78142857" height="10.6992063" rx="2.89071429"></rect>
+                <rect id="Rectangle" stroke-width="1.42071429" fill="#FFFFFF" x="0.710357143" y="6.78178571" width="10.5792857" height="9.44039683" rx="1.105"></rect>
+            </g>
+            <path d="M5.604,11.7951665 C5.12768366,11.5641084 4.8,11.0816062 4.8,10.5238095 C4.8,9.74140613 5.44470996,9.10714286 6.24,9.10714286 C7.03529004,9.10714286 7.68,9.74140613 7.68,10.5238095 C7.68,11.0784779 7.35598156,11.558694 6.884,11.7912552 L6.884,12.8381481 C6.884,13.1868765 6.6012998,13.4695767 6.25257143,13.4695767 L6.23542857,13.4695767 C5.8867002,13.4695767 5.604,13.1868765 5.604,12.8381481 L5.604,11.7951665 Z" id="Combined-Shape" fill="#979797"></path>
+        </g>
+    </g>
+</svg>

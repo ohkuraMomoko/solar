@@ -1,0 +1,274 @@
+﻿@{
+    ViewBag.Title = "我的電廠";
+}
+@section header{
+    @Styles.Render("~/Content/pages/member/dashboard.min.css")
+}
+@section metatags {
+    @Html.Action("GetMetaByType", "Base", new { id = 1 })
+}
+<div class="page-container">
+    <div class="page-kv">
+        <h1 class="page-kv--title">我的電廠總覽</h1>
+    </div>
+    <div class="page-content">
+        <div class="breadcrumb-container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/" href="@Url.Content("~/Home/")">
+                            <span itemprop="name"><img src="@Url.Content("~/Content/images/bread_home_icon.svg")" alt="首頁"></span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Member/" href="@Url.Content("~/Member/")">
+                            <span itemprop="name">會員中心</span>
+                        </a>
+                        <meta itemprop="position" content="2" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                            <span itemprop="name">我的電廠</span>
+                        </a>
+                        <meta itemprop="position" content="3" />
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <div class="solar-page-top">
+            <div class="custom-select">
+                <select class="select-article-class" id="powerplants">
+                    <option value="*" selected="">全部電廠</option>
+                </select>
+            </div>
+            <p class="download-text download-text-desktop">
+                太陽能板轉讓文件下載 :
+                <a href="~/home/TransferNotice" target="_blank">
+                    <img src="~/Content/images/s_paper_icon_g.svg" alt="">
+                    轉讓通知書
+                </a>
+            </p>
+            <p class="download-text download-text-mobile">
+                <a href="javascript:alert('nothing..')" target="_blank">
+                    <img src="~/Content/images/s_paper_icon_g.svg" alt="">
+                    下載轉讓通知書
+                </a>
+            </p>
+        </div>
+
+        @*會員中心_我的電廠_無電廠時*@
+        <div class="center solar--nosolar d-none">
+            <img src="@Url.Content("~/Content/images/no-project.svg")" alt="尚無電廠專案" class="center img">
+            <p class="solar--nosolar-text">
+                <img src="@Url.Content("~/Content/images/s_bulb_icon.svg")" alt="Alternate Text" />
+                <span>如有認購電廠，待電廠相關合約開始移轉後才會出現</span>
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalNotAllow" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-subscription" role="document">
+        <div class="modal-content"> 
+            <p class="modal-subscription--text">馬上輕鬆升級為「VIP會員」？</p>
+            <div class="w-70 m-auto d-flex">
+                <button class="center btn--common btn--common-1 btn--form-send">確定</button>
+             
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/html" id="plantBodyFinishTemplate">
+    <div class="solar-body-item--end" style="cursor:pointer;" onclick="window.location.href='{{JoinProjectUrl}}'">
+        <a class="end-text" href="#">
+            [ 目前已完成銷售 ]
+            <br>
+            <span>查看目前電廠進度</span>
+        </a>
+    </div>
+    <div class="solar-body-item--end" style="cursor:pointer;" onclick="window.location.href='{{JoinProjectUrl}}'">
+        <a class="end-text" href="#">
+            [ 目前已完成銷售 ]
+            <br>
+            <span>查看目前電廠進度</span>
+        </a>
+    </div>
+</script>
+<script type="text/html" id="plantBodyTemplate">
+    <div class="solar-body-item power" style="cursor:pointer;" onclick="jumpJoin('{{CASE_NO}}')">
+        <p class="content-title">總發電量<span class="power">{{POWER_GEN_TTL}}</span></p>
+        <p class="content-text">已發電費天數<span>{{POWER_GEN_DAYS_TTL}}</span></p>
+    </div>
+    <div class="solar-body-item money" style="cursor:pointer;" onclick="jumpInvstCase('{{MAJ_SEQ_ID}}')">
+        <p class="content-title">電費收益<span class="money">{{POWER_BENEFIT}}</span></p>
+        <p class="content-text">已分配電費次數<span>{{POWER_FEE_DISTRIBUTION_TIMES}}</span></p>
+    </div>
+</script>
+<script type="text/html" id="plantTemplate">
+    <div class="solar">
+        <p class="solar-title">{{CASE_NAME}}</p>
+        <a onclick="return MemOnSaleLoanCaseChk(this,'{{CASE_NO}}',{{USR_PANELS_NUM}} )" href="javascript:void(0)" class="btn--common btn--common-1 btn-sell-m">我想出售</a>
+        <div class="solar-pic" style="background-image:url('../File/Image?uri={{WEB_CASE_IMG_FILE}}')"></div>
+        <div class="solar-content">
+            <div class="solar-header">
+                <p class="solar-header-item">持有太陽能板數量<span class="sp-USR_PANELS_NUM">{{USR_PANELS_NUM}}</span></p>&nbsp;
+                <p class="solar-header-item">預估內部報酬率<span>{{LOAN_INTEREST_RATE}}％</span></p>
+                <a onclick="return MemOnSaleLoanCaseChk(this,'{{CASE_NO}}',{{USR_PANELS_NUM}} )" href="javascript:void(0)" class="btn--common btn--common-1 btn-sell">我想出售</a>
+            </div>
+            <div class="solar-body"></div>
+            <div class="solar-footer">
+                <p class="solar-footer-item">保險費用<span>{{POWER_INSURANCE_RATE}} %</span></p>
+                <p class="solar-footer-item"></p>
+                <p class="solar-footer-item">維運管理<span>{{POWER_MANGE_RATE}} %</span></p>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="plantTemplateNotSell">
+    <div class="solar">
+        <p class="solar-title">{{CASE_NAME}}</p>
+        <div class="solar-pic" style="background-image:url('../File/Image?uri={{WEB_CASE_IMG_FILE}}')"></div>
+        <div class="solar-content">
+            <div class="solar-header">
+                <p class="solar-header-item">持有太陽能板數量<span class="sp-USR_PANELS_NUM">{{USR_PANELS_NUM}}</span></p>&nbsp;
+                <p class="solar-header-item">預估內部報酬率<span>{{LOAN_INTEREST_RATE}}％</span></p>
+                @*<a onclick="return MemOnSaleLoanCaseChk(this,'{{CASE_NO}}')" href="javascript:void(0)" class="btn--common btn--common-1 btn-sell">我想出售</a>*@
+            </div>
+            <div class="solar-body"></div>
+            <div class="solar-footer">
+                <p class="solar-footer-item">保險費用<span>{{POWER_INSURANCE_RATE}} %</span></p>
+                <p class="solar-footer-item"></p>
+                <p class="solar-footer-item">維運管理<span>{{POWER_MANGE_RATE}} %</span></p>
+            </div>
+        </div>
+    </div>
+</script>
+@section scripts{
+    <script>
+        const powerplantsUrl = '@Url.Action("PlantList")';
+        const solarPanelUrl = '@Url.Action("PropertySolarPanel")';
+        const interestMemberUrl = '@Url.Action("Interest", "Member")';
+        const projectjoinUrl = '@Url.Action("Project", "Join")';
+        function MemOnSaleLoanCaseChk(_ele, _caseNo, usrPanelsNum) {
+            //數量為0不計算
+            if (usrPanelsNum !== 0) {
+                $(_ele).css({ "background-color": "#8CD8DF", "color": "#fff" }).removeAttr("onclick");
+                $ajax.Post('@Url.Action("MemOnSaleLoanCaseChk", "MemOnSale")', { case_No: _caseNo }, function (d) {
+                    if (d.ERRCODE == 0) {
+                        if (d.RESULT) {
+                            window.location.href = '@Url.Action("Calculate", "Sell")/' + _caseNo;
+                        }
+                        else {
+                            $('#modalNotAllow').modal('show');
+                        }
+                    }
+                });
+            }
+
+
+            return false;
+        }
+
+        var pageNo = 1;
+        var populate;
+        $(function () {
+
+            populate = new scrollingendless(function (callback) {
+                getSolarPanel($('#powerplants').val(), pageNo++, callback);
+            }, 1).start();
+
+            $ajax.Post(powerplantsUrl, {}, function (d) {
+                if (d.plant) {
+                    $.each(d.plant, function (i, v) {
+                        $('<option></option>', { val: v.key }).html(v.value).appendTo($('#powerplants'));
+                    });
+                }
+                getSolarPanel($('#powerplants').val(), pageNo++);
+            });
+
+            $('#powerplants').change(function () {
+                $('.solar').remove();
+                pageNo = 1;
+                getSolarPanel($(this).val(), pageNo++);
+                populate.start();
+            });
+
+        });
+
+        var getSolarPanel = function (majSeq, pageNo, callback) {
+            $ajax.Post(solarPanelUrl, { MAJ_SEQ_ID: majSeq, PAGE_INDEX: pageNo }, function (d) {
+                if (d.plant) {
+                    var isEnd = true;
+                    var html = ''
+                    $.each(d.plant, function (i, v) {
+                        //html = $("#plantTemplate").html();
+                        if (v.IS_POWERING == 'N' || v.SH_TRANS_FLAGS == 'N') {
+                            html = $("#plantTemplateNotSell").html();
+                        } else {
+                            html = $("#plantTemplate").html();
+                        }
+
+                        v.POWER_BENEFIT = setSymbol(v.POWER_BENEFIT);
+                        v.POWER_GEN_TTL = setSymbol(v.POWER_GEN_TTL);
+
+                        $('div.page-content').append(templateBind(html, v));
+                        var solarBody = '';
+                        if (v.IS_POWERING == 'Y')
+                            solarBody = templateBind($("#plantBodyTemplate").html(), v);
+                        else
+                            solarBody = templateBind($("#plantBodyFinishTemplate").html(), { JoinProjectUrl: projectjoinUrl + '/' + v.CASE_NO + '#projectTimeLime' });
+                        $('div.page-content').find('div.solar:last div.solar-body').append(solarBody);
+
+                        var pContent = '屋頂租金<span>' + v.POWER_ROOF_RENT_PERCENT + ' %</span>';
+                        if (v.POWER_ROOF_RENT)
+                            if (!isNaN(v.POWER_ROOF_RENT))
+                                if (parseInt(v.POWER_ROOF_RENT) > 0)
+                                    pContent = '屋頂租金(月)<span> ' + setSymbol(v.POWER_ROOF_RENT) + ' 元</span>';
+
+                        $('div.page-content').find('div.solar:last div.solar-footer p:nth(1)').html(pContent);
+
+                        isEnd = v.ROWNO == v.RESULT_COUNT;
+                        $('span.sp-USR_PANELS_NUM').each(function (i,e) {
+                            if ($(e).text() == 0) {
+                                $button = $(e).parent().next().next();
+                                $button.css({ "background-color": "#8CD8DF", "color": "#fff" }).removeAttr("onclick");
+
+                            };
+                        })
+                    });
+
+                    if (isEnd) populate.end();
+                    else if (callback) callback();
+
+                    if (pageNo == 1) {
+                        if (d.plant.length > 0)
+                            $('div.solar--nosolar').addClass('d-none');
+                        else
+                            $('div.solar--nosolar').removeClass('d-none');
+                    }
+                }
+            });
+        }
+
+        var jumpJoin = function (caseNo) {
+            var a = $("<a>", {
+                href: projectjoinUrl + '/' + caseNo
+            });
+            a[0].click();
+            a.remove();
+        }
+
+        var jumpInvstCase = function (id) {
+            var a = $("<a>", {
+                href: interestMemberUrl + '?id=' + id
+            });
+            a[0].click();
+            a.remove();
+        }
+
+    </script>
+}
+

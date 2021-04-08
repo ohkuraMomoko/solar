@@ -1,0 +1,40 @@
+﻿/* =Reset--------------------------------*/
+ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+a {
+    text-decoration: none;
+    transition: all .2s ease-in-out;
+
+    &:hover,
+    &:active,
+    &:focus {
+        text-decoration: none;
+        outline: none !important;
+    }
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    margin: 0
+}
+
+button {
+    border-radius: 0;
+    border: none;
+    outline: none;
+    padding: 0;
+    &:hover,
+    &:active,
+    &:focus {
+        outline: none;
+    }
+}
+img {
+    display: block;
+    max-width: 100%;
+}
+
+/* =Reset--------------------------------*/

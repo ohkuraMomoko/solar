@@ -1,0 +1,170 @@
+﻿@model ReportsViewModel
+@{
+    ViewBag.Title = "媒體報導";
+}
+@section header {
+    @Styles.Render("~/Content/pages/reports/index.min.css")
+}
+@section metatags {
+    @Html.Action("GetMetaByType", "Base", new { id = 4 })
+}
+
+
+<div class="page-container">
+    <div class="page-kv" data-aos="bg-scale">
+        <h2 class="page-kv--title" data-aos="fade-down" data-aos-delay="400">@ViewBag.Title</h2>
+        <img src="@Url.Content("~/Content/images/title_font_NEWS_REPORTS.svg")" alt="NEWS PEPORTS" class="page-kv--img" data-aos="fade-up" data-aos-delay="200">
+    </div>
+    <div class="page-content">
+        <div class="breadcrumb-container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/" href="@Url.Content("~/Home/")">
+                            <span itemprop="name"><img src="@Url.Content("~/Content/images/bread_home_icon.svg")" alt="首頁"></span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/About" href="@Url.Content("~/Home/About")">
+                            <span itemprop="name">認識電廠專家</span>
+                        </a>
+                        <meta itemprop="position" content="2" />
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                            <span itemprop="name">@ViewBag.Title</span>
+                        </a>
+                        <meta itemprop="position" content="3" />
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <div class="peports-logo">
+            @* TODO: 媒體LOGO，接後台資料,
+                與首頁LOGO處接一樣資料, 為slider,
+                連結可為非必填, 若無聯則須拿掉href="#",
+                超過8筆重複.logo-content(=一頁SLIDER內容), 再包.logo-item
+            *@
+            <div id="reportsSlider" class="logo-container logo-container--slider">
+                @{
+                    int count = 0;
+                }
+                @if (Model.LogoInfoList.Count() > 0)
+                {
+                    foreach (var item in Model.LogoInfoList)
+                    {
+                        if (count % 8 == 0)
+                        {
+                            @:<div class="logo-content">
+                        }
+                        <div class="logo-item">
+                            @if (@item.LOGO_URL == null)
+                            {
+                                 <a  class="logo-item--link" style="background-image:url('@Url.Action("Image", "File", new { uri = item.IMG_WEB })')"></a>
+                            }
+                            else
+                            {
+                                <a href="@item.LOGO_URL" target="_blank" class="logo-item--link" style="background-image:url('@Url.Action("Image", "File", new { uri = item.IMG_WEB })')"></a>
+                            }
+                            @*<a href="@(item.LOGO_URL==null?"#":item.LOGO_URL)" target="_blank" class="logo-item--link" style="background-image:url('@Url.Action("Image", "File", new { uri = item.IMG_WEB })')"></a>*@
+                        </div>
+                        if (count % 8 == 7 || count == (Model.LogoInfoList.Count() - 1))
+                        {
+                            @:</div>
+                        }
+                        count++;
+                    }
+                }
+            </div>
+        </div>
+        <div class="article-container">
+            @* TODO: 文章資料放在article-data中, 各別文章架構為article-item, 依照文章類型渲染 *@
+            <div class="article-data" id="article-data-id">
+                @Html.Partial("ArticleList")
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+<script>
+    var populate = new scrollingendless(function (callback) {
+        LoadNewsArticle(callback);
+    });
+    $(function () {
+        $("#reportsSlider").slick({
+            dots: false,
+            autoplay: true,
+            arrows: true,
+            autoplaySpeed: 5000
+        });
+        populate.start();
+        function logElementEvent(eventName, element) {
+            console.log(
+                Date.now(),
+                eventName,
+                element.getAttribute("data-bg")
+            );
+        }
+
+        var callback_finish = function () {
+            logElementEvent("✔️ FINISHED", document.documentElement);
+        };
+
+        lazy = new LazyLoad({
+            elements_selector: "[data-lazy='true']",
+            threshold: 0,
+            // Assign the callbacks defined above
+            //callback_enter: callback_enter,
+            //callback_exit: callback_exit,
+            //callback_reveal: callback_reveal,
+            //callback_loaded: callback_loaded,
+            //callback_error: callback_error,
+            callback_finish: callback_finish
+        });
+    });
+    function LoadNewsArticle(callback) {
+
+        var viewcount = 0;
+        var articleCount = $('#article-data-id>article').length;
+        viewcount = articleCount + @Chailease.SolarEnergy.Web.ViewModel.ReportsViewModel.VIEW_COUNT_INTERVAL;
+
+        //文章類別選取
+        //var selectedvalue = $("#ReportsType_SelectList").val();
+        if ($("#load_next").length > 0) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("ArticleList")',
+                data: { datacount: viewcount },
+                beforeSend: function () {
+                    $("#loadingContainer").fadeIn(100);
+                    $("body").css("overflow", "hidden");
+                    $("#load_next").remove();
+                }, timeout: 10000,
+                success: function (data) {
+                    $("#article-data-id").append(data);
+                    $("#loadingContainer").fadeOut(300);
+                    $("body").css("overflow", "auto");
+                    if ($("#load_next").length > 0) {
+                        if (callback)
+                            callback();
+                    }
+                    lazy.update();
+                },
+                error: function (errMsg) {
+                    $("#loadingContainer").fadeOut(300);
+                    $("body").css("overflow", "auto");
+                    showMsg("文章列表加載失敗","error");
+                },
+                complete: function (XMLHttpRequest, textStatus) {
+                    populate.start();
+                    $("#loadingContainer").fadeOut(300);
+                    $("body").css("overflow", "auto");
+                }
+            });
+        }
+    }
+
+</script>
+}

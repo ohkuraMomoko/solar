@@ -1,0 +1,699 @@
+﻿@*
+    MODAL: 登入/註冊
+*@
+@using System.Configuration
+
+<script type="text/javascript" src="https://apis.google.com/js/client:plusone.js" gapi_processed="true"></script>
+<style>
+    #loginStep2B {
+        display: none;
+    }
+    #loginStep2C1 {
+        display: none;
+    }
+    #loginStep2C2 {
+        display: none;
+    }
+</style>
+
+<script>
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '@ConfigurationManager.AppSettings["FBAppId"]',
+            cookie: true,
+            xfbml: true,
+            version: '@ConfigurationManager.AppSettings["FBApiVersion"]'
+        });
+
+        FB.AppEvents.logPageView();
+
+    };
+
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) { return; }
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<script>
+    var otpCheck = function (_otpForm, otpTelInput, otpCodeInput, submitc_handle, click_handle, submit_type) {
+        if (!submit_type) submit_type = "submit"
+        _otpForm.validate(validateParams);
+        _otpForm.find(otpTelInput).rules("add", { phonecheck: true });
+        _otpForm.find(otpCodeInput).rules("add", { digits: true });
+        _otpForm.find(otpTelInput).parent().find('div.show-resend-time').hide();
+        _otpForm.find(otpTelInput).parent().find('div.btn-sendotpcode').unbind("click");
+        _otpForm.find(otpTelInput).parent().find('div.btn-sendotpcode').click(click_handle);
+        if (submit_type == "submit") {
+            _otpForm.submit(function () {
+                if (!$(this).valid()) return false;
+                var message = _otpForm.find(otpCodeInput);
+                if (!!message.val()) {
+                    submitc_handle(message);
+                } else {
+                    showMsg("需要輸入驗證碼", 'error');
+                }
+            });
+        } else {
+            _otpForm.children("button").unbind("click");
+            _otpForm.children("button").click(function () {
+                if (!$(this).valid()) return false;
+                var message = _otpForm.find(otpCodeInput);
+                if (!!message.val()) {
+                    submitc_handle(message);
+                } else {
+                    showMsg("需要輸入驗證碼", 'error');
+                }
+            })
+        }
+    }
+
+    $(document).ready(function () {
+
+        $("#signFormStep1Form").validate(validateParams);
+        $("#signFormStepSocialForm").validate(validateParams);
+        $("#loginStep2C2").validate(validateParams);
+        
+        // enable signFormStepSocial checkbox
+        $("#signFormStepSocial .checkbox-signup label").click(function () {
+            var self = this;
+            checkStatus = $(self).siblings("input").prop("checked");
+            $(self).siblings("input").prop("checked", !checkStatus);
+        })
+
+        // 註冊
+        $("#signFormStepSocial .btn--form-send").click(function () {
+            // 取得同意狀態
+            var agree = $("#signFormStepSocial .ga_component_signup_checkbox_agree").prop("checked");
+            // 取得是否需要活動訊息
+            var newsletter = $("#signFormStepSocial .ga_component_signup_checkbox_newsletter").prop("checked");
+
+            if (!$("#signFormStepSocialForm").valid()) {
+                return;
+            }
+
+            if (agree) {
+                var datta = { HasNotifyLetter: newsletter };
+
+                $ajax.Post(updTempRegistrationInfo, { HasNotifyLetter: newsletter }, function (d) {
+                    if (d.result) {
+                        signFormPage(2);
+                        // GA: 集客/註冊步驟2/成功
+                        dataLayer.push(
+                            {
+                                "event": "popupPageView",
+                                "popPATH": "/signup/otp",
+                                "popTitle": "會員註冊-Step2-簡訊驗證"
+                            }
+                        );
+
+                        // GA: 圖靈/1.下一步點擊/成功
+                        dataLayer.push({
+                            'event': 'td_normalMemberRegister',
+                            'register_step': '1',
+                            'register_step_status': 'success'
+                        });
+                    }
+                    else {
+                        showMsg(d.message, 'error');
+                        // GA: 圖靈/1.下一步點擊/失敗
+                        dataLayer.push({
+                            'event': 'td_normalMemberRegister',
+                            'register_step': '1',
+                            'register_step_status': 'fail'
+                        });
+                    }
+                });
+            } else {
+            }
+        })
+
+        //
+        function checkIsExistMember(data) {
+            loginFormPage(3);
+            $("#loginStep2C1 .login-step--maildata").text(data.Email);
+            var loginStep2C1 = $("#loginStep2C1");
+            // fixed 驗證碼會不見的問題
+            countdownByloginStep2C1();
+
+            otpCheck(loginStep2C1, 'input#otpTelInputLogin2C1', 'input#otpCodeInputLogin', function (msg) {
+                $ajax.Post(verifyRegPhoneUrl, { Message: msg.val() }, function (d) {
+                    console.log(d);
+                    if (d.result) {
+                        var phoneNo = loginStep2C1.find('input#otpTelInputLogin2C1');
+                        sessionStorage.setItem("phone", phoneNo.val());
+                        loginFormPage(4);
+                    } else {
+                        // 非會員切換到註冊帳戶
+                        //$("a[data-content=signup]").click();
+                        var phoneNo = loginStep2C1.find('input#otpTelInputLogin2C1');
+                        if(!phoneNo.val()) {
+                            showMsg("需要輸入手機號碼", 'error');
+                        } else {
+                            showMsg(d.message, 'error');
+                        }
+                    }
+                });
+            }, SendVerificationCodeCkickForloginStep2C1, "button")
+
+            $("a[data-content=login]").click();
+        }
+
+        // 有註冊過但第一次登入
+        function LoginFirst(data) {
+            loginFormPage(2);
+            $("#loginStep2B .login-step--maildata").text(data.Email);
+            var loginStep2B = $("#loginStep2B");
+            var phoneNum = "";
+            if (!!data.Phone) {
+                $("#loginStep2B #otpTelInputLogin2B").show();
+                $("#loginStep2B #otpTelInputLogin2B").parent().find("div.form-control.ga_component_signup_input_cellphone").remove();
+                phoneNum = data.Phone;
+                maskPhone = phoneNum.substring(0, 4) + "xxx" + phoneNum.substring(7, 10);
+                var phoneItem = $("<div class='form-control ga_component_signup_input_cellphone'></div>");
+                phoneItem.text(maskPhone);
+                $("#loginStep2B #otpTelInputLogin2B").hide();
+                $("#loginStep2B #otpTelInputLogin2B").parent().append(phoneItem);
+                $("#loginStep2B #otpTelInputLogin2B").val(phoneNum);
+            }
+
+            otpCheck(loginStep2B, 'input#otpTelInputLogin2B', 'input#otpCodeInputLogin', function (msg) {
+                $ajax.Post(verifyRegPhoneUrl, { Message: msg.val() }, function (d) {
+                    console.log(d);
+                    if (d.result) {
+                        // google plus註冊
+                        $ajax.Post(bindMemberUrl, {}, function (r) {
+                            console.log(r);
+                            if (r.result) {
+                                window.location.href = "@Request.Url.AbsolutePath";
+                            } else {
+                                showMsg(r.message, 'error');
+                            }
+                        });
+                    } else {
+                        showMsg(d.message, 'error');
+                        countdownClose();
+                    }
+                });
+            }, SendVerificationCodeCkickForloginStep2B, "button")
+
+            $("a[data-content=login]").click();
+        }
+
+        // loginStep2C2
+        $("#loginStep2C2").children("button").click(function () {
+            if (!$(this).parent().find("#userIdLogin").valid()) return false;
+
+            var identity = $(this).parent().find("#userIdLogin").val();
+            var phone = sessionStorage.getItem("phone");
+            $ajax.Post(hasInvestmbr, { id:identity, phoneNo:phone}, function (r) {
+                console.log(r);
+                if (r.result) {
+                    window.location.href = "@Request.Url.AbsolutePath";
+                } else {
+                    showMsg(r.message, 'error');
+                }
+            });
+            console.log();
+        });
+
+        // Login
+        $("#loginStep1 #loginWithFB").click(function () {
+            FB.login(function () {
+                FB.getLoginStatus(function (response) {
+                    if (response.status = "connected") {
+                        var accessToken = response.authResponse.accessToken;
+                        $.post(loginWithFacebookUrl, { accessToken: accessToken },
+                            function (data) {
+                                try {
+                                    console.log(data);
+                                    switch (data.StatusCode) {
+                                        case 220: // 沒有註冊過
+                                            //進入手機OTP驗證頁
+                                            checkIsExistMember(data);
+                                            break;
+                                        case 200:  // 有註冊也已經登入過
+                                            // 直接登入
+                                            window.location.href = "@Request.Url.AbsolutePath";
+                                            break;
+                                        case 201: //有註冊過但第一次登入
+                                            LoginFirst(data);
+                                            break;
+                                        default:
+                                            showMsg(data.Message, 'error');
+                                            break;
+                                    }
+                                } catch (ex) {
+                                    //showMsg(data.Message, 'error');
+                                    console.log(ex);
+                                }
+                            });
+                    }
+                });
+            }, { scope: 'email' })
+        });
+
+        $("#loginStep1 #loginWithGoogle").click(function () {
+            gapi.auth.authorize({
+                client_id: '@ConfigurationManager.AppSettings["GooglePlusClientId"]',
+                scope: 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
+            }, function (loginResp) {
+                if (!!loginResp.access_token) {
+                    $.post(loginWithGoogleUrl, { "accessToken": loginResp.access_token },
+                        function (data) {
+                            try {
+                                console.log(data);
+                                switch (data.StatusCode) {
+                                    case 220: // 沒有註冊過
+                                        //進入手機OTP驗證頁
+                                        //$("#signFormStepSocial .signup-mail-show").text(data.Email);
+                                        //signFormPage(4);
+                                        checkIsExistMember(data);
+                                        break;
+                                    case 200:  // 有註冊也已經登入過
+                                        // 直接登入
+                                        window.location.href = "@Request.Url.AbsolutePath";
+                                        break;
+                                    case 201: //有註冊過但第一次登入
+                                        LoginFirst(data);
+                                        break;
+                                    default:
+                                        showMsg(data.Message, 'error');
+                                        break;
+                                }
+                            } catch (ex) {
+                                console.log(ex);
+                            }
+                    });
+                }
+            });
+        });
+
+        // Signup
+        $("#signFormStep1 #signupWithFB").click(function () {
+            FB.login(function () {
+                FB.getLoginStatus(function (response) {
+                    if (response.status = "connected") {
+                        var accessToken = response.authResponse.accessToken;
+                        $.post(loginWithFacebookUrl, { accessToken: accessToken },
+                            function (data) {
+                                try {
+                                    console.log(data);
+                                    switch (data.StatusCode) {
+                                        case 220: // 沒有註冊過
+                                            //進入手機OTP驗證頁
+                                            $("#signFormStepSocial .signup-mail-show").text(data.Email);
+                                            signFormPage(4);
+                                            break;
+                                        case 200:  // 有註冊也已經登入過
+                                            // 直接登入
+                                            window.location.href = "@Request.Url.AbsolutePath";
+                                            break;
+                                        case 201: //有註冊過但第一次登入
+                                            LoginFirst(data);
+                                            break;
+                                        default:
+                                            showMsg(data.Message, 'error');
+                                            break;
+                                    }
+                                } catch (ex) {
+                                    console.log(ex);
+                                }
+                            });
+                    }
+                });
+            }, { scope: 'email' })
+        });
+
+        $("#signFormStep1 #singinWithGoogle").click(function () {
+            gapi.auth.authorize({
+                client_id: '@ConfigurationManager.AppSettings["GooglePlusClientId"]',
+                scope: 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
+            }, function (loginResp) {
+                if (!!loginResp.access_token) {
+                    $.post(loginWithGoogleUrl, { "accessToken": loginResp.access_token },
+                        function (data) {
+                            try {
+                                console.log(data);
+                                switch (data.StatusCode) {
+                                    case 220: // 沒有註冊過
+                                        //進入手機OTP驗證頁
+                                        $("#signFormStepSocial .signup-mail-show").text(data.Email);
+                                        signFormPage(4);
+                                        break;
+                                    case 200:  // 有註冊也已經登入過
+                                        // 直接登入
+                                        window.location.href = "@Request.Url.AbsolutePath";
+                                        break;
+                                    case 201: //有註冊過但第一次登入
+                                        LoginFirst(data);
+                                        break;
+                                    default:
+                                        showMsg(data.Message, 'error');
+                                        break;
+                                }
+                            } catch (ex) {
+                                console.log(ex);
+                            }
+                    });
+                }
+            });
+        });
+    });
+</script>
+
+<div class="modal fade" id="modalMember" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-signup" role="document">
+        <div class="modal-content">
+            <button type="button" class="modal-btn--close" data-dismiss="modal" aria-label="Close">
+                <img src="@Url.Content("~/Content/images/bt_close_w.svg")" alt="">
+            </button>
+            <div class="cd-tabs">
+                <nav>
+                    <ul class="cd-tabs-navigation">
+                        <li class="cd-tabs-navigation--item">
+                            <a class="cd-tabs-navigation--item-link selected" data-content="login" href="#0">會員登入</a>
+                        </li>
+                        <li class="cd-tabs-navigation--item">
+                            <a class="cd-tabs-navigation--item-link" data-content="signup" href="#0">註冊帳戶</a>
+                        </li>
+                    </ul>
+                </nav>
+                <ul class="cd-tabs-content">
+                    <!-- PART: 登入 -->
+                    <li data-content="login" class="selected">
+                        @* TODO:
+                            STEP1: #loginStep1
+                            STEP2-B (是既有會員，但用戶首次使用第三方授權登入): #loginStep2B
+                            STEP2-C1 (無法判別是否既有會員-確認手機): #loginStep2C1
+                            STEP2-C2 (無法判別是否既有會員-確認身分證): #loginStep2C2
+                        *@
+                        <div id="loginStep1" class="login-step1">
+                            <form class="modal-login-container">
+                                <p class="modal-login-title">請登入會員</p>
+                                <div class="form-item">
+                                    <div class="input-group">
+                                        <input type="email" id="loginEmail" name="loginEmail" class="form-control has-btn-clear" placeholder="請輸入 E-mail" autocomplete="email" required>
+                                        <div class='js-input-btn-clear input-btn-clear'></div>
+                                    </div>
+                                </div>
+                                <div class="form-item">
+                                    <div class="input-group input-group--password">
+                                        <input type="password" id="loginPassword" name="loginPassword" class="form-control" placeholder="請輸入密碼" autocomplete="new-password" required>
+                                        <a href="#0" class="js-hide-password hide-password"></a>
+                                    </div>
+                                </div>
+                                <div class="form-item">
+                                    <div class="input-group d-flex justify-content-center">
+                                        @*@Html.RecaptchaV2()*@
+                                        @Html.v2CheckecBox()
+                                    </div>
+                                </div>
+                                <button class="center btn--common btn--common-1 btn--form-send">登入</button>
+                                <div class="row no-gutters">
+                                    <div class="col modal-login-email">忘記E-mail？</div>
+                                    <div class="col modal-login-forget">忘記密碼？</div>
+                                </div>
+                            </form>
+                            <div class="row pl-2 mt-5">
+                                <div class="col-6">
+                                    <img id="loginWithGoogle" src="@Url.Content("~/Content/images/btn_gg_in.svg")" class="cup" />
+                                </div>
+                                <div class="col-6">
+                                    <img id="loginWithFB" src="@Url.Content("~/Content/images/btn_fb_in.svg")" class="cup" />
+                                </div>
+                            </div>
+                        </div>
+                        <form id="loginStep2B" class="modal-login-container login-step2">
+                            <p class="login-step--title">資訊安全驗證</p>
+                            <p class="login-step--desc">此Email曾有註冊紀錄，請協助以手機驗證，確認註冊/登入者為同一人<br/>(號碼如非本人所有，請聯絡客服中心)</p>
+                            <p class="login-step--maildata"></p>
+                            <div class="form-item">
+                                <div class="input-group input-sendotpcode">
+                                    <input type="tel" id="otpTelInputLogin2B" name="otpTelInputLogin" 
+                                        placeholder="請輸入手機號碼" autocomplete="tel" required
+                                        class="form-control ga_component_signup_input_cellphone" >
+                                    <div class="sendtopcode-common btn-sendotpcode active ga_component_signup_btn_cellphone--sendverification">發送驗證碼</div>
+                                    <div class="sendtopcode-common show-resend-time">重發(&nbsp;<span id="countdown" class="time"></span>&nbsp;)</div>
+                                </div>
+                            </div>
+                            <div class="form-item">
+                                <div class="input-group input-otpcode">
+                                    <input type="text" id="otpCodeInputLogin" name="otpCodeInputLogin" 
+                                        placeholder="請輸入驗證碼" required maxlength="6"
+                                        class="form-control ga_component_signup_input_cellphone--verification" >
+                                </div>
+                            </div>
+                            <button type="button" class="center btn--common btn--common-1 btn--form-send">完成</button>
+                        </form>
+                        <form id="loginStep2C1" class="modal-login-container login-step2">
+                            <p class="login-step--title">資訊安全驗證</p>
+                            <p class="login-step--desc">如您已是VIP會員，請完成以下驗證；尚未成為VIP會員，請至【註冊帳戶】頁面進行註冊</p>
+                            <div class="form-item">
+                                <div class="input-group input-sendotpcode">
+                                    <input type="tel" id="otpTelInputLogin2C1" name="otpTelInputLogin" 
+                                        placeholder="請輸入手機號碼" autocomplete="tel" required
+                                        class="form-control ga_component_signup_input_cellphone" >
+                                    <div class="sendtopcode-common btn-sendotpcode active ga_component_signup_btn_cellphone--sendverification">發送驗證碼</div>
+                                    <div class="sendtopcode-common show-resend-time">重發(&nbsp;<span id="countdown" class="time"></span>&nbsp;)</div>
+                                </div>
+                            </div>
+                            <div class="form-item">
+                                <div class="input-group input-otpcode">
+                                    <input type="text" id="otpCodeInputLogin" name="otpCodeInputLogin" 
+                                        placeholder="請輸入驗證碼" required maxlength="6" class="form-control" >
+                                </div>
+                            </div>
+                            <button type="button" class="center btn--common btn--common-1 btn--form-send">下一步</button>
+                        </form>
+                        <form id="loginStep2C2" class="modal-login-container login-step2">
+                            <p class="login-step--title">資訊安全驗證</p>
+                            <p class="login-step--desc">如您已是VIP會員，請完成以下驗證；尚未成為VIP會員，請至【註冊帳戶】頁面進行註冊</p>
+                            <div class="form-item">
+                                <div class="input-group">
+                                    <input type="text" id="userIdLogin" name="userIdLogin" 
+                                        placeholder="請輸入身分證字號" required class="form-control" >
+                                </div>
+                            </div>
+                            <button type="button" class="center btn--common btn--common-1 btn--form-send">完成</button>
+                        </form>
+                    </li>
+                    <!-- PART: 註冊 -->
+                    <li data-content="signup">
+                        @* TODO:
+        STEP1 表單資料: #signFormStep1
+        STEP 第三方註冊-確認信箱: #signFormStepSocial
+        STEP2 OTP驗證: #signFormStep2
+        STEP3 註冊結果: #signFormStep3
+                        *@
+                        <div id="signFormStep1" class="modal-signup-container-step1">
+                            <form id="signFormStep1Form" class="modal-signup-container ">
+                                <p class="modal-signup-title">註冊成為新會員</p>
+                                <div class="center form-step-container form-step-container--2">
+                                    <div class="form-step form-step--active">
+                                        <div class="form-step--number">1</div>
+                                        <p class="form-step--title">填寫資訊</p>
+                                    </div>
+                                    <div class="form-step">
+                                        <div class="form-step--number">2</div>
+                                        <p class="form-step--title">手機驗證</p>
+                                    </div>
+                                </div>
+                                <div class="form-item">
+                                    <div class="input-group">
+                                        <input type="email" id="signin-email" name="signin-email"
+                                               placeholder="請輸入 E-mail" autocomplete="email" required
+                                               class="form-control has-btn-clear ga_component_signup_input_email">
+                                        <div class='js-input-btn-clear input-btn-clear'></div>
+                                    </div>
+                                </div>
+                                <div class="form-item">
+                                    <div class="input-group input-group--password">
+                                        <input type="password" id="signin-password" name="signin-password"
+                                               placeholder="請輸入密碼" autocomplete="new-password" required
+                                               class="form-control ga_component_signup_input_password">
+                                        <a href="#0" class="js-hide-password hide-password"></a>
+                                    </div>
+                                </div>
+                                <div class="form-item">
+                                    <div class="input-group input-group--password">
+                                        <input type="password" id="signin-password2" name="signin-password2"
+                                               placeholder="請輸入密碼" autocomplete="new-password" required
+                                               class="form-control ga_component_signup_input_password-repeat">
+                                        <a href="#0" class="js-hide-password hide-password"></a>
+                                        <p class="input-care-info">需包含大小寫字母、數字、長度 8~12 字母之間</p>
+                                    </div>
+                                </div>
+                                @*<div class="form-item">
+                    <div class="input-group has-inputtext">
+                        <div class="custom-select">
+                            <select id="sourceSelectSignup" required
+                                    class="form-control ga_component_signup_select_howknow"></select>
+                        </div>
+                        <input type="text" name="sourceEtcSignup" id="sourceEtcSignup" class="select-inputtext" placeholder="輸入其他訊息來源">
+                    </div>
+                </div>
+                <div class="form-item">
+                    <div class="input-group">
+                        <input type="text" id="signin-recommender"
+                            name="signin-recommender" placeholder="請輸入推薦人編號"
+                            class="form-control ga_component_signup_input_referrer">
+                        <div class='js-input-btn-clear input-btn-clear'></div>
+                    </div>
+                </div>*@
+                                <div class="form-item">
+                                    <div class="input-group d-flex justify-content-center">
+                                        @*@Html.RecaptchaV2()*@
+                                        @Html.v2CheckecBox()
+                                    </div>
+                                </div>
+                                <div class="form-item">
+                                    <div class="checkbox-signup input-group">
+                                        <input type="checkbox" name="check-display"
+                                               id="modalSignupRawCheakbox" required
+                                               class="ga_component_signup_checkbox_agree">
+                                        <label for="modalSignupRawCheakbox">我已詳閱並同意<a href="@Url.Content("~/Home/Membership")" target="_blank">會員條款與隱私權保護及資訊安全政策</a></label>
+                                    </div>
+                                </div>
+                                <div class="form-item">
+                                    <div class="checkbox-signup">
+                                        <input type="checkbox" name="check-modalHasNotifyLetterCheakbox"
+                                               id="modalHasNotifyLetterCheakbox"
+                                               class="ga_component_signup_checkbox_newsletter">
+                                        <label for="modalHasNotifyLetterCheakbox">有相關訊息及新聞電廠請通知我</label>
+                                    </div>
+                                </div>
+                                <button class="center btn--common btn--common-1 btn--form-send ga_component_signup_btn_step1">下一步</button>
+                            </form>
+                            <div class="row pl-2 mt-5">
+                                <div class="col-6">
+                                    <a id="singinWithGoogle"> <img src="@Url.Content("~/Content/images/btn_gg_in.svg")" class="cup" /></a>
+                                </div>
+                                <div class="col-6">
+                                    <a id="signupWithFB"><img src="@Url.Content("~/Content/images/btn_fb_in.svg")" class="cup" /></a>
+                                </div>
+                            </div>
+                        </div>
+                        @* 第三方註冊-確認信箱 *@
+                        <div id="signFormStepSocial" class="modal-signup-container-step-social">
+                            <form id="signFormStepSocialForm" class="modal-signup-container ">
+                                <p class="modal-signup-title">註冊成為新會員</p>
+                                <div class="center form-step-container form-step-container--2">
+                                    <div class="form-step form-step--active">
+                                        <div class="form-step--number">1</div>
+                                        <p class="form-step--title">填寫資訊</p>
+                                    </div>
+                                    <div class="form-step">
+                                        <div class="form-step--number">2</div>
+                                        <p class="form-step--title">手機驗證</p>
+                                    </div>
+                                </div>
+                                <div class="form-item">
+                                    <div class="input-group">
+                                        <p class="signup-mail-show"></p>
+                                    </div>
+                                </div>
+                                <button class="center btn--common btn--common-1 btn--form-send">下一步</button>
+                                <div class="form-item">
+
+                                    <div class="checkbox-signup input-group">
+                                        <input type="checkbox" name="check-display"
+                                               id="modalSignupRawCheakbox" required
+                                               class="ga_component_signup_checkbox_agree">
+                                        <label for="modalSignupRawCheakbox">我已詳閱並同意<a href="@Url.Content("~/Home/Membership")" target="_blank">會員條款與隱私權保護及資訊安全政策</a></label>
+                                    </div>
+                                </div>
+                                <div class="form-item">
+                                    <div class="checkbox-signup">
+                                        <input type="checkbox" name="check-modalHasNotifyLetterCheakbox"
+                                               id="modalHasNotifyLetterCheakbox"
+                                               class="ga_component_signup_checkbox_newsletter">
+                                        <label for="modalHasNotifyLetterCheakbox">有相關訊息及新聞電廠請通知我</label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <form id="signFormStep2" class="modal-signup-container modal-signup-container-step2">
+                            <p class="modal-signup-title">請輸入簡訊驗證碼</p>
+                            <div class="center form-step-container form-step-container--2">
+                                <div class="form-step form-step--active">
+                                    <div class="form-step--number">1</div>
+                                    <p class="form-step--title">填寫資訊</p>
+                                </div>
+                                <div class="form-step form-step--active">
+                                    <div class="form-step--number">2</div>
+                                    <p class="form-step--title">手機驗證</p>
+                                </div>
+                            </div>
+                            <div class="form-item">
+                                <div class="input-group input-sendotpcode">
+                                    <input type="tel" id="otpTelInput" name="otpTelInput"
+                                           placeholder="請輸入手機號碼" autocomplete="tel" required
+                                           class="form-control ga_component_signup_input_cellphone" >
+                                    <div class="sendtopcode-common btn-sendotpcode active ga_component_signup_btn_cellphone--sendverification">發送驗證碼</div>
+                                    <div class="sendtopcode-common show-resend-time">重發(&nbsp;<span id="countdown" class="time"></span>&nbsp;)</div>
+                                </div>
+                            </div>
+                            <div class="form-item">
+                                <div class="input-group input-otpcode">
+                                    <input type="text" id="otpCodeInput" name="otpCodeInput"
+                                           placeholder="請輸入驗證碼" required maxlength="6"
+                                           class="form-control ga_component_signup_input_cellphone--verification" >
+                                </div>
+                            </div>
+                            <button class="center btn--common btn--common-1 btn--form-send ga_component_signup_btn_step2">完成</button>
+                        </form>
+                        <div id="signFormStep3" class="modal-signup-container modal-signup-container-step3">
+                            <img src="@Url.Content("~/Content/images/success_info_icon.svg")" alt="" class="center signup-success--icon">
+                            <p class="signup-success--title">完成會員註冊</p>
+                            <p class="signup-success--text">
+                                <img src="@Url.Content("~/Content/images/s_bulb_icon.svg")" alt="" srcset="">
+                                您的Email 確認信已發送至：
+                                <span>mi0921@test.com</span>
+                            </p>
+                            <div class="signup-success-bottom">
+                                <div class="signup-success-bottom--item">
+                                    <a href="@Url.Content("~/Join/")"
+                                       class="btn--common btn--common-1 signup-success--btn ga_component_signup_link_join">
+                                        查看更多專案</a>
+                                    <p class="signup-success--btn-text">試算電廠收益以及了解更多電廠相關資訊</p>
+                                </div>
+                                <div class="signup-success-bottom--item">
+                                    <a href="@Url.Action("Index", "AdvancedPurchase")"
+                                       class="btn--common btn--common-1 signup-success--btn ga_component_signup_link_levelup">
+                                        成為VIP會員
+                                    </a>
+                                    <p class="signup-success--btn-text">預先成為VIP會員可省去購買電廠時等待時間</p>
+                                    <p class="signup-success--highlight">請先備妥&nbsp;身分證&nbsp;及&nbsp;存摺</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    const loginUrl = '@Url.Action("login", "Account")';
+    const menuUrl = '@Url.Action("_Menu", "Components")';
+    const tempRegistUrl = '@Url.Action("TempRegistrationInfo", "Account")';
+    const updTempRegistrationInfo = '@Url.Action("UpdTempRegistrationInfo", "Account")';
+    const getRegPhoneUrl = '@Url.Action("GetRegPhoneMessage", "Account")';
+    const getRegPhoneBindUrl = '@Url.Action("GetRegPhoneMessageForBIND", "Account")';    
+    const verifyRegPhoneUrl = '@Url.Action("VerifyRegPhoneMessage", "Account")';
+    const registerUrl = '@Url.Action("Register", "Account")';
+    const registerForSocailUrl = '@Url.Action("RegisterForSocial", "Account")';
+    const recommenderUrl = '@Url.Action("HasRecommend", "Account")';
+    const hasAccountUrl = '@Url.Action("HasAccount", "Account")';
+    const componentsInitUrl = '@Url.Action("ComponentsInit", "Account")';
+    const bindMemberUrl = '@Url.Action("BindMember", "Account")';
+    const loginWithGoogleUrl = '@Url.Action("LoginWithGooglePlus", "Account")';
+    const loginWithFacebookUrl = '@Url.Action("LoginWithFacebook", "Account")';
+    const hasInvestmbr ='@Url.Action("HasInvestmbr", "Account")';
+</script> 

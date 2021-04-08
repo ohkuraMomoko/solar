@@ -1,0 +1,22 @@
+﻿@model HomeViewModel
+@{
+    ViewBag.Title = "分享頁面";
+}
+
+@section metatags {
+    @Html.Action("GetMetaByType", "Base", new { id = 9 })
+}
+
+
+<div>
+
+</div>
+@section scripts {
+    <script>
+        $(function () {
+            var anchorOfSignUp = "#signup";
+            var redirecturl = "@Url.Action("Index","Home",new { invite = ViewBag.shareMember })" + anchorOfSignUp;
+            window.location.href = redirecturl;
+        });
+    </script>
+}

@@ -1,0 +1,62 @@
+﻿@model CommentsViewModel
+
+@{
+    ViewBag.Title = "我要留言";
+}
+@section header {
+    @Styles.Render("~/Content/pages/home/commentsSuccess.min.css")
+}
+@section metatags {
+    @Html.Action("GetMetaByType", "Base", new { id = 1 })
+}
+
+<div class="page-container">
+    <div class="page-kv" data-aos="bg-scale">
+        <h1 class="page-kv--title" data-aos="fade-down" data-aos-delay="400">@ViewBag.Title </h1>
+    </div>
+    <div class="page-content">
+        <div class="breadcrumb-container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/" href="@Url.Content("~/Home/")">
+                            <span itemprop="name"><img src="@Url.Content("~/Content/images/bread_home_icon.svg")" alt="首頁"></span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/About/" href="@Url.Content("~/Home/About/")">
+                            <span itemprop="name">認識電廠專家</span>
+                        </a>
+                        <meta itemprop="position" content="2" />
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                            <span itemprop="name">@ViewBag.Title</span>
+                        </a>
+                        <meta itemprop="position" content="3" />
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <div class="verify">
+            <img src="@Url.Content("~/Content/images/success_info_icon.svg")" alt="" class="center verify--icon">
+            <p class="verify--title">留言發送成功</p>
+            <div class="verify-bottom">
+                <div class="verify-bottom--item">
+                    <a href="@Url.Content("~/Join/")" class="btn--common btn--common-1 verify--btn">查看更多專案</a>
+                    <p class="verify--btn-text">立即查看開放認購電廠<br />及暸解更多電廠相關資訊</p>
+                </div>
+                <div class="verify-bottom--item">
+                    <a href="@Url.Content("~/home/")" class="btn--common btn--common-1 verify--btn">回首頁</a>
+                    <p class="verify--btn-text">
+                        回網站首頁查看<br />
+                        更多全民電廠資訊
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

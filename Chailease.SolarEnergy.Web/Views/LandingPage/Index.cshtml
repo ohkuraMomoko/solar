@@ -1,0 +1,467 @@
+﻿@using System.Text.RegularExpressions
+@model LandingPageViewModel
+
+@section header {
+    @Styles.Render("~/Content/pages/landingPage/index.min.css")
+}
+@section metatags {
+    @Html.Action("GetMeta", "LandingPage", new { model = Model.LandingPage })
+}
+
+<div class="wrapper">
+    <section id="kvBg" class="p1 kv-container" alt="'@Model.LandingPage.ImageAlt'">
+        @* TODO: 後台需上桌手機兩張圖
+            桌機需出到1920寬
+            手機須出到750寬
+        *@
+        @*<picture>
+            <source media="(max-width: 750px)" srcset="@Url.Action("Image", "File", new { uri = Model.LandingPage.PhoneImgName })">
+            <img src="@Url.Action("Image", "File", new { uri = Model.LandingPage.BannerImgName })" alt="'@Model.LandingPage.ImageAlt'" class="center">
+        </picture>*@
+
+        <h1 class="kv-title d-none">
+            <label id="title">@Model.LandingPage.Title]</label>
+        </h1>
+        <div class="kv-btn" data-toggle="modal" data-target="#modalMember" data-action="signup">
+            <p class="kv-btn--text">立即註冊</p>
+            <p class="kv-btn--texts">掌握第一手電廠資訊</p>
+        </div>
+    </section>
+    <section class="p2 slogin-container">
+        <div class="p2-content">
+            <h2 class="p2-content--title">願以行動支持再生能源發展民眾</h2>
+            <p class="p2-content--desc">資訊來源：綠色和平《台灣民眾支持能源轉型及願付代價》（2018）</p>
+        </div>
+        <p class="p2-num">79%</p>
+    </section>
+    <section class="p3 join-container">
+        <div class="p3-top">
+            <p class="p3-top--desc">@Model.LandingPage.ZoneTxt</p>
+            <a href="@Url.Content(Model.LandingPage.ZoneUrl)" class="p3-top--btn">@Model.LandingPage.ZoneButton</a>
+        </div>
+    </section>
+    <section class="solar-container">
+        @*電廠資料================*@
+        <div class="join-solar-containter">
+            <div id="LoanCaseList" class="join-solar" data-aos="fade" data-aos-delay="300">
+                <div id="joinSlider" class="join-solar">
+                    @{
+                        if (Model.LoanCaseList.Data != null)
+                        {
+                            foreach (var item in Model.LoanCaseList.Data)
+                            {
+                                string regex = @"^(?'name'[^\d]+)?(?'num'\d+)?";
+                                string caseName = Regex.Match(item.CASE_NAME, regex).Groups["name"].Value;
+                                string caseNameNo = Regex.Match(item.CASE_NAME, regex).Groups["num"].Value;
+                                decimal availableAmt = 0;
+                                decimal availableNum = 0;
+                                decimal perPrice = 0;
+                                decimal intRate = 0;
+                                decimal annIncome = 0;
+
+                                decimal.TryParse(item.LOAN_AVAILABLE_AMT, out availableAmt);
+                                decimal.TryParse(item.AVG_ANNUAL_INCOME, out annIncome);
+                                if (decimal.TryParse(item.PRIORITY_CLAIM_IR, out intRate))
+                                {
+                                    intRate = intRate * 100;
+                                }
+
+                                if (decimal.TryParse(item.PANELS_PRICE, out perPrice))
+                                {
+                                    if (perPrice != 0)
+                                    {
+                                        availableNum = availableAmt / perPrice;
+                                    }
+
+                                }
+
+                                if (item.CASE_WEB_STATUS == "01")
+                                {
+                                    <div class="solar-item solar-item--close" data-id="@item.POWER_PLANT_NUM">
+                                        <div class="solar-item-header">
+                                            <span class="solar-item-header--status">尚未開放</span>
+                                        </div>
+                                        <div data-lazy="true" class="solar-item-body" data-bg="url('@Url.Action("Image", "File", new { uri = item.CASE_IMG })')">
+                                            <div class="solar-item-body--header">
+                                                <div class="solar-title">
+                                                    <p class="solar-title--data">@caseName</p>
+
+                                                    @if (!string.IsNullOrEmpty(caseNameNo))
+                                                    {
+                                                        <span class="solar-title--num">@caseNameNo</span>
+                                                    }
+                                                </div>
+                                                <div class="solar-percentage">
+                                                    <p class="solar-percentage--text">預估內部報酬率</p>
+                                                    <p class="solar-percentage--data">@intRate.ToString("G29")</p>
+                                                </div>
+                                            </div>
+                                            <div class="solar-item-body--content">
+                                                <p class="solar-close-text">即將上架</p>
+                                                <a class="btn--type btn--type-3 solar-item-btn PrjOpenNotice"
+                                                   data-caseno="@item.CASE_NO"
+                                                   data-name="@caseName"
+                                                   data-ga-target="ga_projectlist_solaritem_link"
+                                                   data-ga-project-status="close"
+                                                   data-ga-project-id="@item.POWER_PLANT_NUM">
+                                                    <span>專案開放請通知我</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else if (item.CASE_WEB_STATUS == "03")
+                                {
+                                    <div class="solar-item solar-item--notice" data-id="@item.POWER_PLANT_NUM">
+                                        <div class="solar-item-header">
+                                            <span class="solar-item-header--status">已售完</span>
+                                            <div class="solar-item-header--pcs">
+                                                <span class="pcs-all">@item.PANELS_NUM</span>總數&nbsp;/
+                                                <span class="pcs-canbuy">@availableNum.ToString("N0")</span>可買
+                                            </div>
+                                        </div>
+                                        <div data-lazy="true" class="solar-item-body" data-bg="url('@Url.Action("Image", "File", new { uri = item.CASE_IMG })')">
+                                            <div class="solar-item-body--header">
+                                                <div class="solar-title">
+                                                    <p class="solar-title--data">@caseName</p>
+                                                    @if (!string.IsNullOrEmpty(caseNameNo))
+                                                    {
+                                                        <span class="solar-title--num">@caseNameNo</span>
+                                                    }
+                                                </div>
+                                                <div class="solar-percentage">
+                                                    <p class="solar-percentage--text">預估內部報酬率</p>
+                                                    <p class="solar-percentage--data">@intRate.ToString("G29")</p>
+                                                </div>
+                                            </div>
+                                            <div class="solar-item-body--content">
+                                                <div class="solar-pcs">
+                                                    <p class="solar-pcs--text">每片價格</p>
+                                                    <span class="solar-pcs-price">@perPrice.ToString("N0")</span>
+                                                </div>
+                                                <div class="solar-income">
+                                                    <p class="solar-income--text">預估平均年收益</p>
+                                                    <span class="solar-income--pcs">@annIncome.ToString("N0")</span>
+                                                </div>
+                                                <a class="btn--type btn--type-3 solar-item-btn PrjReleaseNotice"
+                                                   data-caseno="@item.CASE_NO"
+                                                   data-name="@caseName"
+                                                   data-ga-target="ga_projectlist_solaritem_link"
+                                                   data-ga-project-status="soldout"
+                                                   data-ga-project-id="@item.POWER_PLANT_NUM">
+                                                    <span>有專案釋出請通知我</span>
+                                                </a>
+                                                @*<div class="solar-notice">
+                                                        <p>尚有<span>132</span>片<br>太陽能板未繳款</p>
+                                                    </div>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else if (item.CASE_WEB_STATUS == "04")
+                                {
+                                    <div class="solar-item solar-item--finish" data-id="@item.POWER_PLANT_NUM">
+                                        <div class="solar-item-header">
+                                            <span class="solar-item-header--status">認購完成</span>
+                                            <div class="solar-item-header--pcs">
+                                                <span class="pcs-all">@item.PANELS_NUM</span>總數&nbsp;/
+                                                <span class="pcs-canbuy">@availableNum.ToString("N0")</span>可買
+                                            </div>
+                                        </div>
+                                        <div data-lazy="true" class="solar-item-body" data-bg="url('@Url.Action("Image", "File", new { uri = item.CASE_IMG })')">
+                                            <div class="solar-item-body--header">
+                                                <div class="solar-title">
+                                                    <p class="solar-title--data">@caseName</p>
+                                                    @if (!string.IsNullOrEmpty(caseNameNo))
+                                                    {
+                                                        <span class="solar-title--num">@caseNameNo</span>
+                                                    }
+                                                </div>
+                                                <div class="solar-percentage">
+                                                    <p class="solar-percentage--text">預估內部報酬率</p>
+                                                    <p class="solar-percentage--data">@intRate.ToString("G29")</p>
+                                                </div>
+                                            </div>
+                                            <div class="solar-item-body--content">
+                                                <div class="solar-pcs">
+                                                    <p class="solar-pcs--text">每片價格</p>
+                                                    <span class="solar-pcs-price">@perPrice.ToString("N0")</span>
+                                                </div>
+                                                <div class="solar-income">
+                                                    <p class="solar-income--text">預估平均年收益</p>
+                                                    <span class="solar-income--pcs">@annIncome.ToString("N0")</span>
+                                                </div>
+                                                <p class="solar-finish">認購完成</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else if (item.CASE_WEB_STATUS == "02")
+                                {
+                                    <div class="solar-item solar-item--onsale" data-id="@item.POWER_PLANT_NUM">
+                                        <div class="solar-item-header">
+                                            @*<span class="solar-item-header--status">募資中 @item.CASE_WEB_STATUS</span>*@
+                                            <span class="solar-item-header--status">開放認購中</span>
+                                            <div class="solar-item-header--pcs">
+                                                <span class="pcs-all">@item.PANELS_NUM</span>總數&nbsp;/
+                                                <span class="pcs-canbuy">@availableNum.ToString("N0")</span>可買
+                                            </div>
+                                        </div>
+                                        <div data-lazy="true" class="solar-item-body" data-bg="url('@Url.Action("Image", "File", new { uri = item.CASE_IMG })')">
+                                            <div class="solar-item-body--header">
+                                                <div class="solar-title">
+                                                    @* API資料可能只會回傳"雲林大埤004號"，要切割字串，單位"號"由樣式產生 *@
+                                                    <p class="solar-title--data">@caseName</p>
+                                                    @if (!string.IsNullOrEmpty(caseNameNo))
+                                                    {
+                                                        <span class="solar-title--num">@caseNameNo</span>
+                                                    }
+
+                                                </div>
+                                                <div class="solar-percentage">
+                                                    <p class="solar-percentage--text">預估內部報酬率</p>
+                                                    @* 只須報酬率放置資料，"%"由樣式產生 *@
+                                                    <p class="solar-percentage--data">@intRate.ToString("G29")</p>
+                                                </div>
+                                            </div>
+                                            <div class="solar-item-body--content">
+                                                <div class="solar-pcs">
+                                                    <p class="solar-pcs--text">每片價格</p>
+                                                    <span class="solar-pcs-price">@perPrice.ToString("N0")</span>
+                                                </div>
+                                                <div class="solar-income">
+                                                    <p class="solar-income--text">預估平均年收益</p>
+                                                    <span class="solar-income--pcs">@annIncome.ToString("N0")</span>
+                                                </div>
+                                                <div data-href="@Url.Action("Project", "Join",new { id = item.CASE_NO})"
+                                                     class="btn--type btn--type-3 solar-item-btn project-item-btn"
+                                                     data-ga-target="ga_projectlist_solaritem_link"
+                                                     data-ga-project-status="onsale"
+                                                     data-ga-project-id="@item.POWER_PLANT_NUM"
+                                                     data-name="@caseName@caseNameNo"
+                                                     data-price="@perPrice">
+                                                    <span>VIEW MORE</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+
+        @*電廠資料================*@
+    </section>
+    <section class="p4 world-container">
+        <h3 class="world-title">世界各國也在參與公民電廠</h3>
+        <div class="world-content">
+            <div class="world-item">
+                <div class="world-item-left">
+                    <p class="world-item-left--name">德國</p>
+                    <img src="@Url.Content("~/Content/images/landingpage/world-1.png")" alt="德國" class="world-item-left--icon">
+                </div>
+                <div class="world-item-right">再生能源發展最迅速的國家。公民電廠佔所有再生能源電廠50％以上。</div>
+            </div>
+            <div class="world-item">
+                <div class="world-item-left">
+                    <p class="world-item-left--name">日本</p>
+                    <img src="@Url.Content("~/Content/images/landingpage/world-2.png")" alt="日本" class="world-item-left--icon">
+                </div>
+                <div class="world-item-right">2011年日本福島核災，福島居民決定採取行動。以自己籌資建置再生能源－太陽光電系統來展現決心。</div>
+            </div>
+            <div class="world-item">
+                <div class="world-item-left">
+                    <p class="world-item-left--name">奧地利</p>
+                    <img src="@Url.Content("~/Content/images/landingpage/world-3.png")" alt="奧地利" class="world-item-left--icon">
+                </div>
+                <div class="world-item-right">2012年維也納居民開始投資社區太陽光電，支持再生能源發展。</div>
+            </div>
+            <div class="world-item">
+                <div class="world-item-left">
+                    <p class="world-item-left--name">蘇格蘭</p>
+                    <img src="@Url.Content("~/Content/images/landingpage/world-4.png")" alt="蘇格蘭" class="world-item-left--icon">
+                </div>
+                <div class="world-item-right">針對在地參與公民電廠行動提出具體的政策框架。</div>
+            </div>
+        </div>
+        <p class="world-src">資訊來源：GREENPEACE《Potential for citizen-produced electricity in the EU》(2016)</p>
+    </section>
+    <section class="p5 about-container">
+        <div class="about-top">
+            <p class="about-top--title">現在你也可以參與公民電廠行動</p>
+            <a href="@Url.Content("~/Join/Calculate")" class="about-top--btn">立即參與</a>
+        </div>
+        <div class="goodpoint-container">
+            <div class="goodpoint">
+                <p class="goodpoint--text">中租旗下太陽能電廠數<br>(截至2019.01)</p>
+                <p class="goodpoint--number">
+                    @Model.CONFIG["PowerPlants"]
+                    <span class="unit-dollor">座</span>
+                </p>
+            </div>
+            <div class="goodpoint goodpoint--center">
+                <p class="goodpoint--text">累積發電數<br>(2016.01~2019.01)</p>
+                <p class="goodpoint--number">
+                    @Model.CONFIG["AccummulatePower"]億
+                    <span class="unit-dollor">度</span>
+                </p>
+            </div>
+            <div class="goodpoint">
+                <p class="goodpoint--text">累積電費金額數<br>(2016.01~2019.01)</p>
+                <p class="goodpoint--number">
+                    @Model.CONFIG["AccummulateMoney"]億
+                    <span class="unit-dollor">元</span>
+                </p>
+            </div>
+        </div>
+        <p class="intro-care">註：此太陽能電廠數、發電度數、發電金額之計算，是來自於中租控股旗下(包含但不限於中租迪和)所管理之已掛表太陽能電廠，而不是全民電廠目前的相關數字</p>
+    </section>
+    @if (!string.IsNullOrEmpty(Model.LandingPage.VideoUrl))
+    {
+        <section class="p6 video-container">
+            <iframe allowfullscreen="1" class="source" frameborder="0" height="100%" id="myVideo"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    src="@Model.LandingPage.VideoUrl"
+                    width="100%"></iframe>
+        </section>
+    }
+</div>
+
+<section class="bottom-section">
+    <div class="bottom-section--title">聯絡我們</div>
+    <div class="bottom-contact">
+        <a href="tel:0226581677" target="_blank" class="bottom-contact-item">
+            <img src="@Url.Content("~/Content/images/landingpage/icon-phone.png")" alt="(02) 2658-1677" class="contact-icon">
+            <div class="contact-content">
+                <p class="contact-link">(02) 2658-1677</p>
+                <p class="contact-time">09:30-12:00 / 13:30-17:00</p>
+            </div>
+        </a>
+        <a href="mailto:finmart@chailease.com.tw" target="_blank" class="bottom-contact-item">
+            <img src="@Url.Content("~/Content/images/landingpage/icon-mail.png")" alt="finmart@chailease.com.tw" class="contact-icon">
+            <div class="contact-content">
+                <p class="contact-link">finmart@chailease.com.tw</p>
+            </div>
+        </a>
+        <a href="https://goo.gl/maps/wDxfJGYCVTucM3rp6" target="_blank" class="bottom-contact-item">
+            <img src="@Url.Content("~/Content/images/landingpage/icon-map.png")" alt="台北市內湖區瑞光路362號8樓" class="contact-icon">
+            <div class="contact-content">
+                <p class="contact-link">台北市內湖區瑞光路362號8樓</p>
+            </div>
+        </a>
+    </div>
+    <div class="bottom-award">
+        中租雲端服務(股)公司為中租控股(股)公司與中租迪和(股)公司之子公司。
+        中租控股(股)公司列入台灣50指數成分股，公司治理健全，並連四年入選台灣20大國際品牌。
+        集團積極推動永續綠能，具豐富產業融資與太陽能電廠經驗。
+    </div>
+</section>
+
+@section scripts {
+    <script>
+        $(function () {
+            var cachedWidth = $(window).width();
+            var kvImgMobile = '@Url.Action("Image", "File", new { uri = Model.LandingPage.PhoneImgName })';
+            var kvImgDesktop = '@Url.Action("Image", "File", new { uri = Model.LandingPage.BannerImgName })';
+
+            $(window).resize(function(){
+                var newWidth = $(window).width();
+                if(newWidth !== cachedWidth){
+                //避免在手機scroll就會觸發resize event
+                    cachedWidth = newWidth;
+                    if ($(window).width() < 1024) {
+                        $("#kvBg").css("background-image", "url(" + kvImgMobile + ")" )
+                    } else {
+                        $("#kvBg").css("background-image", "url(" + kvImgDesktop + ")")
+                    }
+                }
+            });
+
+            function detectmob() {
+                if( navigator.userAgent.match(/Android/i)
+                || navigator.userAgent.match(/webOS/i)
+                || navigator.userAgent.match(/iPhone/i)
+                || navigator.userAgent.match(/iPad/i)
+                || navigator.userAgent.match(/iPod/i)
+                || navigator.userAgent.match(/BlackBerry/i)
+                || navigator.userAgent.match(/Windows Phone/i)
+                ){
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+
+            if ($(window).width() < 1024) {
+                $("#kvBg").css("background-image", "url(" + kvImgMobile + ")")
+            } else {
+                $("#kvBg").css("background-image", "url(" + kvImgDesktop + ")")
+            }
+
+
+            var isBlockHide = @Model.LandingPage.IsBlockHide;
+            if (isBlockHide) $('.p2').addClass('d-none');
+            Page;
+        });
+
+
+        // 參與募資 VIEW MORE 按鈕
+        $(".project-item-btn").on("click", function () {
+            var href = $(this).data("href");
+            //GA: 圖靈/增強型電子商務-Product Click
+            dataLayer.push({
+                'ecommerce': {
+                    'click': {
+                        'products': [{
+                            'id': $(this).data("ga-project-id"),
+                            'name': $(this).data("name"),
+                            'category': "太陽能板",
+                            'price': $(this).data("price")
+                        }]
+                    }
+                },
+                'event': 'td_productClick'
+            });
+            window.location = href;
+        });
+
+        var Page = new function () {
+            var callback_finish = function () {
+                logElementEvent("✔️ FINISHED", document.documentElement);
+            };
+
+            lazy = new LazyLoad({
+                elements_selector: "[data-lazy='true']",
+                threshold: 0,
+                callback_finish: callback_finish
+            });
+
+            $("#joinSlider").slick({
+                dots: false,
+                arrows: true,
+                slidesToShow: 3,
+                slidesToScroll: 3,
+                responsive: [
+                    {
+                        breakpoint: 1200,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 2
+                        }
+                    },
+                    {
+                        breakpoint: 750,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1
+                        }
+                    }
+                ]
+            });
+        }
+    </script>
+}

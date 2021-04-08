@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="276px" height="190px" viewBox="0 0 276 190" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.3 (67297) - http://www.bohemiancoding.com/sketch -->
+    <title>register_images_ID2</title>
+    <desc>Created with Sketch.</desc>
+    <g id="register_images_ID2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-11">
+            <path d="M0.475,0.475 L0.475,189.525 L275.525,189.525 L275.525,0.475 L0.475,0.475 Z" id="Rectangle-15-Copy" stroke="#A0A0A0" stroke-width="0.95" opacity="0.5"></path>
+            <text id="反面" font-family="PingFangTC-Regular, PingFang TC" font-size="19" font-weight="normal" fill="#A0A0A0">
+                <tspan x="28" y="49">反面</tspan>
+            </text>
+            <polygon id="Rectangle-2-Copy-2" fill="#D8D8D8" points="14 75 261 75 261 77 14 77"></polygon>
+            <g id="Group" transform="translate(14.000000, 92.000000)" fill="#D8D8D8">
+                <rect id="Rectangle-61" x="0" y="0" width="7.57575758" height="38"></rect>
+                <polygon id="Rectangle-61-Copy" points="14.2045455 0 15.1515152 0 15.1515152 38 14.2045455 38"></polygon>
+                <rect id="Rectangle-61-Copy-2" x="21.780303" y="0" width="2.84090909" height="38"></rect>
+                <rect id="Rectangle-61-Copy-3" x="31.25" y="0" width="18.9393939" height="38"></rect>
+                <polygon id="Rectangle-61-Copy-7" points="85.2272727 0 108.901515 0 108.901515 38 85.2272727 38"></polygon>
+                <polygon id="Rectangle-61-Copy-8" points="115.530303 0 117.424242 0 117.424242 38 115.530303 38"></polygon>
+                <polygon id="Rectangle-61-Copy-9" points="124.05303 0 125 0 125 38 124.05303 38"></polygon>
+                <polygon id="Rectangle-61-Copy-4" points="56.8181818 0 57.7651515 0 57.7651515 38 56.8181818 38"></polygon>
+                <rect id="Rectangle-61-Copy-5" x="65.3409091" y="0" width="4.73484848" height="38"></rect>
+                <polygon id="Rectangle-61-Copy-6" points="76.7045455 0 78.5984848 0 78.5984848 38 76.7045455 38"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

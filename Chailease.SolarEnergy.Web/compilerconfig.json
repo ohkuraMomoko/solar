@@ -1,0 +1,126 @@
+﻿[
+  {
+    "outputFile": "Content/pages/join/project.css",
+    "inputFile": "Content/pages/join/project.scss"
+  },
+  {
+    "outputFile": "Content/pages/qa.css",
+    "inputFile": "Content/pages/qa.scss"
+  },
+  {
+    "outputFile": "Content/pages/member/dashboard.css",
+    "inputFile": "Content/pages/member/dashboard.scss"
+  },
+  {
+    "outputFile": "Content/pages/member/index.css",
+    "inputFile": "Content/pages/member/index.scss"
+  },
+  {
+    "outputFile": "Content/pages/member/interest.css",
+    "inputFile": "Content/pages/member/interest.scss"
+  },
+  {
+    "outputFile": "Content/pages/member/interestDesktop.css",
+    "inputFile": "Content/pages/member/interestDesktop.scss"
+  },
+  {
+    "outputFile": "Content/pages/member/interestMobile.css",
+    "inputFile": "Content/pages/member/interestMobile.scss"
+  },
+  {
+    "outputFile": "Content/pages/home/index.css",
+    "inputFile": "Content/pages/home/index.scss"
+  },
+  {
+    "outputFile": "Content/pages/member/Transaction.css",
+    "inputFile": "Content/pages/member/Transaction.scss"
+  },
+  {
+    "outputFile": "Content/pages/member/transactionDesktop.css",
+    "inputFile": "Content/pages/member/transactionDesktop.scss"
+  },
+  {
+    "outputFile": "Content/pages/member/transactionMobile.css",
+    "inputFile": "Content/pages/member/transactionMobile.scss"
+  },
+  {
+    "outputFile": "Content/layout.css",
+    "inputFile": "Content/layout.scss"
+  },
+  {
+    "outputFile": "Content/pages/member/profile.css",
+    "inputFile": "Content/pages/member/profile.scss"
+  },
+  {
+    "outputFile": "Content/pages/home/guideline.css",
+    "inputFile": "Content/pages/home/guideline.scss"
+  },
+  {
+    "outputFile": "Content/pages/home/guidelines.css",
+    "inputFile": "Content/pages/home/guidelines.scss"
+  },
+  {
+    "outputFile": "Content/pages/home/error.css",
+    "inputFile": "Content/pages/home/error.scss"
+  },
+  {
+    "outputFile": "Content/pages/rent/landlord.css",
+    "inputFile": "Content/pages/rent/landlord.scss"
+  },
+  {
+    "outputFile": "Content/pages/member/newsletterSetting.css",
+    "inputFile": "Content/pages/member/newsletterSetting.scss"
+  },
+  {
+    "outputFile": "Content/pages/home/about.css",
+    "inputFile": "Content/pages/home/about.scss"
+  },
+  {
+    "outputFile": "Content/pages/home/operationModel.css",
+    "inputFile": "Content/pages/home/operationModel.scss"
+  },
+  {
+    "outputFile": "Content/pages/home/privacy.css",
+    "inputFile": "Content/pages/home/privacy.scss"
+  },
+  {
+    "outputFile": "Content/pages/rent/index.css",
+    "inputFile": "Content/pages/rent/index.scss"
+  },
+  {
+    "outputFile": "Content/plugin/aos/aos.css",
+    "inputFile": "Content/plugin/aos/aos.scss"
+  },
+  {
+    "outputFile": "Content/pages/join/calculate.css",
+    "inputFile": "Content/pages/join/calculate.scss"
+  },
+  {
+    "outputFile": "Content/pages/member/mailVerifySuccess.css",
+    "inputFile": "Content/pages/member/mailVerifySuccess.scss"
+  },
+  {
+    "outputFile": "Content/pages/rent/success.css",
+    "inputFile": "Content/pages/rent/success.scss"
+  },
+  {
+    "outputFile": "Content/pages/home/commentsSuccess.css",
+    "inputFile": "Content/pages/home/commentsSuccess.scss"
+  },
+  {
+    "outputFile": "Content/pages/wiki/index.css",
+    "inputFile": "Content/pages/wiki/index.scss"
+  },
+  {
+    "outputFile": "Content/pages/news/index.css",
+    "inputFile": "Content/pages/news/index.scss"
+  },
+  {
+    "outputFile": "Content/pages/reports/index.css",
+    "inputFile": "Content/pages/reports/index.scss"
+  },
+  {
+    "outputFile": "Content/pages/landingPage/index.css",
+    "inputFile": "Content/pages/landingPage/index.scss"
+  }
+]

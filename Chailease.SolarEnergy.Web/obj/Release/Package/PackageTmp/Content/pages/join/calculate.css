@@ -1,0 +1,427 @@
+@charset "UTF-8";
+/* @site: 全民電廠
+ * @author: nikki
+ * @update: nikki (2018-12-28)
+ * @page: 獲利試算
+ * @description: 獲利試算
+ */
+/* =Variables--------------------------*/
+/* font style ---*/
+/* desktop & mobile size */
+/* color */
+/*animation */
+/*z-index */
+/* z-index順序 */
+/* contactBtn => meun mobile => signup/login */
+/*為手譏評板裝置，且裝置奘為橫向*/
+/*若只判斷orientation:landscape，desktop size也包含在內*/
+/* common: extend ---*/
+.page-kv {
+  background-image: url("../../images/calculate_bigimage.jpg");
+}
+
+/* block: calculate ---*/
+.calculate {
+  width: 80%;
+  color: #303030;
+  border-top: 0.44rem solid #D4F9F3;
+  -webkit-box-shadow: 0 9px 5px 0 rgba(0, 0, 0, 0.1);
+          box-shadow: 0 9px 5px 0 rgba(0, 0, 0, 0.1);
+  padding: 1rem 0 4rem;
+  margin: 0 auto;
+}
+
+.calculate-title {
+  font-size: 2.25rem;
+  text-align: center;
+  line-height: 3.13rem;
+  letter-spacing: 0.06rem;
+}
+
+/* rwd: calculate ---*/
+@media only screen and (max-width: 768px) {
+  .calculate {
+    width: 100%;
+    border-top-width: 3px;
+    padding-bottom: 1.44rem;
+  }
+  .calculate-title {
+    font-size: 1.13rem;
+    letter-spacing: 0.03rem;
+  }
+}
+
+/* block: calculate-content ---*/
+.calculate-content {
+  width: 80%;
+  max-width: 36rem;
+  margin: 0 auto;
+  padding-top: 4.88rem;
+}
+
+.calculate-content-info {
+  font-size: 0.94rem;
+  color: #A0A0A0;
+  text-align: right;
+}
+
+.calculate-content-info-2 {
+  line-height: 1.38rem;
+  letter-spacing: 0.03rem;
+  color: #6F6F6F;
+  text-align: center;
+}
+
+/* rwd: calculate ---*/
+@media only screen and (max-width: 768px) {
+  .calculate-content {
+    width: 100%;
+    padding-top: 5%;
+  }
+  .calculate-content-info {
+    font-size: 0.63rem;
+    line-height: 1rem;
+    text-align: left;
+  }
+  .calculate-content-info-2 {
+    width: 80%;
+    font-size: 0.88rem;
+    line-height: 1.25rem;
+    letter-spacing: 0;
+    text-align: center;
+    margin: 0 auto;
+  }
+}
+
+/* item: calculate-item ---*/
+.calculate-item {
+  height: 2.63rem;
+  margin-bottom: 2.5rem;
+}
+
+.calculate-item > div {
+  line-height: 2.63rem;
+}
+
+.calculate-item--title {
+  font-size: 1.36rem;
+}
+
+.calculate-item--data {
+  text-align: center;
+}
+
+.calculate-item--data-2 {
+  font-size: 1.82rem;
+  color: #6F6F6F;
+}
+
+.calculate-item--data-3 {
+  font-size: 2.13rem;
+  color: #1EB5AC;
+}
+
+.calculate-item--info {
+  font-size: 1.13rem;
+  text-align: right;
+}
+
+.care-info {
+  display: none;
+  font-size: 0.81rem;
+  color: #A0A0A0;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+@media only screen and (max-width: 768px) {
+  .calculate-item--care {
+    display: none;
+  }
+  .care-info {
+    display: block;
+  }
+  .calculate-item {
+    margin-bottom: 1.5rem;
+  }
+  .calculate-item > div {
+    line-height: 1.8rem;
+  }
+  .calculate-item--title {
+    font-size: 15px;
+  }
+  .calculate-item--data {
+    text-align: right;
+  }
+  .calculate-item--data-2 {
+    font-size: 1.27rem;
+    padding-right: 5%;
+  }
+  .calculate-item--data-3 {
+    font-size: 1.49rem;
+    padding-right: 5%;
+  }
+  .calculate-item--info {
+    font-size: 0.63rem;
+    text-align: left;
+  }
+}
+
+/* item: calc-link ---*/
+.calc-link {
+  width: 90%;
+  max-width: 31rem;
+  height: 4.81rem;
+  line-height: 4.81rem;
+  font-size: 1.88rem;
+  margin: 3.88rem auto 1.13rem;
+}
+
+/* rwd: calc-link ---*/
+@media only screen and (max-width: 768px) {
+  .calc-link {
+    width: 100%;
+    height: 2.81rem;
+    font-size: 1.13rem;
+    line-height: 2.81rem;
+    margin: 1.7rem auto;
+  }
+}
+
+/* item: calc-input ---*/
+.calc-input-container {
+  position: relative;
+}
+
+.calc-input-container:after {
+  content: '片';
+  position: absolute;
+  right: 29%;
+  bottom: 10%;
+  width: 2rem;
+  font-size: 1.16rem;
+}
+
+.calc-input-container.no-unit:after {
+  display: none;
+}
+
+.calc-input {
+  width: 100%;
+  max-width: 14.5rem;
+  height: 2.63rem;
+  background: #E5F9F6;
+  border: 1px solid #D8D8D8;
+  -webkit-box-shadow: inset 0 5px 3px 0 rgba(0, 0, 0, 0.1);
+          box-shadow: inset 0 5px 3px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 2.42px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 0.07rem;
+  line-height: 2.63rem;
+  text-align: center;
+  outline: none;
+}
+
+/*item: calc-input ---*/
+@media only screen and (max-width: 768px) {
+  .calc-input-container::after {
+    right: 0;
+    bottom: 0;
+  }
+  .calc-input {
+    line-height: 1.8rem;
+    height: 1.8rem;
+    font-size: 1.2em;
+  }
+}
+
+/* block: join-step-container ---*/
+.join-step-container {
+  width: 100%;
+  padding: 0 5% 15%;
+  background-repeat: no-repeat;
+  background-position: 50% 300px;
+  background-size: 100%;
+  background-image: url("../../images/calculate_bgimage.jpg");
+}
+
+/* rwd: join-step-container ---*/
+@media only screen and (max-width: 768px) {
+  .join-step-container {
+    background-position-y: 100%;
+    padding: 5% 0 12rem;
+  }
+}
+
+/* item: join-title ---*/
+.join-title {
+  font-size: 2.25rem;
+  text-align: center;
+  color: #A0A0A0;
+  margin-bottom: 3.75rem;
+}
+
+/* rwd: join-title ---*/
+@media only screen and (max-width: 768px) {
+  .join-title {
+    font-size: 1.13rem;
+    letter-spacing: 0.03rem;
+    margin-bottom: 2.5rem;
+  }
+}
+
+/* item : join-step  ---*/
+.join-step {
+  width: 100%;
+  max-width: 73.81rem;
+  margin: 0 auto;
+  display: -webkit-box;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+  -moz-justify-content: space-around;
+  justify-content: space-around;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.join-step-item {
+  width: 15.56rem;
+  height: 24.44rem;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.join-step-item--bg {
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover;
+  position: absolute;
+  z-index: -1;
+  -webkit-transition: transform cubic-bezier(0.215, 0.61, 0.355, 1) 0.45s;
+  -o-transition: transform cubic-bezier(0.215, 0.61, 0.355, 1) 0.45s;
+  -webkit-transition: -webkit-transform cubic-bezier(0.215, 0.61, 0.355, 1) 0.45s;
+  transition: -webkit-transform cubic-bezier(0.215, 0.61, 0.355, 1) 0.45s;
+  transition: transform cubic-bezier(0.215, 0.61, 0.355, 1) 0.45s;
+  transition: transform cubic-bezier(0.215, 0.61, 0.355, 1) 0.45s, -webkit-transform cubic-bezier(0.215, 0.61, 0.355, 1) 0.45s;
+}
+
+.join-step-item--bg:hover {
+  -webkit-transform: scale(1.05);
+  -ms-transform: scale(1.05);
+  transform: scale(1.05);
+}
+
+.join-step-item--num {
+  font-size: 1.88rem;
+  color: #fff;
+  font-weight: bold;
+  position: absolute;
+  left: 5%;
+  top: 1%;
+}
+
+.join-step-item--icon {
+  width: 2rem;
+  position: absolute;
+  left: calc(50% - 1rem);
+  bottom: 12%;
+}
+
+.join-step-item--title {
+  width: 100%;
+  font-size: 1.13rem;
+  text-align: center;
+  letter-spacing: 0.06rem;
+  color: #fff;
+  position: absolute;
+  left: 0;
+  bottom: 5%;
+}
+
+.join-step-item--1 {
+  height: 24.44rem;
+}
+
+.join-step-item--1 .join-step-item--bg {
+  background-image: url("../../images/calculate_image01.jpg");
+}
+
+.join-step-item--2 {
+  height: 31.19rem;
+}
+
+.join-step-item--2 .join-step-item--bg {
+  background-image: url("../../images/calculate_image02.jpg");
+}
+
+.join-step-item--3 {
+  height: 28.56rem;
+}
+
+.join-step-item--3 .join-step-item--bg {
+  background-image: url("../../images/calculate_image03.jpg");
+}
+
+.join-step-item--4 {
+  height: 26.13rem;
+}
+
+.join-step-item--4 .join-step-item--bg {
+  background-image: url("../../images/calculate_image04.jpg");
+}
+
+/* rwd: join-step ---*/
+@media only screen and (max-width: 1024px) {
+  .join-step-item {
+    width: 13.63rem;
+  }
+}
+
+@media only screen and (max-width: 1023px) {
+  .join-step {
+    -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+    -moz-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -moz-align-items: center;
+    align-items: center;
+  }
+  .join-step-item {
+    width: 10.63rem;
+    margin-bottom: 2.5rem;
+  }
+  .join-step-item--num {
+    font-size: 1.35rem;
+    width: 1.2rem;
+    left: calc(50% - .6rem);
+    top: 5%;
+  }
+  .join-step-item--icon {
+    width: 1.35rem;
+    left: calc(50% - 1.35rem/2);
+  }
+  .join-step-item--title {
+    font-size: 0.81rem;
+  }
+  .join-step-item--1 {
+    height: 16.69rem;
+  }
+  .join-step-item--2 {
+    height: 21.44rem;
+  }
+  .join-step-item--3 {
+    height: 19.56rem;
+  }
+  .join-step-item--4 {
+    height: 19.64rem;
+  }
+}

@@ -1,0 +1,110 @@
+﻿/* @site: 全民電廠
+ * @author: nikki
+ * @update: nikki (2019-3-13)
+ * @page: 相關條款
+ * @description: 包含 隱私權保護及資訊安全政策privacy 與 會員條款terms
+ */
+
+@import "../../setting/_variables.scss";
+@import "../../setting/_mixins.scss";
+
+
+.page-container {
+    background-image: linear-gradient(0deg, rgba(30,181,172,0.00) 30%, rgba(30,181,172,0.80) 100%);
+}
+
+.page-kv {
+    padding-top: 10rem;
+    height: 25rem;
+
+    &--title {
+        color: $color-dark;
+    }
+}
+
+@include rwd(#{$ipad - 1px}) {
+    .page-kv {
+        height: 15rem;
+        padding: 7rem 5% 0;
+    }
+}
+
+/*item: law-tag ---*/
+.law-tag-container {
+    border-bottom: 1px solid #D3D3D3;
+}
+
+.law-tag {
+    width: 70%;
+    max-width: 50rem;
+    margin: 0 auto;
+    @include flexbox;
+    @include justify-content(space-between);
+
+    &--item {
+        width: 50%;
+        max-width: 19rem;
+        font-size: 1.5rem;
+        line-height: 3rem;
+        text-align: center;
+        color: #8a8a8a;
+        border-bottom: .5rem solid transparent;
+        border-radius: 2px;
+        @include change();
+        @include flexbox;
+        @include justify-content(center);
+        @include align-items(center);
+        > a {
+            color: inherit;
+            display: block;
+        }
+
+        &:hover,
+        &.active {
+            color: $color-dark;
+            border-color: $color-primary-blue;
+        }
+    }
+}
+/*rwd: law-tag ----*/
+@include rwd($ipad) {
+    .law-tag {
+        width: 100%;
+        &--item {
+            font-size: 0.94rem;
+            line-height: 2rem;
+            border-width: .25rem;
+            padding: 0 5%;
+        }
+    }
+}
+
+.article {
+    width: 90%;
+    max-width: 50rem;
+    margin: 0 auto;
+    padding-top: 4.31rem;
+    &-title {
+        color: $color-primary-blue;
+        text-align: center;
+        font-size: 1.69rem;
+    }
+    &-content {
+        color: $color-dark;
+        letter-spacing: 0.03rem;
+        line-height: 1.38rem;
+        margin-top: 1.69rem;
+    }
+}
+@include rwd($ipad) {
+    .article {
+        &-title {
+            font-size: 1rem;
+        }
+        &-content {
+            font-size: 0.88rem;
+            letter-spacing: 0.02rem;
+            line-height: 1.25rem;
+        }
+    }
+}

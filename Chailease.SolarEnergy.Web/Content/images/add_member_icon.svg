@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="29px" height="30px" viewBox="0 0 29 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.3 (67297) - http://www.bohemiancoding.com/sketch -->
+    <title>add member icon</title>
+    <desc>Created with Sketch.</desc>
+    <g id="add-member-icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-2" transform="translate(1.000000, 1.000000)" fill-rule="nonzero" stroke="#1EB5AC">
+            <rect id="Rectangle" x="6.5" y="0.5" width="10" height="13" rx="5"></rect>
+            <path d="M7.06990022e-13,21.8897152 C0.649694412,16.6299051 3.26655381,14 7.85057819,14 C12.4346026,14 14.8638044,14.0337407 15.1381836,14.1012221" id="Path-17" stroke-linecap="round"></path>
+            <circle id="Oval" cx="20.5" cy="21.5" r="6.5"></circle>
+            <g id="Group" transform="translate(17.500000, 18.000000)" stroke-linecap="round">
+                <path d="M0,3.5 L6.19100478,3.5" id="Path-58"></path>
+                <path d="M0,3.5 L6.19100478,3.5" id="Path-58" transform="translate(3.095502, 3.500000) rotate(-270.000000) translate(-3.095502, -3.500000) "></path>
+            </g>
+        </g>
+    </g>
+</svg>

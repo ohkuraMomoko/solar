@@ -1,0 +1,118 @@
+﻿/* @site: 全民電廠
+ * @author: nikki
+ * @update: nikki (2018-12-25)
+ * @page: 進階購買
+ * @description: 出資資料填寫
+ */
+
+@import "../setting/_variables.scss";
+@import "../setting/_mixins.scss";
+
+/* common: page-container -------*/
+
+
+/* common: page-kv -----------*/
+.page-kv {
+    height: 27rem;
+    background-position: center 100%;
+    background-image: url('../images/message_bigimage.jpg');
+    padding-top: 13rem;
+    &-title {
+        font-size: 2.25rem;
+        letter-spacing: 0.23rem;
+        color: #ffffff;
+        text-align: center;
+    }
+}
+/* rwd: page-kv ---*/
+@include rwd($ipad) {
+    .page-kv {
+        height: 12rem;
+        padding-top: 5rem;
+    }
+}
+
+/* common: page-content -----*/
+.page-content {
+    margin-top: -6rem;
+    padding-bottom: 8rem;
+    &-form {
+        width: 90%;
+        max-width: 38rem;
+        margin: 0 auto;
+        padding-top: 2.5rem;
+        &--title {
+            font-size: 1.25rem;
+            line-height: 1.75rem;
+            letter-spacing: 0.08rem;
+            color: $color-dark;
+            text-align: center;
+            margin-bottom: 1.56rem;
+        }
+        .form-step-container {
+            margin: 0 auto 3.25rem;
+        }
+        .btn--form-send {
+            width: 100%;
+            max-width: 18.75rem;
+            margin-top: 5%;
+        }
+    }
+}
+
+/* rwd: page-content ---*/
+@include rwd($ipad) {
+    .page-content {
+        margin-top: -2rem;
+    }
+}
+
+/* page: FormResult.cshtml =======*/
+.form-result {
+    &-content {
+        padding-top: 10%;
+        &--img {
+            width: 3.13rem;
+            display: block;
+            margin: 0 auto;
+        }
+        &--title {
+            font-size: 1.5rem;
+            letter-spacing: 0.03rem;
+            color: $color-primary-blue;
+            text-align: center;
+            font-weight: bold;
+            margin: 2rem auto;
+        }
+        &--text {
+            text-align: center;
+            margin-bottom: 8%;
+            >span {
+                color: $color-primary-blue;
+                font-weight: bold;
+            }
+        }
+    }
+}
+/* rwd: .form-result ---*/
+@include rwd($ipad) {
+    .form-result {
+        &-content {
+            &--img {
+                width: 2.5rem;
+            }
+            &--title {
+                font-size: 1rem;
+                letter-spacing: 0;
+                margin-top: 0.69rem auto 1.69rem;
+            }
+            &--text {
+                font-size: 0.88rem;
+                line-height: 1.5rem;
+            }
+            .btn--form-send {
+                width: 80%;
+            }
+        }
+    }
+}

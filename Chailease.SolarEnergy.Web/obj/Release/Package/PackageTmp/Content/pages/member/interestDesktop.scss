@@ -1,0 +1,355 @@
+﻿/* @site: 全民電廠
+ * @author: nikki
+ * @update: nikki (2019-1-30)
+ * @page: 會員專區-電費收益
+ * @description: desktop
+ */
+
+@import "../../setting/_variables.scss";
+@import "../../setting/_mixins.scss";
+@import "_interestExtend.scss";
+
+/*block: interest-header  ----*/
+.interest-header {
+    @include flexbox;
+    @include align-items(center);
+    position: relative;
+
+    .data-show {
+        position: absolute;
+        right: 0;
+        top: 0;
+
+        .user-owner {
+            line-height: 3.12rem;
+            color: $color-dark--2;
+            display: inline-block;
+
+            > span {
+                font-size: 1.5em;
+                font-weight: bold;
+                color: $wiki-color-class-3;
+                margin-left: 1.13rem;
+            }
+        }
+
+        .owner-total {
+            padding-left: 25px;
+            padding-right: 15px;
+
+
+            > span {
+                position: relative;
+
+                &:after {
+                    content: '元';
+                    position: absolute;
+                    right: -18px;
+                    bottom: 5px;
+                    font-size: .6em;
+                    line-height: 1;
+                    color: $color-dark--2;
+                }
+            }
+        }
+    }
+}
+
+/*item: all-interest  ----*/
+.all-interest {
+    margin-bottom: 1.88rem;
+    margin-top: 2.63rem;
+    @include flexbox;
+    @include justify-content(space-between);
+
+    &-item {
+        width: 49%;
+        height: 4.06rem;
+        border-top: 3px solid #e9e9e9;
+        background-color: #f8f8f8;
+        @include flexbox;
+        @include flex-direction(column);
+        @include justify-content(center);
+        @include align-items(center);
+
+        &--title {
+            font-size: 0.88rem;
+            color: $color-dark;
+        }
+
+        &--data {
+            font-size: 1.5rem;
+            color: $color-primary-blue;
+            font-weight: bold;
+
+            &.dollar {
+                position: relative;
+
+                &:after {
+                    content: "元";
+                    position: absolute;
+                    right: -1.3rem;
+                    top: 32%;
+                    font-size: .6em;
+                    color: $color-dark--2;
+                }
+            }
+
+            &.frequency {
+                position: relative;
+
+                &:after {
+                    content: "次";
+                    position: absolute;
+                    right: -1.3rem;
+                    top: 32%;
+                    font-size: .6em;
+                    color: $color-dark--2;
+                }
+            }
+        }
+    }
+}
+
+/*block: interest-collapse-block ---*/
+.interest-collapse-block {
+    margin: 7.5px auto;
+}
+/*item: interest-collapse-header  ----*/
+.interest-collapse-header {
+    height: 3.63rem;
+    border-top: 3px solid #e3e3e3;
+
+    &--item {
+        display: inline-block;
+        line-height: 3.63rem;
+        color: $color-dark;
+        text-align: center;
+
+        &:nth-child(1),
+        &:nth-child(2),
+        &:nth-child(4) {
+            width: 20%;
+        }
+
+        &:nth-child(3) {
+            width: 13%;
+        }
+
+        &:nth-child(5) {
+            width: 25%;
+        }
+    }
+}
+
+/*item: .interest-button ---*/
+.interest-button {
+    height: 3.13rem;
+    background-color: $blue-light;
+    display: block;
+
+    &--item {
+        display: inline-block;
+        line-height: 3.13rem;
+        color: $color-dark;
+        text-align: center;
+
+        &:nth-child(1),
+        &:nth-child(2),
+        &:nth-child(4) {
+            width: 20%;
+        }
+
+        &:nth-child(3) {
+            width: 13%;
+        }
+
+        &:nth-child(5) {
+            width: 25%;
+        }
+    }
+}
+
+/*action: .interest-button ---*/
+.interest-button {
+    position: relative;
+    &:after {
+        content: '';
+        width: 20px;
+        height: 20px;
+        background-image: url(../../images/triangle.svg);
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: 50% 50%;
+        position: absolute;
+        left: 30%;
+        bottom: -15px;
+        opacity: 0;
+        z-index: 5;
+        @include change();
+    }
+    &[aria-expanded="true"] {
+        &:after {
+            bottom: -13px;
+            opacity: 1;
+        }
+    }
+}
+
+/*block: interest-content ---*/
+.interest-content {
+    width: 95%;
+    border: 2px solid #979797;
+    padding: 1.25rem 1rem 3.38rem;
+    margin: .56rem auto 1.31rem;
+    color: $color-dark;
+    position: relative;
+    @include flexbox;
+    @include justify-content(space-between);
+    @include align-items(flex-start);
+
+    &-block {
+        width: 49%;
+        border: 2px solid #EEEEEE;
+        display: inline-block;
+        padding: 1rem;
+    }
+
+    &-header {
+        @include flexbox;
+        @include justify-content(space-between);
+
+        &--title {
+            width: 166px;
+            font-size: 1.13rem;
+        }
+        &--date {
+            text-align: right;
+        }
+    }
+
+    &-body {
+        position: relative;
+    }
+}
+
+.tip {
+    position: absolute;
+    left: 184px;
+    cursor: pointer;
+
+    &--icon {
+        display: inline-block;
+    }
+
+    &--content {
+        $padding: 0.69rem;
+        width: 25.5rem;
+        // height: 3.94rem;
+        background-color: rgba(255,243,181,0.70);
+        padding: $padding;
+        position: absolute;
+        left: -$padding;
+        top: -$padding;
+        opacity: 0;
+        @include change(opacity, 0.3s, ease-in-out);
+    }
+}
+
+.tip:hover {
+    .tip--content {
+        opacity: 1;
+    }
+}
+
+/* item: .interest-detail--data ---*/
+.interest-detail {
+    margin: 1rem 0;
+
+    &--title {
+        font-size: 0.94rem;
+    }
+
+    &--data {
+        height: 1.88rem;
+        line-height: 1.88rem;
+        font-size: 0.94rem;
+        color: #797979;
+        letter-spacing: 0.03rem;
+        background-color: #f5f5f5;
+        padding-left: 15%;
+        margin: .38rem auto;
+        @include flexbox;
+        @include justify-content(space-between);
+        @include align-items(center);
+
+        > li {
+            display: inline-block;
+
+            img {
+                display: inline-block;
+                margin-right: 0.25rem;
+                margin-top: -0.3rem;
+            }
+        }
+
+        &--first {
+            width: 45%;
+        }
+
+        &--second {
+            width: 20%;
+            text-align: center;
+            cursor: pointer;
+            a {
+                color: #797979;
+            }
+        }
+
+        &--money {
+            width: 35%;
+            text-align: right;
+            color: black;
+            font-weight: bold;
+        }
+
+        &--total {
+            font-size: 1.13rem;
+            color: $color-primary-blue;
+            font-weight: bold;
+        }
+
+        &.total {
+            font-size: 1.13rem;
+            color: $color-primary-blue;
+            font-weight: bold;
+            @include justify-content(flex-end);
+        }
+    }
+
+    &-desc {
+        list-style: decimal;
+        padding-left: 20%;
+    }
+}
+
+/* rwd: .interest-detail--data ---*/
+@include rwd($ipad-pro) {
+    .interest-detail--data {
+        padding-left: 8%;
+    }
+}
+
+/* item: collapse-footer-btn  ---*/
+.collapse-footer-btn {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 1rem;
+    bottom: 1.63rem;
+    background-image: url(../../images/icon_arrow_down_grey.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 50% 50%;
+    @include prefix(transform, rotate(180deg));
+}

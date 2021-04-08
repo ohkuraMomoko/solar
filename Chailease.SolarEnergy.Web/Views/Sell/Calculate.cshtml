@@ -1,0 +1,444 @@
+﻿@model SellViewModel
+@{
+    ViewBag.Title = "確認出售價格";
+}
+@section header {
+    @Styles.Render("~/Content/plugin/bootstrap-table.min.css")
+    @Styles.Render("~/Content/pages/join/calculate.min.css")
+    @Styles.Render("~/Content/pages/sell/calculate.min.css")
+
+}
+@section metatags {
+    @Html.Action("GetMetaByType", "Base", new { id = 6 })
+}
+
+<div class="page-container">
+    <input type="hidden" name="CAL_UUID" />
+    @*<input type="hidden" name="CUST_NAME" />*@
+    <div class="page-kv">
+        <h1 class="page-kv--title">會員中心</h1>
+    </div>
+    <div class="page-content">
+        <div class="breadcrumb-container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/" href="@Url.Content("~/Home/")">
+                            <span itemprop="name"><img src="@Url.Content("~/Content/images/bread_home_icon.svg")" alt="首頁"></span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    <li class="breadcrumb-item" aria-current="page" itemprop="itemListElement" itemscope
+                        itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Member/" href="@Url.Content("~/Member/")">
+                            <span itemprop="name">會員中心</span>
+                        </a>
+                        <meta itemprop="position" content="2" />
+                    </li>
+                    <li class="breadcrumb-item" aria-current="page" itemprop="itemListElement" itemscope
+                        itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Member/Dashboard" href="@Url.Content("~/Member/Dashboard")">
+                            <span itemprop="name">我的電廠</span>
+                        </a>
+                        <meta itemprop="position" content="3" />
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page" itemprop="itemListElement" itemscope
+                        itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                            @*
+                                TODO: 此麵包屑名稱為該電廠名稱
+                            *@
+                            <span itemprop="name">@Model.MemOnSalepPreConfirmDto.CASE_NAME-出售發布</span>
+                        </a>
+                        <meta itemprop="position" content="4" />
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        @{
+            Html.RenderPartial("~/Views/Sell/_Calculate.cshtml", Model);
+        }
+        <div class="modal fade" id="modalCalculate" tabindex="-1" role="dialog"></div>
+    </div>
+    <script type="text/html" id="tmpCalculateModal">
+        <div class="modal-dialog modal-dialog-centered modal-calculate" role="document">
+            <div class="modal-content">
+                <div class="text-black font-weight-bold">二手交易預估報酬率資訊({{ANNOUNCEMENT_DT}} 公告)</div>
+                <div class="p-4">
+                    <div class="modal-row">
+                        <div class="modal-item">
+                            <div class="modal-col-label">電廠名稱</div>
+                            <div class="modal-col-content">{{CASE_NAME}}</div>
+                        </div>
+                        <div class="modal-item">
+                            <div class="modal-col-label">出售人</div>
+                            <div class="modal-col-content">{{CUST_NAME}}</div>
+                        </div>
+                        <div class="modal-item">
+                            <div class="modal-col-label">欲出售片數</div>
+                            <div class="modal-col-content">{{SELL_NUM}} 片</div>
+                        </div>
+                        <div class="modal-item">
+                            <div class="modal-col-label">售電合約剩餘計費期間</div>
+                            <div class="modal-col-content">{{CONTRACT_REMAIN_DAY}}</div>
+                        </div>
+                        <div class="modal-item">
+                            <div class="modal-col-label">每片太陽能板</div>
+                            <div class="modal-col-content">{{PANELS_CAPACITY}} KW</div>
+                        </div>
+                        @*<div class="modal-item">
+                            <div class="modal-col-label">投資報酬率</div>
+                            <div class="modal-col-content">
+                                {{SELL_INTEREST_RATE}} %
+                            </div>
+                        </div>*@
+                        @*<div class="modal-item">
+                            <div class="modal-col-label">預估售電期間總回收金額</div>
+                            <div class="modal-col-content">{{FEEDBACK_AMT}} 元/片</div>
+                        </div>*@
+                    </div>
+                    <div class="modal-row-l">
+                        @*<div class="col-12 col-md-8 d-flex mb-2 small">
+                            （台電合約自 {{CONTRACT_STRT_DT}} 起 {{CONTRACT_YEARS}} 年，已持續發電並分配收益共 {{POWER_DIST_DAY}}）
+                        </div>*@
+                        <div class="col-12 col-md-12 d-flex mb-2 small">
+                            @*台電合約自 {{CONTRACT_STRT_DT}} 起 {{CONTRACT_YEARS}} 年，截至最近一次電費分配日<span class="text-black">{{LAST_FEE_DIST_DT}}</span> (計費迄日 {{LAST_FEE_CAL_DT}})，已持續發電並分配收益共 {{POWER_DIST_DAY}}*@
+                            台電合約自 {{CONTRACT_STRT_DT}} 起 {{CONTRACT_YEARS}} 年{{LAST_FEE_INFO}}，已持續發電並分配收益共 {{POWER_DIST_DAY}}
+                        </div>
+                    </div>
+                    <!-- 預估回收金額 -->
+                    <div class="col-12 col-md-8 d-flex mb-2">
+                        <div class="text-black font-weight-bold">
+                            估計每片太陽能板各年度發電量、電費收入、費用與收益（收款金額)
+                        </div>
+                    </div>
+                        <div class="modal-row">
+                            @*<div class="small">新增最近一次電費分配日<span class="text-black">{{LAST_FEE_DIST_DT}}</span> (計費迄日 {{LAST_FEE_CAL_DT}})</div>*@
+                            <div class="modal-item">
+                                <div class="modal-col-label">出售單價</div>
+                                <div class="modal-col-content">
+                                    {{SELL_PRICE}} 元/片
+                                </div>
+                            </div>
+                            <div class="modal-item">
+                                <div class="modal-col-label">預估內部報酬率</div>
+                                <div class="modal-col-content">
+                                    {{SELL_IRR}} %
+                                </div>
+                            </div>
+                            <div class="modal-item">
+                                <div class="modal-col-label">預估剩餘售電期間總收款金額</div>
+                                <div class="modal-col-content">
+                                    {{SUM_PRE_ANNUAL_RECEIPT}} 元/片
+                                </div>
+                            </div>
+                        </div>
+                    <div style="overflow-y: hidden; width: 100%">
+                        <table id="table"
+                               data-classes="table table-borderless table-hover flip-scroll"
+                               data-toggle="table"
+                               data-click-to-select="true"
+                               data-pagination="false" style="width:100%">
+                            <thead class="cf">
+                                <tr>
+                                    <th style="text-align: right; padding-right: 30px;">年</th>
+                                    <th style="text-align: right; padding-right: 30px;">發電效能</th>
+                                    <th style="text-align: right; padding-right: 30px;">發電量（度）</th>
+                                    <th style="text-align: right; padding-right: 30px;">電費收入</th>
+                                    <th style="text-align: right; padding-right: 30px;">屋頂租金</th>
+                                    <th style="text-align: right; padding-right: 30px;">保險費用</th>
+                                    <th style="text-align: right; padding-right: 30px;">其他費用</th>
+                                    <th style="text-align: right; padding-right: 30px;">收款金額</th>
+                                    <th style="text-align: right; padding-right: 30px;">累積收款金額</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                       
+                        <!-- 收益費用 -->
+                        <div class="border-bottom pt-2 pb-2">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h6 class="text-black">收益費用</h6>
+                                <a class="small clps-btn" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false" aria-controls="collapse1">
+                                    <span class="clps-close">收起內容</span>
+                                    <span class="clps-open">展開內容</span>
+                                    <img src="@Url.Content("~/Content/images/icon_arrow_down_b.svg")" />
+                                </a>
+                            </div>
+                            <div class="collapse small text-justify pt-2 pb-2" id="collapse1">
+                                <!--tmpIntroList-->
+                                @*<div class="col-12">
+                        <div class="tab-content-description">
+                            {{LOAN_FEE_DESC}}
+                        </div>
+                    </div>*@
+                            </div>
+                        </div>
+                        <!-- 試算補充說明 -->
+                        <div class="border-bottom pt-2 pb-2">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h6 class="text-black">試算補充說明</h6>
+                                <a class="small clps-btn" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false" aria-controls="collapse2">
+                                    <span class="clps-close">收起內容</span>
+                                    <span class="clps-open">展開內容</span>
+                                    <img src="@Url.Content("~/Content/images/icon_arrow_down_b.svg")" />
+                                </a>
+                            </div>
+                            <div class="collapse small text-justify pt-2 pb-2" id="collapse2">
+                                <!--tmpIntroList2-->
+                                @*<div class="col-12">
+                        <div class="tab-content-description">
+                            {{CREDIT_INFO}}
+                        </div>
+                    </div>*@
+                            </div>
+
+                        </div>
+                    </div>
+                <div class="text-center">
+                    <button type="button" class="btn--common btn--common-4" id="closeCalcmodal">同意試算結果</button>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/html" id="tmpCalculateModalRow">
+        <tr>
+            <td style="text-align:right;padding-right:35px;">{{YEAR}}</td>
+            <td style="text-align:right;padding-right:40px;">{{PRE_POWER_PERFORMANCE}} %</td>
+            <td style="text-align:right;padding-right:40px;">{{PRE_POWER_GEN}}</td>
+            <td style="text-align:right;padding-right:40px;">{{PRE_POWER_FEE}}</td>
+            <td style="text-align:right;padding-right:40px;">{{PRE_APPOR_RENT}}</td>
+            <td style="text-align:right;padding-right:40px;">{{PRE_APPOR_INSURANCE}}</td>
+            <td style="text-align:right;padding-right:40px;">{{PRE_OTHER_FEE}}</td>
+            <td style="text-align:right;padding-right:40px;">{{PRE_ANNUAL_RECEIPT}}</td>
+            <td style="text-align: right;padding-right:40px;">{{PRE_ACCUMLATE_RECEIPT}}</td>
+        </tr>
+    </script>
+    <script type="text/html" id="tmpIntroList">
+        @*每期台電公司所給付之電費(約1個月為一期)，將扣除營業稅與以下費用後(可能為預扣)，依個別會員所擁有之太陽能板比例分配剩餘之電費(如有金融機構轉帳手續費由會員負擔)。
+        <br>
+        1.設備保險費(受委託管理代為處理保險事宜)：產物險為每年一約並逐年議約，保險費依實際支出，將受委託管理人於「投保後最近一次分配電費時」扣除。
+        <br>
+        &nbsp;&nbsp;(1)當年度保費=當年度保險金額×當年度保險費率%；
+        <br>
+        &nbsp;&nbsp;(2)當年度保險金額：依保險公司合約，預估效益之保險金額以「期初未稅建置成本」估算；
+        <br>
+        &nbsp;&nbsp;(3)當年保險費率：依保險公司報價，預估效益之保險費率以「0.3%」估算。
+        <br>
+        2.每月屋頂租金：{{POWER_ROOF_RENT}}元 (依屋頂租約，支付給出租人)；
+        <br>
+        3.委託管理及維護保養費(含稅)：每期電費×{{POWER_MANGE_RATE}}%(支付予受委託管理及維護保養公司)；
+        <br>
+        4.市集服務費(含稅)：每期電費×{{POWER_MARKET_SERVICE_RATE}}%(支付予本市集)*@
+        <div class="col-12">
+            @* 內文是否會有換行符號? *@
+            <div class="tab-content-description">
+                {{LOAN_FEE_DESC}}
+            </div>
+        </div>
+    </script>
+    <script type="text/html" id="tmpIntroList2">
+        <div class="col-12">
+            @* 內文是否會有換行符號? *@
+            <div class="tab-content-description">
+                {{CREDIT_INFO}}
+            </div>
+        </div>
+    </script>
+    @section scripts {
+        @Scripts.Render("~/Scripts/bootstrap-table.min.js")
+
+        <script>
+
+            var numberFormat = function (n) {
+                n += "";
+                var arr = n.split(".");
+                var re = /(\d{1,3})(?=(\d{3})+$)/g;
+                return arr[0].replace(re, "$1,") + (arr.length == 2 ? "." + arr[1] : "");
+            };
+
+            $(function () {
+                $('.js-inputBuyValue').blur(function () {
+                    priceInit();
+                });
+                // 點擊重新試算
+                $('#calcbtn').click(function () {
+                    $("#modalCalculate").empty();
+                    if ($('.calcshow').hasClass('hide')) {
+
+                        var SELL_PRICE = $('input[name=POWER_PANEL_SELL_PRICE]').val();
+
+                        // 先把所有的","清除掉
+                        while (SELL_PRICE.indexOf(',') > 0) {
+                            SELL_PRICE = SELL_PRICE.replace(',', '');
+                        }
+
+                        $ajax.Post('@Url.Action("MemOnSalepPreCal", "MemOnSale")', {
+                            id: '@Model.MemOnSalepPreConfirmDto.CASE_NO',
+                            power_panel_sell_price: SELL_PRICE
+                        }, function (result) {
+                            if (result.ERRCODE == 0) {
+                                $('input[name=POWER_PANEL_SELL_PRICE]').attr("disabled", "disabled");
+
+                                var d = result.Data;
+                                d.ANNOUNCEMENT_DT = d.ANNOUNCEMENT_DT.substring(0, 4) + '/' + d.ANNOUNCEMENT_DT.substring(4, 6) + '/' + d.ANNOUNCEMENT_DT.substring(6, 8);
+                                d.FEEDBACK_AMT = numberFormat(d.FEEDBACK_AMT);
+                                d.SELL_PRICE = numberFormat(d.SELL_PRICE);
+                                d.POWER_PANEL_SELL_PRICE = numberFormat(d.POWER_PANEL_SELL_PRICE);
+                                if (d.LAST_FEE_DIST_DT !== undefined && d.LAST_FEE_DIST_DT !== "") {
+                                    d.LAST_FEE_DIST_DT = d.LAST_FEE_DIST_DT.substring(0, 4) + '/' + d.LAST_FEE_DIST_DT.substring(4, 6) + '/' + d.LAST_FEE_DIST_DT.substring(6, 8);
+                                    d.LAST_FEE_INFO = '，截至最近一次電費分配日<span class="text- black">' +d.LAST_FEE_DIST_DT+'</span> ';
+                                }
+                                if (d.LAST_FEE_CAL_DT !== undefined && d.LAST_FEE_CAL_DT !== "") {
+                                    d.LAST_FEE_CAL_DT = d.LAST_FEE_CAL_DT.substring(0, 4) + '/' + d.LAST_FEE_CAL_DT.substring(4, 6) + '/' + d.LAST_FEE_CAL_DT.substring(6, 8);
+                                    d.LAST_FEE_INFO = d.LAST_FEE_INFO + '(計費迄日 ' +  d.LAST_FEE_CAL_DT + ')';
+                                }
+             
+                                d.CONTRACT_STRT_DT = d.CONTRACT_STRT_DT.substring(0, 4) + '/' + d.CONTRACT_STRT_DT.substring(4, 6) + '/' + d.CONTRACT_STRT_DT.substring(6, 8);
+                                d.SUM_PRE_ANNUAL_RECEIPT = numberFormat(d.SUM_PRE_ANNUAL_RECEIPT);
+                                var calculateBody = templateBind($("#tmpCalculateModal").html(), d);
+                                $('#modalCalculate').append(calculateBody).modal('show');
+                                $('input[name=CAL_UUID]').val(d.CAL_UUID);
+                                //$('input[name=CUST_NAME]').val(d.CUST_NAME);
+                                $('span.calc-return').text(d.SELL_IRR);
+                                $('span.calc-money').text(d.SUM_PRE_ANNUAL_RECEIPT);
+                                $('a.viewPdf-btn').attr('href', '@Url.Action("LoanCaseFile")?FILE_UUID=' + d.CAL_FILE_UUID)
+                                var $row = $('#tmpCalculateModalRow');
+                                var total = { PRE_POWER_PERFORMANCE: 0, PRE_POWER_GEN: 0, PRE_POWER_FEE: 0, PRE_APPOR_RENT: 0, PRE_APPOR_INSURANCE: 0, PRE_OTHER_FEE: 0, PRE_ANNUAL_RECEIPT: 0 }
+                                $.each(d.CALUATLE_LIST, function (i, m) {
+                                    total.PRE_POWER_PERFORMANCE += parseInt(m.PRE_POWER_PERFORMANCE);
+                                    total.PRE_POWER_GEN += parseInt(m.PRE_POWER_GEN);
+                                    total.PRE_POWER_FEE += parseInt(m.PRE_POWER_FEE);
+                                    total.PRE_APPOR_RENT += parseInt(m.PRE_APPOR_RENT);
+                                    total.PRE_APPOR_INSURANCE += parseInt(m.PRE_APPOR_INSURANCE);
+                                    total.PRE_OTHER_FEE += parseInt(m.PRE_OTHER_FEE);
+                                    total.PRE_ANNUAL_RECEIPT += parseInt(m.PRE_ANNUAL_RECEIPT);
+                                    total.PRE_ACCUMLATE_RECEIPT += parseInt(m.PRE_ACCUMLATE_RECEIPT);
+                                    $("#modalCalculate tbody").append(templateBind($row.html(), {
+                                        YEAR: m.YEAR,
+                                        PRE_POWER_PERFORMANCE: numberFormat(m.PRE_POWER_PERFORMANCE),
+                                        PRE_POWER_GEN: numberFormat(m.PRE_POWER_GEN),
+                                        PRE_POWER_FEE: numberFormat(m.PRE_POWER_FEE),
+                                        PRE_APPOR_RENT: numberFormat(m.PRE_APPOR_RENT),
+                                        PRE_APPOR_INSURANCE: numberFormat(m.PRE_APPOR_INSURANCE),
+                                        PRE_OTHER_FEE: numberFormat(m.PRE_OTHER_FEE),
+                                        PRE_ANNUAL_RECEIPT: numberFormat(m.PRE_ANNUAL_RECEIPT),
+                                        PRE_ACCUMLATE_RECEIPT: numberFormat(m.PRE_ACCUMLATE_RECEIPT)
+                                    }));
+                                });
+                                var lasrRow = "<tr class='total'>";
+                                lasrRow += "<td class='text-black' style='text-align:right; padding-right:30px;'>合計</td > "
+                                lasrRow += "<td></td>";
+                                lasrRow += "<td style='text-align:right; padding-right:40px;'>{{PRE_POWER_GEN}}</td>";
+                                lasrRow += "<td style='text-align:right; padding-right:40px;'>{{PRE_POWER_FEE}}</td>";
+                                lasrRow += "<td style='text-align:right; padding-right:40px;'>{{PRE_APPOR_RENT}}</td>";
+                                lasrRow += "<td style='text-align:right; padding-right:40px;'>{{PRE_APPOR_INSURANCE}}</td>";
+                                lasrRow += "<td style='text-align:right; padding-right:40px;'>{{PRE_OTHER_FEE}}</td>";
+                                lasrRow += "<td style='text-align:right; padding-right:40px;'>{{PRE_ANNUAL_RECEIPT}}</td>";
+                                lasrRow += "<td></td>";
+                                lasrRow += "</tr>";
+                                $("#modalCalculate tbody").append(templateBind(lasrRow, {
+                                    PRE_POWER_PERFORMANCE: numberFormat(total.PRE_POWER_PERFORMANCE),
+                                    PRE_POWER_GEN: numberFormat(total.PRE_POWER_GEN),
+                                    PRE_POWER_FEE: numberFormat(total.PRE_POWER_FEE),
+                                    PRE_APPOR_RENT: numberFormat(total.PRE_APPOR_RENT),
+                                    PRE_APPOR_INSURANCE: numberFormat(total.PRE_APPOR_INSURANCE),
+                                    PRE_OTHER_FEE: numberFormat(total.PRE_OTHER_FEE),
+                                    PRE_ANNUAL_RECEIPT: numberFormat(total.PRE_ANNUAL_RECEIPT)
+                                }));
+                                $ajax.Post('@Url.Action("GetLoanCaseIntroList", "MemOnSale")', { CASE_NO: '@Model.MemOnSalepPreConfirmDto.CASE_NO', CASE_TYPE: '3' }, function (d) {
+                                    d.CASELOAN_INTRODCT.POWER_ROOF_RENT = numberFormat(d.CASELOAN_INTRODCT.POWER_ROOF_RENT);
+                                    d.CASELOAN_INTRODCT.POWER_MANGE_RATE = d.CASELOAN_INTRODCT.POWER_MANGE_RATE * 100;
+                                    d.CASELOAN_INTRODCT.POWER_MANGE_RATE = d.CASELOAN_INTRODCT.POWER_MANGE_RATE.toFixed(2);
+                                    d.CASELOAN_INTRODCT.POWER_MARKET_SERVICE_RATE = d.CASELOAN_INTRODCT.POWER_MARKET_SERVICE_RATE * 100;
+                                    d.CASELOAN_INTRODCT.POWER_MARKET_SERVICE_RATE = d.CASELOAN_INTRODCT.POWER_MARKET_SERVICE_RATE.toFixed(2);
+                                    var loanFeeDesc = {
+                                        LOAN_FEE_DESC : ""
+                                    };
+                                    loanFeeDesc.LOAN_FEE_DESC = d.CASELOAN_INTRODCT.LOAN_FEE_DESC;
+                                    var calculateBody = templateBind($("#tmpIntroList").html(), loanFeeDesc);
+                                    $('#collapse1').append(calculateBody);
+                                    var creditInfo = {
+                                        CREDIT_INFO : ""
+                                    };
+                                    creditInfo.CREDIT_INFO = d.CASELOAN_INTRODCT.CREDIT_INFO;
+                                    var calculateBody2 = templateBind($("#tmpIntroList2").html(), creditInfo);
+                                    $('#collapse2').append(calculateBody2);
+                                });
+                            }
+                            else {
+                                showMsg(result.ERRMSG, 'error');
+                            }
+                        });
+                    } else {
+                        $('input[name=POWER_PANEL_SELL_PRICE]').attr("disabled", false);
+
+                        reCalculate();
+                    }
+                });
+
+                // 關閉modal
+                $('body').on('click', '#closeCalcmodal', function () {
+                    $('#modalCalculate').modal('hide');
+                });
+
+                // 關閉modal時，顯示原本隱藏欄位
+                $('#modalCalculate').on('hide.bs.modal', function () {
+                    afterAgree();
+                });
+            });
+
+            // 出售單價預設值
+            function priceInit() {
+                var picTxt = $('.js-inputBuyValue').val();
+                var pic = parseInt(picTxt, 0);
+                if (picTxt == '' || isNaN(picTxt)) {
+                    pic = 1;
+                }
+                if (pic < 1) pic = 1; //確保為正數(售完外)
+                $('.js-inputBuyValue').val(pic);
+            }
+
+            function afterAgree() {
+                $('#calcbtn').removeClass('btn--common-4').addClass('btn--common-2').text('重新試算');
+                $('.calcshow').removeClass('hide');
+                $('#calcsubmitbtn').removeClass('btn--common-2').addClass('btn--common-4');
+                $('#sellnum, #calcsubmitbtn').prop('disabled', false)
+            }
+
+            function reCalculate() {
+                $('#calcbtn').removeClass('btn--common-2').addClass('btn--common-4').text('試算報酬率');
+                $('.calcshow').addClass('hide');
+                $('#calcsubmitbtn').removeClass('btn--common-4').addClass('btn--common-2');
+                $('#sellnum, #calcsubmitbtn').prop('disabled', true);
+                $('#sellnum option:eq(0)').prop('selected', true);
+                $('.calc-input').val('1');
+                $('.calc-return, .calc-money').text('');
+        }
+
+          
+
+            $('input[name=POWER_PANEL_SELL_PRICE]').keyup(function () {
+                var obj = $(this).val();
+
+                // 先把所有的","清除掉
+                while (obj.indexOf(',') > 0) {
+                    obj = obj.replace(',', '');
+                }
+
+                // 檢核是否有輸入數字以外的字
+                var mnyReg = /^([1-9][0-9]*|(([0]\.[0-9]{0,2}[1-9]\d*|[1-9][0-9]*\.\d*)))$/;
+                if (!(mnyReg.test(obj))) {
+                    showMsg("請輸入正確的數字","error");
+                    $(this).val($('#SELL_PRICE').val());
+                    return;
+                }
+
+                var toThousands = numberFormat(obj);
+                $('#SELL_PRICE').val(toThousands);
+                $(this).val(toThousands);
+            });
+
+        </script>
+    }

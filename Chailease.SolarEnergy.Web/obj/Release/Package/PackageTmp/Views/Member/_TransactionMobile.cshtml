@@ -1,0 +1,194 @@
+﻿@Styles.Render("~/Content/pages/member/transactionMobile.min.css")
+
+<div class="transaction-container">
+    <div class="w-90 m-auto transaction-header--item transaction-header-select">
+        <select name="transactionStatus" id="transactionStatus">
+            <option value="*" selected="">全案件狀態</option>
+            <option value="AT">成功申購</option>
+            <option value="C0">取消申請</option>
+            <option value="OS">尚未匯款</option>
+        </select>
+    </div>
+    <div class="transaction-body">
+        @* TODO:
+            以.transaction-collapse-block為一筆電廠資料單位。
+            collapse效果相依於ID，collapse1的部分都要替換掉，命名範例EX:collapse1、collapse2...
+            *TYPE: 成功申購、取消申請、尚未匯款
+
+            列印功能: 請加ID列印目標在 .transaction-collapse-block(ID)
+                與 .js-print-btn (data-order)上面
+        *@
+
+        @* TYPE: 尚未匯款,
+            CLASS: notfinish *@
+
+        @* TYPE: 成功申購,
+            CLASS: success *@
+
+        @* TYPE: 取消申請,
+            CLASS: cancle *@
+
+    </div>
+</div>
+
+<script type="text/html" id="transactionnotfinish">
+    <section id="printPart{{index}}" class="transaction-collapse-block notfinish">
+        <a class="transaction-button" data-toggle="collapse" href="#collapse{{index}}" role="button" aria-expanded="false" aria-controls="collapse{{index}}">
+            <div class="row no-gutters w-90 m-auto">
+                <div class="col-4 transaction-button--left">
+                    <div class="transaction-button--item">專案名稱</div>
+                    <div class="transaction-button--item">申購時間</div>
+                    <div class="transaction-button--item">申購數量</div>
+                    <div class="transaction-button--item">申購金額</div>
+                    <div class="transaction-button--item">匯款帳號</div>
+                    <div class="transaction-button--item">匯款期限</div>
+                    <div class="transaction-button--item">入帳/取消日期</div>
+                </div>
+                <div class="col-8 transaction-button--right">
+                    <div class="transaction-button--item">{{CASE_NAME}}</div>
+                    <div class="transaction-button--item">{{SUBSCRIPTION_DT}}</div>
+                    <div class="transaction-button--item">{{PANELS_NUM}} 片</div>
+                    <div class="transaction-button--item">{{SUBSCRIPTION_AMT}} 元</div>
+                    <div class="transaction-button--item">{{BNK_VR_ACCNTNO}}</div>
+                    <div class="transaction-button--item">{{PAY_DUE_DT}}</div>
+                    <div class="transaction-button--item">{{ACPT_DT}}</div>
+                </div>
+            </div>
+            <div class="pl-3 transaction-status-type text-heightline text-bold">尚未匯款</div>
+        </a>
+        <div class="collapse" id="collapse{{index}}">
+            <div class="transaction-content">
+                <div class="transaction-content--title mb-3">匯款資訊明細</div>
+                <div class="transaction-content--container">
+                    <div class="row no-gutters transaction-data">
+                        <div class="col-3 transaction-data--title">訂單編號</div>
+                        <div class="col-9 transaction-data--content">{{ORDER_NO}}</div>
+                    </div>
+                    <div class="row no-gutters transaction-data">
+                        <div class="col-3 transaction-data--title">申購時間</div>
+                        <div class="col-9 transaction-data--content">{{SUBSCRIPTION_DT}}</div>
+                    </div>
+                    <div class="row no-gutters transaction-data">
+                        <div class="col-3 transaction-data--title">繳款戶名</div>
+                        <div class="col-9 transaction-data--content">{{BNK_VR_ACCNTNME}}</div>
+                    </div>
+
+                    @if (ViewBag.isMember03)
+                    {
+                        <div class="row no-gutters transaction-data">
+                            <div class="col-3 transaction-data--title">繳款銀行</div>
+                            <div class="col-9 transaction-data--content text-heightline text-bold">{{BNK_VR_BNKNME}}</div>
+                        </div>
+                        <div class="row no-gutters transaction-data">
+                            <div class="col-3 transaction-data--title">繳款帳號</div>
+                            <div class="col-9 transaction-data--content text-heightline text-bold">{{BNK_VR_ACCNTNO}}</div>
+                        </div>
+                        <div class="row no-gutters transaction-data">
+                            <div class="col-3 transaction-data--title">繳款金額</div>
+                            <div class="col-9 transaction-data--content text-heightline text-bold">{{SUBSCRIPTION_AMT}} 元</div>
+                        </div>
+                        <div class="row no-gutters transaction-data">
+                            <div class="col-3 transaction-data--title">繳款期限</div>
+                            <div class="col-9 transaction-data--content text-heightline text-bold">{{PAY_DUE_DT}}</div>
+                        </div>
+                    }
+                    <div class="d-flex justify-content-center mt-4">
+                        <button class="transaction-btn transaction-btn--print js-print-btn mr-3" data-order="#printPart{{index}}">列印</button>
+                        <div class="transaction-btn transaction-btn--cancle" data-toggle="modal" data-target="#modalCancle" data-transaction="{{CASE_NAME}}" data-orderno="{{ORDER_NO}}" data-orderseqid="{{ORDER_SEQ_ID}}" data-id="printPart{{index}}">取消認購</div>
+                    </div>
+                    <a class="collapse-footer-btn" data-toggle="collapse" href="#collapse{{index}}" role="button" aria-expanded="true" aria-controls="collapse{{index}}"></a>
+                </div>
+            </div>
+        </div>
+    </section>
+</script>
+<script type="text/html" id="transactionsuccess">
+    <section class="transaction-collapse-block success">
+        <a class="transaction-button" data-toggle="collapse" href="#collapse{{index}}" role="button" aria-expanded="false" aria-controls="collapse{{index}}">
+            <div class="row no-gutters w-90 m-auto">
+                <div class="col-4 transaction-button--left">
+                    <div class="transaction-button--item">專案名稱</div>
+                    <div class="transaction-button--item">申購時間</div>
+                    <div class="transaction-button--item">申購數量</div>
+                    <div class="transaction-button--item">申購金額</div>
+                    <div class="transaction-button--item">匯款帳號</div>
+                    <div class="transaction-button--item">匯款期限</div>
+                    <div class="transaction-button--item">入帳/取消日期</div>
+                </div>
+                <div class="col-8 transaction-button--right">
+                    <div class="transaction-button--item">{{CASE_NAME}}</div>
+                    <div class="transaction-button--item">{{SUBSCRIPTION_DT}}</div>
+                    <div class="transaction-button--item">{{PANELS_NUM}} 片</div>
+                    <div class="transaction-button--item">{{SUBSCRIPTION_AMT}} 元</div>
+                    <div class="transaction-button--item">{{BNK_VR_ACCNTNO}}</div>
+                    <div class="transaction-button--item">{{PAY_DUE_DT}}</div>
+                    <div class="transaction-button--item">{{ACPT_DT}}</div>
+                </div>
+            </div>
+            <div class="pl-3 transaction-status-type text-blue text-bold">成功申購</div>
+        </a>
+        <div class="collapse" id="collapse{{index}}">
+            <div class="transaction-content">
+                <div class="transaction-content--title mb-3">匯款資訊明細</div>
+                <div class="transaction-content--container">
+                    <div class="row no-gutters transaction-data">
+                        <div class="col-3 transaction-data--title">訂單編號</div>
+                        <div class="col-9 transaction-data--content">{{ORDER_NO}}</div>
+                    </div>
+                    <div class="row no-gutters transaction-data">
+                        <div class="col-3 transaction-data--title">購買專案</div>
+                        <div class="col-9 transaction-data--content">{{CASE_NAME}}</div>
+                    </div>
+                    <div class="row no-gutters transaction-data">
+                        <div class="col-3 transaction-data--title">購買片數</div>
+                        <div class="col-9 transaction-data--content">{{PANELS_NUM}} 片</div>
+                    </div>
+                    <div class="row no-gutters transaction-data">
+                        <div class="col-3 transaction-data--title">付款帳號</div>
+                        <div class="col-9 transaction-data--content">{{BNK_PAY_ACCNTNO}}</div>
+                    </div>
+                    <div class="row no-gutters transaction-data">
+                        <div class="col-3 transaction-data--title">已付金額</div>
+                        <div class="col-9 transaction-data--content">{{PAY_AMT}}</div>
+                    </div>
+                    <div class="row no-gutters transaction-data">
+                        <div class="col-3 transaction-data--title">付款日期</div>
+                        <div class="col-9 transaction-data--content">{{PAY_DT}}</div>
+                    </div>
+                    <a href="@Url.Action("InvestContract","member")/{{DOCUMENT_VERSION}}" target="_blank" class="check-detail-btn">
+                        <img src="@Url.Content("~/Content/images/Member_center_transaction_icon.svg")" alt="">
+                        <p>購買合約檢視</p>
+                    </a>
+                    <a class="collapse-footer-btn" data-toggle="collapse" href="#collapse{{index}}" role="button" aria-expanded="true" aria-controls="collapse{{index}}"></a>
+                </div>
+            </div>
+        </div>
+    </section>
+</script>
+<script type="text/html" id="transactioncancle">
+    <section class="transaction-collapse-block cancle">
+        <a class="transaction-button">
+            <div class="row no-gutters w-90 m-auto">
+                <div class="col-4 transaction-button--left">
+                    <div class="transaction-button--item">專案名稱</div>
+                    <div class="transaction-button--item">申購時間</div>
+                    <div class="transaction-button--item">申購數量</div>
+                    <div class="transaction-button--item">申購金額</div>
+                    <div class="transaction-button--item">匯款帳號</div>
+                    <div class="transaction-button--item">匯款期限</div>
+                    <div class="transaction-button--item">入帳/取消日期</div>
+                </div>
+                <div class="col-8 transaction-button--right">
+                    <div class="transaction-button--item">{{CASE_NAME}}</div>
+                    <div class="transaction-button--item">{{SUBSCRIPTION_DT}}</div>
+                    <div class="transaction-button--item">{{PANELS_NUM}} 片</div>
+                    <div class="transaction-button--item">{{SUBSCRIPTION_AMT}} 元</div>
+                    <div class="transaction-button--item">{{BNK_VR_ACCNTNO}}</div>
+                    <div class="transaction-button--item">{{PAY_DUE_DT}}</div>
+                    <div class="transaction-button--item">{{ACPT_DT}}</div>
+                </div>
+            </div>
+            <div class="pl-3 transaction-status-type text-bold">取消申請</div>
+        </a>
+    </section>
+</script>

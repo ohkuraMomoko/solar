@@ -1,0 +1,138 @@
+@charset "UTF-8";
+/* @site: 全民電廠
+ * @author: mickey
+ * @update: mickey (2019-11-19)
+ * @page: 會員專區-轉讓紀錄
+ * @description: 轉讓紀錄/受讓紀錄
+ */
+/* =Variables--------------------------*/
+/* font style ---*/
+/* desktop & mobile size */
+/* color */
+/*animation */
+/*z-index */
+/* z-index順序 */
+/* contactBtn => meun mobile => signup/login */
+/*為手譏評板裝置，且裝置奘為橫向*/
+/*若只判斷orientation:landscape，desktop size也包含在內*/
+/*item: profile-tag ---*/
+.profile-tag-container {
+  border-bottom: 1px solid #D3D3D3;
+}
+
+.profile-tag {
+  width: 90%;
+  max-width: 57rem;
+  margin: 0 auto;
+  display: -webkit-box;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  /*@include justify-content(space-between);*/
+}
+
+.profile-tag--item {
+  width: 50%;
+  max-width: 18.75rem;
+  font-size: 1.5rem;
+  line-height: 3rem;
+  text-align: center;
+  color: #8a8a8a;
+  border-bottom: .5rem solid transparent;
+  border-radius: 2px;
+  margin: 0 3%;
+  -webkit-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+}
+
+.profile-tag--item > a {
+  color: inherit;
+  display: block;
+}
+
+.profile-tag--item:hover, .profile-tag--item.active {
+  color: #303030;
+  border-color: #1C8886;
+}
+
+/*rwd: profile-tag ----*/
+@media only screen and (max-width: 768px) {
+  .profile-tag {
+    width: 100%;
+  }
+  .profile-tag--item {
+    font-size: 0.94rem;
+    line-height: 2rem;
+    border-width: .25rem;
+    margin: 0 auto;
+  }
+}
+
+.transfer .transaction-header {
+  border-bottom: 1px solid #e3e3e3;
+}
+
+.transfer .transaction-collapse-block {
+  border-top: 0;
+}
+
+.transfer .transaction-button::after {
+  display: none;
+}
+
+.transfer .transfer-btn {
+  background-color: #FFFFFF;
+  color: #535353;
+  max-width: 11.81rem;
+  height: 2.19rem;
+  line-height: 2.19rem;
+  width: 100%;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  -webkit-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+}
+
+.transfer .transfer-btn:hover, .transfer .transfer-btn:active, .transfer .transfer-btn:focus {
+  background-color: #c7c7c7;
+  color: #ffffff;
+}
+
+@media only screen and (min-width: 1024px) {
+  .transfer .transaction-container {
+    width: 80%;
+  }
+  .transfer .transaction-button--item:nth-child(4),
+  .transfer .transaction-header--item:nth-child(4) {
+    width: 12%;
+  }
+  .transfer .transaction-button--item:nth-child(5),
+  .transfer .transaction-header--item:nth-child(5) {
+    width: 28%;
+  }
+  .transfer .transaction-button--item:nth-child(1),
+  .transfer .transaction-button--item:nth-child(2),
+  .transfer .transaction-button--item:nth-child(3),
+  .transfer .transaction-header--item:nth-child(1),
+  .transfer .transaction-header--item:nth-child(2),
+  .transfer .transaction-header--item:nth-child(3) {
+    width: 20%;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .transaction-button--item, .transaction-header--item {
+    line-height: 1.38rem;
+    margin-bottom: .44rem;
+  }
+  .transfer .transfer-btn {
+    max-width: 100%;
+  }
+}

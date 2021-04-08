@@ -1,0 +1,151 @@
+﻿@model JoinViewModel
+@{ 
+    var projectIntro = Model.LoanCaseIntroduct.CASELOAN_INTRODCT;
+    var schedule = Model.LoanCaseSchedule.LOAN_CASE_SCHED;
+
+    string youtubeUrlPrefix = "https://www.youtube.com/embed/";
+    string shareUrlPrefix = "https://youtu.be/";
+    string watchUrl = "https://www.youtube.com/watch?v= ";
+    string embedUrl = "";
+
+    if (projectIntro.POWER_AVI_PATH != null)
+    {
+
+        if (projectIntro.POWER_AVI_PATH.IndexOf(shareUrlPrefix) >= 0)
+        {
+            embedUrl = projectIntro.POWER_AVI_PATH.Replace(shareUrlPrefix, youtubeUrlPrefix);
+        }
+        else if (projectIntro.POWER_AVI_PATH.IndexOf(watchUrl) >= 0)
+        {
+            embedUrl = youtubeUrlPrefix + projectIntro.POWER_AVI_PATH.Split(new[] { "v=" }, StringSplitOptions.None)[1];
+        }
+        else
+        {
+            embedUrl = projectIntro.POWER_AVI_PATH;
+        }
+
+    }
+}
+
+<section class="block-item">
+    <h3 class="tab-content-title">案廠介紹</h3>
+    <div class="row no-gutters">
+        <div class="col-12 col-md-6">
+            @* 內文是否會有換行符號? *@
+            <div class="tab-content-description">
+                @Html.Raw(projectIntro.LOAN_SIMPLE_DESC)
+            </div>
+        </div>
+        <div class="col-12 col-md-6 d-flex justify-content-end">
+            <div class="tab-content-media tab-content-media--video">
+                <iframe width="674" height="379" src="@embedUrl" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="projectTimeLime" class="block-item block-item--process">
+    <h3 class="tab-content-title">專案啟用流程</h3>
+    <ul class="project-process">
+        @*<li class="project-process-item project-process-item--1">
+            TODO: 專案流程的框線(.project-highlight)
+                1. 起始點(加上.start)
+                2. 中間點(加上.medium)
+                3. 結束點(加上.end)
+                4. 預設
+            
+            <div class="project-highlight start"></div>
+            TODO: 專案進度狀態(.project-process-flag)
+                1. 預設
+                2. 勾選(加上.active) 
+            <div class="project-process-flag active"></div>
+            TODO: 專案進度狀態(.project-process-title)
+                1. 預設
+                2. 專案開始銷售/專案募資完成(加上.active) 
+            <div class="project-process-title">
+                <p class="project-process-title--time">2019.01.01</p>
+                <p class="project-process-title--data"></p>
+            </div>
+            TODO: 專案進度說明狀態(project-process-box)
+                1.預設
+                2.若沒有說明文字但有附件(加上.no-desc)
+                3.無描述也無附件(加上.invisible)
+            
+            <div class="project-process-box">
+                <div class="project-process-desc"></div>
+                <a href="#" target="_blank" class="project-process-link">附件</a>
+            </div>
+        </li>*@
+        
+        @{ 
+            bool isMedium = false;
+            if (schedule != null)
+            {
+
+
+                foreach (var item in schedule)
+                {
+                    string stageCheck = item.STG_STATUS == "Y" ? "active" : "";
+                    string titleActive = "";
+                    string fileShow = "";
+                <li class="project-process-item project-process-item--2">
+                    @if (item.STG_PAY_POSITION == "Y")
+                    {
+                        <div class="project-highlight start"></div>
+                        isMedium = true;
+                        titleActive = "active";
+                    }
+                    else if (item.STG_GET_POSITION == "Y")
+                    {
+                        <div class="project-highlight end"></div>
+                        isMedium = false;
+                        titleActive = "active";
+                    }
+                    else if (isMedium)
+                    {
+                        <div class="project-highlight medium"></div>
+
+                    }
+
+                    @if (string.IsNullOrEmpty(item.STG_CONTEXT))
+                    {
+                        fileShow = "no-desc";
+                        if (item.STG_FILE == "N")
+                        {
+                            fileShow = "invisible";
+                        }
+                    }
+
+                    <div class="project-process-flag @stageCheck"></div>
+                    <div class="project-process-title @titleActive">
+                        <p class="project-process-title--time">@item.STG_DT</p>
+                        <p class="project-process-title--data">@item.STG_NME</p>
+                    </div>
+                    <div class="project-process-box @fileShow">
+                        <div class="project-process-desc">@item.STG_CONTEXT</div>
+                        @if (item.STG_FILE == "Y")
+                        {
+                            <a href='javascript:view_file()'  class="project-process-link">附件</a>
+                        }
+                    </div>
+                    
+                </li>
+                    }
+                }
+            }
+    </ul>
+</section>
+<section class="power-care">
+    <h4 class="power-care-title">補充說明</h4>
+    <p class="power-care-desc">
+        @Html.Raw(projectIntro.LOAN_GUARANTEE_DESC)
+        <br />
+    </p>
+</section>
+
+
+<script>
+    function view_file() {
+        $('.tab-btn-3').click()
+    }
+    
+</script>

@@ -1,0 +1,43 @@
+﻿
+
+<div class="js-contact-btn contact-btn contact-btn-desktop"></div>
+
+<div class="js-contact-btn contact-btn contact-btn-mobile">
+    <div class="d-flex">
+        <div class="d-flex justify-content-center align-items-center icon">
+            <img src="@Url.Content("~/Content/images/icon_phone.svg")" alt="" />
+        </div>
+        <div class="text">聯絡我們</div>
+    </div>
+</div>
+
+<div class="modal fade contact-modal" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <img src="@Url.Content("~/Content/images/bt_close_w.svg")" alt="close contact modal" />
+            </button>
+            <div class="modal-body">
+                <div class="contact-header">
+                    <p class="contact-header--title">聯絡我們</p>
+                    <p>客服電話 / 出租屋頂</p>
+                    <a href="@Url.Content("~/Home/Comments")" 
+                        class="center btn--type btn--type-2 contact-btn ga_component_contact_link_comments">
+                        <span>線上留言</span>
+                    </a>
+                </div>
+                <div class="contact-body">
+                    <p>或者你也可以</p>
+                    <a href="mailto:finmart@chailease.com.tw"
+                       target="_blank"
+                       class="contact-body--text ga_component_contact_btn_email">
+                        finmart@chailease.com.tw
+                    </a>
+                    <a  class="js-contact-link ga_component_contact_btn_tel" 
+                        target="_blank" >服務電話：(02) 2658-1677</a>
+                    <p>週一至週五 9:00 - 12:00 / 13:00-17:30</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

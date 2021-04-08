@@ -1,0 +1,87 @@
+﻿@import "../setting/_variables.scss";
+@import "../setting/_mixins.scss";
+
+/* block: form-step-container ==========*/
+.form-step-container {
+    @include flexbox;
+    @include flex-direction(row);
+    @include justify-content(center);
+}
+
+/*item: form-step -----------------------*/
+.form-step {
+    width: 100px;
+    @include flexbox;
+    @include flex-direction(column);
+    @include align-items(center);
+    &--number {
+        $stepIconHeight: 2.31rem;
+        width: $stepIconHeight;
+        height: $stepIconHeight;
+        border-radius: 50%;
+        background-color: $color-step;
+        font-size: 1.13rem;
+        letter-spacing: 0.08rem;
+        line-height: $stepIconHeight;
+        color: #ffffff;
+        text-align: center;
+    }
+    &--title {
+        margin-top: 0.25rem;
+        font-size: 1rem;
+        color: $color-secondary;
+    }
+}
+
+/*status: form-step,2步驟,3步驟 ----*/
+.form-step-container {
+    position: relative;
+    z-index: 1;
+    &--2,
+    &--3 {
+        &:after {
+            content: '';
+            height: 2px;
+            background-color: $color-step;
+            position: absolute;
+            left: 40px;
+            top: 30%;
+            z-index: -1;
+        }
+    }
+    &--2 {
+        width: 200px;
+        &:after {
+            width: 116px;
+        }
+    }
+    &--3 {
+        width: 95%;
+        max-width: 300px;
+        margin: 0 auto;
+        &:after {
+            width: 70%;
+        }
+    }
+}
+
+/* action: active ---*/
+.form-step--active {
+    .form-step--number {
+        background-color: $color-primary-blue;
+    }
+}
+
+/* rwd: form-step ---*/
+.form-step {
+    &--number {
+        $stepIconHeight: 1.88rem;
+        width: $stepIconHeight;
+        height: $stepIconHeight;
+        line-height: $stepIconHeight;
+        font-size: 0.91rem;
+    }
+    &--title {
+        font-size: 0.81rem;
+    }
+}

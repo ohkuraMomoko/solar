@@ -1,0 +1,137 @@
+﻿@using Chailease.SolarEnergy.Web.ViewModel
+@model HomeViewModel
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Language" content="zh-TW">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
+    <meta charset="utf-8" />
+    <title>中租全民電廠 - @ViewBag.Title</title>
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC" rel="stylesheet">
+    @Styles.Render("~/Content/bootstrap")
+    @Styles.Render("~/Content/css")
+    @RenderSection("header", required: false)
+    @RenderSection("metatags", false)
+    @Scripts.Render("~/bundles/jquery")
+
+    <script>
+        var getUserInfoUrl = '@Url.Action("GetInstantUserInfo")';
+        var memberId;
+
+        $.ajax({
+            url: getUserInfoUrl,
+            type: "POST",
+            dataType: 'json',
+            cache: false,
+            data: {},
+            success: function (meminfo) {
+                // meminfo: ID , LEVEL , BASEINFO , ACCTION , RETURN_NOTE
+                if (meminfo.ID != null) {
+                    console.log('page init,login success.');
+                    console.log('userID:' + meminfo.ID);
+                    memberId = meminfo.ID;
+                    // GA DataLayer
+                    window.dataLayer = window.dataLayer || [];
+
+                    // GA: 集客/UserId
+                    dataLayer.push({ 'userID': memberId });
+
+                    // GA: 圖靈/UserID
+                    dataLayer.push({ "event": "send_UserID", "UserID": memberId });
+
+                    // GA: 圖靈/身份別
+                    // 會員權限 00:非會員 01:一般會員 02:出資會員(審核中) 03:出資會員(完成實名認證)
+                    dataLayer.push({ 'event': 'td_identityCheck', 'td_identity': meminfo.LEVEL });
+                }
+            },
+            error: function (errmsg) {
+                console.log("getUserInfoUrl error");
+            }
+        });
+    </script>
+
+    <!-- Google Tag Manager: 中租全民電廠(新站) -->
+    <script>
+        var testMode = "@System.Configuration.ConfigurationManager.AppSettings["testMode"]";
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', testMode == "Y" ? 'GTM-54TSQVR' :'GTM-W4FFCND');</script>
+    <!-- End Google Tag Manager: 中租全民電廠(新站) -->
+    <!-- Google Tag Manager: 中租全民電廠(新站)for圖靈數位使用 -->
+    <script>
+        var testMode = "@System.Configuration.ConfigurationManager.AppSettings["testMode"]";
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', testMode == "Y" ? 'GTM-WN5LDQJ' :'GTM-K8JLD7M');</script>
+    <!-- End Google Tag Manager: 中租全民電廠(新站)for圖靈數位使用 -->
+</head>
+<body>
+    @{
+        Html.RenderPartial("~/Views/Components/_ContactBtn.cshtml");
+    }
+    <div id="headerMeun">
+        @{
+            Html.RenderPartial("~/Views/Components/_Menu.cshtml", Model.MenuVwModel);
+        }
+    </div>
+    <main>
+        @RenderBody()
+    </main>
+    @{
+
+        Html.RenderPartial("~/Views/Components/_Footer.cshtml", Model.MenuVwModel);
+        Html.RenderPartial("~/Views/Components/_ModalSignup.cshtml");
+        Html.RenderPartial("~/Views/Components/_ModalSource.cshtml");
+        Html.RenderPartial("~/Views/Components/_ModalForgetPassword.cshtml");
+        Html.RenderPartial("~/Views/Components/_ModalForgetEmail.cshtml");
+        Html.RenderPartial("~/Views/Components/_ModalSettingPassword.cshtml");
+        Html.RenderPartial("~/Views/Components/_ModalBuyInfo.cshtml");
+        Html.RenderPartial("~/Views/Components/_ModalSubscription.cshtml");
+        Html.RenderPartial("~/Views/Components/_ModalNotAllow.cshtml");
+        Html.RenderPartial("~/Views/Components/_LoadingCover.cshtml");
+    }
+
+    <<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/plugin")
+    @Scripts.Render("~/bundles/menu")
+    @Scripts.Render("~/bundles/common")
+    @Scripts.Render("~/bundles/Components")
+    @RenderSection("scripts", required: false)
+    <script>
+        $(function () {
+            // 手機板選單的登入按鈕 在IOS的safari/chrome都無法用data attr開啟modal
+            $("#mobileLoginBtn").on('click', function () {
+                $('#modalMember').modal('show');
+                $(this).data("action", "login");
+            });
+            $("#mobileSignBtn").on('click', function () {
+                $('#modalMember').modal('show');
+                $(this).data("action", "signup");
+            });
+        })
+    </script>
+    <!-- Google Tag Manager (noscript): 中租全民電廠(新站) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=@(System.Configuration.ConfigurationManager.AppSettings["testMode"]=="Y"?"GTM-54TSQVR":"GTM-W4FFCND")" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript): 中租全民電廠(新站) -->
+    <!-- Google Tag Manager (noscript): 中租全民電廠(新站)for圖靈數位使用 -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=@(System.Configuration.ConfigurationManager.AppSettings["testMode"]=="Y"?"GTM-WN5LDQJ":"GTM-K8JLD7M")" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript): 中租全民電廠(新站)for圖靈數位使用 -->
+</body>
+</html>

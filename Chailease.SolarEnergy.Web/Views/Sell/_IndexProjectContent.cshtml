@@ -1,0 +1,195 @@
+﻿@using System.Text.RegularExpressions
+@model SellViewModel
+@section header {
+
+}
+<div class="join-solar">
+   
+</div>
+<script type="text/html" id="plantTemplate">
+    <div class="solar-item solar-item--onsale {{SHOW}}" data-id="TEXT">
+        <div class="solar-item-header">
+            <span class="solar-item-header--status">二手開放</span>
+            <div class="solar-item-header--box">
+                <div class="solar-item-header--inline">
+                    <div class="pcs-all">瀏覽數&nbsp;</div>{{VIEW_NUM}}&nbsp;&nbsp;
+                    <div class="pcs-all">關注數&nbsp;</div>{{BUY_NUM}}
+                </div>
+                <div class="solar-item-header--pcs">
+                    欲出售<span class="pcs-canbuy">{{SELL_NUM}}</span>片
+                </div>
+            </div>
+        </div>
+        <div data-lazy="true" class="solar-item-body" data-bg="url({{CASE_IMG}})">
+            <div class="solar-item-body--header">
+                <div class="solar-title">
+                    <p class="solar-title--data">{{CASE_NAME1}}</p>
+                    <span class="solar-title--num">{{CASE_NAME2}}</span>
+                </div>
+                <div class="solar-percentage">
+                    <p class="solar-percentage--text">預估內部報酬率</p>
+                    <p class="solar-percentage--data">{{SELL_IRR}}</p>
+                </div>
+            </div>
+            <div class="solar-item-body--content">
+                @*<div class="solar-row">
+                    <p class="solar-row--label solar-row--label-s">{{POWER_STRT_DT}} 發電</p>
+                </div>*@
+                <div class="solar-row">
+                    <p class="solar-row--label">售電合約剩餘期間</p>
+                    <div class="solar-row--year"><span>{{CONTRACT_REMAIN_DAY}}</span></div>
+                </div>
+                <div class="solar-row">
+                    <p class="solar-row--label">每片欲出售價格</p>
+                    <div class="solar-row--price"><span>{{POWER_PANEL_SELL_PRICE}}</span>元</div>
+                </div>
+                @*
+                    (不懂此註解)
+                    分三種狀態
+                    1.已關注→您已關注此案
+                    2.未關注→VIEW MORE
+                    3.暫停關注→目前暫停關注
+                *@
+                <div data-href="@Url.Content("~/Sell/Project")"
+                     class="btn--type btn--type-3 solar-item-btn project-item-btn"
+                     data-ga-target="ga_projectlist_solaritem_link"
+                     data-ga-project-status="onsale"
+                     data-ga-project-id="TEXT"
+                     data-name="TEXT"
+                     data-price="TEXT"
+                     onclick="return loadProject('{{SH_TRANS_INST_CD}}');">
+                    <span class="display-buyer" >{{IS_BUYER_MSG}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script>
+    const $mbrLVL = '@Model.UserInfoDetail.MBR_LVL';
+
+    $(".project-item-btn").on("click", function () {
+        var href = $(this).data("href");
+        @*
+        //GA: 圖靈/增強型電子商務-Product Click
+        dataLayer.push({
+            'ecommerce': {
+                'click': {
+                    'products': [{
+                        'id': $(this).data("ga-project-id"),
+                        'name': $(this).data("name"),
+                        'category': "太陽能板",
+                        'price': $(this).data("price")
+                    }]
+                }
+            },
+            'event': 'td_productClick'
+        });*@
+
+        if ($mbrLVL == '' || $mbrLVL == '00') {
+            $('#modalMember').modal('show');
+            // GA: 圖靈/電廠列表/專案開放請通知我/click event/狀態:需登入
+            dataLayer.push({
+                'event': 'productClick',
+                'buttonName': '二手交易',
+                'pageName': '登入',
+                'productName': projectName,
+                'url': '@Request.Url.LocalPath'
+            });
+        } else {
+            window.location = href;
+        }
+    });
+
+    $('.PrjOpenNotice').on("click",function () {
+        var caseno = $(this).data('caseno');
+        var projectName = $(this).data('name');
+        loginExt.setPageRefresh(true)
+
+        if ($mbrLVL == '' || $mbrLVL == '00') {
+            $('#modalMember').modal('show');
+            // GA: 圖靈/電廠列表/專案開放請通知我/click event/狀態:需登入
+            dataLayer.push({
+                'event': 'productClick',
+                'buttonName': '專案開放請通知我',
+                'pageName': '登入',
+                'productName': projectName,
+                'url': '@Request.Url.LocalPath'
+            });
+        } else {
+            $.ajax({
+                url: '@Url.Action("NewPrjNotice")',
+                type: "POST",
+                dataType: 'json',
+                cache: false,
+                data: { MBR_ID: '@Model.UserInfoDetail.MBR_ID', STATUS: '1', CASE_NO: caseno, NOTICE_TYPE: '3' }
+            }).done(function (res) {
+                if (!res.result) {
+                    showMsg(res.msg, "error");
+                }
+                else {
+                    $('#modalSubscription').modal('show');
+                    // GA: 圖靈/電廠列表/專案開放請通知我/click event/狀態:訂閱成功
+                    dataLayer.push({
+                        'event': 'productClick',
+                        'buttonName': '專案開放請通知我',
+                        'pageName': '訂閱成功',
+                        'productName': projectName,
+                        'url': '@Request.Url.LocalPath'
+                    });
+                }
+            });
+        }
+    });
+
+
+    $('.PrjReleaseNotice').click(function () {
+        var caseno = $(this).data('caseno');
+        var projectName = $(this).data('name');
+        loginExt.setPageRefresh(true)
+
+        if ($mbrLVL == '' || $mbrLVL == '00') {
+
+            $('#modalMember').modal('show');
+        } else {
+            // GA: 圖靈/電廠列表/有專案釋出請通知我/click event
+            dataLayer.push({
+                'event': 'productClick',
+                'buttonName': '有專案釋出請通知我',
+                'pageName': '電廠列表',
+                'productName': projectName,
+                'url': '@Request.Url.LocalPath'
+            });
+            $.ajax({
+                url: '@Url.Action("NewPrjNotice")',
+                type: "POST",
+                dataType: 'json',
+                cache: false,
+                data: { MBR_ID: '@Model.UserInfoDetail.MBR_ID', STATUS: '1', CASE_NO: caseno, NOTICE_TYPE: '2' }
+            }).done(function (res) {
+                if (!res.result) {
+                    showMsg(res.msg,"error")
+                }
+                else {
+                    $('#modalSubscription').modal('show')
+                }
+            });
+        }
+    });
+
+    function loadProject(shTransInstCd) {
+
+        if ($mbrLVL == '' || $mbrLVL == '00') {
+            $('#modalMember').modal('show');
+            dataLayer.push({
+                'event': 'productClick',
+                'buttonName': '二手交易',
+                'pageName': '登入',
+                'productName': 'null',
+                'url': '@Request.Url.LocalPath'
+            });
+        } else {
+            location.replace('@Url.Action("Project","Sell")/' +  shTransInstCd);
+        }
+    };
+
+</script>

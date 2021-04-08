@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="23px" height="50px" viewBox="0 0 23 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.3 (67297) - http://www.bohemiancoding.com/sketch -->
+    <title>Member center_power plant_icon01</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="100%" y1="30.0990513%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#22DAD4" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#1EB5AC" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Member-center_power-plant_icon01" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <polygon id="Path-39" fill="url(#linearGradient-1)" points="14.4531808 -1.63064007e-16 0.998115537 19 9.46260316 19 0.998115537 31 9.46260316 31 0 47 18.3267269 27 12.0592631 27 23.0131912 15 16.3304958 15 30 1.70401887e-13"></polygon>
+    </g>
+</svg>

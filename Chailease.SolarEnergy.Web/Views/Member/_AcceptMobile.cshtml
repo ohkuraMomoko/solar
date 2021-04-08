@@ -1,0 +1,35 @@
+﻿@Styles.Render("~/Content/pages/member/transactionMobile.min.css")
+@model Chailease.SolarEnergy.Web.ViewModel.MemberViewModel
+<div class="transaction-container">
+    <div class="transaction-body">
+        @foreach (var m in Model.MemOnSaleTransBuyRecList)
+        {
+            <section class="transaction-collapse-block notfinish">
+                <div class="transaction-button">
+                    <div class="row no-gutters w-90 m-auto">
+                        <div class="col-4 transaction-button--left">
+                            <div class="transaction-header--item">變更日期</div>
+                            <div class="transaction-header--item">轉讓人</div>
+                            <div class="transaction-header--item">專案名稱</div>
+                            <div class="transaction-header--item">數量</div>
+                            <div class="transaction-header--item"></div>
+                        </div>
+                        <div class="col-8 transaction-button--right">
+                            <div class="transaction-button--item">@m.APLY_DT</div>
+                            <div class="transaction-button--item">@m.SELL_MBR_ID @m.SELL_CUST_NAME</div>
+                            <div class="transaction-button--item">@m.SELL_CASE_NAME</div>
+                            <div class="transaction-button--item">@m.BUY_NUM 片</div>
+                            <div class="transaction-button--item">
+                                @*
+                                    連結為 member/Interest?id=電廠編號
+                                *@
+                                <a class="transfer-btn" href="@Url.Content("~/Member/Interest")?id=@m.MAJ_SEQ_ID">檢視分配記錄</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        }
+
+    </div>
+</div>

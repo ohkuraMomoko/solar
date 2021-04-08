@@ -1,0 +1,129 @@
+﻿/* @site: 全民電廠
+ * @author: nikki
+ * @update: nikki (2019-3-12)
+ * @page: 如何運作
+ * @description: 如何運作
+ */
+
+@import "../../setting/_variables.scss";
+@import "../../setting/_mixins.scss";
+
+/* common: extend ---*/
+.page-kv {
+    background-image: url("../../images/operation_model_bigimage.jpg");
+}
+
+.article {
+    width: 100%;
+    max-width: 60rem;
+    margin: 0 auto;
+    color: $color-dark;
+    &-title {
+        font-size: 2.5rem;
+        letter-spacing: 0.19rem;
+        text-align: center;
+    }
+    &-desc {
+        width: 100%;
+        max-width: 44.63rem;
+        font-size: 1.25rem;
+        letter-spacing: 0.06rem;
+        line-height: 1.88rem;
+        text-align: center;
+        color: $color-dark--2;
+        margin: 3rem auto;
+    }
+    &-link {
+        color: $color-dark;
+        text-align: right;
+        display: block;
+        font-weight: bold;
+        margin-bottom: 6rem;
+    }
+}
+@include rwd($ipad) {
+    .article {
+        &-title {
+            font-size: 1rem;
+            letter-spacing: 0.06rem;
+        }
+        &-desc{
+            font-size: 0.81rem;
+            line-height: 1.31rem;
+            margin: 1.88rem auto 0;
+        }
+        &-link {
+            font-size: 1rem;
+            letter-spacing: 0.03rem;
+            margin-bottom: 1.75rem;
+        }
+    }
+}
+
+.section-item {
+    $img: 21rem;
+    margin-bottom: 5.06rem;
+    @include flexbox;
+    @include justify-content(space-between);
+    &--img {
+        width: 100%;
+        max-width: $img;
+        margin: 0 auto;
+    }
+    .section-content {
+        width: calc(100% - #{$img});
+        padding: 0 5%;
+        position: relative;
+        &--title {
+            font-size: 1.88rem;
+            letter-spacing: 0.05rem;
+            line-height: 1;
+            text-align: justify;
+            margin-bottom: 2rem;
+        }
+        &--desc {
+            font-size: 1.13rem;
+            letter-spacing: 0.03rem;
+            line-height: 1.81rem;
+            color: $color-dark--2;
+        }
+        &--link {
+            font-size: 1.13rem;
+            letter-spacing: 0.03rem;
+            line-height: 1.56rem;
+            font-weight: bold;
+            color: $color-dark;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+        }
+    }
+}
+
+@include rwd($ipad){
+    .section-item {
+        margin-bottom: 1.81rem;
+        @include flex-direction(column);
+        .section-content {
+            width: 100%;
+            padding: 0;
+            &--title {
+                font-size: 1rem;
+                letter-spacing: 0.03rem;
+                margin-top: 0.5rem;
+                margin-bottom: 0.5rem;
+            }
+            &--desc {
+                font-size: 0.88rem;
+                letter-spacing: 0;
+                line-height: 1.38rem;
+                text-align: justify;
+            }
+            &--link {
+                position: static;
+                display: block;
+                text-align: right;
+            }
+        }
+    }
+}

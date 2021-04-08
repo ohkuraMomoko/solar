@@ -1,0 +1,256 @@
+﻿@{
+    ViewBag.Title = "資料填寫";
+}
+@section metatags {
+    @Html.Action("GetMetaByType", "Base", new { id = 1 })
+}
+@section header{
+    @Styles.Render("~/Content/pages/advancedPurchase.min.css")
+    <link href="~/Content/typeahead.css" rel="stylesheet" />
+    <style>
+        /* 套件樣式影響到錯誤提示的圖案顯示，要重置掉float */
+        .twitter-typeahead {
+            float: inherit !important;
+        }
+
+        .bankname .input-group .twitter-typeahead {
+            display: inherit !important;
+        }
+
+        /*搜尋下拉選單的樣式:銀行分行*/
+        .tt-query, /* UPDATE: newer versions use tt-input instead of tt-query */
+        .tt-hint {
+            width: 396px;
+            height: 30px;
+            padding: 8px 12px;
+            font-size: 24px;
+            line-height: 30px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .tt-query { /* UPDATE: newer versions use tt-input instead of tt-query */
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        }
+
+        .tt-hint {
+            color: #999;
+        }
+
+        .tt-menu { /* UPDATE: newer versions use tt-menu instead of tt-dropdown-menu */
+            width: 422px;
+            margin-top: 12px;
+            padding: 8px 0;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            box-shadow: 0 5px 10px rgba(0,0,0,.2);
+        }
+
+        .tt-suggestion {
+            padding: 3px 20px;
+            font-size: 18px;
+            line-height: 24px;
+        }
+
+        .tt-suggestion.tt-is-under-cursor { /* UPDATE: newer versions use .tt-suggestion.tt-cursor */
+            color: #fff;
+            background-color: #0097cf;
+        }
+
+        .tt-suggestion p {
+            margin: 0;
+        }
+    </style>
+}
+<div class="page-container request-form">
+    <div class="page-kv">
+        <h1 class="page-kv--title">資料填寫</h1>
+    </div>
+    <div class="page-content">
+        <form action="" class="page-content-form">
+            <h2 class="page-content-form--title">請輸入/上傳帳戶銀行資料</h2>
+            <div class="form-step-container form-step-container--3">
+                <div class="form-step form-step--active">
+                    <div class="form-step--number">1</div>
+                    <p class="form-step--title">E-mail認證</p>
+                </div>
+                <div class="form-step form-step--active">
+                    <div class="form-step--number">2</div>
+                    <p class="form-step--title">身分資料</p>
+                </div>
+                <div class="form-step form-step--active">
+                    <div class="form-step--number">3</div>
+                    <p class="form-step--title">帳戶銀行資料</p>
+                </div>
+            </div>
+
+            <div class="form-item">
+                <label class="control-label">帳號</label>
+                <div class="input-group">
+                    <div class="account-data-containter">
+                        <span class="account-data">@ViewBag.Email</span>&nbsp;
+                        <span class="account-status account-status--approve">（已認證）</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-item">
+                <label class="control-label">銀行帳戶姓名</label>
+                <div class="input-group">
+                    <div class="account-data-containter">
+                        <span class="account-data">@ViewBag.name</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-item bank-data">
+                <label for="backId" class="control-label required">銀行帳戶資訊</label>
+                <div class="form-item mb-1">
+                    <div class="input-group">
+                            @*<select class="form-control ga_advanced_step3_select_bankid" required>
+                                <option value="" selected="" disabled="">銀行代碼(3碼)</option>
+                            </select>*@
+                            @*<input type="number" id="backId" name="backId" class="form-control has-btn-clear" placeholder="銀行代碼(3碼)" maxlength="3" required>*@
+                        <input id="bankId" class="form-control ga_advanced_step3_select_bankid" list="bankDataList" placeholder="銀行代碼(3碼)"  required />
+                        <div class='js-input-btn-clear input-btn-clear'></div>
+                    </div>
+                </div>
+                <div class="form-item mb-1 bankname">
+                    <div class="input-group">
+                        <input type="text" id="bankName" name="bankName"
+                               placeholder="分行名稱" required
+                               class="form-control has-btn-clear typeahead ga_advanced_step3_input_bankname">
+                        <div class='js-input-btn-clear input-btn-clear'></div>
+                    </div>
+                </div>
+                <div class="form-item mb-0">
+                    <div class="input-group">
+                        <input type="text" id="bankAccount" name="bankAccount"
+                               placeholder="銀行帳號" required
+                               class="form-control has-btn-clear ga_advanced_step3_input_bankaccount">
+                        <div class='js-input-btn-clear input-btn-clear'></div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-item">
+                <label for="fileAccountBank" class="control-label mb-3">上傳帳戶存摺</label>
+                <div class="upload-content-account">
+                    <div class="file-container-account input-group mb-3">
+                        <div class="js-file-preview file-img"></div>
+                        <input type="file" id="fileAccountBank" name="fileAccountBank"
+                               accept="image/gif, image/jpeg, image/jpg, image/png" required
+                               class="js-input-file input-file ga_advanced_step3_input_uploadbank">
+                        <p class="file-name js-file-name d-none">檔名顯示</p>
+                        <div class="btn--type btn--type-2 file-btn">選擇檔案</div>
+                    </div>
+                </div>
+            </div>
+            <button class="center btn--common btn--common-1 btn--form-send ga_advanced_step3_btn_finish">下一步</button>
+        </form>
+    </div>    
+</div>
+    <datalist id="bankDataList" name="bankDataList"></datalist>
+    @section scripts    {
+
+
+        <script src="~/Scripts/typeahead.bundle.js"></script>
+        <script src="~/Scripts/image-compressor.js"></script>
+        <script>
+    const email = '@ViewBag.Email';
+    const userAuthUrl = '@Url.Action("UserAuth")';
+    const bankCodeUrl = '@Url.Action("GetBankName", "member")';
+    const bankNameUrl = '@Url.Action("GetBankBranchName", "member")';
+    const requestFormBankUrl = '@Url.Action("RequestFormBank")';
+
+    var bankName = undefined;
+    var tForm = $('form.page-content-form');
+        $(function () {
+            //GA: 集客/出資會員/步驟3銀行資料
+            dataLayer.push(
+                {
+                    "event": "popupPageView",
+                    "popPATH": "/AdvancedPurchase/requestFormBank",
+                    "popTitle": "出資會員-Step3-銀行資料"
+                }
+            );
+
+            if ('@ViewBag.FirstInto')
+                $('#modalBuyInfo').modal('show');
+
+            bankName = new typeaheadoption('#bankName');
+
+            //var slt = tForm.find('select');
+            var slt = $('#bankDataList');
+            $ajax.Post(bankCodeUrl, {}, function (d) {
+                if (d.bankCode) {
+                    //$.each(d.bankCode, function (i, v) { $('<option></option>', { value: v.key }).html(v.key + ' ' + v.value).appendTo(slt) });
+                    $.each(d.bankCode, function (i, v) {
+                        slt.append("<option value='" + v.key + ' ' + v.value + "'>");
+                    });
+                }
+            });
+            $('#bankId').blur(function () {
+                bankName.clear();
+                var v = $(this).val();
+                var BankData = tForm.find('#bankId').val().split(" ");
+                $ajax.Post(bankNameUrl, { code: BankData[0] }, function (d) {
+                    if (d.bankNames) {
+                        bankName.setData(d.bankNames);
+                    }
+                });
+            });
+
+
+            //tForm.find('div.account-data-containter span:nth(0)').html(email);
+
+            tForm.validate(validateParams);
+            tForm.find('input[type=file]').rules("add", { filesize: 30 * 1024 * 1024 });
+            tForm.find('input#bankAccount').rules("add", { digits: true, maxlength: 14 });
+
+            tForm.submit(function () {
+                if (!tForm.valid()) return false;
+
+                var file = tForm.find('input[type=file]')[0].files[0];
+                var p = new imgcompress();
+                p.compress(file, 1, function (d) {
+                    var formData = new FormData();
+                    formData.append('File', d, d.name);
+                    var BankData = tForm.find('#bankId').val().split(" ");
+                    //formData.append('BankId', tForm.find('select').val());
+                    formData.append('BankId', BankData[0]);
+                    //formData.append('BankName', tForm.find('select option:selected').html());
+                    formData.append('BankName', BankData[1]);
+                    formData.append('BankBranchName', tForm.find('#bankName').val());
+                    formData.append('BankBranchId', bankName.getKey());
+                    formData.append('BankAccount', tForm.find('#bankAccount').val());
+                    $ajax.FormPost(requestFormBankUrl, formData, function (d) {
+                        if (d.result) {
+                            // GA: 圖靈/出資會員/2.帳戶銀行資料確認下一步點擊/成功
+                            dataLayer.push({
+                                'event': 'td_fundingMemberRegister',
+                                'register_step': '2',
+                                'register_step_status': 'success'
+                            });
+                            window.location.reload();
+                            //window.location = d.url;
+                        }
+                        else {
+                            showMsg(d.message, 'error');
+                            // GA: 圖靈/出資會員/2.帳戶銀行資料確認下一步點擊/失敗
+                            dataLayer.push({
+                                'event': 'td_fundingMemberRegister',
+                                'register_step': '2',
+                                'register_step_status': 'fail'
+                            });
+                        }
+                    });
+                }, function (e) { showMsg('File upload fail - ' + e, 'error') });
+                return false;
+            });
+            });
+
+
+        </script>
+
+    }

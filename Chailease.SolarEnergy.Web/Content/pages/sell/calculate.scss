@@ -1,0 +1,457 @@
+﻿/* @site: 全民電廠
+ * @author: mickey
+ * @update: miceky (2019-11-22)
+ * @page: 會員中心 - 我的電廠 - 確認出售價格
+ * @description: 
+ */
+
+ @import "../../setting/_variables.scss";
+ @import "../../setting/_mixins.scss";
+
+ .page-container {
+    background-image: linear-gradient(0deg, rgba(30,181,172,0.00) 30%, rgba(30,181,172,0.80) 100%);
+}
+.page-kv {
+    padding-top: 10rem;
+    height: 25rem;
+    background-image: unset;
+    &--title {
+        color: $color-dark;
+    }
+}
+
+@include rwd(#{$ipad - 1px}){
+    .page-kv {
+        height: 15rem;
+        padding: 7rem 5% 0;
+    }
+}
+
+.calculate{
+    position: relative;
+    padding: 2rem 0 4rem;
+}
+@include rwd($ipad){
+    .calculate{
+        padding: 1rem 1rem 4rem;
+    }
+}
+
+.sellcal {
+    &-title{
+        width: 80%;
+        margin: 0 auto;
+        padding: 0.75rem;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        h2{
+            font-size: rem(28px);
+            color: $color-primary-blue--4;
+        }
+        p{
+            color: #8A8A8A;
+        }
+        span{
+            font-size: rem(26px);
+            color: $color-primary-blue--4;
+            margin-left: 0.5rem;
+        }
+    }
+    &-subtitle{
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    &-btn{
+        font-size: rem(24px);
+        position: absolute;
+        top: auto;
+        right: 2rem;
+        width: auto;
+        line-height: 3.75rem;
+        height: 3.75rem;
+        width: 11.31rem;
+        text-align: center;
+    }
+    &-text{
+        text-align: center;
+        color: #8A8A8A;
+        margin-bottom: 1rem;
+    }
+}
+@include rwd($ipad){
+    .sellcal{
+        &-title{
+        width: 95%;
+        padding: 1rem 0;
+            h2{
+                font-size: rem(22px);
+            }
+            span{
+                font-size: rem(18px);
+            }
+        }
+        &-subtitle{
+            justify-content: space-between;
+            padding: 0 1rem;
+        }
+        &-btn{
+            position: relative;
+            top: auto;
+            right: auto;
+            height: 1.88rem;
+            line-height: 1.88rem;
+            font-size: rem(18px);
+        }
+    }
+}
+
+.calculate-item.auto-height{
+    height: auto;
+    >div {
+        line-height: unset;
+    }
+    .form-item{
+        margin-bottom: 0;
+    }
+}
+.calculate-item--data-1{
+    color: #4A4A4A;
+    font-size: rem(20px);
+}
+.calculate-item--data-3{
+    margin-right: 1rem;
+}
+.calc-input-container:after{
+    content: '元/片';
+    right: 2%;
+    width: 3rem; 
+} 
+.calculate-item--data{
+    text-align: right;
+}
+
+@include rwd($ipad){
+    .calculate-item-inline .custom-select select{
+        height: 48px;
+        line-height: 48px;
+    }
+}
+
+// 備註
+.calculate-content-info{
+    text-align: center;
+    margin-bottom: 1rem;
+}
+.select-article-class{
+    &[disabled]{
+        background-color: rgba(216,216,216,0.70);
+        border: 1px solid #B4B4B4;
+        color: #B4B4B4;
+    }
+}
+.calculate-item--text{
+    text-align: right;
+}
+.sellcal-gray{
+    font-size: rem(18px);
+    color: #8A8A8A;
+    span{
+        color: #232323;
+    }
+    &.text-sm{
+        font-size: 1rem;
+    }
+    label{
+        width: 4rem;
+        flex: 0 0 4rem;
+        &:before{
+            content:':';
+            display: inline-block;
+            float: right;
+            margin-right: 0.5rem;
+        }
+    }
+}
+.sellcal-blue{
+    font-size: rem(14px);
+    color: $color-primary-blue--4;
+}
+.calc-link{
+    border-radius: 8px;
+    margin: 0 auto;
+    &[disabled]{
+        cursor: not-allowed;
+    }
+} 
+.viewPdf{
+    display: flex;
+    justify-content: flex-end;
+    &.hide{
+        display: none;
+    }
+    &-btn{
+        font-size: rem(18px);
+        color: #FFFFFF;
+        line-height: 3.13rem;
+        height: 3.13rem;
+        background-color: $color-primary-blue--4;
+        padding: 0 2rem 0 3.5rem;
+        width: auto;
+        position: relative;
+        &:before{
+            content: '';
+            width: 1.25rem;
+            height: 1.63rem;
+            background-image: url('../../images/s_paper_icon_w.svg');
+            background-position: center;
+            background-size: 100%;
+            background-repeat: no-repeat;
+            position: absolute;
+            left: 1.5rem; 
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+}
+.text-input{
+    border: 1px solid $color-secondary--2;
+    color: $color-news-class--1;
+    border-radius: 10px;
+    width: 6.38rem;
+    line-height: 3.25rem;
+    height: 3.25rem;
+    text-align: center;
+    font-size: 1.25rem;
+    outline: 0;
+    transition: border-color .2s linear; 
+    &:hover, &:focus, &:active{
+        border-color: $color-primary-blue--4;
+    }
+    ~.calculate-item--title{
+        margin-left: 1rem;
+    }
+}
+.calc-full{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+.flex-grow{
+    flex: 0 0 auto;
+}
+.hide{
+    display: none !important;
+}
+@include rwd($ipad){
+    .sellcal-subtitle{
+        padding: 0;
+        button{
+            width: auto;
+            padding: 0 1rem;
+            line-height: 2.19rem;
+        }
+    }
+    .calc-link{
+        margin: 0 15px;
+    }
+    .calc-full{
+        justify-content: flex-start;
+    }
+}
+
+.calculate-item-inline{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    > *{
+        flex: 0 0 calc(50% - 0.5rem);
+        width: calc(50% - 0.5rem);
+    }
+    .custom-select{
+        margin-left: 1rem;
+        select{
+            width: 100%;
+        }
+    }
+}
+
+
+// modal
+.modal-open .page-content{
+    z-index: auto;
+}
+.modal-dialog{
+    max-width: 80%;
+    margin: 0 auto;
+    *:not(button){
+       color: #A3A3A3; 
+    }
+    .text-black{
+        color: #535353;
+    }
+}
+.modal-content{
+    padding: 1rem 2rem;
+}
+.modal-col-label{
+    width: 11.25rem;
+    @extend .flex-grow; 
+}
+.modal-col-content{
+    font-weight: 700;
+    @extend .text-black; 
+}
+.modal-item{
+    display: flex;
+    flex: 0 0 33.33333%;
+    max-width: 33.33333%;
+    margin-bottom: 0.5rem;
+    &-md{
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+.modal-row,
+.modal-row-l{
+    display: flex;
+    flex-wrap: wrap;
+}
+#modalCalculate{
+    th, td{
+        text-align: center;
+    }
+    .th-inner {
+        padding: 0 !important;
+        line-height: 2.38rem;
+        @extend .text-black; 
+    }
+    th{
+        background: $color-hover;
+    } 
+    td{
+        font-size: rem(14px);
+        line-height: 1.31rem;
+    }
+    tbody tr:nth-child(even) td{ 
+        background: $color-hover;
+    }
+    .total td{
+        background: #FFF3B5 !important;
+        color: #535353; 
+        font-weight: 700;
+    }
+    .bootstrap-table{
+        margin: 1rem 0;
+    }
+    .clps-btn{
+        display: flex;
+        align-items: center;
+        span{
+            margin-right: 0.5rem;
+        }
+        &[aria-expanded="true"]{
+            .clps-close{
+                display: block;
+            }
+            .clps-open{
+                display: none;
+            }
+            img{
+                transform: rotate(180deg);
+            }
+        }
+        &[aria-expanded="false"]{
+            .clps-close{
+                display: none;
+            }
+            .clps-open{
+                display: block;
+            }
+            img{
+                transform: rotate(0deg);
+            }
+        }
+    }
+}
+@include rwd($ipad){
+    .modal-dialog{
+        max-width: 90%;
+    }
+    .modal-content{
+        padding: 1rem;
+    }
+    .modal-col-content{
+        text-align: right;
+        width: 100%;
+    }
+    .modal-item{
+        flex: 0 0 100%;
+        max-width: 100%;
+        &-md{
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+    }
+    #modalCalculate{
+        .p-4{
+            padding: 1rem 0 !important;
+        }
+        .th-inner{
+            line-height: unset;
+            padding: 0.25rem !important;
+        }
+        td{
+            line-height: unset;
+            padding: 0.25rem 0.5rem !important;
+        }
+        .bootstrap-table{
+            margin: 0.5rem 0;
+        }
+    }
+}
+
+
+// rwd table
+@include rwd($ipad){
+    .bootstrap-table .fixed-table-container .table{
+        // width: auto;
+        overflow: visible;
+        display: flex;
+    }
+    .bootstrap-table .fixed-table-container .fixed-table-body{
+        overflow: hidden;
+    }
+
+    .flip-scroll .cf:after { visibility: hidden; display: block; font-size: 0; content: " "; clear: both; height: 0; }
+    .flip-scroll * html .cf { zoom: 1; } 
+    .flip-scroll *:first-child+html .cf { zoom: 1; }
+    
+    .flip-scroll table { width: 100%; border-collapse: collapse; border-spacing: 0; }
+
+    .flip-scroll th,
+    .flip-scroll td { margin: 0; vertical-align: top; white-space: nowrap; }
+     
+    .flip-scroll table { display: block; position: relative; width: 100%; }
+    .flip-scroll thead { display: block; float: left; }
+    .flip-scroll tbody { display: flex; position: relative; overflow-x: auto;}
+    .flip-scroll thead tr { display: block; }
+    .flip-scroll th { display: block; text-align: left; height: 3rem; }
+    .flip-scroll tbody tr { display: inline-block; vertical-align: top; }
+    .flip-scroll td { display: block; min-height: 1.25em; text-align: left;  height: 3rem; }
+	.btn-wrap .th-inner {
+		height: 1.88rem;
+	} 
+
+    /* sort out borders */
+
+    .flip-scroll th { border-bottom: 0; border-left: 0; }
+    .flip-scroll td { border-left: 0; border-right: 0; border-bottom: 0; }
+
+    .flip-scroll{
+        margin-top: 0 !important;
+    }
+}

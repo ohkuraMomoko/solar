@@ -1,0 +1,232 @@
+﻿@model Chailease.SolarEnergy.Web.ViewModel.SellViewModel
+
+@{
+    string youtubeUrlPrefix = "https://www.youtube.com/embed/";
+    string shareUrlPrefix = "https://youtu.be/";
+    string watchUrl = "https://www.youtube.com/watch?v= ";
+    string embedUrl = "";
+
+    if (Model.MemOnSaleDetail.POWER_AVI_PATH != null)
+    {
+
+        if (Model.MemOnSaleDetail.POWER_AVI_PATH.IndexOf(shareUrlPrefix) >= 0)
+        {
+            embedUrl = Model.MemOnSaleDetail.POWER_AVI_PATH.Replace(shareUrlPrefix, youtubeUrlPrefix);
+        }
+        else if (Model.MemOnSaleDetail.POWER_AVI_PATH.IndexOf(watchUrl) >= 0)
+        {
+            embedUrl = youtubeUrlPrefix + Model.MemOnSaleDetail.POWER_AVI_PATH.Split(new[] { "v=" }, StringSplitOptions.None)[1];
+        }
+        else
+        {
+            embedUrl = Model.MemOnSaleDetail.POWER_AVI_PATH;
+        }
+
+    }
+}
+<section class="block-item">
+    <h3 class="tab-content-title">案廠介紹</h3>
+    <div class="row no-gutters">
+        <div class="col-12 col-md-6">
+            @* 內文是否會有換行符號? *@
+            <div class="tab-content-description">
+                @Model.MemOnSaleDetail.SH_TRANS_INFO
+            </div>
+        </div>
+        <div class="col-12 col-md-6 d-flex justify-content-end">
+            <div class="tab-content-media tab-content-media--video">
+                <iframe width="674" height="379" src="@embedUrl" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="block-item">
+    <h3 class="tab-content-title">二手交易公佈欄提醒事項</h3>
+    <div class="row no-gutters">
+        <div class="col-12">
+            @* 內文是否會有換行符號? *@
+            <div class="tab-content-description">
+                @Model.MemOnSaleDetail.SH_TRANS_MEMO
+            </div>
+        </div>
+        @*<div class="col-12 col-md-6 d-flex justify-content-end">
+            <div class="tab-content-media tab-content-media--video">
+            </div>
+        </div>*@
+    </div>
+</section>
+<section class="block-item">
+    <h3 class="tab-content-title">收益費用</h3>
+    <div class="row no-gutters">
+        <div class="col-12">
+            @* 內文是否會有換行符號? *@
+            <div class="tab-content-description">
+                @Model.MemOnSaleDetail.LOAN_FEE_DESC
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="tab-content-table"></section>
+
+<script type="text/html" id="plantTemplate">
+    @*<div class="modal-row">
+        <div class="modal-item">
+            <div class="modal-col-label">出售單價</div>
+            <div class="modal-col-content">{{SELL_PRICE}} 元/片</div>
+        </div>
+        <div class="modal-item">
+            <div class="modal-col-label">內部報酬率(IRR)</div>
+            <div class="modal-col-content">{{SELL_IRR}}%</div>
+        </div>
+        <div class="modal-item">
+            <div class="modal-col-label">投資報酬率</div>
+            <div class="modal-col-content">{{SELL_INTEREST_RATE}}%</div>
+        </div>
+        <div class="modal-item modal-item-md">
+            <div class="modal-col-label">預估售電期間總回收金額</div>
+            <div class="modal-col-content">{{FEEDBACK_AMT}} 元/片</div>
+        </div>
+        <div class="modal-item modal-item-md">
+            <div class="modal-col-label">每片太陽能板</div>
+            <div class="modal-col-content">{{PANELS_CAPACITY}} KW</div>
+        </div>
+    </div>
+    <div class="modal-row-l">
+        <div class="modal-item">
+            <div class="modal-col-label">售電合約剩餘計費期間</div>
+            <div class="modal-col-content">{{CONTRACT_REMAIN_DAY}}</div>
+        </div>
+        <div class="col-12 col-md-8 d-flex mb-2 small">
+            （台電合約自{{CONTRACT_STRT_DT}}起{{CONTRACT_YEARS}}年，已持續發電並分配收益共{{POWER_DIST_DAY}}）
+        </div>
+    </div>*@
+    <!-- 預估回收金額 -->
+    <div class="table-title">
+        <h6 class="text-black font-weight-bold">預估回收金額</h6>
+        @* <div class="small table-title-note">新增最近一次電費分配日<span class="text-black">{{LAST_FEE_DIST_DT}}</span> (計費迄日{{LAST_FEE_CAL_DT}})</div> *@
+    </div>
+    <div style="overflow-y: hidden; width: 100%">
+        <table id="CALUATLE_LIST"
+               data-classes="table table-borderless table-hover flip-scroll"
+               data-toggle="table"
+               data-click-to-select="true"
+               data-pagination="false"
+               style="width: 100%">
+            <thead class="cf">
+                <tr>
+                    <th>年</th>
+                    <th>發電效能</th>
+                    <th>發電量（度）</th>
+                    <th>電費收入</th>
+                    <th>屋頂租金</th>
+                    <th>保險費用</th>
+                    <th>其他費用</th>
+                    <th>收款金額</th>
+                    <th>累積收款金額</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    
+    
+</script>
+<section class="block-item">
+    <h3 class="tab-content-title">試算補充說明</h3>
+    <div class="row no-gutters">
+        <div class="col-12">
+            @* 內文是否會有換行符號? *@
+            <div class="tab-content-description">
+                @Model.MemOnSaleDetail.CREDIT_INFO
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/html" id="tableRow">
+    <tr>
+        <td>{{YEAR}}</td><td>{{PRE_POWER_PERFORMANCE}}%</td><td>{{PRE_POWER_GEN}}</td> <td>{{PRE_POWER_FEE}}</td><td>{{PRE_APPOR_RENT}}</td> <td>{{PRE_APPOR_INSURANCE}}</td><td>{{PRE_OTHER_FEE}}</td> <td>{{PRE_ANNUAL_RECEIPT}}</td><td>{{PRE_ACCUMLATE_RECEIPT}}</td>
+    </tr>
+</script>
+<script type="text/html" id="tableLastRow">
+    <tr class="total">
+        <td class="text-black">合計</td><td></td><td>{{PRE_POWER_GEN_TOTAL}}</td> <td>{{PRE_POWER_FEE_TOTAL}}</td><td>{{PRE_APPOR_RENT_TOTAL}}</td> <td>{{PRE_APPOR_INSURANCE_TOTAL}}</td><td>{{PRE_OTHER_FEE_TOTAL}}</td> <td>{{PRE_ANNUAL_RECEIPT_TOTAL}}</td><td></td>
+    </tr>
+</script>
+<script>
+    function view_file() {
+        $('.tab-btn-3').click()
+    }
+
+    $(function () {
+        LoadTabInfo('@Model.MemOnSaleDetail.SH_TRANS_INST_CD');
+    })
+    var numberFormat = function (n) {
+        n += "";
+        var arr = n.split(".");
+        var re = /(\d{1,3})(?=(\d{3})+$)/g;
+        return arr[0].replace(re, "$1,") + (arr.length == 2 ? "." + arr[1] : "");
+    };
+    function LoadTabInfo(_sh_trans_inst_cd) {
+        $ajax.Post('@Url.Action("MemOnSaleDetailCal", "MemOnSale")',
+            {
+                sh_trans_inst_cd: _sh_trans_inst_cd
+            },
+            function (d) {
+                if (d.ERRCODE == 0) {
+                    var _PRE_POWER_GEN_TOTAL = 0;
+                    var _PRE_POWER_FEE_TOTAL = 0;
+                    var _PRE_APPOR_RENT_TOTAL = 0;
+                    var _PRE_APPOR_INSURANCE_TOTAL = 0;
+                    var _PRE_OTHER_FEE_TOTAL = 0;
+                    var _PRE_ANNUAL_RECEIPT_TOTAL = 0;
+                    var html = $("#plantTemplate").html();
+                    d.Data.FEEDBACK_AMT = numberFormat(d.Data.FEEDBACK_AMT);
+                    d.Data.SELL_PRICE = numberFormat(d.Data.SELL_PRICE);
+                    d.Data.CONTRACT_STRT_DT = d.Data.CONTRACT_STRT_DT.substring(0, 4) + '/' + d.Data.CONTRACT_STRT_DT.substring(4, 6) + '/' + d.Data.CONTRACT_STRT_DT.substring(6, 8);
+                    if (d.Data.LAST_FEE_DIST_DT !== null && d.Data.LAST_FEE_DIST_DT !== "") {
+                        d.Data.LAST_FEE_DIST_DT = d.Data.LAST_FEE_DIST_DT.substring(0, 4) + '/' + d.Data.LAST_FEE_DIST_DT.substring(4, 6) + '/' + d.Data.LAST_FEE_DIST_DT.substring(6, 8);
+                    } else {
+                        d.Data.LAST_FEE_DIST_DT = "";
+                    }
+                    if (d.Data.LAST_FEE_CAL_DT !== null && d.Data.LAST_FEE_CAL_DT !== "") {
+                        d.Data.LAST_FEE_CAL_DT = d.Data.LAST_FEE_CAL_DT.substring(0, 4) + '/' + d.Data.LAST_FEE_CAL_DT.substring(4, 6) + '/' + d.Data.LAST_FEE_CAL_DT.substring(6, 8);
+                    } else {
+                        d.Data.LAST_FEE_CAL_DT = "";
+                    }
+                    $('section.tab-content-table').append(templateBind(html, d.Data));
+                    $.each(d.Data.CALUATLE_LIST, function (e, m) {
+         
+                        _PRE_POWER_GEN_TOTAL += parseInt(m.PRE_POWER_GEN);
+                        _PRE_POWER_FEE_TOTAL += parseInt(m.PRE_POWER_FEE);
+                        _PRE_APPOR_RENT_TOTAL += parseInt(m.PRE_APPOR_RENT);
+                        _PRE_APPOR_INSURANCE_TOTAL += parseInt(m.PRE_APPOR_INSURANCE);
+                        _PRE_OTHER_FEE_TOTAL += parseInt(m.PRE_OTHER_FEE);
+                        _PRE_ANNUAL_RECEIPT_TOTAL += parseInt(m.PRE_ANNUAL_RECEIPT);
+                        m.PRE_POWER_FEE = numberFormat(m.PRE_POWER_FEE);
+                        m.PRE_APPOR_RENT = numberFormat(m.PRE_APPOR_RENT);
+                        m.PRE_ANNUAL_RECEIPT = numberFormat(m.PRE_ANNUAL_RECEIPT);
+                        m.PRE_ACCUMLATE_RECEIPT = numberFormat(m.PRE_ACCUMLATE_RECEIPT);
+                        //m.PRE_APPOR_RENT = numberFormat(m.PRE_APPOR_RENT);
+                        $('#CALUATLE_LIST tbody').append(templateBind($("#tableRow").html(), m));
+                        if (e == d.Data.CALUATLE_LIST.length-1) {
+                            var lastRow = $("#tableLastRow").html()
+                            $('#CALUATLE_LIST tbody').append(templateBind(lastRow,
+                                {
+                                    PRE_POWER_GEN_TOTAL: numberFormat(_PRE_POWER_GEN_TOTAL),
+                                    PRE_POWER_FEE_TOTAL: numberFormat(_PRE_POWER_FEE_TOTAL),
+                                    PRE_APPOR_RENT_TOTAL: numberFormat(_PRE_APPOR_RENT_TOTAL),
+                                    PRE_APPOR_INSURANCE_TOTAL: numberFormat(_PRE_APPOR_INSURANCE_TOTAL),
+                                    PRE_OTHER_FEE_TOTAL: numberFormat(_PRE_OTHER_FEE_TOTAL),
+                                    PRE_ANNUAL_RECEIPT_TOTAL:numberFormat( _PRE_ANNUAL_RECEIPT_TOTAL)
+                            }));
+                        }
+                    });
+
+                    
+                }
+            });
+
+            return false;
+        }
+</script>

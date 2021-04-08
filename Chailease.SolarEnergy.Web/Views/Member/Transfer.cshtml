@@ -1,0 +1,103 @@
+﻿@*@model HomeViewModel*@
+@{
+    ViewBag.Title = "轉讓紀錄";
+}
+@section header {
+    @Styles.Render("~/Content/pages/member/transfer.min.css")
+}
+@section metatags {
+    @Html.Action("GetMetaByType", "Base", new { id = 1 })
+}
+<div class="page-container transfer">
+    <div class="page-kv">
+        <h1 class="page-kv--title">轉讓紀錄</h1>
+    </div>
+    <div class="page-content">
+        <div class="breadcrumb-container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/" href="@Url.Content("~/Home/")">
+                            <span itemprop="name"><img src="@Url.Content("~/Content/images/bread_home_icon.svg")" alt="首頁"></span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Member/" href="@Url.Content("~/Member/")">
+                            <span itemprop="name">會員中心</span>
+                        </a>
+                        <meta itemprop="position" content="2" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                            <span itemprop="name">轉讓紀錄</span>
+                        </a>
+                        <meta itemprop="position" content="3" />
+                    </li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="profile-tag-container">
+            <ul class="profile-tag">
+                <li class="profile-tag--item active">
+                    <a href="@Url.Content("~/Member/Transfer")">轉讓紀錄</a>
+                </li>
+                <li class="profile-tag--item">
+                    <a href="@Url.Content("~/Member/Accept")">受讓紀錄</a>
+                </li>
+            </ul>
+        </div>
+        @* 依照裝置切換patical view*@
+        <div id="place" class="place"></div>
+    </div>
+    <section class="care-text-desktop page-content" style="width: 70%; text-align: left; color: rgb(160, 160, 160); font-size: 0.85rem;">
+        <p>
+            <img style="float: left;" alt="" src="../Content/images/lightball_icon.svg">
+            完成「變更電費收款人之日期」不同於「電費移轉歸屬日」，例如轉讓者持有之太陽能板專案最近一次電費計費期間為2019/09/05~2019/10/04(即計費迄日)，該筆電費並於2019/11/07分配。後續太陽能板於2019/11/10完成辦理「變更電費收款人」，受讓者收取電費之起日實為2019/10/05(前次計費迄日之下一日)
+        </p>
+    </section>
+</div>
+
+
+@section scripts {
+    <script>
+        $(function () {
+            var cachedWidth = $(window).width();
+            var brackPoint = 768;
+            $(window).resize(function () {
+                var newWidth = $(window).width();
+                if (newWidth !== cachedWidth) {
+                    cachedWidth = newWidth;
+                    //    location.reload();
+                    checkDevice();
+                }
+            });
+
+            function detectmob() {
+                if (navigator.userAgent.match(/Android/i)
+                    || navigator.userAgent.match(/webOS/i)
+                    || navigator.userAgent.match(/iPhone/i)
+                    || navigator.userAgent.match(/iPad/i)
+                    || navigator.userAgent.match(/iPod/i)
+                    || navigator.userAgent.match(/BlackBerry/i)
+                    || navigator.userAgent.match(/Windows Phone/i)
+                ) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+            function checkDevice() {
+                if (detectmob() && $(window).width() <= brackPoint) {
+                    $('#place').load("@Url.Content("_TransferMobile")");
+                } else {
+                    $('#place').load("@Url.Content("_TransferDesktop")");
+                }
+            }
+
+            checkDevice();
+        });
+    </script>
+}

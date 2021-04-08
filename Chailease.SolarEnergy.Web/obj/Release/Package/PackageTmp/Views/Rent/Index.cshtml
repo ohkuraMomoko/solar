@@ -1,0 +1,178 @@
+﻿@model HomeViewModel
+@{
+    ViewBag.Title = "出租屋頂獲利";
+}
+@section header{
+    @Styles.Render("~/Content/pages/rent/index.min.css")
+}
+@section metatags {
+    @Html.Action("GetMetaByType", "Base", new { id = 7 })
+}
+
+
+<div class="page-container">
+    <div class="page-kv" data-aos="bg-scale">
+        <h2 class="page-kv--title" data-aos="fade-down" data-aos-delay="400">@ViewBag.Title </h2>
+        <img src="@Url.Content("~/Content/images/title_font_RENT.svg")" alt="NEWS" class="page-kv--img" data-aos="fade-up" data-aos-delay="200">
+    </div>
+    <div class="page-content">
+        <div class="breadcrumb-container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/" href="@Url.Content("~/Home/")">
+                            <span itemprop="name"><img src="@Url.Content("~/Content/images/bread_home_icon.svg")" alt="首頁"></span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Rent" href="@Url.Content("~/Rent")">
+                            <span itemprop="name">我要出租屋頂</span>
+                        </a>
+                        <meta itemprop="position" content="2" />
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                            <span itemprop="name">@ViewBag.Title</span>
+                        </a>
+                        <meta itemprop="position" content="3" />
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <article class="article">
+            <section class="section-container section-container--1">
+                <h1 class="section-container--title">輕鬆建置屋頂太陽能板的好處<br><b>20 年被動收入 x 專業安心好品質</b></h1>
+                <div class="block block--p1">
+                    <div class="block-img">
+                        <img src="@Url.Content("~/Content/images/rent_image01.jpg")" alt="屋頂活化">
+                    </div>
+                    <div class="block-content">
+                        <p class="block-title" data-aos="fade-up" data-aos-once="true">屋頂活化</p>
+                        <p class="block-desc" data-aos="fade-up" data-aos-delay="100" data-aos-once="true">
+                            除了在本市集購買太陽能板外，還能夠以出租屋頂方式來參與綠能發展。與其讓屋頂閒置遭受日曬雨淋，不如出租屋頂來建置太陽能板，除了能定期收取租金，屋頂上的太陽能板還具有遮陽隔熱的效果，進而節省冷氣電費支出。太陽能發電沒有噪音，也不會產生危害人體的電磁波，更重要的是，民眾不用負擔建置成本。
+                        </p>
+                    </div>
+                </div>
+                <div class="block block--p2">
+                    <div class="block-content">
+                        <p class="block-title" data-aos="fade-up" data-aos-once="true">專人服務</p>
+                        <p class="block-desc" data-aos="fade-up" data-aos-delay="100" data-aos-once="true">
+                            太陽能板從規劃、建置到售電，以及後續的保養，相關作業確實令人感到複雜，但交給我們專業的團隊來處理，民眾完全毋須煩惱諸多細節。只要有興趣提供屋頂建置太陽能板，我們能提供一站式的服務，並且給予專業諮詢，讓您的屋頂發揮最大的效益。只要適當的維護，原則上20年之間都能保有合理的發電效能。
+                        </p>
+                    </div>
+                </div>
+                <div class="block block--p3">
+                    <div class="block-img">
+                        <img src="@Url.Content("~/Content/images/rent_image03.jpg")" alt="輕鬆獲利">
+                    </div>
+                    <div class="block-content">
+                        <p class="block-title" data-aos="fade-up" data-aos-once="true">輕鬆獲利</p>
+                        <p class="block-desc" data-aos="fade-up" data-aos-delay="100" data-aos-once="true">依據政府的再生能源躉購政策，在與台電簽購售電合約的20年間，售電價格是固定的，售電收入的一部分將轉為屋頂租金，屋主可從中賺取長期合理利潤。<br>加上免建置成本與專業服務，讓民眾可以輕鬆參與綠能並從中獲利。相關資訊可以參考工研院「陽光屋頂百萬座」網站，或是立即與我們聯絡出租屋頂事宜。</p>
+                    </div>
+                </div>
+            </section>
+            <section class="section-container section-container--2">
+                <h3 class="section-container--title">租金預估</h3>
+                <div class="table-container" data-aos="fade-in" data-aos-once="true">
+                    <p class="table-container--text">
+                        租金收入依設置地點、坪數大小與建物狀況而異，請留下詳細資料，將由專人為您服務
+                        <br />註：以設置於彰化縣，並於2019下半年完工之太陽能電廠為例
+                    </p>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <td>屋頂坪數</td>
+                                <td>預估年租金收入</td>
+                                <td>預估20年租金收入</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    200
+                                    <span class="sm-text">坪</span>
+                                </td>
+                                <td>
+                                    40,000
+                                    <span class="sm-text">元</span>
+                                </td>
+                                <td>
+                                    800,000
+                                    <span class="sm-text">元</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    300
+                                    <span class="sm-text">坪</span>
+                                </td>
+                                <td>
+                                    56,000
+                                    <span class="sm-text">元</span>
+                                </td>
+                                <td>
+                                    1,120,000
+                                    <span class="sm-text">元</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    500
+                                    <span class="sm-text">坪</span>
+                                </td>
+                                <td>
+                                    94,000
+                                    <span class="sm-text">元</span>
+                                </td>
+                                <td>
+                                    1,880,000
+                                    <span class="sm-text">元</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    1000
+                                    <span class="sm-text">坪</span>
+                                </td>
+                                <td>
+                                    188,000
+                                    <span class="sm-text">元</span>
+                                </td>
+                                <td>
+                                    3,760,000
+                                    <span class="sm-text">元</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <a href="@Url.Content("~/Rent/Landlord")" class="center btn--type btn--type-4 ask-btn" data-aos="fade-up" data-aos-once="true">
+                    <span>立刻詢問</span>
+                </a>
+                <p class="care-text">想出租屋頂獲利，讓全民電廠給您專業的諮詢與評估</p>
+            </section>
+            <section class="section-container section-container--3">
+                <h4 class="section-container--title">申請出租流程</h4>
+                <div class="icon-container">
+                    <div class="icon" data-aos="fade-up" data-aos-delay="0" data-ancher=".join-step">
+                        <img src="@Url.Content("~/Content/images/rent_icon01.svg")" alt="線上申請" class="icon--img">
+                        <p class="icon--title">線上申請</p>
+                    </div>
+                    <div class="icon" data-aos="fade-up" data-aos-delay="100" data-ancher=".join-step">
+                        <img src="@Url.Content("~/Content/images/rent_icon02.svg")" alt="專人服務" class="icon--img">
+                        <p class="icon--title">專人服務</p>
+                    </div>
+                    <div class="icon" data-aos="fade-up" data-aos-delay="200" data-ancher=".join-step">
+                        <img src="@Url.Content("~/Content/images/rent_icon03.svg")" alt="規劃建置" class="icon--img">
+                        <p class="icon--title">規劃建置</p>
+                    </div>
+                    <div class="icon" data-aos="fade-up" data-aos-delay="300" data-ancher=".join-step">
+                        <img src="@Url.Content("~/Content/images/rent_icon04.svg")" alt="租金回饋" class="icon--img">
+                        <p class="icon--title">租金回饋</p>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </div>
+</div>

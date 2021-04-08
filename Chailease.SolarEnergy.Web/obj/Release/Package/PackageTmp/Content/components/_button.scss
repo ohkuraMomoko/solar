@@ -1,0 +1,584 @@
+﻿@import "../setting/_variables.scss";
+@import "../setting/_mixins.scss";
+/*=btn--------------------------------*/
+
+a[class^="btn"] {
+	display: block;
+}
+
+/* btn--type --- */
+%btn {
+	width: 12.38rem;
+	height: 3.94rem;
+	font-size: 1rem;
+	text-align: center;
+	line-height: 3.94rem;
+	border-style: solid;
+	border-width: 1px;
+	background-color: transparent;
+	position: relative;
+	overflow: hidden;
+	cursor: pointer;
+	-webkit-transition: color 0.55s cubic-bezier(0.52, 0.08, 0.18, 1);
+	transition: color 0.55s cubic-bezier(0.52, 0.08, 0.18, 1);
+	> span {
+		position: relative;
+	}
+	&:before {
+		content: "";
+		display: block;
+		width: 120%;
+		height: 100%;
+		position: absolute;
+		left: 0;
+		top: 0;
+		-webkit-transform-origin: right top;
+		-ms-transform-origin: right top;
+		transform-origin: right top;
+		-webkit-transform: translateX(-101%) skewX(-17.62deg);
+		-ms-transform: translateX(-101%) skewX(-17.62deg);
+		transform: translateX(-101%) skewX(-17.62deg);
+		-webkit-transition: -webkit-transform 0.55s
+			cubic-bezier(0.52, 0.08, 0.18, 1);
+		transition: -webkit-transform 0.55s cubic-bezier(0.52, 0.08, 0.18, 1);
+		transition: transform 0.55s cubic-bezier(0.52, 0.08, 0.18, 1);
+		transition: transform 0.55s cubic-bezier(0.52, 0.08, 0.18, 1),
+			-webkit-transform 0.55s cubic-bezier(0.52, 0.08, 0.18, 1);
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+	}
+	&:hover {
+		&:before {
+			-webkit-transform: translateX(0) skewX(-17.62deg);
+			-ms-transform: translateX(0) skewX(-17.62deg);
+			transform: translateX(0) skewX(-17.62deg);
+			-webkit-transform-origin: left top;
+			-ms-transform-origin: left top;
+			transform-origin: left top;
+		}
+	}
+	&.disable {
+		cursor: not-allowed;
+	}
+}
+
+.btn--type {
+	@extend %btn;
+	&-1 {
+		border-color: $color-dark;
+		color: #fff;
+		&:before {
+			background-color: #fff;
+		}
+		&:hover,
+		&:focus,
+		&:active {
+			color: $color-dark;
+		}
+	}
+	&-2 {
+		border-color: $color-dark;
+		color: $color-dark;
+		&:before {
+			background-color: $color-dark;
+		}
+		&:hover{
+			color: #fff;
+		}
+	}
+	&-3 {
+		border-color: #fff;
+		color: #fff;
+		background-color: rgba(0, 0, 0, 0.4);
+		&:before {
+			background-color: $color-dark;
+		}
+		&:hover,
+		&:focus,
+		&:active {
+			color: #fff;
+		}
+	}
+	&-4 {
+		border-color: transparent;
+		color: #fff;
+		background-color: $color-primary-blue;
+		&:before {
+			background-color: $color-dark;
+		}
+		&:hover,
+		&:focus,
+		&:active {
+			color: #fff;
+		}
+	}
+}
+
+@include rwd($ipad) {
+    .btn--type {
+        height: 2.5rem;
+        line-height: 2.5rem;
+		>span {
+			font-size: .7rem;
+			line-height: 2.5rem;
+			letter-spacing: .02rem;
+			height: 100%;
+			display: block;
+		}
+    }
+}
+
+/*item: btn--scroll_dowm ---*/
+.btn--scroll_dowm {
+	width: 76px;
+	height: 76px;
+	background-color: transparent;
+	background-image: url('images/kv-btn-arrow.svg');
+	background-repeat: no-repeat;
+	background-size: 24%;
+	background-position: 50% 50%;
+	@include change(background-color);
+	cursor: pointer;
+    >svg>rect {
+        stroke: #fff;
+        stroke-dasharray: 1200;
+        stroke-dashoffset: 0;
+		// animation: dash 8s $cb infinite alternate;
+		animation-name: dash;
+		animation-duration: 1.5s;
+		animation-delay: 5s;
+		animation-timing-function: $cb2;
+		animation-iteration-count: infinite;
+		animation-direction: alternate; 
+	}
+	&:hover {
+		background-color: rgba(#fff, 0.2);
+	}
+}
+@-webkit-keyframes dash {
+	0% {
+		stroke-dashoffset: 1200
+	}
+	50% {
+		stroke-dasharray: 1200;
+	}
+	100% {
+		stroke-dashoffset: 0;
+	}
+}
+/* rwd: .btn--scroll_dowm ---*/
+@include rwd($ipad){
+	.btn--scroll_dowm {
+		@include prefix(transform, scale(0.5));
+	}
+}
+
+/* item: 普通按鈕 ---- */ 
+%btn--common {
+	width: 14.13rem;
+	height: 2.56rem;
+	line-height: 2.56rem;
+	border-radius: 7px;
+	font-size: 1rem;
+	text-align: center;
+	letter-spacing: 0.07rem;
+	color: #fff;
+	cursor: pointer;
+	@include change(all);
+}
+.btn--common {
+    @extend %btn--common;
+
+    &.disable {
+        background-color: #b4b4b4;
+        cursor: not-allowed;
+    }
+
+    &-1 {
+        background-color: $color-primary-blue;
+
+        &:hover,
+        &:active,
+        &:focus {
+            color: #fff;
+            background-color: $color-primary-blue--2;
+        }
+
+        &.disable {
+            background-color: $color-secondary;
+            cursor: not-allowed;
+        }
+    }
+
+    &-2 {
+        background-color: $color-dark--2;
+
+        &:hover,
+        &:active,
+        &:focus {
+            background-color: $color-secondary--2;
+            color: $color-dark;
+        }
+
+        &.disable {
+            background-color: $color-secondary--4;
+            color: $color-dark;
+            cursor: not-allowed;
+        }
+    }
+
+    &-3 { 
+        border-radius: 0;
+        border: 1px solid $color-primary-blue;
+        background-color: #fff;
+        color: $color-primary-blue--2;
+
+        &:hover,
+        &:active,
+        &:focus {
+            color: #fff;
+            background-color: $color-primary-blue;
+        }
+
+        &.disable {
+            background-color: $color-secondary--2;
+            border-color: $color-secondary--2;
+            color: $color-dark;
+            cursor: not-allowed;
+        }
+    }
+
+    &-4 {
+        background-color: $color-primary-blue--4;
+
+        &:hover,
+        &:active,
+        &:focus {
+            color: #fff;
+            background-color: $color-primary-blue--2;
+        }
+
+        &.disable {
+            background-color: $color-secondary;
+            cursor: not-allowed;
+        }
+    }
+}
+
+@include rwd($ipad) {
+    .btn--common {
+        height: 2.5rem;
+        line-height: 2.5rem;
+        font-size: 0.88rem;
+        letter-spacing: 0.02rem;
+    }
+}
+
+/* item: social media button --- */
+.btn--social {
+    &-1 {
+        @extend %bg--common;
+        @include change(background-image, ease-in-out);
+		height: 2.5rem;
+		background-size: contain;
+        cursor: pointer;
+        &-line {
+            width: 10rem;
+            background-image: url("images/btn_line_share.svg");
+            &:hover,
+            &:active {
+                background-image: url("images/btn_line_share_active.svg")
+            }
+            &.disable {
+                background-image: url("images/btn_line_share_disable.svg");
+            }
+        }
+        &-fb {
+            width: 6.13rem;
+            background-image: url("images/btn_fb_share.svg");
+            &:hover,
+            &:active {
+                background-image: url("images/btn_fb_share_active.svg");
+            }
+            &.disable {
+                background-image: url("images/btn_fb_share_disable.svg");
+            }
+        }
+    }
+    &-2 {
+        @extend %bg--common;
+        @include change(background-image,ease-in-out);
+        width: 3.63rem;
+		height: 3.63rem;
+		background-position: 50% 50%;
+		background-repeat: no-repeat;
+		background-color: $color-secondary--4;
+		border-radius: 50%;
+        cursor: pointer;
+        &-line {
+			background-image: url("images/icon_line.svg");
+			background-size: 50%;
+			&:hover,
+            &:active {
+				background-image: url("images/icon_line_hover.svg");
+				background-color: $color-primary-blue--2;
+            }
+        }
+        &-fb {
+			background-image: url("images/icon_fb.svg");
+			background-size: 25%;
+			&:hover,
+            &:active {
+				background-image: url("images/icon_fb_hover.svg");
+				background-color: $color-primary-blue--2;
+            }
+        }
+	}
+	&-3 {
+        @extend %bg--common;
+        @include change(background-image,ease-in-out);
+        width: 3.63rem;
+		height: 3.63rem;
+		background-position: 50% 50%;
+		background-repeat: no-repeat;
+        cursor: pointer;
+        &-line {
+			background-image: url("images/icon_line.svg");
+			background-size: 50%;
+			&:hover,
+            &:active {
+                background-image: url("images/icon_line_hover.svg");
+            }
+        }
+        &-fb {
+			background-image: url("images/icon_fb.svg");
+			background-size: 25%;
+			&:hover,
+            &:active {
+                background-image: url("images/icon_fb_hover.svg");
+            }
+        }
+    }
+}
+
+/* rwd: social-btn ---*/
+@include rwd($ipad) {
+	.btn--social-1-line {
+		width: 7.14rem;
+		height: 1.8rem;
+	}
+	.btn--social-1-fb {
+		width: 4.35rem;
+		height: 1.8rem;
+	}
+}
+
+/* item: back button ---*/
+.btn--back {
+    $img: 45px;
+    @include change(color,ease-in-out);
+    width: 100px;
+    height: $img;
+    font-size: 1rem;
+    line-height: $img;
+    color: $color-dark--2;
+    padding: 0 $img+18px;
+    position: relative;
+    cursor: pointer;
+    &:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: $img;
+        height: $img;
+        @extend %bg--common;
+        background-image: url("images/arrow_back_bt.svg");
+        background-size: contain;
+        @include change(all, ease-in-out);
+    }
+    &:hover,
+    &:active {
+        color: #000000;
+        &:after{
+            background-image: url("images/arrow_back_bt_hover.svg");
+        }
+    }
+}
+@include rwd($ipad){
+    .btn--back {
+		$img: 31px;
+		width: 4.75rem;
+        height: $img;
+		line-height: $img;
+		padding: 0;
+		padding-left: $img+10px;
+		font-size: 0.5rem;
+        &:after{
+            width: $img;
+            height: $img;
+        }
+    }
+}
+
+/* item: article-header ---*/
+.article-header {
+    width: 75%;
+    height: 2.81rem;
+    margin: 0 auto 1.81rem;
+    position: relative;
+    &:before {
+        content: '';
+        width: 100%;
+        height: 1px;
+        background-color: #979797;
+        position: absolute;
+        left: 0;
+        top: 50%;
+    }
+    &--link {
+        background-color: #fff;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+}
+
+@include rwd($ipad){
+    .article-header {
+		width: 100%;
+		height: 31px;
+		margin-bottom: 1rem;
+	}
+}
+
+/* item: .btn--article-read ---*/
+.btn--article-read {
+	width: 9.75rem;
+	height: 2.63rem;
+	border: 1px solid $color-dark;
+	color: $color-dark;
+	text-align: center;
+	line-height: 2.63rem;
+	background-color: #fff;
+	cursor: pointer;
+	@include change();
+	&:hover {
+		background-color: $color-dark;
+		color: #fff;
+	}
+}
+
+/* rwd: .btn--article-read ---*/
+@include rwd($ipad){
+    .btn--article-read {
+		width: 7.5rem;
+		height: 2rem;
+		line-height: 2rem;
+		font-size: 0.8rem;
+	}
+}
+
+/*=btn--------------------------------*/
+/*=toggle btn=====================*/
+.toggle {
+    $dotSize: 40px;
+    position: relative;
+    display: inline-block;
+
+    &:after, &:before {
+        font-family: FontAwesome;
+        font-feature-settings: normal;
+        font-kerning: auto;
+        font-language-override: normal;
+        font-stretch: normal;
+        font-style: normal;
+        font-synthesis: weight style;
+        font-variant: normal;
+        font-weight: normal;
+        text-rendering: auto;
+    }
+
+    label {
+        width: 55px;
+        height: 30px;
+        background: #b4b4b4;
+        position: relative;
+        display: inline-block;
+        border-radius: 46px;
+        @include prefix(transition, .4s);
+
+        &:after {
+            content: '';
+            position: absolute;
+            width: $dotSize;
+            height: $dotSize;
+            border-radius: 100%;
+            left: calc(0% - #{$dotSize/2});
+            top: calc(50% - #{$dotSize/2});
+            z-index: 2;
+            background: #e9e3e3;
+            box-shadow: 0 0 5px rgba(0,0,0,.2);
+            @include prefix(transition, .4s);
+        }
+    }
+
+    input {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 5;
+        opacity: 0;
+        cursor: pointer;
+
+        &:hover + label:after {
+            box-shadow: 0 2px 15px 0 rgba(0, 0, 0, .2), 0 3px 8px 0 rgba(0, 0, 0, .15);
+        }
+
+        &:checked + label {
+            background: $color-primary-blue--4;
+
+
+            &:after {
+                left: calc(100% - #{$dotSize}/2);
+                background: $color-primary-blue--2;
+            }
+        }
+    }
+
+    &.lock {
+        input {
+            &:hover + label:after {
+                box-shadow: unset;
+            }
+
+            &:checked + label {
+                background: #b4b4b4;
+
+                &:after {
+                    left: calc(0% - #{$dotSize/2});
+                    background: #e9e3e3;
+                }
+            }
+        }
+    }
+}
+
+.toggle-text{
+	font-size: 1.25rem;
+	letter-spacing: 0.15rem;
+	color: $color-dark--2;
+	font-weight: bold;
+	@include change(color, linear, .4s);
+	&.active {
+		color: $color-primary-blue--4;
+	}
+}
+@include rwd(#{$ipad - 1px}) {
+	.toggle-model-1 {
+		@include prefix(transform, scale(0.75));
+		margin-top: 1rem;
+	}
+}

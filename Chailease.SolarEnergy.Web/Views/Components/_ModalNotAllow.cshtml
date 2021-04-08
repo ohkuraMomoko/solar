@@ -1,0 +1,20 @@
+﻿@*
+    MODAL: 無預覽權限
+*@
+<div class="modal fade" id="modalNotAllow" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-subscription" role="document">
+        <div class="modal-content">
+            <button type="button" class="modal-btn--close" data-dismiss="modal" aria-label="Close">
+                <img src="@Url.Content("~/Content/images/bt_close_w.svg")" alt="">
+            </button>
+            <img src="@Url.Content("~/Content/images/warning_info_icon.svg")" alt="" class="center modal-subscription--icon">
+            <p class="modal-subscription--title text-heightline text-bold">您尚無預覽權限</p>
+            <p class="modal-subscription--text">馬上輕鬆升級為「VIP會員」？</p>
+            <div class="w-70 m-auto d-flex">
+                <button class="center btn--common btn--common-2" data-dismiss="modal">返回</button>
+                <a href="@Url.Content("~/AdvancedPurchase")" class="center btn--common btn--common-1">確定</a>
+            </div>
+        </div>
+    </div>
+</div>
+

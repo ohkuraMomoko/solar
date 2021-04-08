@@ -1,0 +1,226 @@
+﻿/* @site: 全民電廠
+ * @author: nikki
+ * @update: nikki (2019-1-4)
+ * @page: 電廠小百科
+ * @description: 電廠小百科
+ */
+
+@import "../../setting/_variables.scss";
+@import "../../setting/_mixins.scss";
+
+/* common: extend ---*/
+.page-kv {
+    background-image: url("../../images/pedia-bigimage.jpg");
+}
+@include rwd($ipad){
+    .page-content {
+        padding-bottom: 7rem;
+    }
+}
+
+/* block: article-class-container ---*/
+.article-class-container {
+    width: 90%;
+    max-width: 55.44rem;
+    margin: 0 auto;
+    @include flexbox;
+    @include justify-content(flex-end);
+}
+
+/* item: article-container ---*/
+.article-container {
+    width: 90%;
+    max-width: 55.44rem;
+    margin: 0 auto;
+    position: relative;
+    .article-readmore-btn {
+        position: absolute;
+        right: 0;
+        bottom: -5.56rem;
+    }
+}
+
+/* item: article-item --------*/
+.article-item {
+    width: 100%;
+    max-width: 950px;
+    border-bottom: 1px solid $color-secondary--2;
+    margin: 2.75rem auto;
+    padding-bottom: 2.88rem;
+}
+
+/* rwd: article-item ---*/
+@include rwd($ipad) {
+    .article-item {
+        margin: 1.69rem auto;
+    }
+}
+
+/* item: article-item-source ---*/
+.article-item-source {
+    width: 100%;
+    height: 1.75rem;
+    margin-bottom: 0.63rem;
+    @include flexbox;
+    @include justify-content(space-between);
+    @include align-items(center);
+    &--class {
+        height: 1.63rem;
+        line-height: 1.63rem;
+        padding: 0 0.81rem;
+        text-align: center;
+        color: #fff;
+    }
+    &--date {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        color: $color-primary-blue;
+    }
+}
+
+/* rwd: article-item-source ---*/
+@include rwd($ipad){
+    .article-item-source {
+        &--class {
+            height: 1.19rem;
+            line-height: 1.19rem;
+            font-size: 0.6rem;
+            border-width: 1px;
+        }
+        &--date {
+            font-size: 0.75rem;
+            line-height: 1rem;
+        }
+    }
+}
+
+/* status: article-item-source--class  --- */
+.article-item-source--class {
+    &.class {
+        &-1 {
+            background-color: $wiki-color-class-1;
+        }
+        &-2 {
+            background-color: $wiki-color-class-2;
+        }
+        &-3 {
+            background-color: $wiki-color-class-3;
+        }
+    }
+}
+
+.article-item-content {
+    width: 100%;
+    max-width: 950px;
+    margin: 0 auto;
+
+    &-img {
+        width: 22.75rem;
+        height: 17rem;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+        /*background-color: $color-dark--2;*/
+        margin-right: 0.69rem;
+    }
+
+    &-data {
+        position: relative;
+        width: 100%;
+        max-width: 29rem;
+        color: $color-dark--2;
+        margin: 0 auto;
+        @include flexbox;
+        @include flex-direction(column);
+        @include justify-content(center);
+        .article-title {
+            @include textrow(2,2.56rem);
+            font-size: 1.88rem;
+            line-height: 2.56rem;
+            font-weight: bold;
+            color: $color-dark--2;
+            margin-bottom: 1.75rem;
+        }
+        .article-description {
+            @include textrow(7,1.56rem);
+            font-size: 1rem;
+            line-height: 1.56rem;
+            text-align: justify;
+            letter-spacing: 0.06rem;
+        }
+    }
+}
+
+/* rwd: article-item-content ---*/
+@include rwd($ipad) {
+    .article-item-content {
+        &-img {
+            width: 100%;
+            height: 13.31rem;
+            margin-right: 0;
+        }
+        &-data {
+            .article-title {
+                font-size: 1.13rem;
+                letter-spacing: 0.06rem;
+                line-height: 1.56rem;
+                @include textrow(2,1.56rem);
+                margin-bottom: 0.3rem;
+                margin-top: 0.5rem;
+            }
+            .article-description {
+                font-size: 0.81rem;
+                line-height: 1.38rem;
+                @include textrow(4,1.38rem);
+            }
+        }
+    }
+}
+
+/* status: type 1 ---*/
+.article-item.article--type1 {
+    .article-item-content {
+        @include flexbox;
+        @include align-items(flex-start);
+        @include flex-wrap(wrap);
+    }
+}
+
+/* status: type 2 ---*/
+.article-item.article--type2 {
+    .article-item-content {
+        @include flexbox;
+        @include align-items(flex-start);
+        @include flex-wrap(wrap);
+        &-img {
+            position: relative;
+            &:after {
+                content: '';
+                width: 100%;
+                height: 100%;
+                background-image: url("../../images/play_icon.svg");
+                background-position: 50% 50%;
+                background-repeat: no-repeat;
+                background-size: 13%;
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+        }
+    }
+}
+
+/* status: type 3 ---*/
+.article-item.article--type3 {
+    .article-item-content-data {
+        max-width: none;
+    }
+}
+
+/* item : article-readmore-btn ----*/
+@include rwd($ipad) {
+    .article-readmore-btn {
+        width: 7.56rem;
+        left: calc(50% - #{7.56rem/2});
+    }
+}

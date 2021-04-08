@@ -1,0 +1,1397 @@
+﻿@model HomeViewModel
+@{
+    ViewBag.Title = "Guidelines";
+}
+@section header {
+    @Styles.Render("~/Content/pages/home/guidelines.min.css")
+}
+
+<h2 class="mb-5 text-center">Guidelines</h2>
+<aside id="list-example" class="guideline-nav">
+    <a href="#listItemButton" class="list-group-item list-group-item-action guideline-nav--item">Buttons</a>
+    <a href="#listItemButtonSocial" class="list-group-item list-group-item-action guideline-nav--item">Social Buttons</a>
+    <a href="#listItemModal" class="list-group-item list-group-item-action guideline-nav--item">Modal</a>
+    <a href="#listItemForm" class="list-group-item list-group-item-action guideline-nav--item">Form Element</a>
+    <a href="#listItemFormSignup" class="list-group-item list-group-item-action guideline-nav--item">Form Signup</a>
+    <a href="#listItemFormMemberCenter" class="list-group-item list-group-item-action guideline-nav--item">Form MemberCenter</a>
+    <a href="#listItemFormStep" class="list-group-item list-group-item-action guideline-nav--item">Form Step</a>
+    <a href="#listItemLoading" class="list-group-item list-group-item-action guideline-nav--item">Loading Cover</a>
+    <a href="#listItemBreadcrumb" class="list-group-item list-group-item-action guideline-nav--item">Breadcrumb</a>
+    <a href="#listItemProgress" class="list-group-item list-group-item-action guideline-nav--item">Progress Bar</a>
+    <a href="#listItemNotify" class="list-group-item list-group-item-action guideline-nav--item">Notification Library</a>
+</aside>
+<div class="guideline" data-spy="scroll" data-target="#list-example" data-offset="0">
+    <section id="listItemButton" class="guideline-part">
+        <p class="element-title">上下一篇按鈕</p>
+        <a href="#" class="btn--article-read">上一篇</a>
+        <a href="#" class="btn--article-read">下一篇</a>
+        <p class="element-title">back button</p>
+        <a href="#" class="btn--back">BACK</a>
+        
+        <div class="article-header">
+            <a href="@Url.Content("~/News/")" class="btn--back article-header--link">BACK</a>
+        </div>
+
+        <div class="d-flex justify-content-around pt-2 pb-2" style="background-color:gray;">
+            <button class="btn--type btn--type-1">
+                <span>button name</span>
+            </button>
+            <a href="#" target="_blank" class="btn--type btn--type-1">
+                <span>button name</span>
+            </a>
+            <div class="btn--type btn--type-1">
+                <span>button name</span>
+            </div>
+        </div>
+        <div class="d-flex justify-content-around pt-2 pb-2">
+            <button class="btn--type btn--type-2">
+                <span>button name</span>
+            </button>
+            <a href="#" target="_blank" class="btn--type btn--type-2">
+                <span>button name</span>
+            </a>
+            <div class="btn--type btn--type-2">
+                <span>button name</span>
+            </div>
+        </div>
+        <div class="d-flex justify-content-around pt-2 pb-2">
+            <button class="btn--type btn--type-3">
+                <span>button name</span>
+            </button>
+            <a href="#" target="_blank" class="btn--type btn--type-3">
+                <span>button name</span>
+            </a>
+            <div class="btn--type btn--type-3">
+                <span>button name</span>
+            </div>
+        </div>
+        <div class="d-flex justify-content-around flex-wrap pt-2 pb-2">
+            <button class="btn--type btn--type-4">
+                <span>button name</span>
+            </button>
+            <a href="#" target="_blank" class="btn--type btn--type-4">
+                <span>button name</span>
+            </a>
+            <div class="btn--type btn--type-4">
+                <span>button name</span>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center pt-2 pb-2" style="background-color:gray;">
+            <a class="btn--scroll_dowm" href="#">
+                <svg width="76px" height="76px" viewBox="0 0 76 76">
+                    <rect fill="none" stroke="#fff" stroke-width="1" stroke-miterlimit="10" width="76" height="76"></rect>
+                </svg>
+            </a>
+        </div>
+        <div class="d-flex justify-content-around flex-wrap pt-2 pb-2">
+            <button class="btn--common btn--common-1">xxx</button>
+            <a href="#" class="btn--common btn--common-1">xxx</a>
+            <div class="btn--common btn--common-1">xxx</div>
+            <button class="btn--common btn--common-2">xxx</button>
+            <a href="#" class="btn--common btn--common-2">xxx</a>
+            <div class="btn--common btn--common-2">xxx</div>
+            <button class="btn--common btn--common-3">xxx</button>
+            <a href="#" class="btn--common btn--common-3">xxx</a>
+            <div class="btn--common btn--common-3">xxx</div>
+        </div>
+        <div class="d-flex justify-content-around flex-wrap pt-2 pb-2">
+            <p>STATUS: disable</p>
+            <button class="btn--common btn--common-3 disable">xxx</button>
+            <a href="#" class="btn--common btn--common-3 disable">xxx</a>
+            <div class="btn--common btn--common-3 disable">xxx</div>
+        </div>
+        <blockquote>
+            Toggle Buttons<br>
+            配合下方JS使用
+        </blockquote>
+        <div class="toggle-model-1">
+            <div class="toggle">
+                <input type="checkbox" />
+                <label></label>
+            </div>
+        </div>
+        <div class="d-flex toggle-model-1 js-toggle-btn">
+            <div class="toggle">
+                <input type="checkbox" />
+                <label></label>
+            </div>
+            <span class="ml-5 toggle-text">已退訂</span>
+        </div>
+    </section>
+    <section id="listItemButtonSocial" class="guideline-part">
+        <p class="element-title">Button Social</p>
+        <blockquote>
+            分享功能待補
+        </blockquote>
+        <button class="btn--social-1 btn--social-1-line"></button>
+        <button class="btn--social-1 btn--social-1-fb"></button>
+        <button class="btn--social-2 btn--social-2-line"></button>
+        <button class="btn--social-2 btn--social-2-fb"></button>
+        <div style="background-color:gray;">
+            <button class="btn--social-3 btn--social-3-line"></button>
+            <button class="btn--social-3 btn--social-3-fb"></button>
+        </div>
+    </section>
+    <section id="listItemModal" class="guideline-part">
+        <p class="element-title">Modal</p>
+        <div class="d-flex justify-content-around flex-wrap pt-2 pb-2">
+            <div class="btn--type btn--type-3" data-toggle="modal" data-target="#modalMember" data-action="login">
+                <span>登入</span>
+            </div>
+            
+            <div class="btn--type btn--type-3" data-toggle="modal" data-target="#modalMember" data-action="signup">
+                <span>註冊</span>
+            </div>
+            
+            <div class="btn--type btn--type-3" data-toggle="modal" data-target="#modalSource">
+                <span>請問您如何得知中租全民電廠</span>
+            </div>
+            
+            <div class="btn--type btn--type-3" data-toggle="modal" data-target="#modalForgetPassword">
+                <span>忘記密碼</span>
+            </div>
+            
+            <div class="btn--type btn--type-3" data-toggle="modal" data-target="#modalForgetEmail">
+                <span>忘記EMAIL帳號</span>
+            </div>
+            
+            <div class="btn--type btn--type-3" data-toggle="modal" data-target="#modalSettingPassword">
+                <span>設定登入密碼</span>
+            </div>
+            
+            <div class="btn--type btn--type-3" data-toggle="modal" data-target="#modalBuyInfo">
+                <span>成為出資會員</span>
+            </div>
+            
+            <div class="btn--type btn--type-3" data-toggle="modal" data-target="#modalCommon">
+                <span>button name</span>
+            </div>
+            
+            <div class="btn--type btn--type-3" data-toggle="modal" data-target="#modalSubscription">
+                <span>訂閱</span>
+            </div>
+            
+            <div class="btn--type btn--type-3" data-toggle="modal" data-target="#modalNotAllow">
+                <span>無預覽權限</span>
+            </div>
+        </div>
+        <div class="modal fade" id="modalCommon" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <button type="button" class="modal-btn--close" data-dismiss="modal" aria-label="Close">
+                        <img src="@Url.Content("~/Content/images/bt_close_w.svg")" alt="">
+                    </button>
+                    <p>jjjjj</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="listItemForm" class="guideline-part">
+        <h5 class="element-title">Form Element</h5>
+        <blockquote>
+            帳號 <br>
+            class:account-status--approve(狀態:已認證) / account-status--not-certified(狀態:未認證) <br>
+            account-status內的字要改為"已認證"OR"未認證" <br>
+        </blockquote>
+        <div class="form-item">
+            <label class="control-label">帳號</label>
+            <div class="input-group">
+                <div class="account-data-containter">
+                    <span class="account-data">milton123@test.com</span>&nbsp;
+                    <span class="account-status account-status--approve">（已認證）</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="control-label">帳號</label>
+            <div class="input-group">
+                <div class="account-data-containter">
+                    <span class="account-data">milton123@test.com</span>&nbsp;
+                    <span class="account-status account-status--not-certified">（未認證）</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="control-label">帳號</label>
+            <div class="input-group">
+                <div class="account-data-containter">
+                    <span class="account-data">milton123@test.com</span>&nbsp;
+                    <span class="account-status account-status--not-certified">（未認證）</span>
+                </div>
+                <p class="account-care-text">
+                    <img src="@Url.Content("~/Content/images/s_bulb_icon.svg")" alt="" srcset="">
+                    請您至帳號信箱進行認証
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <blockquote>
+                    所有欄位都為必填，不特別做必填狀態。<br>
+                    input [input-group 狀態： error, success, disabled]
+                </blockquote>
+                <div class="form-item">
+                    <label for="ORDER_ID" class="control-label">姓名</label>
+                    <div class="input-group">
+                        <input type="text" id="ORDER_ID" name="ORDER_ID" class="form-control has-btn-clear" placeholder="請填入姓名"
+                            autocomplete="name" required>
+                        <div class='js-input-btn-clear input-btn-clear'></div>
+                    </div>
+                </div>
+                
+                <blockquote>input success</blockquote>
+                <div class="form-item">
+                    <label for="ORDER_ID_success" class="control-label">姓名</label>
+                    <div class="input-group success">
+                        <input type="text" id="ORDER_ID_success" name="ORDER_ID_success" class="form-control has-btn-clear"
+                            placeholder="請填入姓名" autocomplete="name" required>
+                        <div class='js-input-btn-clear input-btn-clear'></div>
+                    </div>
+                </div>
+                
+                <blockquote>input error</blockquote>
+                <div class="form-item">
+                    <label for="ORDER_ID_error" class="control-label">姓名</label>
+                    <div class="input-group error">
+                        <input type="text" id="ORDER_ID_error" name="ORDER_ID_error" class="form-control has-btn-clear"
+                            placeholder="請填入姓名" autocomplete="name" required>
+                        <div class='js-input-btn-clear input-btn-clear'></div>
+                    </div>
+                    <p class="input-error-info">錯誤訊息錯誤訊息錯誤訊息錯誤訊息</p>
+                </div>
+                
+                <blockquote>input 說明文字</blockquote>
+                <div class="form-item">
+                    <label for="ttt" class="control-label">姓名</label>
+                    <div class="input-group required">
+                        <input type="text" id="ttt" name="ttt" class="form-control has-btn-clear" placeholder="請填入姓名"
+                            autocomplete="name" required>
+                        <div class='js-input-btn-clear input-btn-clear'></div>
+                    </div>
+                    <p class="input-care-info">※說明文字說明文字說明文字說明文字說明文字說明文字說明文字說明文字</p>
+                </div>
+                
+                <blockquote>input disabled [配合disabled狀態 請在input tag上加上readonly attr]</blockquote>
+                <div class="form-item">
+                    <label for="ORDER_ID_disabled" class="control-label">姓名</label>
+                    <div class="input-group disabled">
+                        <input type="text" id="ORDER_ID_disabled" name="ORDER_ID_disabled" class="form-control has-btn-clear"
+                            placeholder="請填入姓名" readonly>
+                        <div class='js-input-btn-clear input-btn-clear'></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <blockquote>住家電話: 多欄位必填，標住在control-label上，input上請加required</blockquote>
+                <label for="tel_home_area" class="control-label required">住家電話</label>
+                <div class="row no-gutters">
+                    <div class="col-4">
+                        <div class="form-item">
+                            <div class="input-group">
+                                <input type="text" id="tel_home_area" name="tel_home_area" class="form-control has-btn-clear"
+                                    placeholder="區碼" autocomplete="tel-area-code" required>
+                                <div class='js-input-btn-clear input-btn-clear'></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div class="form-item">
+                            <div class="input-group">
+                                <input type="text" id="tel_home_num" name="tel_home_num" class="form-control has-btn-clear"
+                                    placeholder="電話號碼" autocomplete="tel-local" required>
+                                <div class='js-input-btn-clear input-btn-clear'></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-item required">
+                    <label for="reg_addr" class="control-label required">戶籍地址</label>
+                    <div class="row no-gutters">
+                        <div class="col">
+                            <div class="form-item mb-1">
+                                <div class="input-group">
+                                    <div class="custom-select">
+                                        <select class="form-control" id="reg_addr_city"
+                                            onchange="OnChange_City('reg_addr_city','reg_addr_region')">
+                                            <option value="" selected="" disabled="">縣市</option>
+                                            <option value="1">台北市</option>
+                                            <option value="2">新北市</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-item mb-1">
+                                <div class="input-group">
+                                    <div class="custom-select">
+                                        <select class="form-control" id="reg_addr_region">
+                                            <option value="" selected="" disabled="">鄉鎮區域</option>
+                                            <option value="1">中山區</option>
+                                            <option value="2">中正區</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-0">
+                        <input id="reg_addr" name="reg_addr" class="form-control has-btn-clear" placeholder="詳細地址" required>
+                        <div class='js-input-btn-clear input-btn-clear'></div>
+                    </div>
+                </div>
+                <div class="form-item required">
+                    <label for="cur_addr" class="control-label required mb-3">住家地址</label>
+                    <div class="checkboxer checkboxer-inline">
+                        <input type="checkbox" name="sameAddr" id="sameAddr">
+                        <label for="sameAddr">同戶籍地址</label>
+                    </div>
+                    <div class="row no-gutters">
+                        <div class="col">
+                            <div class="form-item mb-1">
+                                <div class="input-group">
+                                    <div class="custom-select">
+                                        <select class="form-control" id="cur_addr_city"
+                                            onchange="OnChange_City('cur_addr_city','cur_addr_region')">
+                                            <option value="" selected="" disabled="">縣市</option>
+                                            <option value="1">台北市</option>
+                                            <option value="2">新北市</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-item mb-1">
+                                <div class="input-group">
+                                    <div class="custom-select">
+                                        <select class="form-control" id="cur_addr_region">
+                                            <option value="" selected="" disabled="">鄉鎮區域</option>
+                                            <option value="1">中山區</option>
+                                            <option value="2">中正區</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-0">
+                        <input id="cur_addr" name="cur_addr" class="form-control has-btn-clear" placeholder="詳細地址" required>
+                        <div class='js-input-btn-clear input-btn-clear'></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <p class="element-title">Select</p>
+                <div class="form-item">
+                    <label for="EC_PROD_TYPE_CD" class="control-label">商品類別</label>
+                    <div class="input-group">
+                        <div class="custom-select">
+                            <select class="form-control" id="EC_PROD_TYPE_CD" required>
+                                <option value="" selected="" disabled="">請選擇</option>
+                                <option value="1">類別一</option>
+                                <option value="2">類別二</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <p class="element-title">Select size*2</p>
+                <label for="EC_PROD_TYPE_CD_s2_1" class="control-label">商品類別</label>
+                <div class="row no-gutters select-col-2">
+                    <div class="col">
+                        <div class="form-item">
+                            <div class="input-group">
+                                <div class="custom-select">
+                                    <select class="form-control" id="EC_PROD_TYPE_CD_s2_1" required>
+                                        <option value="" selected="" disabled="">請選擇</option>
+                                        <option value="1">類別一</option>
+                                        <option value="2">類別二</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-item">
+                            <div class="input-group">
+                                <div class="custom-select">
+                                    <select class="form-control" id="EC_PROD_TYPE_CD_s2_2" required>
+                                        <option value="" selected="" disabled="">請選擇</option>
+                                        <option value="1">類別一</option>
+                                        <option value="2">類別二</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="element-title">Select size*3</p>
+                <label for="EC_PROD_TYPE_CD_s3_1" class="control-label">生日</label>
+                <div class="row no-gutters">
+                    <div class="col">
+                        <div class="form-item">
+                            <div class="input-group">
+                                <div class="custom-select">
+                                    <select class="form-control" id="EC_PROD_TYPE_CD_s3_1" required>
+                                        <option value="" selected="" disabled="">年</option>
+                                        <option value="1">1991</option>
+                                        <option value="2">1992</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-item">
+                            <div class="input-group">
+                                <div class="custom-select">
+                                    <select class="form-control" id="EC_PROD_TYPE_CD_s3_2" required>
+                                        <option value="" selected="" disabled="">月</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-item">
+                            <div class="input-group">
+                                <div class="custom-select">
+                                    <select class="form-control" id="EC_PROD_TYPE_CD_s3_3" required>
+                                        <option value="" selected="" disabled="">日</option>
+                                        <option value="1">30</option>
+                                        <option value="2">31</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <p class="element-title">Select 文章篩選</p>
+                <div class="form-item">
+                    <div class="input-group">
+                        <div class="custom-select">
+                            <select class="select-article-class" id="articleClass">
+                                <option value="1" selected="true">依日期排序</option>
+                                <option value="2">???</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <p class="element-title">Select 排序分類</p>
+                <div class="select-reorder-container">
+                    <select class="select-reorder" id="solarItemSearchSelect">
+                        <option value="1" selected="">依最新上架日期排序</option>
+                        <option value="2">類別二</option>
+                    </select>
+                </div>
+                <p class="element-title">銀行帳戶資訊</p>
+                <div class="form-item bank-data">
+                    <label for="backId" class="control-label required">銀行帳戶資訊</label>
+                    <div class="row no-gutters">
+                        <div class="col">
+                            <div class="form-item mb-1">
+                                <div class="input-group">
+                                    <input type="number" id="backId" name="backId" class="form-control has-btn-clear"
+                                        placeholder="銀行代碼(3碼)" maxlength="3" required>
+                                    <div class='js-input-btn-clear input-btn-clear'></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-item mb-1">
+                                <div class="input-group">
+                                    <input type="text" id="bankName" name="bankName" class="form-control has-btn-clear"
+                                        placeholder="分行名稱" required>
+                                    <div class='js-input-btn-clear input-btn-clear'></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row no-gutters">
+                        <div class="col">
+                            <div class="form-item mb-0">
+                                <div class="input-group">
+                                    <input type="number" id="bankAccount" name="bankAccount" class="form-control has-btn-clear"
+                                        placeholder="銀行帳號" required>
+                                    <div class='js-input-btn-clear input-btn-clear'></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="element-title">Upload File Element</p>
+        <blockquote>
+            請配合下方JS使用，帶入選擇的圖檔。 <br>
+            選完圖片後，請叫出Loading Cover， <br>
+            1. OCR辨識成功: 帶入資料至表單 <br>
+            2. OCR辨識失敗: 請如下方所示於.file-container加上.error
+        </blockquote>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <div class="form-item">
+                    <label for="fileField1" class="control-label mb-3">上傳身分證</label>
+                    <div class="upload-content">
+                        <div class="row no-gutters">
+                            <div class="col-12 col-md-6">
+                                <div class="file-container">
+                                    <div class="file-error-info">
+                                        <p>檔案資料模糊<br>請重新拍照上傳</p>
+                                    </div>
+                                    <div class="js-file-preview file-img face"></div>
+                                    <input type="file" id="fileField1" class="js-input-file input-file"
+                                        accept="image/gif, image/jpeg, image/jpg, image/png">
+                                    <p class="file-name js-file-name d-none">檔名顯示</p>
+                                    <div class="btn--type btn--type-2 file-btn">選擇檔案</div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="file-container">
+                                    <div class="file-error-info">
+                                        <p>檔案資料模糊<br>請重新拍照上傳</p>
+                                    </div>
+                                    <div class="js-file-preview file-img back"></div>
+                                    <input type="file" id="fileField2" class="js-input-file input-file"
+                                        accept="image/gif, image/jpeg, image/jpg, image/png">
+                                    <p class="file-name js-file-name d-none">檔名顯示</p>
+                                    <div class="btn--type btn--type-2 file-btn">選擇檔案</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-item">
+                    <label for="fileField1" class="control-label mb-3">上傳身分證</label>
+                    <div class="upload-content">
+                        <div class="row no-gutters">
+                            <div class="col-12 col-md-6">
+                                <div class="file-container error">
+                                    <div class="file-error-info">
+                                        <p>檔案資料模糊<br>請重新拍照上傳</p>
+                                    </div>
+                                    <div class="js-file-preview file-img face"></div>
+                                    <input type="file" id="fileField1" class="js-input-file input-file"
+                                        accept="image/gif, image/jpeg, image/jpg, image/png">
+                                    <p class="file-name js-file-name d-none">檔名顯示</p>
+                                    <div class="btn--type btn--type-2 file-btn">選擇檔案</div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="file-container error">
+                                    <div class="file-error-info">
+                                        <p>檔案資料模糊<br>請重新拍照上傳</p>
+                                    </div>
+                                    <div class="js-file-preview file-img back"></div>
+                                    <input type="file" id="fileField2" class="js-input-file input-file"
+                                        accept="image/gif, image/jpeg, image/jpg, image/png">
+                                    <p class="file-name js-file-name d-none">檔名顯示</p>
+                                    <div class="btn--type btn--type-2 file-btn">選擇檔案</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="element-title">Upload File Element 銀行存摺</p>
+        <div class="form-item w-60">
+            <label for="fileAccountBank" class="control-label mb-3">上傳帳戶存摺</label>
+            <div class="upload-content-account">
+                <div class="file-container-account">
+                    <div class="js-file-preview file-img"></div>
+                    <input type="file" id="fileAccountBank" class="js-input-file input-file" accept="image/gif, image/jpeg, image/jpg, image/png">
+                    <p class="file-name js-file-name d-none">檔名顯示</p>
+                    <div class="btn--type btn--type-2 file-btn">選擇檔案</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <p class="element-title">Radio</p>
+                <div class="form-item">
+                    <label for="radioElement_CUST1" class="control-label">工作公司</label>
+                    <div class="row no-gutters">
+                        <div class="col-6 radioer">
+                            <input type="radio" name="radioElementq" id="radioElement_CUST1" value="radioElement_CUST1">
+                            <label for="radioElement_CUST1">就業中</label>
+                        </div>
+                        <div class="col-6 radioer">
+                            <input type="radio" name="radioElementq" id="radioElement_CUST2" value="radioElement_CUST2">
+                            <label for="radioElement_CUST2">學生</label>
+                        </div>
+                    </div>
+                    <div class="row no-gutters">
+                        <div class="col-6 radioer">
+                            <input type="radio" name="radioElementq" id="radioElement_CUST3" value="radioElement_CUST31" disabled>
+                            <label for="radioElement_CUST3">其他</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <p class="element-title">Checkbox</p>
+                <div class="form-item">
+                    <label for="APP_URL_SEND" class="control-label">核准申請書副本寄送</label>
+                    <div class="checkboxer checkboxer-inline">
+                        <input type="checkbox" name="check-display" id="backupMail">
+                        <label for="backupMail">寄給我一份</label>
+                    </div>
+                </div>
+                
+                <div class="form-item">
+                    <label for="APP_URL_SEND" class="control-label">核准申請書副本寄送</label>
+                    <div class="checkboxer checkboxer-inline">
+                        <input type="checkbox" name="check-display" id="backupMailDisable" disabled>
+                        <label for="backupMailDisable">寄給我一份</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="element-title">Textbox</p>
+        <div class="form-item">
+            <label for="EC_PROD_TYPE_CD" class="control-label">問題分類</label>
+            <textarea name="form-textarea" id="formTextarea" cols="30" rows="10" class="form-textarea" placeholder="請輸入留言內容"></textarea>
+        </div>
+    </section>
+    <section id="listItemFormSignup" class="guideline-part">
+        <h5 class="element-title">Form Signup</h5>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <blockquote>
+                    註冊/登入視窗的Form Element
+                </blockquote>
+                <p class="element-title">input email</p>
+                <div class="form-item">
+                    <div class="input-group">
+                        <input type="email" id="signin-email" name="signin-email" class="form-control has-btn-clear"
+                            placeholder="請輸入 E-mail" autocomplete="email" required>
+                        <div class='js-input-btn-clear input-btn-clear'></div>
+                    </div>
+                </div>
+                
+                <p class="element-title">input email on error</p>
+                <div class="form-item">
+                    <div class="input-group">
+                        <input type="email" id="signin-email-error" name="signin-email-error" class="form-control has-btn-clear"
+                            placeholder="請輸入 E-mail" autocomplete="email" required>
+                        <div class='js-input-btn-clear input-btn-clear'></div>
+                    </div>
+                    <p class="input-error-info-signup">錯誤訊息錯誤訊息錯誤訊息錯誤訊息</p>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <p class="element-title">input password</p>
+                <div class="form-item">
+                    <div class="input-group input-group--password">
+                        <input type="password" id="signin-password" name="signin-password" class="form-control" placeholder="請輸入密碼"
+                            autocomplete="new-password" required>
+                        <a href="#0" class="js-hide-password hide-password"></a>
+                    </div>
+                </div>
+                <p class="element-title">input password 有下方說明文字</p>
+                <div class="form-item">
+                    <div class="input-group input-group--password">
+                        <input type="password" id="signin-password2" name="signin-password2" class="form-control" placeholder="請輸入密碼"
+                            autocomplete="new-password" required>
+                        <a href="#0" class="js-hide-password hide-password"></a>
+                        <p class="input-care-info">需包含大小寫字母、數字、長度 8~12 字母之間</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <p class="element-title">checkbox</p>
+                <div class="form-item">
+                    <div class="checkbox-signup">
+                        <input type="checkbox" name="check-display" id="sendInfoCheckbox1">
+                        <label for="sendInfoCheckbox1">有相關訊息及新開電廠請通知我</label>
+                    </div>
+                </div>
+                <p class="element-title">input email + checkbox</p>
+                <div class="form-item has-checkbox">
+                    <div class="input-group">
+                        <input type="email" id="signin-email1" name="signin-email1" class="form-control has-btn-clear"
+                            placeholder="請輸入 E-mail" autocomplete="email" required>
+                        <div class='js-input-btn-clear input-btn-clear'></div>
+                    </div>
+                    <div class="checkbox-signup">
+                        <input type="checkbox" name="check-display" id="sendInfoCheckbox">
+                        <label for="sendInfoCheckbox">有相關訊息及新開電廠請通知我</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <p class="element-title">select+input text</p>
+                <blockquote>
+                    選擇選項:其他，下方顯示Input輸入框
+                </blockquote>
+                <div class="form-item">
+                    <div class="input-group has-inputtext">
+                        <div class="custom-select">
+                            <select class="form-control" id="sourceSelect" required>
+                                <option value="" selected="" disabled="">如何得知全民電廠</option>
+                                <option value="1">類別一</option>
+                                <option value="2">類別二</option>
+                                <option value="etc">其他</option>
+                            </select>
+                        </div>
+                        <input type="text" name="sourceEtc" id="sourceEtc" class="select-inputtext" placeholder="輸入其他訊息來源">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <p class="element-title">發送驗證碼</p>
+                <blockquote>
+                    輸入手機號碼後，在btn-sendotpcode新增active class
+                </blockquote>
+                <div class="form-item">
+                    <div class="input-group input-sendotpcode">
+                        <input type="tel" id="otpTelInput" name="otpTelInput" class="form-control" placeholder="請輸入手機號碼"
+                            autocomplete="tel" required>
+                        <!-- <div class="sendtopcode-common btn-sendotpcode">發送驗證碼</div> -->
+                        <div class="sendtopcode-common show-resend-time">重發(&nbsp;<span id="countdown" class="time">05:00</span>&nbsp;)
+                        </div>
+                    </div>
+                </div>
+                <p class="element-title">輸入驗證碼</p>
+                <div class="form-item">
+                    <div class="input-group input-otpcode">
+                        <input type="tel" id="otpCodeInput" name="otpCodeInput" class="form-control" placeholder="請輸入驗證碼" required>
+                    </div>
+                </div>
+                <p class="element-title">輸入驗證碼 success</p>
+                <div class="form-item">
+                    <div class="input-group input-otpcode success">
+                        <input type="tel" id="otpCodeInput1" name="otpCodeInput1" class="form-control" placeholder="請輸入驗證碼" required>
+                    </div>
+                </div>
+                <p class="element-title">輸入驗證碼 error</p>
+                <div class="form-item">
+                    <div class="input-group input-otpcode error">
+                        <input type="tel" id="otpCodeInput2" name="otpCodeInput2" class="form-control" placeholder="請輸入驗證碼" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6"></div>
+        </div>
+    </section>
+    <section id="listItemFormMemberCenter" class="guideline-part">
+        <p class="element-title">會員中心Form Element</p>
+        
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <blockquote>
+                    會員中心>會員資料>我的資料(profile.cshtml)
+                    使用的form element,
+                    姓名/身分證字號/生日/戶籍地址 為無法修改, 為readonly狀態
+                </blockquote>
+                <div class="form-item">
+                    <label class="control-label">會員編號</label>
+                    <span class="ml-3 member-account">Q12123122222</span>
+                </div>
+                <div class="form-item">
+                    <label for="memberUserName" class="control-label">姓名</label>
+                    <div class="input-group lock">
+                        <input type="text" id="memberUserName" name="memberUserName" class="form-control" value="王小明" readonly>
+                    </div>
+                </div>
+                <div class="form-item">
+                    <label for="memberUserId" class="control-label">身分證字號</label>
+                    <div class="input-group lock">
+                        <input type="text" id="memberUserId" name="memberUserId" class="form-control" value="身分證字號" readonly>
+                    </div>
+                </div>
+                <div class="form-item">
+                    <label for="memberUserBirthday" class="control-label">生日</label>
+                    <div class="input-group lock">
+                        <input type="text" id="memberUserBirthday" name="memberUserBirthday" class="form-control" value="生日" readonly>
+                    </div>
+                </div>
+                <div class="form-item">
+                    <label for="memberUserAddr" class="control-label">戶籍地址</label>
+                    <div class="input-group lock">
+                        <input type="text" id="memberUserAddr" name="memberUserAddr" class="form-control" value="戶籍地址" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <blockquote>
+                    聯絡地址原為Readonly，
+                    按下編輯後顯示下方可編輯的元件。
+                </blockquote>
+                <div class="form-item">
+                    <label for="memberAddress" class="control-label">聯絡地址</label>
+                    <div class="input-group has-btn">
+                        <input type="text" id="memberAddress" name="memberAddress" class="form-control" value="104 台北市XX區XX路..."
+                            readonly>
+                        <div class="input-change">編輯</div>
+                    </div>
+                </div>
+                <div class="form-item">
+                    <label for="memberAddress" class="control-label">聯絡地址</label>
+                    <div class="row no-gutters">
+                        <div class="col-6 col-md-3">
+                            <div class="form-item">
+                                <div class="input-group">
+                                    <div class="custom-select">
+                                        <select class="form-control" id="zzz" required="">
+                                            <option value="" selected="" disabled="">縣市</option>
+                                            <option value="1">類別一</option>
+                                            <option value="2">類別二</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="form-item">
+                                <div class="input-group">
+                                    <div class="custom-select">
+                                        <select class="form-control" id="zzz2" required="">
+                                            <option value="" selected="" disabled="">鄉鎮區域</option>
+                                            <option value="1">類別一</option>
+                                            <option value="2">類別二</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="input-group has-btn">
+                                <input type="text" id="memberAddress2" name="memberAddress2" class="form-control" value="詳細地址">
+                                <div class="input-change">確認</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <blockquote>
+                    E-mail/行動電話 按下編輯修改>彈出Modal進行修改步驟
+                </blockquote>
+                <div class="form-item">
+                    <label for="memberEmail" class="control-label">E-mail</label>
+                    <div class="input-group has-btn">
+                        <input type="text" id="memberEmail" name="memberEmail" class="form-control" value="zzz@chailease.com.tw"
+                            readonly>
+                        <div class="input-change" data-toggle="modal" data-target="#modalChangeEmail">編輯</div>
+                    </div>
+                </div>
+                <div class="form-item">
+                    <label for="memberCellphone" class="control-label">行動電話</label>
+                    <div class="input-group has-btn">
+                        <input type="text" id="memberCellphone" name="memberCellphone" class="form-control" value="095555555555"
+                            readonly>
+                        <div class="input-change" data-toggle="modal" data-target="#modalChangeCellphone">編輯</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @{
+            Html.RenderPartial("~/Views/Components/_ModalChangeEmail.cshtml");
+            Html.RenderPartial("~/Views/Components/_ModalChangeCellphone.cshtml");
+        }
+        <blockquote>
+            會員中心身分證狀態: <br>
+            1. 已審核(身分證此處僅展示，無法修改。請套上上傳圖檔) <br>
+            2. 審核中(身分證此處僅展示，無法修改。請套上上傳圖檔) <br>
+            3. 未審核 <br>
+            4. 審核失敗(說明文字不確定，可能由後台給?。請套上上傳圖檔)
+        </blockquote>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <div class="form-item">
+                    <div class="idcard-status">
+                        <label class="control-label mb-3">身分證</label>
+                        <img src="../../Content/images/success_info_icon.svg" class="ml-3 idcard-status--icon">
+                    </div>
+                    <div class="upload-content">
+                        <div class="row no-gutters">
+                            <div class="col-6">
+                                <div class="file-container">
+                                    <div class="js-file-preview file-img face"
+                                        style="background-image:url('../Content/images/news_report_bigimage.jpg')"></div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="file-container">
+                                    <div class="js-file-preview file-img back"
+                                        style="background-image:url('../Content/images/news_report_bigimage.jpg')"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-item">
+                    <div class="idcard-status">
+                        <label class="control-label mb-3">身分證</label>
+                        <img src="../../Content/images/search_info_icon.svg" class="ml-md-3 idcard-status--icon">
+                        <span class="ml-md-3 idcard-status--text">身分證尚在查核中</span>
+                    </div>
+                    <div class="upload-content">
+                        <div class="row no-gutters">
+                            <div class="col-6">
+                                <div class="file-container">
+                                    <div class="js-file-preview file-img face"
+                                        style="background-image:url('../Content/images/news_report_bigimage.jpg')"></div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="file-container">
+                                    <div class="js-file-preview file-img back"
+                                        style="background-image:url('../Content/images/news_report_bigimage.jpg')"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-item">
+                    <div class="idcard-status">
+                        <label class="control-label mb-3">身分證</label>
+                        <img src="../../Content/images/warning_info_icon.svg" class="ml-md-3 idcard-status--icon">
+                        <span class="ml-md-3 idcard-status--text text-heightline">身分證尚未確認，會影響到您的會員權利</span>
+                    </div>
+                    <div class="upload-content">
+                        <div class="row no-gutters">
+                            <div class="col-6">
+                                <div class="file-container">
+                                    <div class="js-file-preview file-img face"></div>
+                                    <input type="file" id="fileField1" class="js-input-file input-file"
+                                        accept="image/gif, image/jpeg, image/jpg, image/png">
+                                    <p class="file-name js-file-name d-none">檔名顯示</p>
+                                    <div class="btn--type btn--type-2 file-btn">選擇檔案</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="file-container">
+                                    <div class="js-file-preview file-img back"></div>
+                                    <input type="file" id="fileField2" class="js-input-file input-file"
+                                        accept="image/gif, image/jpeg, image/jpg, image/png">
+                                    <p class="file-name js-file-name d-none">檔名顯示</p>
+                                    <div class="btn--type btn--type-2 file-btn">選擇檔案</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-item">
+                    <div class="idcard-status">
+                        <label class="control-label mb-3">身分證</label>
+                        <img src="../../Content/images/warning_info_icon.svg" class="ml-md-3 idcard-status--icon">
+                        <span class="ml-md-3 idcard-status--text text-heightline">審核失敗，請重新上傳</span>
+                    </div>
+                    <div class="upload-content">
+                        <div class="row no-gutters">
+                            <div class="col-6">
+                                <div class="file-container">
+                                    <div class="js-file-preview file-img face"
+                                        style="background-image:url('../Content/images/news_report_bigimage.jpg')"></div>
+                                    <input type="file" id="fileField1" class="js-input-file input-file"
+                                        accept="image/gif, image/jpeg, image/jpg, image/png">
+                                    <p class="file-name js-file-name d-none">檔名顯示</p>
+                                    <div class="btn--type btn--type-2 file-btn">選擇檔案</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="file-container">
+                                    <div class="js-file-preview file-img back"
+                                        style="background-image:url('../Content/images/news_report_bigimage.jpg')"></div>
+                                    <input type="file" id="fileField2" class="js-input-file input-file"
+                                        accept="image/gif, image/jpeg, image/jpg, image/png">
+                                    <p class="file-name js-file-name d-none">檔名顯示</p>
+                                    <div class="btn--type btn--type-2 file-btn">選擇檔案</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <blockquote>
+            銀行存摺狀態: <br>
+            1. 已審核(銀行存摺此處僅展示，無法修改。請套上上傳圖檔) <br>
+            2. 審核中(銀行存摺此處僅展示，無法修改。請套上上傳圖檔) <br>
+            3. 未審核 <br>
+            4. 審核失敗(說明文字不確定，可能由後台給?。請套上上傳圖檔)
+        </blockquote>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <div class="form-item w-60">
+                    <div class="idcard-status">
+                        <label class="control-label mb-3">銀行存摺</label>
+                        <img src="../../Content/images/success_info_icon.svg" class="ml-3 idcard-status--icon">
+                    </div>
+                    <div class="upload-content-account">
+                        <div class="file-container-account">
+                            <div class="js-file-preview file-img"
+                                style="background-image:url('../Content/images/news_report_bigimage.jpg')"></div>
+                            <input type="file" id="fileAccountBank" class="js-input-file input-file"
+                                accept="image/gif, image/jpeg, image/jpg, image/png">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-item w-60">
+                    <div class="idcard-status">
+                        <label class="control-label mb-3">銀行存摺</label>
+                        <img src="../../Content/images/search_info_icon.svg" class="ml-3 idcard-status--icon">
+                        <span class="ml-3 idcard-status--text">銀行存摺尚在查核中</span>
+                    </div>
+                    <div class="upload-content-account">
+                        <div class="file-container-account">
+                            <div class="js-file-preview file-img"
+                                style="background-image:url('../Content/images/news_report_bigimage.jpg')"></div>
+                            <input type="file" id="fileAccountBank" class="js-input-file input-file"
+                                accept="image/gif, image/jpeg, image/jpg, image/png">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-item w-60">
+                    <div class="idcard-status">
+                        <label class="control-label mb-3">銀行存摺</label>
+                        <img src="../../Content/images/warning_info_icon.svg" class="ml-3 idcard-status--icon">
+                        <span class="ml-3 idcard-status--text text-heightline">銀行存摺尚未確認，會影響到您的會員權利</span>
+                    </div>
+                    <div class="upload-content-account">
+                        <div class="file-container-account">
+                            <div class="js-file-preview file-img"></div>
+                            <input type="file" id="fileAccountBank" class="js-input-file input-file"
+                                accept="image/gif, image/jpeg, image/jpg, image/png">
+                            <p class="file-name js-file-name d-none">檔名顯示</p>
+                            <div class="btn--type btn--type-2 file-btn">選擇檔案</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-item w-60">
+                    <div class="idcard-status">
+                        <label class="control-label mb-3">銀行存摺</label>
+                        <img src="../../Content/images/warning_info_icon.svg" class="ml-3 idcard-status--icon">
+                        <span class="ml-3 idcard-status--text text-heightline">審核失敗，請重新上傳</span>
+                    </div>
+                    <div class="upload-content-account">
+                        <div class="file-container-account">
+                            <div class="js-file-preview file-img"
+                                style="background-image:url('../Content/images/news_report_bigimage.jpg')"></div>
+                            <input type="file" id="fileAccountBank" class="js-input-file input-file"
+                                accept="image/gif, image/jpeg, image/jpg, image/png">
+                            <p class="file-name js-file-name d-none">檔名顯示</p>
+                            <div class="btn--type btn--type-2 file-btn">選擇檔案</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="listItemFormStep" class="guideline-part">
+        <p class="element-title">Form Step</p>
+        <blockquote>
+            表單步驟<br>
+            class: 增加form-step--active
+        </blockquote>
+        <div class="form-step-container form-step-container--3">
+            <div class="form-step form-step--active">
+                <div class="form-step--number">1</div>
+                <p class="form-step--title">E-mail認證</p>
+            </div>
+            <div class="form-step">
+                <div class="form-step--number">2</div>
+                <p class="form-step--title">身分資料</p>
+            </div>
+            <div class="form-step">
+                <div class="form-step--number">3</div>
+                <p class="form-step--title">帳戶銀行資料</p>
+            </div>
+        </div>
+
+        <div class="form-step-container form-step-container--2">
+            <div class="form-step form-step--active">
+                <div class="form-step--number">1</div>
+                <p class="form-step--title">E-mail認證</p>
+            </div>
+            <div class="form-step">
+                <div class="form-step--number">2</div>
+                <p class="form-step--title">身分資料</p>
+            </div>
+        </div>
+    </section>
+    <section id="listItemLoading" class="guideline-part">
+        <p class="element-title">Loadind Cover</p>
+        <blockquote>
+            OCR辨識用的Loading Cover，
+            請配合下方範例JS使用
+        </blockquote>
+        <button class=" btn--common btn--common-1" id="loadingCoverBtnOCR">OCR loading cover</button>
+        
+        <blockquote class="mt-3">
+            通用的Loading Cover，
+            請配合下方範例JS使用
+        </blockquote>
+        <button class=" btn--common btn--common-1" id="loadingCoverBtn">loading cover</button>
+        
+    </section>
+    <section id="listItemBreadcrumb" class="guideline-part">
+        <p class="element-title">Breadcrumb</p>
+        <blockquote>
+            請依照目前頁面的結構(Sitemap)撰寫
+        </blockquote>
+        <div class="breadcrumb-container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/" href="@Url.Content("~/Home/")">
+                            <span itemprop="name"><img src="@Url.Content("~/Content/images/bread_home_icon.svg")" alt="首頁"></span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/Guidelines/" href="#">
+                            <span itemprop="name">認識電廠專家</span>
+                        </a>
+                        <meta itemprop="position" content="2" />
+                    </li>
+                    <li class="breadcrumb-item" aria-current="page" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/News/" href="@Url.Content("~/News/")">
+                            <span itemprop="name">最新消息</span>
+                        </a>
+                        <meta itemprop="position" content="3" />
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/Guidelines/" href="#">
+                            <span itemprop="name">最新消息詳細</span>
+                        </a>
+                        <meta itemprop="position" content="4" />
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+    <section id="listItemProgress" class="guideline-part">
+        <p class="element-title">Progress Bar</p>
+        <blockquote>
+            請配合下方範例JS使用，帶入片數等資料
+        </blockquote>
+        <div id="cont" class="progress">
+            <div class="progress-content">
+                <p class="progress-content--canbuy">
+                    剩<span id="progressPic">000</span>片
+                </p>
+                <p class="progress-content--all">
+                    共<span id="progressAllPic">000</span>片
+                </p>
+            </div>
+            <svg id="progress" width="200" height="200" viewPort="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <circle r="90" cx="100" cy="100" fill="transparent" stroke-dasharray="565.48" stroke-dashoffset="0"></circle>
+                <circle id="bar" r="90" cx="100" cy="100" fill="transparent" stroke-dasharray="565.48" stroke-dashoffset="0"></circle>
+            </svg>
+        </div>
+    </section>
+    <section id="listItemNotify" class="guideline-part">
+        <p class="element-title">Notification Library</p>
+        <blockquote>
+            Link: <a href="https://github.com/needim/noty" target="_blank">Github</a> / 
+            <a href="https://ned.im/noty/#/" target="_blank">Documentation</a> / 
+            <a href="https://ned.im/noty/#/themes" target="_blank">Themes</a>
+            目前暫時使用CDN方式引入。決定好用哪個Themes，會在整理樣式進架構中。
+        </blockquote>
+        <div id="log"></div>
+        <button id="shownotify" class="btn--type btn--type-4">
+            <span>Show Notification</span>
+        </button>
+    </section>
+</div>
+
+@section scripts {
+    <script>
+        let log = document.getElementById('log');
+        $("#shownotify").on('click', function () {
+            new Noty({
+                type: 'success',
+                layout: 'topRight',
+                theme: 'nest',
+                text: 'Hello, just testing! 🤖',
+                timeout: '4000',
+                progressBar: true,
+                closeWith: ['click'],
+                killer: true,
+                callbacks: {
+                    beforeShow: function () {
+                        log.insertAdjacentHTML('beforeend', 'Preparing... ⏱<br/>');
+                    },
+                    onShow: function () {
+                        log.insertAdjacentHTML('beforeend', 'Showed ✨<br/>');
+                    },
+                    onHover: function () {
+                        log.insertAdjacentHTML('beforeend', 'Hovered 👀<br/>');
+                    },
+                    onClick: function () {
+                        log.insertAdjacentHTML('beforeend', 'Clicked ✅<br/>');
+                    },
+                    onClose: function () {
+                        log.insertAdjacentHTML('beforeend', 'Bye 👋🏻<br/>');
+                    }
+                },
+            }).show();
+        });
+
+
+    </script>
+    <script>
+        $(function () {
+            $('body').scrollspy({ target: '#list-example' });
+
+            //hide or show password
+            $('.js-hide-password').on('click', function () {
+                var $this = $(this),
+                    $password_field = $this.prev('input');
+                ('password' == $password_field.attr('type')) ? $password_field.attr('type', 'text') : $password_field.attr('type', 'password');
+                $(this).toggleClass("hide-password-icon");
+                $password_field.putCursorAtEnd();
+            });
+            jQuery.fn.putCursorAtEnd = function () {
+                return this.each(function () {
+                    if (this.setSelectionRange) {
+                        var len = $(this).val().length * 2;
+                        this.setSelectionRange(len, len);
+                    } else {
+                        $(this).val($(this).val());
+                    }
+                });
+            };
+
+            /* 輸入框清除內容按鈕*/
+            $(".form-control.has-btn-clear").on("keydown", function () {
+                let btn = $(this).parent().find(".js-input-btn-clear");
+                btn.fadeIn();
+            });
+
+            $(".js-input-btn-clear").on("click", function () {
+                $(this).parent().find("input").val("");
+                $(this).fadeOut();
+            });
+
+            /* select event*/
+            $("#sourceEtc").fadeOut(10);
+            $("#sourceSelect").on("change", function () {
+                var type = $(this).find(":selected").val();
+                if (type === "etc") {
+                    $("#sourceEtc").fadeIn();
+                } else {
+                    $("#sourceEtc").fadeOut();
+                }
+            });
+
+            /* 驗證碼倒數 */
+            var timerInterval;
+            function startTimer(duration, display) {
+                var timer = duration, minutes, seconds;
+                timerInterval = setInterval(function () {
+                    minutes = parseInt(timer / 60, 10);
+                    seconds = parseInt(timer % 60, 10);
+                    minutes = minutes < 10 ? "0" + minutes : minutes;
+                    seconds = seconds < 10 ? "0" + seconds : seconds;
+                    display.text(minutes + ":" + seconds);
+                    if (--timer < 0) {
+                        // timer = duration;
+                        clearInterval(timerInterval);
+                    }
+                }, 1000);
+            }
+
+            var limitMinutes = 60 * 5,
+                display = $('#countdown');
+            startTimer(limitMinutes, display);
+
+
+            // upload event & upload file preview
+            $(".js-input-file").on('change', function () {
+                var filePath = $(this).val();
+                if (this.files[0].size > 31457280) {
+                    // $("#msgModalWarning .modal-msg-title").text("");
+                    // $("#msgModalWarning .modal-msg-text").html("您的檔案超過30MB，請重新選擇！");
+                    // $('#msgModalWarning').modal('show');
+                    this.value = "";
+                } else {
+                    var arr = filePath.split("\\");
+                    var fileName = arr[arr.length - 1];
+                    $(this).parent().children(".js-file-name").text(fileName);
+                    previewImg(this);
+                }
+            });
+            function previewImg(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $(input).parent().children(".js-file-preview").css("background-image", "url(" + e.target.result + ")");
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            // loading cover
+            var timer;
+            $("#loadingCoverBtn").click(function () {
+                $("#loadingContainer").fadeIn(100);
+                $("body").css("overflow", "hidden");
+                clearTimeout(timer);
+                timer = setTimeout(function () {
+                    $("#loadingContainer").fadeOut(300);
+                    $("body").css("overflow", "auto");
+                }, 5000);
+            });
+            $("#loadingCoverBtnOCR").click(function () {
+                $("#loadingContainerOCR").fadeIn(100);
+                $("body").css("overflow", "hidden");
+                clearTimeout(timer);
+                timer = setTimeout(function () {
+                    $("#loadingContainerOCR").fadeOut(300);
+                    $("body").css("overflow", "auto");
+                }, 5000);
+            });
+
+            // progress bar
+            let pic = 380;
+            let allPic = 624;
+            let precent = (pic / allPic) * 100;
+            let $circle = $('#progress #bar');
+            if (isNaN(precent)) {
+                precent = 100;
+            } else {
+                let r = $circle.attr('r');
+                let c = Math.PI * (r * 2);
+                if (precent < 0) { precent = 0; }
+                if (precent > 100) { precent = 100; }
+                let pct = ((100 - precent) / 100) * c;
+                $circle.css({ strokeDashoffset: pct });
+                // $('#cont').attr('data-pct', precent);
+                $("#progressPic").text(pic);
+                $("#progressAllPic").text(allPic);
+            }
+
+            // toggle btn ---
+            $('.js-toggle-btn').click(function () {
+                const checkbox = $(this).find(':checkbox');
+                const subscribeText = $(this).find(".toggle-text");
+                checkbox.prop('checked', checkbox.prop('checked'));
+                if(checkbox.prop('checked')){
+                    subscribeText.text("已訂閱");
+                }else {
+                    subscribeText.text("已退訂");
+                }
+            });  
+        });
+    </script>
+}

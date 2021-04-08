@@ -1,0 +1,378 @@
+﻿/* @site: 全民電廠
+ * @author: nikki
+ * @update: nikki (2019-01-16)
+ * @page: 電廠明細頁
+ * @description: 電廠明細頁-共通部分
+ */
+
+
+@import "../../setting/_variables.scss";
+@import "../../setting/_mixins.scss";
+/* common: extend ---*/
+.page-kv {
+    background-image: url("../../images/investment_bigimage.jpg");
+}
+
+.project {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.care-text-desktop {
+    font-size: 0.75rem;
+    line-height: 1.38rem;
+    color: $color-dark--2;
+    letter-spacing: 0.02rem;
+}
+
+/*item: care-text-mobile ----*/
+.care-text-mobile {
+    border-top: 7px solid #d4f9f3;
+    padding-top: 1.81rem;
+    display: none;
+}
+.collapse-body {
+    font-size: 0.69rem;
+    line-height: 1.19rem;
+    color: #8a8a8a;
+}
+.collapse-btn {
+    width: 100%;
+    text-align: center;
+    color: $color-dark--2;
+    font-weight: 500;
+    letter-spacing: 0.03rem;
+    margin-bottom: 0.56rem;
+    display: block;
+    &-icon {
+        width: 20px;
+        height: 20px;
+        border-radius: 4px;
+        border: 1px solid #d0d0d0;
+        display: inline-block;
+        position: relative;
+        margin-left: 12px;
+        &:after {
+            content: '';
+            width: 80%;
+            height: 2px;
+            background-color: $color-dark--2;
+            position: absolute;
+            left: 10%;
+            top: calc(50% - 1px);
+        }
+        &:before {
+            content: '';
+            height: 80%;
+            width: 2px;
+            background-color: $color-dark--2;
+            position: absolute;
+            left: calc(50% - 1px);
+            top: 10%;
+            @include change(opacity);
+        }
+    }
+    &[aria-expanded="true"] {
+        .collapse-btn-icon:before {
+            opacity: 0;
+        }
+    }
+}
+@include rwd(#{$ipad - 1px}) {
+    .care-text-desktop {
+        display: none;
+    }
+    .care-text-mobile {
+        display: block;
+        border-width: 4px;
+    }
+}
+
+/* block: project-header =====*/
+.project-header {
+    width: 100%;
+    padding: 3rem 2.5rem 0;
+    position: relative;
+}
+/*rwd: project-header ---*/
+@include rwd($ipad) {
+    .project-header {
+        padding: 0;
+    }
+}
+/* block: project-body =====*/
+.project-body {
+    margin-top: 4.56rem;
+    padding-top: 4rem;
+    position: relative;
+
+    &:after {
+        content: '';
+        width: 100%;
+        height: 1px;
+        background-color: $color-step;
+        position: absolute;
+        left: 0;
+        top: 4rem;
+    }
+}
+
+/*rwd: project-body ---*/
+@include rwd($ipad) {
+    .project-body {
+        margin-top: 2rem;
+        padding-top: 2rem;
+
+        &:after {
+            top: 44px;
+        }
+    }
+}
+
+
+/* block: tabs ==== */
+@-webkit-keyframes showTab {
+    from {
+        opacity: 0;
+        -webkit-transform: translateY(10px);
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+}
+
+@keyframes showTab {
+    from {
+        opacity: 0;
+        -webkit-transform: translateY(10px);
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+}
+
+
+$tabBtnSize: 13rem;
+
+.tabsy {
+    @include flexbox;
+
+    input {
+        display: none;
+
+        &:checked + label + .tab {
+            display: block;
+
+            > .tab-content {
+                -webkit-animation: showTab 250ms ease-in-out;
+                animation: showTab 250ms ease-in-out;
+            }
+        }
+    }
+
+    input:checked + label {
+        color: $color-dark;
+
+        &:after {
+            -webkit-transform: translate3d(0,0,0);
+            transform: translate3d(0,0,0);
+        }
+    }
+
+    .tab {
+        display: none;
+        width: 100%;
+    }
+}
+
+.tab-btn {
+    width: $tabBtnSize;
+    font-size: 1.8rem;
+    text-align: center;
+    color: $color-dark--2;
+    line-height: 4rem;
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+    display: block;
+    cursor: pointer;
+    overflow: hidden;
+    @include change(all, .3s, ease-in-out);
+
+    &:after {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 6px;
+        background: $color-primary-blue;
+        content: '';
+        -webkit-transition: -webkit-transform 0.3s;
+        transition: transform 0.3s;
+        -webkit-transform: translate3d(0,150%,0);
+        transform: translate3d(0,150%,0);
+    }
+
+    &.tab-btn-1 {
+        left: 0;
+    }
+
+    &.tab-btn-2 {
+        left: $tabBtnSize;
+    }
+
+    &.tab-btn-3 {
+        left: $tabBtnSize*2;
+    }
+}
+
+@include rwd($ipad) {
+    $tabBtnSize: 33%;
+
+    .tab-btn {
+        width: $tabBtnSize;
+        font-size: 1rem;
+        line-height: 2.8;
+        height: 44px;
+
+        &:after {
+            height: 4px;
+        }
+
+        &.tab-btn-1 {
+            left: 0;
+        }
+
+        &.tab-btn-2 {
+            left: $tabBtnSize;
+        }
+
+        &.tab-btn-3 {
+            left: $tabBtnSize*2;
+        }
+    }
+}
+
+@include rwd(#{$i6 - 1px}) {
+    .tab-btn {
+        font-size: 0.88rem;
+    }
+}
+
+/*block: tab-content --- */
+
+
+/*block: block-item ---*/
+.block-item {
+    padding: 2rem;
+    border-top: 7px solid #D4F9F3;
+    border-bottom: 7px solid #D4F9F3;
+    margin: 3rem 0;
+}
+
+.block-item--process {
+    padding-bottom: 9rem;
+}
+/*rwd: block-item ---*/
+@include rwd($ipad) {
+    .block-item {
+        margin: 1.5rem 0;
+        padding: 0.69rem;
+        border-width: 4px;
+    }
+
+    .block-item--process {
+        padding-bottom: 5rem;
+    }
+}
+
+/*item: tab-content-title ---*/
+.tab-content-title {
+    font-size: 1.63rem;
+    letter-spacing: 0.04rem;
+    color: $color-primary-blue;
+    font-weight: bold;
+    position: relative;
+
+    &:after {
+        content: '';
+        position: absolute;
+        left: -30px;
+        top: 5px;
+        width: 0;
+        height: 0;
+        border-left: 20px solid #1c8886;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+    }
+}
+/*rwd: tab-content-title ---*/
+@include rwd($ipad) {
+    .tab-content-title {
+        font-size: 0.94rem;
+        letter-spacing: 0.02rem;
+
+        &:after {
+            left: -18px;
+            top: 3px;
+            border-left: 12px solid #1c8886;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+        }
+    }
+}
+
+/*item: tab-content-description ---*/
+.tab-content-description {
+    letter-spacing: 0.03rem;
+    line-height: 2;
+    color: $color-dark;
+    margin-top: 1.06rem;
+}
+
+/*rwd: tab-content-description ---*/
+@include rwd($ipad) {
+    .tab-content-description {
+        font-size: 0.88rem;
+    }
+}
+
+/*modal*/
+.modal-video {
+    .modal-dialog {
+        max-width: 800px;
+    }
+
+    .modal-content {
+        border: none;
+        background-color: transparent;
+
+        iframe {
+            width: 100%;
+            max-width: 710px;
+            height: 25vw;
+            max-height: 450px;
+            margin: 0 auto;
+            display: block;
+        }
+    }
+}
+
+@include rwd($ipad) {
+    .modal-video {
+        .modal-content {
+            iframe {
+                height: 67vw;
+            }
+        }
+    }
+}

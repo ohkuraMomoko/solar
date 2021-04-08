@@ -1,0 +1,555 @@
+﻿@model JoinViewModel
+@{
+    ViewBag.Title = "購買太陽能板";
+    String projectState = "";
+    Boolean isFundRacing = true;//
+    var projectIntro = Model.LoanCaseIntroduct.CASELOAN_INTRODCT;
+    decimal availableAmt = 0;
+    decimal availableNum = 0;
+    decimal perPrice = 0;
+    decimal powerGenNum = 0;
+    decimal powerGenAmt = 0;
+    double bakAmt = 0;
+    decimal intRate = 0;
+
+    decimal.TryParse(projectIntro.LOAN_AVAILABLE_AMT, out availableAmt);
+    double.TryParse(projectIntro.FEEDBACK_AMT, out bakAmt);
+    if (decimal.TryParse(projectIntro.LOAN_INTEREST_RATE, out intRate))
+    {
+        intRate = intRate * 100;
+    }
+
+    if (decimal.TryParse(projectIntro.PANELS_PRICE, out perPrice))
+    {
+        if (perPrice != 0)
+        {
+            availableNum = availableAmt / perPrice;
+        }
+    }
+
+    decimal.TryParse(projectIntro.CASE_POWER_GEN_NUM, out powerGenNum);
+    decimal.TryParse(projectIntro.CASE_POWER_GEN_AMT, out powerGenAmt);
+    
+    // 專案狀態
+    if (projectIntro != null)
+    {
+        switch (projectIntro.CASE_WEB_STATUS)
+        {
+            case "01": projectState = "尚未開啟";
+                break;
+            case "02": projectState = "開放認購中";
+                break;
+            case "03": projectState = "已售完(專案釋出請通知)";
+                break;
+            case "04": projectState = "認購完成";
+                break;
+            case "05": projectState = "發電中";
+                isFundRacing = false;
+                break;
+            case "99": projectState = "認購失敗";
+                isFundRacing = false;
+                break;
+            default: projectState = "異常請聯繫客服";
+                break;
+        }
+    }
+
+}
+@section header {
+    @Styles.Render("~/Content/pages/join/project.min.css")
+}
+@section metatags {
+    @Html.Action("GetMetaByType", "Base", new { id = 6 })
+}
+
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+<div class="page-container">
+    <div class="page-kv" data-aos="bg-scale">
+        <h2 class="page-kv--title" data-aos="fade-down" data-aos-delay="400">購買太陽能板</h2>
+        <img src="@Url.Content("~/Content/images/title_font_INVESTMENT.svg")" alt="INVESTMENT" class="page-kv--img" data-aos="fade-up" data-aos-delay="200">
+    </div>
+    <div class="page-content">
+        <div class="breadcrumb-container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/" href="@Url.Content("~/Home/")">
+                            <span itemprop="name"><img src="@Url.Content("~/Content/images/bread_home_icon.svg")" alt="首頁"></span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    <li class="breadcrumb-item" aria-current="page" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Join/" href="@Url.Content("~/Join/")">
+                            <span itemprop="name">我想參與認購</span>
+                        </a>
+                        <meta itemprop="position" content="2" />
+                    </li>
+                    @* TODO:
+                        麵包屑最後一個要套電廠標題
+                    *@
+                    <li class="breadcrumb-item active" aria-current="page" itemprop="itemListElement" itemscope
+                        itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                            <span itemprop="name">@projectIntro.CASE_NAME</span>
+                        </a>
+                        <meta itemprop="position" content="3" />
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <div class="project">
+            <section class="project-header">
+                <div class="js-project-slider project-slider">
+                    @{ 
+                        if (projectIntro.CASE_IMG_LIST != null)
+                        {
+                            foreach (var item in projectIntro.CASE_IMG_LIST)
+                            {
+                                <div class="project-slider-item" style="background-image:url('@Url.Action("Image","File", new { uri = item.FILE_UUID })')"></div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="project-slider-item" style="background-image:url(@Url.Content("~/Content/images/solarCase.jpg"))"></div>
+                        }
+                    }
+                    
+
+                </div>
+
+                <div class="project-info">
+                    @* TODO: 分兩種狀態(CLASS: project-info--status):
+                        1.發電中
+                        2.募資中
+                    *@
+                    <h3 class="project-info--status">@projectState</h3>
+                    <h1 class="project-info--name">@projectIntro.CASE_NAME</h1>
+                    <div class="project-info--description">@projectIntro.CASE_SCHEDULE_STAGE_DESC</div>
+                    <div class="project-info-content">
+                        <ul class="project-info-list">
+                            <li class="row no-gutters project-info-item">
+                                <div class="col-6 project-info-item--title">太陽能板售價</div>
+                                <div class="col-6 project-info-item--data">
+                                    <span> @perPrice.ToString("N0")</span>&nbsp;&nbsp;元/片
+                                </div>
+                            </li>
+                            <li class="row no-gutters project-info-item">
+                                <div class="col-6 project-info-item--title">預估內部報酬率</div>
+                                <div class="col-6 project-info-item--data">
+                                    <span> @intRate.ToString("G29")</span>&nbsp;&nbsp;%
+                                </div>
+                            </li>
+                            <li class="row project-info-item">
+                                <div class="col-6 project-info-item--title">預估總回饋金額</div>
+                                <div class="col-6 project-info-item--data">
+                                    <span> 
+                                        @if ((bakAmt * 100) % 100 != 0) {
+                                            @bakAmt.ToString("N2");
+                                        } else {
+                                            @bakAmt.ToString("N0");
+                                        }
+                                    </span>&nbsp;&nbsp;元/片
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <a href='#_money' class="project-info-link" onclick="view_revenue()">立即試算</a>
+                </div>
+
+                @* TODO: 依照專案狀態切換顯示(CLASS: d-none)
+                    1. 發電中(CLASS: project-online)
+                    2. 募資中(CLASS: project-buy)
+                *@
+                @* 02: 募資中 05:發電中 *@
+                @if (isFundRacing)
+                {
+                    <div class="project-buy ">
+                        <div class="project-buy--progress">
+                            <div id="cont" class="progress">
+                                <div class="progress-content">
+                                    <p class="progress-content--canbuy">
+                                        剩<span id="progressPic">@availableNum.ToString("N0")</span>片
+                                    </p>
+                                    <p class="progress-content--all">
+                                        共<span id="progressAllPic">@projectIntro.PANELS_NUM</span>片
+                                    </p>
+                                </div>
+                                <svg id="progress" width="200" height="200" viewPort="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                    <circle r="90" cx="100" cy="100" fill="transparent" stroke-dasharray="565.48" stroke-dashoffset="0"></circle>
+                                    <circle id="bar" r="90" cx="100" cy="100" fill="transparent" stroke-dasharray="565.48"
+                                            stroke-dashoffset="0"></circle>
+                                </svg>
+                            </div>
+                        </div>
+                        @* TODO:
+                            lightbox購買視窗(VIEW: _ModalBuyProject.cshtml)
+                            data-price: 帶入一片金額,
+                            data-name: 帶入專案名稱
+                        *@
+                        <button class="btn--common btn--common-1 project-buy--btn"
+                                data-toggle="modal" data-target=""
+                                data-price="@projectIntro.PANELS_PRICE" data-name="@projectIntro.CASE_NAME"
+                                data-ga-target="ga_project_topinfo_btn_buy"
+                                data-ga-project-id="@projectIntro.POWER_PLANT_NUM" 
+                                >
+                            立即購入
+                        </button>
+                    </div>
+                }
+                else if (@projectIntro.CASE_WEB_STATUS.Equals("05"))
+                {
+                    @*<div class="project-online d-none">*@
+                    <div class="project-online">
+                        <div class="row no-gutters w-100 h-100">
+                            <div class="col-6 project-online-item">
+                                <img src="@Url.Content("~/Content/images/flash_icon.svg")" alt="" class="project-online-item--icon">
+                                <p class="project-online-item--title">截至目前發電總量</p>
+                                <p class="project-online-item--data">
+                                    <span>@powerGenNum.ToString("N0")</span>&nbsp;度
+                                </p>
+                            </div>
+                            <div class="col-6 project-online-item">
+                                <img src="@Url.Content("~/Content/images/money_icon.svg")" alt="" class="project-online-item--icon">
+                                <p class="project-online-item--title">截至目前發電金額</p>
+                                <p class="project-online-item--data">
+                                    <span>@powerGenAmt.ToString("N0")</span>&nbsp;元
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </section>
+
+            <section class="project-body tabsy">
+                @* TIP: name=tab可用checked=""控制預設分頁 *@
+                <input type="radio" id="tab1" name="tab" checked="">
+                <label class="tab-btn tab-btn-1" for="tab1">專案介紹</label>
+                <div class="tab tab--project-info">
+                    <div class="tab-content">
+                        @{
+                            Html.RenderPartial("~/Views/Join/_ProjectTabInfo.cshtml", Model);
+                        }
+                    </div>
+                </div>
+                <input type="radio" id="tab2" name="tab">
+                <label class="tab-btn tab-btn-2" for="tab2">費用收益說明</label>
+                <div class="tab tab--money">
+                    <div class="tab-content">
+                        @{
+                            Html.RenderPartial("~/Views/Join/_ProjectTabMoney.cshtml");
+                        }
+                    </div>
+                </div>
+                <input type="radio" id="tab3" name="tab">
+                <label class="tab-btn tab-btn-3" for="tab3">專案附件</label>
+                <div class="tab tab--file">
+                    <div class="tab-content">
+                        @{
+                            Html.RenderPartial("~/Views/Join/_ProjectTabFile.cshtml");
+                        }
+                    </div>
+                </div>
+            </section>
+
+            <section class="care-text-desktop">
+                提醒與聲明<br>
+                @Html.Raw(@projectIntro.LOAN_WARNINGS_DESC)
+
+            </section>
+            <div class="care-text-mobile">
+                <a class="collapse-btn" data-toggle="collapse" href="#collapseCareText" role="button" aria-expanded="false" aria-controls="collapseCareText">
+                    提醒與聲明 <span class="collapse-btn-icon"></span>
+                </a>
+                <div class="collapse" id="collapseCareText">
+                    <div class="collapse-body">
+                        @Html.Raw(@projectIntro.LOAN_WARNINGS_DESC)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-video" id="modalVideo" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="modal-btn--close" data-dismiss="modal" aria-label="Close">
+                <img src="@Url.Content("~/Content/images/bt_close_w.svg")" alt="">
+            </button>
+            <div id="modalVideoIndex"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalDenied" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-subscription" role="document">
+        <div class="modal-content">
+            <button type="button" class="modal-btn--close" data-dismiss="modal" aria-label="Close">
+                <img src="@Url.Content("~/Content/images/bt_close_w.svg")" alt="">
+            </button>
+            <img src="@Url.Content("~/Content/images/warning_info_icon.svg")" alt="" class="center modal-subscription--icon">
+            <p class="modal-subscription--title text-heightline text-bold">
+                您目前無法進行電廠認購
+                <br/>
+                如有問題請洽客服電話：(02) 2658-1677
+            </p>
+            <p class="modal-subscription--text"></p>
+            <div class="w-70 m-auto d-flex justify-content-center">
+                <button class="center btn--common btn--common-2" data-dismiss="modal">確定</button>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+@{
+    Html.RenderPartial("~/Views/Join/_ModalBuyProject.cshtml");
+}
+
+@section scripts {
+<script src="../../Scripts/project.js"></script>
+
+<script>
+    $(document).ready(function () {
+        //var url_param = window.location.search
+        if (window.location.href.indexOf('invest=true') > 0) {
+            $('.project-buy--btn').click();
+        }
+        getContractVersion();
+    });
+
+    // progress bar ===========================
+    let pic = '@availableNum';
+    let allPic = @projectIntro.PANELS_NUM;
+    let precent = (pic / allPic) * 100;
+    let $circle = $("#progress #bar");
+    if (isNaN(precent)) {
+        precent = 100;
+    } else {
+        let r = $circle.attr("r");
+        let c = Math.PI * (r * 2);
+        if (precent < 0) {
+            precent = 0;
+        }
+        if (precent > 100) {
+            precent = 100;
+        }
+        let pct = ((100 - precent) / 100) * c;
+        $circle.css({ strokeDashoffset: pct });
+        // $('#cont').attr('data-pct', precent);
+        $("#progressPic").text('@availableNum.ToString("N0")');
+        $("#progressAllPic").text(allPic);
+    }
+
+    // GA: 圖靈/電廠頁/增強型電子商務-product detail
+    dataLayer.push({
+        'ecommerce': {
+            'detail': {
+                'products': [{
+                    'id': '@projectIntro.POWER_PLANT_NUM',
+                    'name': '@projectIntro.CASE_NAME',
+                    'category': "太陽能板",
+                    'price': @projectIntro.PANELS_PRICE,
+                }]
+            }
+        },
+        'event': 'td_productDetail'
+    });
+
+    $('.project-buy--btn').on("click", function () {
+        if (@projectIntro.CASE_WEB_STATUS != '02') {
+            showMsg('電廠已售完', 'error');
+            return;
+        }
+
+        $('#txtBuyPic').val(1);
+        $('#txtDiscountCode').val('');
+        $('#txtPrice').html('');
+        $('#txtTotalPrice').html('');
+        $('#txtDiscount').html(0);
+        $('#txtBuyPicInfo').addClass('d-none')
+        calculatePrice();
+
+        $("#step1").removeClass("d-none");
+        $("#step2").addClass("d-none");
+        $("#step3").addClass("d-none");
+        $("#step4NotCertified").addClass("d-none");
+        $("#step4Verified").addClass("d-none");
+
+        loginExt.setCallback(function () {
+            location.href = location.href + '?invest=true'
+            location.reload()
+
+        })
+
+        $ajax.Post('@Url.Action("GetInstantUserInfo")', {}, function (res) {
+            //console.log(res)
+            if (res.LEVEL == "03" || (res.LEVEL == "02" && res.RETURN_NOTE == 'N')) {
+                //完成認證&未完成認證
+                $('#modalBuyProject').modal('show');
+                // GA: 圖靈/電廠頁/立即購入/click event/狀態:可購買
+                dataLayer.push({
+                    'event': 'productClick',			
+                    'buttonName': '立即購入',				
+                    'pageName': '可購買頁面',							
+                    'productName': '@projectIntro.CASE_NAME',
+                    'url': '@Request.Url.LocalPath'
+                });
+            }
+            else if (res.LEVEL == "02" && res.RETURN_NOTE == 'Y') {
+                //有退回註記
+                $('#modalDenied').modal('show');
+                // GA: 圖靈/電廠列表/立即購入/click event/狀態:無法進行電廠認購
+                dataLayer.push({
+                    'event': 'productClick',			
+                    'buttonName': '立即購入',				
+                    'pageName': '無法進行電廠認購',							
+                    'productName': '@projectIntro.CASE_NAME',
+                    'url': '@Request.Url.LocalPath'
+                });
+            }
+            else if (res.LEVEL == "01") {
+                //一般會員
+                location.href = '@Url.Action("Index", "AdvancedPurchase")';
+                // GA: 圖靈/電廠列表/立即購入/click event/狀態:需升級出資會員
+                dataLayer.push({
+                    'event': 'productClick',			
+                    'buttonName': '立即購入',				
+                    'pageName': '需升級出資會員',							
+                    'productName': '@projectIntro.CASE_NAME',
+                    'url': '@Request.Url.LocalPath'
+                });
+            }
+            else {
+                //未登入
+                $('#modalMember').modal('show');
+                // GA: 圖靈/電廠列表/立即購入/click event/狀態:需登入
+                dataLayer.push({
+                    'event': 'productClick',			
+                    'buttonName': '立即購入',				
+                    'pageName': '需登入',							
+                    'productName': '@projectIntro.CASE_NAME',
+                    'url': '@Request.Url.LocalPath'
+                });
+            }
+        });
+    })
+
+    $('.tab-btn-3').on("click", function () {
+
+        $ajax.Post('@Url.Action("GetInstantUserInfo")', {}, function (res) {
+            console.log(res)
+            if (res.LEVEL == '03' || (res.LEVEL == '02' && res.RETURN_NOTE == 'N')) {
+                // GA: 圖靈/電廠列表/專案附件頁籤/click event/狀態:出資會員
+                dataLayer.push({
+                    'event': 'productClick',			
+                    'buttonName': '專案附件頁籤',				
+                    'pageName': '專案附件頁',							
+                    'productName': '@projectIntro.CASE_NAME',
+                    'url': '@Request.Url.LocalPath'
+                });
+            }
+            else if (res.LEVEL == "02" && res.RETURN_NOTE == 'Y') {
+                //有退回註記
+                $('.tab-btn-1').click()
+                $('#modalDenied').modal('show')
+                // GA: 圖靈/電廠列表/專案附件頁籤/click event/狀態:目前無法進行電廠認購
+                dataLayer.push({
+                    'event': 'productClick',			
+                    'buttonName': '專案附件頁籤',				
+                    'pageName': '目前無法進行電廠認購',							
+                    'productName': '@projectIntro.CASE_NAME',
+                    'url': '@Request.Url.LocalPath'
+                });
+            }
+            else if (res.LEVEL == "01") {
+                //一般會員
+                $('.tab-btn-1').click()
+                $('#modalNotAllow').modal('show')
+                // GA: 圖靈/電廠列表/專案附件頁籤/click event/狀態:一般會員
+                dataLayer.push({
+                    'event': 'productClick',			
+                    'buttonName': '專案附件頁籤',				
+                    'pageName': '無預覽權限',							
+                    'productName': '@projectIntro.CASE_NAME',
+                    'url': '@Request.Url.LocalPath'
+                });
+            }
+            else {
+                $('.tab-btn-1').click()
+                $('#modalMember').modal('show')
+                // GA: 圖靈/電廠列表/專案附件頁籤/click event/狀態:需登入
+                dataLayer.push({
+                    'event': 'productClick',			
+                    'buttonName': '專案附件頁籤',				
+                    'pageName': '需登入',							
+                    'productName': '@projectIntro.CASE_NAME',
+                    'url': '@Request.Url.LocalPath'
+                });
+            }
+        });
+    })
+
+    $('.tab-btn-2').on("click", function () {
+        $ajax.Post('@Url.Action("GetInstantUserInfo")', {}, function (res) {
+            //console.log(res)
+            if (res.LEVEL == null || res.LEVEL == '' || res.LEVEL == '00') {
+                // GA: 圖靈/電廠頁/立即試算/click event/狀態:需登入
+                dataLayer.push({
+                    'event': 'productClick',			
+                    'buttonName': '立即試算',				
+                    'pageName': '需登入',							
+                    'productName': '@projectIntro.CASE_NAME',
+                    'url': '@Request.Url.LocalPath'
+                });
+
+                $('.tab-btn-1').click()
+                //$('#modalMember').modal('show')
+                loginExt.setCallback(function () {
+                    $('.tab-btn-2').click();
+                }).open();
+            } else {
+                // GA: 圖靈/電廠頁/立即試算/click event/狀態:電廠試算頁
+                dataLayer.push({
+                    'event': 'productClick',			
+                    'buttonName': '立即試算',				
+                    'pageName': '電廠試算頁',							
+                    'productName': '@projectIntro.CASE_NAME',
+                    'url': '@Request.Url.LocalPath'
+                });
+            }
+        });
+    })
+
+    function view_revenue() {
+        $('.tab-btn-2').click();
+    }
+
+    function getContractVersion() {
+        $ajax.Post('@Url.Action("GetContractByVersion")', { version: '@projectIntro.VERSION' }, function (res) {
+            $('#buyRaw').html(res.CONTENT);
+        });
+    }
+
+    //GA 集客: 專案購買-Step1-購買片數
+    $('#modalBuyProject').on('shown.bs.modal', function (e) {
+        dataLayer.push(
+            {
+                "event": "popupPageView",
+                "popPATH": "/buy/order",
+                "popTitle": "專案購買-Step1-購買片數"
+            }
+        );
+
+    });
+    $('#modalBuyProject').on('hidden.bs.modal', function (e) {
+        dataLayer.push(
+            {
+                "event": "popupClosed",
+            }
+        );
+    });
+
+
+</script>
+}

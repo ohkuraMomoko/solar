@@ -1,0 +1,158 @@
+﻿@model Chailease.SolarEnergy.Web.ViewModel.WikiViewModel
+@{
+    ViewBag.Title = "電廠小百科";
+}
+@section header{
+    @Styles.Render("~/Content/pages/wiki/index.min.css")
+}
+@section metatags {
+    @Html.Action("GetMetaByType", "Base", new { id = 5 })
+}
+
+<div class="page-container">
+    <div class="page-kv" data-aos="bg-scale">
+        <h2 class="page-kv--title" data-aos="fade-down" data-aos-delay="400">@ViewBag.Title</h2>
+        <img src="@Url.Content("~/Content/images/title_font_FINMARTPEDIA.svg")" alt="NEWS" class="page-kv--img" data-aos="fade-up" data-aos-delay="200">
+    </div>
+    <div class="page-content">
+        <div class="breadcrumb-container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/" href="@Url.Content("~/Home/")">
+                            <span itemprop="name"><img src="@Url.Content("~/Content/images/bread_home_icon.svg")" alt="首頁"></span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Home/About" href="@Url.Content("~/Home/About")">
+                            <span itemprop="name">認識電廠專家</span>
+                        </a>
+                        <meta itemprop="position" content="2" />
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="@System.Configuration.ConfigurationManager.AppSettings["Url"]/Wiki/" href="@Url.Content("~/Wiki/")">
+                            <span itemprop="name">@ViewBag.Title</span>
+                        </a>
+                        <meta itemprop="position" content="3" />
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <div class="article-class-container">
+            <div class="custom-select">
+                @Html.DropDownListFor(x => x.WikiType_SelectList, Model.WikiTypeSelectList, new { @class = "select-article-class" })
+            </div>
+        </div>
+        <div class="article-container">
+            @* TODO: 文章資料放在article-data中, 各別文章架構為article-item, 依照文章類型渲染 *@
+            @* TODO:
+            分類顏色由後臺設定，請抓取後台顏色
+            *@
+            <div class="article-data" id="article-data-id">
+                @{
+                    Html.RenderPartial("ArticleList");
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+<script>
+    var lazy;
+    var populate = new scrollingendless(function (callback) {
+        LoadNewsArticle(true,callback);
+    });
+
+    $(function () {
+        Init();
+        populate.start();
+    })
+
+    function Init() {
+        $('#WikiType_SelectList').val("@Model.ListType");
+        function logElementEvent(eventName, element) {
+            console.log(
+                Date.now(),
+                eventName,
+                element.getAttribute("data-bg")
+            );
+        }
+
+        var callback_finish = function () {
+            logElementEvent("✔️ FINISHED", document.documentElement);
+        };
+
+        lazy = new LazyLoad({
+            elements_selector: "[data-lazy='true']",
+            threshold: 0,
+            // Assign the callbacks defined above
+            //callback_enter: callback_enter,
+            //callback_exit: callback_exit,
+            //callback_reveal: callback_reveal,
+            //callback_loaded: callback_loaded,
+            //callback_error: callback_error,
+            callback_finish: callback_finish
+        });
+    }
+    function LoadNewsArticle(cond,callback) {
+
+            var viewcount = 0;
+            var articleCount = $('#article-data-id>article').length;
+            viewcount = articleCount + @Chailease.SolarEnergy.Web.ViewModel.WikiViewModel.VIEW_COUNT_INTERVAL;
+
+            //文章類別選取
+            var selectedvalue = $("#WikiType_SelectList").val();
+            //view more button顯示
+            if ($("#load_next").length > 0) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ArticleList")',
+                    data: { category: selectedvalue, datacount: viewcount },
+                    beforeSend: function () {
+                        if (cond) {
+                            $("#loadingContainer").fadeIn(100);
+                            $("body").css("overflow", "hidden");
+                        }
+                        $("#load_next").remove();// 按鈕每次動態生成,依據文章條件
+                    }, timeout: 10000,
+                    success: function (data) {
+                        $("#article-data-id").append(data);
+                        if (cond) {
+                            $("#loadingContainer").fadeOut(300);
+                            $("body").css("overflow", "auto");
+                        }
+                        if ($("#load_next").length > 0) {
+                            if (callback)
+                                callback();
+                        }
+                        lazy.update();
+                    },
+                    error: function (errMsg) {
+                        if (cond) {
+                            $("#loadingContainer").fadeOut(300);
+                            $("body").css("overflow", "auto");
+                        }
+                        showMsg("文章列表加載失敗","error");
+                    },
+                    complete: function (XMLHttpRequest, textStatus) {
+                        populate.start();
+                        $("#loadingContainer").fadeOut(300);
+                        $("body").css("overflow", "auto");
+                    }
+                });
+                
+        }
+    }
+
+    $("#WikiType_SelectList").change(function () {
+        var load_next = "<div id=\"load_next\"></div>";
+        $("#article-data-id").empty();
+        $("#article-data-id").append(load_next);
+        LoadNewsArticle(true);
+    });
+    
+
+</script>
+}

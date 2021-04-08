@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.3 (67297) - http://www.bohemiancoding.com/sketch -->
+    <title>member _icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <circle id="path-1" cx="15" cy="15" r="15"></circle>
+    </defs>
+    <g id="member-_icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-9">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#1EB5AC" fill-rule="nonzero" xlink:href="#path-1"></use>
+            <g mask="url(#mask-2)">
+                <g transform="translate(3.818182, 4.909091)">
+                    <g>
+                        <g id="Group-4" fill-rule="nonzero" stroke="#FFFFFF" stroke-width="0.972">
+                            <rect id="Rectangle-14" x="6.31999209" y="0.486" width="9.72365217" height="12.6808926" rx="4.86182609"></rect>
+                            <rect id="Rectangle-14" x="0.486" y="13.163686" width="21.3916364" height="18.5321322" rx="6.804"></rect>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,461 @@
+﻿@model SellViewModel
+
+<section class="block-item">
+    <h3 class="tab-content-title">收益費用</h3>
+    <div class="tab-content-description">
+        TEXT
+    </div>
+</section>
+<section id="_money" class="block-item">
+    <h3 class="tab-content-title">試算 TEXT</h3>
+    <div class="trial-container">
+        <div class="trial-header">
+            <div class="trial-header-item">
+                台電躉購價格 <span>TEXT</span>元/度
+            </div>
+            <div class="trial-header-item">
+                購買價格 :<span>TEXT</span>元/片
+            </div>
+        </div>
+        <div class="trial-content">
+            <div class="trial-input">
+                <span class="trial-input-left">輸入購買片數</span>
+                <input type="number" value="1" id="txtBuy" max="100" min="1">
+                <span class="trial-input-right">片</span>
+            </div>
+            <button id="getCalc" class="btn--common btn--common-1 btn-trial">試算</button>
+            <div class="trial-content-data">
+                <div class="trial-content-data-item">
+                    內部報酬率
+                    TEXT
+                    <span>@LOAN_INTEREST_RATE_D %</span>
+                </div>
+                <div class="trial-content-data-item">
+                    每年平均收益
+                    TEXT
+                    <span class="annual_avg">@AVG_ANNUAL_INCOME_D.ToString("N0")</span>
+                    元/片
+                </div>
+                <div class="trial-content-data-item">
+                    售電總回收金額
+                    TEXT
+                    <span class="totalamt">@TOTAL_RECOVERY_AMOUNT_D.ToString("N0")</span>
+                    元
+                </div>
+                <div class="trial-content-data-item">
+                    回收年限
+                    <span>20</span>
+                    年
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="chart-container">
+        <canvas id="calcChart"></canvas>
+        <div id="chartjs-tooltip" class="chart-tooltip">
+            <table></table>
+        </div>
+    </div>
+
+    <h4 class="power-care-title">預估回收金額</h4>
+    @* TODO: 套試算20年資料，金額都要套,符號 *@
+    <div class="table-container js-table">
+        <div class="table">
+            <div class="table-title-content table-fixed-mobile">
+                <div class="table-title">年</div>
+                <div class="table-title">發電效能</div>
+                <div class="table-title">發電量(度)</div>
+                <div class="table-title">電費收入</div>
+                <div class="table-title">屋頂租金</div>
+                <div class="table-title">保險費用</div>
+                <div class="table-title">其他費用</div>
+                <div class="table-title">收款金額</div>
+                <div class="table-title">累積收款金額</div>
+            </div>
+            <div class="table-data-content js-tableData"></div>
+        
+        </div>
+    </div>
+
+    <section class="power-care">
+        <h4 class="power-care-title">試算補充說明</h4>
+        <p class="power-care-desc">
+            TEXT
+            <br/>
+        </p>
+    </section>
+</section>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/chart")
+@Scripts.Render("~/bundles/temp")
+
+<script id="template" type="text/x-jquery-tmpl">
+    <div class="item-box">
+        <div class="table-row">
+            <div class="table-data">年</div>
+            <div class="table-data">TEXT</div>
+            <div class="table-data">TEXT</div>
+            <div class="table-data">TEXT</div>
+            <div class="table-data">TEXT</div>
+            <div class="table-data">TEXT</div>
+            <div class="table-data">TEXT</div>
+            <div class="table-data">TEXT</div>
+            <div class="table-data">TEXT</div>
+        </div>
+    </div>
+</script>
+
+<!-- TODO:合計列 -->
+<script id="templateTotal" type="text/x-jquery-tmpl">
+    <div class="item-box total">
+        <div class="table-row">
+            <div class="table-data">合&nbsp;&nbsp;計</div>
+            <div class="table-data"></div>
+            <div class="table-data">TEXT</div>
+            <div class="table-data">TEXT</div>
+            <div class="table-data">TEXT</div>
+            <div class="table-data">TEXT</div>
+            <div class="table-data">TEXT</div>
+            <div class="table-data">TEXT</div>
+            <div class="table-data"></div>
+        </div>
+    </div>
+</script>
+
+<script>
+  
+    var dataArr = [];
+    var dataArrM = [];
+    var powerArr = [];
+    var genArr = [];
+    var genArrM = [];
+    var feeArr = [];
+    var feeArrM = [];
+    var roofArr = [];
+    var roofArrM = [];
+    var insArr = [];
+    var insArrM = [];
+    var recArr = [];
+    var recArrM = [];
+    @for (int i = 0; i < calculate.CALUATLE_LIST.Count;i++)
+    {
+        @:genArr.push(@calculate.CALUATLE_LIST[i].PRE_POWER_GEN);
+        @:genArrM.push(@calculate.CALUATLE_LIST[i].PRE_POWER_GEN);
+        @:feeArr.push(@calculate.CALUATLE_LIST[i].PRE_POWER_FEE);
+        @:feeArrM.push(@calculate.CALUATLE_LIST[i].PRE_POWER_FEE);
+        @:dataArr.push(@calculate.CALUATLE_LIST[i].PRE_ACCUMLATE_RECEIPT);
+        @:dataArrM.push(@calculate.CALUATLE_LIST[i].PRE_ACCUMLATE_RECEIPT);
+        @:powerArr.push(@calculate.CALUATLE_LIST[i].PRE_POWER_PERFORMANCE);
+        @:roofArr.push(@calculate.CALUATLE_LIST[i].PRE_APPOR_RENT);
+        @:roofArrM.push(@calculate.CALUATLE_LIST[i].PRE_APPOR_RENT);
+        @:insArr.push(@calculate.CALUATLE_LIST[i].PRE_APPOR_INSURANCE);
+        @:insArrM.push(@calculate.CALUATLE_LIST[i].PRE_APPOR_INSURANCE);
+        @:recArr.push(@calculate.CALUATLE_LIST[i].PRE_ANNUAL_RECEIPT);
+        @:recArrM.push(@calculate.CALUATLE_LIST[i].PRE_ANNUAL_RECEIPT);
+
+    }
+    dataArr.push(3020)
+    
+
+    //setChart(data)
+    // 試算圖表 =========================================
+    const primaryColor = "rgba(20, 112, 107, 1)";
+    const primaryColorOpacity = "rgba(20, 112, 107, .85)";
+    var calcChart = $("#calcChart");
+    var chart = document.getElementById("calcChart").getContext("2d"),
+        gradient = chart.createLinearGradient(0, 0, 0, 450);
+    gradient.addColorStop(0, "rgba(34, 218, 212, .8)");
+    gradient.addColorStop(0.3, "rgba(34, 218, 212, .32)");
+    gradient.addColorStop(1, "rgba(34, 218, 212, 0.1)");
+
+    var customTooltips = function (tooltip) {
+
+        // Tooltip Element
+        var tooltipEl = document.getElementById("chartjs-tooltip");
+        if (!tooltipEl) {
+            tooltipEl = document.createElement("div");
+            tooltipEl.id = "chartjs-tooltip";
+            tooltipEl.innerHTML = "<table></table>";
+            this._chart.canvas.parentNode.appendChild(tooltipEl);
+        }
+
+        // Hide if no tooltip
+        if (tooltip.opacity === 0) {
+            tooltipEl.style.opacity = 0;
+            return;
+        }
+
+        // Set caret Position
+        tooltipEl.classList.remove("above", "below", "no-transform");
+        if (tooltip.yAlign) {
+            tooltipEl.classList.add(tooltip.yAlign);
+        } else {
+            tooltipEl.classList.add("no-transform");
+        }
+
+        function getBody(bodyItem) {
+            return bodyItem.lines;
+        }
+
+        // Set Text
+        if (tooltip.body) {
+            var titleLines = tooltip.title || [];
+            var bodyLines = tooltip.body.map(getBody);
+            innerHtml = "<tbody>";
+
+            bodyLines.forEach(function (body, i) {
+                // let value = body.toString().replace(/[^0-9]/g, "");
+                //去除冒號
+                var  value = body.toString().replace(/\:/g, '');
+
+                var data_index = -1;
+                dataArr.forEach(function (v, i) { if (v == value) data_index = i; });
+
+                // TODO: 金額要加$字號與負號 參閱UI SPEC
+                // TODO: 屋頂租金/保險費用/其他費用 會是負號
+                innerHtml +=
+                    "<tr><td>發電量 :</td><td style='color: #FFF3B5;'>" +
+                    "" + setSymbol(genArr[data_index]) +
+                    "</td></tr>" +
+                    "<tr><td>電費收入 :</td><td style='color: #FFF3B5;'>" +
+                    "$" + setSymbol(feeArr[data_index]) +
+                    "</td></tr>" +
+                    "<tr><td>屋頂租金 :</td><td style='color: #FFF3B5;'>" +
+                    "$" + setSymbol(roofArr[data_index]) +
+                    "</td></tr>" +
+                    "<tr><td>保險費用 :</td><td style='color: #FFF3B5;'>" +
+                    "$" + setSymbol(insArr[data_index]) +
+                    "</td></tr>" +
+                    "<tr><td>收款金額 :</td><td style='color: #FFF3B5;'>" +
+                    "$" + setSymbol(recArr[data_index]) +
+                    "</td></tr>" +
+                    "<tr><td>累積收款金額 :</td><td style='color: #FFF3B5;'>" +
+                    "$" + setSymbol(value) +
+                    "</td></tr>";
+            });
+            innerHtml += "</tbody>";
+            var tableRoot = tooltipEl.querySelector("table");
+            tableRoot.innerHTML = innerHtml;
+        }
+        var positionY = this._chart.canvas.offsetTop;
+        var positionX = this._chart.canvas.offsetLeft;
+
+        // Display, position, and set styles for font
+        tooltipEl.style.opacity = 1;
+        if (tooltip.caretX >= calcChart.width() * 0.6) {
+            tooltipEl.style.right = calcChart.width() - tooltip.caretX + "px";
+            tooltipEl.style.left = "unset";
+        } else {
+            tooltipEl.style.left = positionX + tooltip.caretX + "px";
+            tooltipEl.style.right = "unset";
+        }
+
+        tooltipEl.style.top = positionY + tooltip.caretY + 10 + "px";
+        // tooltipEl.style.fontFamily = tooltip._bodyFontFamily;
+        // tooltipEl.style.fontSize = tooltip.bodyFontSize + 'px';
+        // tooltipEl.style.fontStyle = tooltip._bodyFontStyle;
+        // tooltipEl.style.padding = tooltip.yPadding + 'px ' + tooltip.xPadding + 'px';
+    };
+
+    let year = 20;
+    let chartData = dataArr
+
+
+    var config = {
+        type: "line",
+        data: {
+            // X軸 20年收益
+            labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+            datasets: [
+                {
+                    // "label": "收款金額",
+                    data: chartData,
+                    // "fill": false,
+                    borderWidth: 2,
+                    borderColor: "rgb(145, 159, 158)",
+                    // 曲線0.4~直線0
+                    lineTension: 0,
+                    // 漸層背景
+                    backgroundColor: gradient,
+                    pointBackgroundColor: primaryColor,
+                    pointBorderColor: primaryColor,
+                    pointBorderWidth: 3,
+                    pointHoverBorderWidth: 4,
+                    // borser style: dash
+                    borderDash: [5, 5]
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            //圖表比例用樣式控制(.chart-container)
+            maintainAspectRatio: false,
+            animation: {
+                duration: 1000
+            },
+            legend: {
+                display: false
+            },
+            tooltips: {
+                enabled: false,
+                position: "nearest",
+                mode: "index",
+                intersect: false,
+                backgroundColor: primaryColorOpacity,
+                displayColors: false,
+                custom: customTooltips
+            },
+            scales: {
+                yAxes: [
+                    {
+                        ticks: {
+                            autoSkip: true,
+                            // 金額區段
+                            
+                            callback: function (value, index, values) {
+                                return setSymbol(value);
+                            }
+                        },
+
+                        stacked: false,
+                        gridLines: {
+                            display: true,
+                            color: "rgba(0,0,0,0.2)"
+                        }
+                    }
+                ],
+                xAxes: [
+                    {
+                        ticks: {
+                            autoSkip: true,
+                            autoSkipPadding: 10,
+                            maxRotation: false
+                        },
+                        scaleLabel: {
+                            display: true
+                        },
+                        gridLines: {
+                            display: true,
+                            color: "rgba(0,0,0,0.2)"
+                        }
+                    }
+                ]
+            },
+            annotation: {
+                events: ["click"],
+                annotations: [
+                    {
+                        drawTime: "afterDatasetsDraw",
+                        id: "hline",
+                        type: "line",
+                        mode: "horizontal",
+                        scaleID: "y-axis-0",
+                        value: @calculate.PANELS_PRICE,
+                        borderColor: "rgb(255, 243, 181)",
+                        borderWidth: 3
+
+                    }
+                ]
+            }
+        }
+    };
+    
+    window.myLine = new Chart(document.getElementById("calcChart"), config);
+
+    function setSymbol(num) {
+        // return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        var source = String(num).split(".");
+        source[0] = source[0].replace(new RegExp('(\\d)(?=(\\d{3})+$)', 'ig'), "$1,");
+        return source.join(".");
+    }
+
+    function getPower(value) {
+        var data_index = dataArr.indexOf(parseInt(value))
+        return genArr[data_index];
+    }
+    function getIncome(value) {
+        var data_index = dataArr.indexOf(parseInt(value))
+        return feeArr[data_index];
+    }
+
+
+    var data = { tempChartData: chartData };
+    $(".js-tableData").children(".item-box").remove();
+    $("#template").tmpl(data).appendTo(".js-tableData");
+    $("#templateTotal").tmpl(data).appendTo(".js-tableData");
+
+    $('#getCalc').on("click", function () {
+        // GA: 圖靈/電廠列表/有專案釋出請通知我/click event
+            dataLayer.push({
+                'event': 'productClick',			
+                'buttonName': '試算',				
+                'pageName': '電廠專案頁',							
+                'productName': '@projectIntro.CASE_NAME',
+                'url': '@Request.Url.LocalPath'
+        });
+
+        var buy_cnt = $('#txtBuy').val();
+        if (buy_cnt < 1) {
+            $('#txtBuy').val(1)
+            buy_cnt = 1;
+        } else if (buy_cnt > 100) {
+            $('#txtBuy').val(100)
+            buy_cnt = 100;
+        }
+
+        $.ajax({
+            url: '@Url.Action("LoadMoneyTable")',
+            type: "POST",
+            cache: false,
+            data: { buy_cnt: buy_cnt, id: '' },
+            success: function (data) {
+                
+                $(".js-tableData").children(".item-box").remove();
+                $(".js-tableData").append(data)
+
+            }, error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR)
+                console.log(textStatus)
+            }
+
+        });
+
+        var amt = '@calculate.TOTAL_RECOVERY_AMOUNT';
+        var annu_avg = '@calculate.AVG_ANNUAL_INCOME';
+
+        var total_amt = amt * buy_cnt;
+        var total_annu_avg = annu_avg * buy_cnt;
+        $('.totalamt').html(setSymbol(total_amt))
+        $('.annual_avg').html(setSymbol(total_annu_avg))
+
+        for (var i = 0; i < dataArr.length; i++) {
+            dataArr[i] = (dataArrM[i] * buy_cnt).toFixed();
+            genArr[i] = (genArrM[i] * buy_cnt).toFixed();
+            feeArr[i] = (feeArrM[i] * buy_cnt).toFixed();
+            recArr[i] = (recArrM[i] * buy_cnt).toFixed();
+            roofArr[i] = (roofArrM[i] * buy_cnt).toFixed();
+            insArr[i] = (insArrM[i] * buy_cnt).toFixed();
+        }
+        var pic = '@calculate.PANELS_PRICE';
+        var line = 'line' + buy_cnt;
+        //必須清空annotations的內容，給一條新的線
+        window.myLine.options.annotation.annotations = [];
+        window.myLine.options.annotation.annotations.push(
+        {
+            drawTime: "afterDatasetsDraw",
+            id: line,
+            value: pic * buy_cnt,
+            drawTime: "afterDatasetsDraw",
+            type: "line",
+            mode: "horizontal",
+            scaleID: "y-axis-0",
+            borderColor: "rgb(255, 243, 181)",
+            borderWidth: 3
+            });
+        window.myLine.update();
+    });
+
+</script>
+
+
+

@@ -1,0 +1,155 @@
+﻿@import "_variables.scss";
+@import "_mixins.scss";
+
+/*=Common Styles--------------------------------*/
+body {
+    font-family: $font-tw;
+    font-size: 16px;
+}
+.center {
+    display: block;
+    margin: 0 auto;
+}
+/*extend function ---*/
+%bg--common {
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: transparent;
+}
+
+%flex--row-sb {
+    @include flexbox;
+    @include justify-content(space-between);
+    @include align-items(center);
+}
+
+%flex--center {
+    @include flexbox;
+    @include justify-content(center);
+    @include align-items(center);
+}
+
+/* color common setting class ---*/
+
+.bg-yellow {
+    background-color: $color-primary-yellow !important;
+}
+.bg-blue {
+    background-color: $color-primary-blue !important;
+}
+
+.text-bold {
+    font-weight: bold !important;
+}
+.text-upderline {
+    text-decoration: underline !important;
+}
+.text-center {
+    text-align: center !important;
+}
+.text-heightline {
+    color: $color-warning !important;
+}
+.text-blue {
+    color: $color-primary-blue !important;
+}
+.text-lg {
+    font-size: 1.5em;
+}
+.page-container {
+    overflow: hidden;
+}
+.cup {
+    cursor: pointer;
+}
+/* common: page-kv -----------*/
+.page-kv {
+    width: 100%;
+    height: 60vh;
+    max-height: 43rem;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    padding-top: 18vh;
+    &--title {
+        font-size: 2.25rem;
+        letter-spacing: 0.23rem;
+        color: #ffffff;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    &--img {
+        height: 50px;
+        display: block;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (max-width: 1300px) and (min-width: 1025px) {
+    .page-kv {
+        height: 80vh;
+        padding-top: 25vh;
+    }
+}
+
+/* rwd: page-kv ---*/
+@include rwd($ipad) {
+    .page-kv {
+        height: 35vh;
+        padding: 10vh 5% 0;
+        &--title {
+            font-size: 1.5rem;
+            letter-spacing: 0.15rem;
+            margin-bottom: .8rem;
+        }
+    }
+}
+
+/* common: page-content -----*/
+.page-content {
+    width: 90%;
+    background-color: #fff;
+    margin: 0 auto;
+    margin-top: -10rem;
+    padding-top: 2rem;
+    padding-bottom: 10%;
+    z-index: 1;
+    position: relative;
+}
+
+/* rwd: page-content ---*/
+@include rwd($ipad) {
+    .page-content {
+        margin-top: -2rem;
+        padding-top: 0.5rem;
+    }
+}
+
+/* google recaptcha ---*/
+@include rwd(400px) {
+    .g-recaptcha {
+        @include prefix(transform, scale(0.85));
+        // @include prefix(transform-origin, 0 0);
+    }
+}
+
+
+
+/*lazy load fadein effect ---*/
+[data-lazy='true'][data-was-processed="true"]{
+    opacity: 1;
+}
+
+[data-lazy='true']:not([data-was-processed="true"]) {
+    opacity: 0;
+}
+
+/*[data-lazy='true']:not([style]) {
+    visibility: hidden;
+}*/
+[data-lazy='true'] {
+    @include prefix(transition, "opacity linear 2.5s");
+
+}
+/*=Common Styles--------------------------------*/
